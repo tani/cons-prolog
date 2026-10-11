@@ -12,7 +12,23 @@
   (let ((symbol (gensym "?DCG-")))
     (setf (get symbol 'dcg-internal) t) symbol))
 (defun dcg-marker-p (form marker)
-  (and (consp form) (eq (car form) marker)))
+  (and (consp form)
+       (or (eq (car form) marker)
+           (and (symbolp (car form))
+                (string= (symbol-name (car form))
+                         (case marker
+                           (:seq "AND") (:or "OR") (:goals "DO")
+                           (:terminals "QUOTE") (otherwise "")))))))
+(defun dcg-terminal-tokens (form)
+  (if (eq (car form) :terminals)
+      (cdr form)
+      (progn
+        (unless (and (finite-list-p form) (= (length form) 2)
+                     (finite-list-p (second form)))
+          (error "DCG QUOTE requires exactly one finite proper token list"))
+        (second form))))
+(defun dcg-empty-terminals-p (form)
+  (and (dcg-marker-p form :terminals) (null (dcg-terminal-tokens form))))
 (defun dcg-control-p (form name)
   (let ((symbol (if (and (consp form) (null (cdr form))) (car form) form)))
     (and (symbolp symbol) (string= (symbol-name symbol) name))))
@@ -27,7 +43,7 @@
   (let ((work (mapcar (lambda (form) (cons :enter form)) forms))
         (colors (make-hash-table :test 'eq)))
     (loop while work for item = (pop work) for form = (cdr item) do
-      (when (and (consp form) (member (car form) '(:seq :or)))
+      (when (or (dcg-marker-p form :seq) (dcg-marker-p form :or))
         (if (eq (car item) :leave) (setf (gethash form colors) :done)
             (case (gethash form colors)
               (:active (error "Cyclic DCG control expression"))
@@ -52,7 +68,7 @@
                  unless (or (dcg-marker-p form :goals) (dcg-marker-p form :goal)
                             (dcg-control-p form "!") (dcg-control-p form "TRUE")
                             (dcg-control-p form "FAIL")
-                            (equal form '(:terminals))) collect index into indices
+                            (dcg-empty-terminals-p form)) collect index into indices
                  finally (return (car (last indices)))))
          (state input) (goals nil))
     (loop for form in forms for index from 0 do
@@ -64,16 +80,16 @@
          (dolist (goal (cdr form)) (push goal goals)))
         ((or (dcg-control-p form "!") (dcg-control-p form "TRUE") (dcg-control-p form "FAIL"))
          (push form goals))
-        ((equal form '(:terminals)) nil)
+        ((dcg-empty-terminals-p form) nil)
         (t
          (let ((next (if (= index last-consuming) rest (dcg-variable))))
            (cond
              ((dcg-marker-p form :terminals)
               (let ((tail next))
-                (dolist (token (reverse (cdr form))) (setf tail (cons token tail)))
+                (dolist (token (reverse (dcg-terminal-tokens form))) (setf tail (cons token tail)))
                 (push (list '= state tail) goals)))
              ((dcg-marker-p form :or)
-              (unless (cdr form) (error ":OR requires at least one branch"))
+              (unless (cdr form) (error "DCG OR requires at least one branch"))
               (push (make-disjunction-goal
                      :branches (mapcar (lambda (branch) (dcg-body-goals (list branch) state next))
                                        (cdr form))) goals))

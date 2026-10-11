@@ -171,9 +171,9 @@ Prolog ゴールの `(-> 条件 成功時)` は条件の最初の解にコミッ
 通常の Prolog 節へ展開してから同じ WAM でコンパイル・実行します。
 
 ```lisp
-(---> (article) (:terminals the))
-(---> (noun cat) (:terminals cat))
-(--> (noun dog) (:terminals dog))
+(---> (article) '(the))
+(---> (noun cat) '(cat))
+(--> (noun dog) '(dog))
 (---> (sentence ?noun) (article) (noun ?noun))
 
 (?- (phrase (sentence ?noun) ( the cat)))
@@ -190,26 +190,29 @@ Prolog ゴールの `(-> 条件 成功時)` は条件の最初の解にコミッ
 | 文法本体 | 意味 |
 |---|---|
 | `(noun ?x)` または `noun` | 非終端呼び出し |
-| `(:terminals a b ?x)` | トークン列。論理変数・複合トークンも可能 |
-| `(:terminals)`、`(:seq)`、規則の空の本体 | 空列 |
-| 複数の本体形式、`(:seq A B ...)` | 連接 |
-| `(:or A B ...)` | 記載順の選言。各枝が複数形式なら `:seq` で包む |
-| `(:goal G)`、`(:goals G1 G2 ...)` | 入力を消費しない通常の Prolog ゴール |
+| `'(a b ?x)` | トークン列。quote は DCG 構文であり、内部の論理変数・複合トークンも単一化される |
+| `'()`、`(and)`、規則の空の本体 | 空列 |
+| 複数の本体形式、`(and A B ...)` | 連接 |
+| `(or A B ...)` | 記載順の選言。各枝が複数形式なら `and` で包む |
+| `(do G)`、`(do G1 G2 ...)` | 入力を消費しない通常の Prolog ゴール |
 | `!`、`(!)` | 現在の文法規則のカット |
 
-`:goals` では `lisp` / `lispp` も使え、定義や問い合わせのレキシカル環境を捕捉します。
+`quote` / `and` / `or` / `do` は DCG 本体の予約構文です。
+quote に渡すトークン列は有限の proper list とし、各トークン自体には任意の Lisp 項を使えます。
+
+`do` では `lisp` / `lispp` も使え、定義や問い合わせのレキシカル環境を捕捉します。
 
 ```lisp
 (let ((offset 10))
   (---> (adjusted ?out)
-        (:terminals ?n)
-        (:goals (lispp (integerp ?n)) (lisp ?out (+ ?n offset)))))
+        '(?n)
+        (do (lispp (integerp ?n)) (lisp ?out (+ ?n offset)))))
 
 (?- (phrase (adjusted ?out) ( 3))) ; => (((?out . 13)))
 ```
 
 `PHRASE/2` は残余入力を空列に固定し、`PHRASE/3` は残余を明示します。
-問い合わせの文法引数には非終端に加えて `:seq` / `:or` / `:terminals` 等の文法式を記述できます。
+問い合わせの文法引数には非終端に加えて `and` / `or` / `quote` 等の文法式を記述できます。
 生成された内部変数は利用者の変数と衝突せず、解の alist にも現れません。
 文法式としての `phrase` は独立したカット境界を持ち、呼び出し元の選択点を削除しません。
 
@@ -218,11 +221,14 @@ Lisp 関数 `PHRASE` は実行時のデータから解を収集します。引�
 ```lisp
 (phrase '(sentence ?noun) '( the cat))
 (phrase '(sentence ?noun) '?tokens nil :limit 1 :gc-threshold 64)
+(phrase ''(the cat) '(the cat)) ; 文法式 (quote (the cat)) をデータとして渡す
 ```
 
 キーワード引数を使う場合は第3引数の残余も明示してください。
 Lisp 式を含む文法をレキシカル環境と接続する場合は `?-` / `PROLOG` / DCG 定義マクロを使います。
 ストリーミングは通常どおり `MAKE-QUERY` に `((phrase ...))` を渡して行えます。
+
+旧キーワード構文 `:terminals` / `:seq` / `:or` / `:goal` / `:goals` も互換性のため受理します。
 
 `DCG-EXPAND` は引用した頭部と本体から、展開後の頭部・本体を2値で返します。
 選言は複数の節へ配布せず、同じ環境内の `try-branch` / `jump` に変換します。
@@ -291,7 +297,7 @@ freeze register によるスタック共有ではなく、継続と束縛グラ�
 
 ```lisp
 (table 'letters 2) ; 元の引数が0個なら展開後は2個
-(---> (letters) (letters) (:terminals a))
+(---> (letters) (letters) '(a))
 (--> (letters))
 (?- (phrase (letters) ( a a a))) ; => (NIL)
 ```

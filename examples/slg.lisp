@@ -9,7 +9,7 @@
 (<-- (edge a b)) (<- (edge b c)) (<- (edge c a))
 (format t "Left-recursive cyclic paths: ~S~%" (?- (path a ?y)))
 (table 'letters 2)
-(---> (letters) (letters) (:terminals a))
+(---> (letters) (letters) '(a))
 (--> (letters))
 (format t "Left-recursive DCG: ~S~%" (?- (phrase (letters) ( a a a))))
 (table 'p 0) (table 'q 0)

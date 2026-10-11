@@ -1,6 +1,6 @@
 (asdf:defsystem "sprolog"
   :description "Stack-safe S-expression Prolog with a WAM-derived register VM"
-  :version "0.8.0" :license "MIT" :serial t
+  :version "0.8.1" :license "MIT" :serial t
   :components ((:file "src/package") (:file "src/engine") (:file "src/gc") (:file "src/wam") (:file "src/dcg") (:file "src/compiler") (:file "src/wam-compiler") (:file "src/slg") (:file "src/api") (:file "src/builtins"))
   :in-order-to ((asdf:test-op (asdf:test-op "sprolog/tests"))))
 (asdf:defsystem "sprolog/tests"

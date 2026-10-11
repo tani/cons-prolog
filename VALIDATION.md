@@ -1,4 +1,4 @@
-# Validation — 0.8.0, 2026-10-11
+# Validation — 0.8.1, 2026-10-12
 
 SBCL 2.2.9.debian, Linux x86-64. No external Lisp libraries.
 
@@ -6,10 +6,9 @@ SBCL 2.2.9.debian, Linux x86-64. No external Lisp libraries.
 sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 ```
 
-3518 checks pass with a 1 MiB Lisp control-stack limit.
+4,115 checks pass with a 1 MiB Lisp control-stack limit.
 The sole execution backend is granular WAM. The earlier reference backend and
-its selectable API are removed. The count differs from 0.2.0 because duplicate
-runs of the removed backend were replaced with WAM-only GC comparisons.
+its selectable API are removed. The suite includes WAM-only GC comparisons and the builtin, term-model and DCG syntax regressions.
 
 | Stress case | Result | Max VM continuation depth | Max managed heap cells |
 |---|---|---:|---:|
@@ -18,7 +17,7 @@ runs of the removed backend were replaced with WAM-only GC comparisons.
 | 100,000 tail iterations constructing/discarding compound terms | Pass | 2 | 65 |
 | Compile/unify/export a 100,000-element list | Pass | Iterative traversal | Input-sized live terms |
 | Parse 10,000 tokens with a right-recursive DCG | Pass | 1 | 13,079 |
-| Expand a 10,000-level nested DCG :SEQ expression | Pass | Iterative expansion | Source-sized work list |
+| Expand a 10,000-level nested DCG AND expression | Pass | Iterative expansion | Source-sized work list |
 
 The million-call run allocates 1,000,000 managed cells and reclaims 998,936 before
 its first answer. The garbage-producing run allocates 800,000 cells, reclaims
@@ -103,7 +102,7 @@ compatibility claim.
 ## Lisp-native builtins and cons terms
 
 SBCL 2.2.9, Linux x86-64, 2 GiB dynamic-space ceiling, 1 MiB control stack:
-**4,102 combined checks pass**. The core builtin registry contains **101 predicate
+**4,115 combined checks pass**. The core builtin registry contains **101 predicate
 indicators**, plus seven aliases. ISO conformance and Prolog text conversion are
 outside the specification.
 

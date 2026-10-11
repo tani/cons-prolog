@@ -1,3 +1,9 @@
+# 0.8.1
+
+- Use quoted token lists in DCGs, with `and`, `or` and `do` for grammar controls.
+- Preserve `-->` / `--->` append/replace semantics and accept the old keyword forms for compatibility.
+- Migrate examples and regressions; validate malformed quoted token lists.
+
 # 0.8.0
 
 - Adopt a single Lisp cons term model; restore direct list/dotted-pair syntax and remove special list/cons constructors.

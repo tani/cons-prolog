@@ -53,7 +53,7 @@
     (check (= 1 (length (?- (first ?x)))) "caller cut after completion")
     ;; Left-recursive DCG; input is finite, so its variants and answers are finite.
     (table 'letters 2)
-    (---> (letters) (letters) (:terminals a)) (--> (letters))
+    (---> (letters) (letters) '(a)) (--> (letters))
     (dolist (gc '(nil 1 8))
       (check (equal (phrase '(letters) '( a a a) nil :gc-threshold gc) '(nil)) "left-recursive DCG")
       (check (= 4 (length (phrase '(letters) '( a a a) '?rest :gc-threshold gc))) "DCG prefix answers"))
