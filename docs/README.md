@@ -6,6 +6,7 @@
 - [Builtin reference](BUILTINS.md): supported predicates, arithmetic and Lisp-friendly names.
 - [Validation](VALIDATION.md): test coverage, stress tests and current limitations.
 - [Benchmarks](BENCHMARKS.md): measured performance, allocation profiles, bottlenecks and reproduction commands.
+- [Type declaration experiment](TYPE-DECLARATIONS.md): SBCL measurements without algorithm changes.
 - [Roadmap](ROADMAP.md): implementation status and planned improvements.
 - [Changelog](../CHANGELOG.md): release history.
 

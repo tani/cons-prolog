@@ -193,3 +193,9 @@ with SWI-Prolog, XSB or Allegro Prolog was performed.
 Recommended order: scalar graph fast paths; first-argument indexing; large-term
 construction; answer export; arithmetic dispatch. Shared SLG stacks are a later
 candidate, rather than the first fix for the path workload measured here.
+
+## Type declarations without algorithm changes
+
+A [follow-up experiment](TYPE-DECLARATIONS.md) compares VM parameter declarations
+and broader vector/local type declarations against this implementation. It retains
+reproducible patches and measurements; neither candidate is applied to production.
