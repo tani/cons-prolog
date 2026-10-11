@@ -41,6 +41,9 @@ negation/conditionals remain unsupported.
 
 ## Future performance work
 
+[Measured bottlenecks](BENCHMARKS.md) prioritize scalar graph fast paths and
+first-argument indexing before larger VM/SLG representation changes.
+
 - First-argument indexing, X-register reuse and variable lifetime analysis.
 - Direct acyclic term construction, compact instruction encodings and native dispatch.
 - Shared frozen stacks, answer tries and explicit table-space accounting.

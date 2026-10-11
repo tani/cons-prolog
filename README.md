@@ -84,4 +84,5 @@ Validated on SBCL 2.2.9 / Linux x86-64: 4,190 checks pass, including one million
 - [User guide](MANUAL.md): terms, queries, Lisp callbacks, DCGs, SLG, WAM, GC and limitations
 - [Builtins](BUILTINS.md): supported predicates and Lisp-friendly names
 - [Validation](VALIDATION.md): semantic coverage and stress tests
+- [Benchmarks](BENCHMARKS.md): timings, allocation profiles and bottlenecks
 - [Roadmap](ROADMAP.md) and [changelog](CHANGELOG.md)

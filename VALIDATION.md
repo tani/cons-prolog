@@ -144,3 +144,10 @@ declarations, mutation, escaping closures, branch scope, initialization counts,
 DCG DO, independent cursors, compiled hidden variables, ordinary callers of
 tabled predicates and forced GC. A 10,000-call tail-recursive predicate using
 LET retains continuation depth one with a 1 MiB host control stack.
+
+## Performance investigation
+
+[Benchmarks](BENCHMARKS.md) records five-run timing/allocation medians for 13
+workloads, CPU and allocation profiles, and process-local diagnostic experiments
+on revision be479795 (0.9.1). Timing, cumulative allocated bytes and peak managed
+cells are distinct metrics. No runtime optimizer was installed by the investigation.
