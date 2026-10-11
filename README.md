@@ -23,13 +23,11 @@ No external Lisp libraries are required. From the repository directory:
     (append ?xs ?ys ?zs))
 
 (?- (append ?xs ?ys (a b c)))
-;; => (((?xs) (?ys a b c))
-;;     ((?xs a) (?ys b c))
-;;     ((?xs a b) (?ys c))
-;;     ((?xs a b c) (?ys)))
 ```
 
-`<--` replaces clauses of the same name and arity; `<-` appends a clause. `?x` is a logic variable; each `?` is anonymous. `?-` returns all solutions as a list of binding alists. Failure is `NIL`; one solution without bindings is `(NIL)`.
+`<--` replaces clauses of the same name and arity; `<-` appends a clause. `?x` is a logic variable; each `?` is anonymous. `?-` computes and displays one answer at a time. Type `;` followed by Enter for the next answer, or Enter alone to stop. EOF also stops. Failure prints `false.`; success without bindings prints `true.`. It returns no values.
+
+Use `(query '((append ?xs ?ys (a b c))))` to collect all answers as binding alists, or add `:limit` to bound collection.
 
 Terms and lists share the same Lisp cons representation. Write `(f a b)` or `(a . ?tail)` directly. Definition and query macros treat goals as data, so ordinary terms need no quote.
 
@@ -44,7 +42,7 @@ Terms and lists share the same Lisp cons representation. Write `(f a b)` or `(a 
   (noun ?noun))
 
 (?- (phrase (sentence ?noun) (the cat)))
-;; => (((?noun . cat)))
+;; Prints ?NOUN = CAT; Enter stops.
 ```
 
 `--->` replaces grammar clauses; `-->` appends one. Within a DCG, `'(a b)` denotes a token sequence; variables inside it still unify. Use `and` for sequences, `or` for alternatives and `do` for ordinary goals that consume no input.
@@ -60,16 +58,17 @@ Terms and lists share the same Lisp cons representation. Write `(f a b)` or `(a 
 (<- (edge c a))
 
 (?- (path a ?y))
-;; => (((?y . b)) ((?y . c)) ((?y . a)))
+;; Prints ?Y = B; type ; for another answer.
 ```
 
-SLG supports left and mutual recursion, plus ground `tnot`. Cuts over unfinished tables raise an error. See the [user guide](MANUAL.md#slg-resolution) for details and restrictions.
+SLG supports left and mutual recursion, plus ground `tnot`. Conditional answers display `undefined` and their delayed negations. Cuts over unfinished tables raise an error. See the [user guide](MANUAL.md#slg-resolution) for details and restrictions.
 
 Use `prolog` / `lisp` / `lispp` for lexical Lisp callbacks and `make-query` / `next-solution` / `close-query` for streaming answers. Builtins cover unification, arithmetic, dynamic definitions, exceptions, answer collection and character/byte I/O.
 
 ## Examples and tests
 
 ```sh
+sbcl --script examples/interactive.lisp
 sbcl --script examples/append.lisp
 sbcl --script examples/dcg.lisp
 sbcl --script examples/slg.lisp
@@ -77,7 +76,7 @@ sbcl --script examples/builtins.lisp
 sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 ```
 
-Validated on SBCL 2.2.9 / Linux x86-64: 4,115 checks pass, including one million tail calls with a 1 MiB Lisp control stack.
+Validated on SBCL 2.2.9 / Linux x86-64: 4,141 checks pass, including one million tail calls with a 1 MiB Lisp control stack.
 
 ## Documentation
 

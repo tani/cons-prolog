@@ -8,7 +8,7 @@
 (<-- (append () ?ys ?ys))
 (<- (append (?x . ?xs) ?ys (?x . ?zs))
     (append ?xs ?ys ?zs))
-(?- (append ?xs ?ys (a b c)))
+(query '((append ?xs ?ys (a b c))))
 ```
 
 `<--` replaces all clauses of the same name and arity; `<-` appends one.
@@ -17,9 +17,9 @@ using depth-first search. Tabled predicates use SLG.
 
 Symbols beginning with `?` are logic variables. Each occurrence of `?` is a
 fresh anonymous variable. Common Lisp package identity matters for symbols.
-`?-` returns all solutions as binding alists: failure is NIL, while a successful
+`query` collects solutions as binding alists: failure is NIL, while a successful
 goal without named bindings returns `(NIL)`. Use limits or cursors for large or
-infinite answer sets.
+infinite answer sets. `?-` is the interactive interface described below.
 
 ```lisp
 (query '((append ?xs ?ys (a b c))) :limit 2)
@@ -31,6 +31,37 @@ infinite answer sets.
           (print solution)))
     (close-query cursor)))
 ```
+
+### Interactive queries
+
+```lisp
+(?- (append ?xs ?ys (a b c)))
+```
+
+```text
+?XS = NIL
+?YS = (A B C)
+More? [; = next, Enter = stop] ;
+?XS = (A)
+?YS = (B C)
+More? [; = next, Enter = stop]
+```
+
+The first answer is computed immediately. Only `;` followed by Enter requests
+another; Enter alone, EOF, `q` or `.` stops. Invalid commands repeat the prompt
+without advancing. There is no lookahead to determine whether more answers exist.
+Requesting an answer after exhaustion prints `false.`; a ground success prints
+`true.`. `?-` returns no values and does not accumulate solutions.
+
+Input and output use dynamically bound `*query-io*`. Answers preserve Lisp
+notation and print cycles with reader labels. Conditional SLG answers print
+`undefined` and their delayed negations instead of being silently skipped.
+The cursor is released on stop, EOF, exhaustion, errors and nonlocal exits.
+Lexical callbacks work as in `prolog`. An individual request may still diverge;
+tabled evaluation may need to complete an SCC before producing an answer.
+
+Use `query` for programmatic collection and `make-query` / `next-solution` for
+programmatic streaming. The collecting examples in this guide use `query`.
 
 The second value of `next-solution` distinguishes an answer from exhaustion.
 Answer cons graphs are copied and remain valid after backtracking. Unbound
@@ -45,9 +76,9 @@ for single-threaded use; synchronization is not implemented.
 Terms are native Lisp cons graphs. Lists and compound terms are not distinct.
 
 ```lisp
-(?- (= ?x (f a b)))
-(?- (= ?x (a b c)))
-(?- (= (a . ?tail) (a b))) ; ?tail = (b)
+(query '((= ?x (f a b))))
+(query '((= ?x (a b c))))
+(query '((= (a . ?tail) (a b)))) ; ?tail = (b)
 ```
 
 `list`, `cons` and `:compound` have no special constructor meaning.
@@ -87,8 +118,7 @@ Lisp side effects are not undone by backtracking.
 
 `return-from prolog` and Lisp exceptions release the VM through host
 `unwind-protect`. A Prolog cleanup construct spanning backtracking is not
-implemented. Interactive Allegro-style queries and its variable APIs are also
-not implemented.
+implemented. Allegro variable APIs and full interactive API compatibility are not implemented.
 
 ## DCGs
 
@@ -102,12 +132,12 @@ then compiles the result with the ordinary WAM backend.
 (--> (noun dog) '(dog))
 (---> (sentence ?noun) (article) (noun ?noun))
 
-(?- (phrase (sentence ?noun) (the cat)))
+(query '((phrase (sentence ?noun) (the cat))))
 ;; => (((?noun . cat)))
-(?- (phrase (sentence ?noun) ?tokens))
+(query '((phrase (sentence ?noun) ?tokens)))
 ;; => (((?noun . cat) (?tokens the cat))
 ;;     ((?noun . dog) (?tokens the dog)))
-(?- (phrase (sentence ?noun) (the dog extra) ?rest))
+(query '((phrase (sentence ?noun) (the dog extra) ?rest)))
 ;; => (((?noun . dog) (?rest extra)))
 ```
 
@@ -131,7 +161,7 @@ finite proper list; individual tokens may be arbitrary Lisp terms.
     '(?n)
     (do (lispp (integerp ?n))
         (lisp ?out (+ ?n offset)))))
-(?- (phrase (adjusted ?out) (3))) ; => (((?out . 13)))
+(query '((phrase (adjusted ?out) (3)))) ; => (((?out . 13)))
 ```
 
 `phrase/2` requires complete input consumption; `phrase/3` exposes the remainder.
@@ -171,7 +201,7 @@ clause definitions.
 (<-- (path ?x ?y) (path ?x ?z) (edge ?z ?y))
 (<- (path ?x ?y) (edge ?x ?y))
 (<-- (edge a b)) (<- (edge b c)) (<- (edge c a))
-(?- (path a ?y))
+(query '((path a ?y)))
 ;; => (((?y . b)) ((?y . c)) ((?y . a)))
 ```
 
@@ -202,7 +232,8 @@ and simplified as tables complete; unresolved negative cycles are undefined.
 ;; => ((:truth :undefined :bindings nil :delays ((q))))
 ```
 
-`query` and `?-` normally enumerate only true answers. With `:truth-values t`,
+`query` normally collects only true answers; `?-` displays conditional answers
+as undefined. With `:truth-values t`,
 `query` returns `(:truth :true-or-undefined :bindings alist :delays goals)`.
 Each delayed goal represents a negation whose truth remains unresolved.
 Different conditional derivations may yield different delay lists for the same
@@ -218,7 +249,7 @@ fourth. Its second value is T for conditional answers as well.
 (table 'letters 2) ; A zero-argument grammar expands to arity two.
 (---> (letters) (letters) '(a))
 (--> (letters))
-(?- (phrase (letters) (a a a))) ; => (NIL)
+(query '((phrase (letters) (a a a)))) ; => (NIL)
 ```
 
 ### Cuts and limitations
@@ -230,12 +261,12 @@ depends on reached calls and their current SCC/completion state.
 ```lisp
 (table 'first-path 1)
 (<-- (first-path ?x) (path a ?x) !)
-(?- (first-path ?x)) ; Select one answer after PATH completes.
+(query '((first-path ?x))) ; Select one answer after PATH completes.
 
 (table 'bad 1)
 (<-- (bad ?x) (bad ?x) !)
 (<- (bad base))
-(?- (bad ?x)) ; SLG-INCOMPLETE-CUT: crosses an unfinished recursive call.
+(query '((bad ?x))) ; SLG-INCOMPLETE-CUT: crosses an unfinished recursive call.
 ```
 
 A caller's cut leaves other answers in a completed child table intact.

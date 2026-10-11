@@ -1,4 +1,4 @@
-# Lisp-native terms and builtins (0.8.1)
+# Lisp-native terms and builtins (0.9.0)
 
 [README](README.md) · [User guide](MANUAL.md)
 
@@ -12,9 +12,9 @@ in goal position. `()` is NIL. `?x` is a logic variable; each `?` is fresh.
 ```lisp
 (<-- (append () ?ys ?ys))
 (<- (append (?x . ?xs) ?ys (?x . ?zs)) (append ?xs ?ys ?zs))
-(?- (append ?xs ?ys (a b c)))
-(?- (= ?term (f a (g b))))
-(?- (= ?tail (a . ?tail)) (ground ?tail))
+(query '((append ?xs ?ys (a b c))))
+(query '((= ?term (f a (g b)))))
+(query '((= ?tail (a . ?tail)) (ground ?tail)))
 ```
 
 `list`, `cons`, and `:compound` have no special term-constructor meaning.

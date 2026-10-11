@@ -1,3 +1,10 @@
+# 0.9.0
+
+- Make `?-` interactive: print one answer, compute another only after `;`, stop on Enter or EOF.
+- Display binding values, ground success/failure and conditional SLG answers with delayed negations.
+- Use `*query-io*`, print cycles safely and close cursors on every exit path.
+- Keep `query` for collecting results; migrate batch examples and regression helpers.
+
 # 0.8.1
 
 - Use quoted token lists in DCGs, with `and`, `or` and `do` for grammar controls.

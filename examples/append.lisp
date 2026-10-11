@@ -4,7 +4,7 @@
 (use-package :sprolog)
 (<-- (append () ?ys ?ys))
 (<- (append ( ?x  . ?xs) ?ys ( ?x  . ?zs)) (append ?xs ?ys ?zs))
-(format t "Solutions: ~S~%" (?- (append ?xs ?ys ( a b c))))
+(format t "Solutions: ~S~%" (query '((append ?xs ?ys ( a b c)))))
 (let ((items '(a b c)) (results nil))
   (prolog (lisp ?items items) (append ?xs ?ys ?items)
           (lisp (push (list ?xs ?ys) results)))

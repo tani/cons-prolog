@@ -1,13 +1,14 @@
 # Implementation roadmap
 
-## Implemented (0.8.1)
+## Implemented (0.9.0)
 
 - Native Lisp cons graphs for terms, lists, dotted tails, sharing and rational trees.
 - One granular WAM backend: X/Y registers, get/put/unify/set, read/write modes,
   explicit choices and continuations, and tail execution.
 - Iterative term processing and nonmoving VM ownership-vector mark/compact GC,
   with conditional trailing, suspended-environment roots and adaptive thresholds.
-- Query cursors, copied answers, database isolation and lexical Lisp callbacks.
+- Interactive one-answer-at-a-time queries, cursors, copied answers, database isolation
+  and lexical Lisp callbacks.
 - DCGs with quoted token lists, and/or/do controls, append/replace definition
   macros, hygienic difference-list expansion and scoped cuts.
 - SLG variant tabling, copied consumer continuations, queue scheduling,
@@ -30,7 +31,7 @@ PAIP / Allegro API inspiration does not imply complete API compatibility.
 
 ## Future API work
 
-Interactive queries, variable inspection and cleanup scopes are not implemented.
+Variable inspection APIs and cleanup scopes are not implemented.
 Prolog resource cleanup across backtracking needs a separate design; host Lisp
 UNWIND-PROTECT alone does not provide those semantics.
 DCG dynamic nonterminal calls, semicontext/push-back and grammar-level

@@ -22,7 +22,7 @@
       (check (equal '(f) (value-of '?x (car (query '((= ?x (f))) :gc-threshold gc))))
              "one-element lists are not atoms"))
     (<-- (group-first b 2)) (<- (group-first a 1)) (<- (group-first b 3))
-    (let ((answers (?- (bagof ?value (group-first ?key ?value) ?bag))))
+    (let ((answers (solutions (bagof ?value (group-first ?key ?value) ?bag))))
       (check (equal '(b a) (mapcar (lambda (s) (value-of '?key s)) answers)) "bagof uses first appearance order")
       (check (equal '((2 3) (1)) (mapcar (lambda (s) (value-of '?bag s)) answers))))
     (dolist (indicator '((functor . 3) (arg . 3) (=.. . 2) (@< . 2) (@=< . 2)

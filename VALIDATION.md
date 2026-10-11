@@ -1,4 +1,4 @@
-# Validation — 0.8.1, 2026-10-12
+# Validation — 0.9.0, 2026-10-12
 
 SBCL 2.2.9.debian, Linux x86-64. No external Lisp libraries.
 
@@ -6,7 +6,7 @@ SBCL 2.2.9.debian, Linux x86-64. No external Lisp libraries.
 sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 ```
 
-4,115 checks pass with a 1 MiB Lisp control-stack limit.
+4,141 checks pass with a 1 MiB Lisp control-stack limit.
 The sole execution backend is granular WAM. The earlier reference backend and
 its selectable API are removed. The suite includes WAM-only GC comparisons and
 the builtin, term-model and DCG syntax regressions.
@@ -103,7 +103,7 @@ compatibility claim.
 ## Lisp-native builtins and cons terms
 
 SBCL 2.2.9, Linux x86-64, 2 GiB dynamic-space ceiling, 1 MiB control stack:
-**4,115 combined checks pass**. The core builtin registry contains **101 predicate
+**4,141 combined checks pass**. The core builtin registry contains **101 predicate
 indicators**, plus seven aliases. ISO conformance and Prolog text conversion are
 outside the specification.
 
@@ -128,3 +128,11 @@ and compound tokens, empty productions, lexical callbacks, nested alternatives,
 cut boundaries, tabled grammars and forced GC. Runtime grammar data is tested
 separately from definition/query macros. Malformed and cyclic quoted token
 sequences are rejected; legacy keyword syntax remains covered for compatibility.
+
+## Interactive queries (0.9.0)
+
+`tests/interactive.lisp` checks demand-driven alternatives (including infinite
+REPEAT), EOF and explicit stop commands, invalid-command retries, ground success,
+failure, cyclic answer printing, lexical callbacks, undefined SLG answers and
+cursor teardown after stop, errors and nonlocal exits. Batch regressions use a
+private collecting macro; the public `?-` interface is exercised separately.
