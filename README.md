@@ -1,4 +1,4 @@
-# sprolog 0.5.0 — SBCL 向け S式 Prolog
+# sprolog 0.8.0 — SBCL 向け S式 Prolog
 
 PAIP / Allegro Prolog の API に着想を得た、独立した初期実装です。
 既存処理系のコードは流用していません。Franz Inc. の製品ではなく、同社との提携・承認もありません。
@@ -31,9 +31,9 @@ sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 
 ```lisp
 (<-- (append () ?ys ?ys))
-(<- (append (?x . ?xs) ?ys (?x . ?zs))
+(<- (append ( ?x  . ?xs) ?ys ( ?x  . ?zs))
     (append ?xs ?ys ?zs))
-(?- (append ?xs ?ys (a b c)))
+(?- (append ?xs ?ys ( a b c)))
 ;; => (((?xs) (?ys a b c))
 ;;     ((?xs a) (?ys b c))
 ;;     ((?xs a b) (?ys c))
@@ -52,8 +52,8 @@ Allegro の対話的な表示・継続入力は未実装です。
 無限の解集合には件数制限またはカーソルを使います。
 
 ```lisp
-(query '((append ?xs ?ys (a b c))) :limit 2)
-(let ((cursor (make-query '((append ?xs ?ys (a b c))))))
+(query '((append ?xs ?ys ( a b c))) :limit 2)
+(let ((cursor (make-query '((append ?xs ?ys ( a b c))))))
   (unwind-protect
       (loop
         (multiple-value-bind (solution foundp) (next-solution cursor)
@@ -67,6 +67,21 @@ Allegro の対話的な表示・継続入力は未実装です。
 未束縛変数は fresh な `?G...` シンボルとなり、一つの解の中では変数の同一性を保持します。
 `QUERY-STATISTICS` は命令数、最大継続深度・選択点数、累計割当セル数、現在／最大ヒープセル数、Trail と GC の統計を返します。
 `MAKE-DATABASE` と `*DATABASE*` の動的束縛でデータベースを分離でき、`CLEAR-DATABASE` で消去できます。
+
+## 項の構文
+
+項は通常の Lisp の cons 構造です。複合項とリストを区別しません。
+
+```lisp
+(?- (= ?x (f a b)))
+(?- (= ?x (a b c)))
+(?- (= (a . ?tail) (a b))) ; ?tail = (b)
+```
+
+`list`／`cons` は特別な項構築構文ではなく、項位置では普通のシンボルです。
+`(f)` は項位置では1要素のリスト、ゴール位置では `f/0` の呼び出しです。
+入力・解・Lisp コールバックは同じ cons 表現を使い、共有・循環も扱えます。
+ISO Prolog への準拠や項の翻訳は目標としません。
 
 ## Lisp との接続
 
@@ -98,15 +113,15 @@ Lisp の副作用はバックトラックで取り消しません。
 | 機能 | 初版 |
 |---|---|
 | 事実・規則・再帰・複数節 | 対応 |
-| リスト・dotted pair・構造項 | 対応 |
+| リスト・末尾付きリスト・複合項 | `list`／`cons`／`(f ...)` |
 | `(= ?x term)` | 対応 |
 | `!` / `(!)` | 述語入口を境界とするカット |
 | `true` / `(true)` / `fail` / `(fail)` | 対応 |
 | 末尾呼び出し | `execute` で継続フレームを再利用 |
 | `prolog` / `lisp` / `lispp` | 上記の範囲で対応 |
 | 節の追加・置き換え | `<-` / `<--` |
-| `assert` / `retract` / `call` / 一般の Prolog 選言・否定 | 未実装 |
-| `bagof` / `setof` / 算術述語 / occurs check | 未実装 |
+| `asserta` / `assertz` / `retract` / `call/1..8` / 選言・否定 | `src/builtins.lisp` で実装 |
+| `findall` / `bagof` / 算術述語 / occurs check | `src/builtins.lisp` で実装 |
 | Prolog ゴールとしての `unwind-protect` | 未実装 |
 | Allegro の変数 API・対話 UI・完全互換 | 未実装 |
 | X/Y レジスタ、read/write モード、細粒度の項命令 | 対応 |
@@ -149,24 +164,26 @@ Prolog 呼び出しは Lisp の再帰を使いません。
 
 ## DCG
 
-文法規則は `->` で追加し、`-->` で同名・同アリティの文法を置き換えます。
+文法規則は `-->` で追加し、`--->` で同名・同アリティの文法を置き換えます。
+Prolog ゴールの `(-> 条件 成功時)` は条件の最初の解にコミットします。
+`(or (-> 条件 成功時) 失敗時)` で if-then-else を表します。
 この2つは本プロジェクトの S式構文です。文法の非終端には入力と残余入力の2引数を追加し、
 通常の Prolog 節へ展開してから同じ WAM でコンパイル・実行します。
 
 ```lisp
-(--> (article) (:terminals the))
-(--> (noun cat) (:terminals cat))
-(-> (noun dog) (:terminals dog))
-(--> (sentence ?noun) (article) (noun ?noun))
+(---> (article) (:terminals the))
+(---> (noun cat) (:terminals cat))
+(--> (noun dog) (:terminals dog))
+(---> (sentence ?noun) (article) (noun ?noun))
 
-(?- (phrase (sentence ?noun) (the cat)))
+(?- (phrase (sentence ?noun) ( the cat)))
 ;; => (((?noun . cat)))
 
 (?- (phrase (sentence ?noun) ?tokens))
 ;; => (((?noun . cat) (?tokens the cat))
 ;;     ((?noun . dog) (?tokens the dog)))
 
-(?- (phrase (sentence ?noun) (the dog extra) ?rest))
+(?- (phrase (sentence ?noun) ( the dog extra) ?rest))
 ;; => (((?noun . dog) (?rest extra)))
 ```
 
@@ -184,11 +201,11 @@ Prolog 呼び出しは Lisp の再帰を使いません。
 
 ```lisp
 (let ((offset 10))
-  (--> (adjusted ?out)
+  (---> (adjusted ?out)
         (:terminals ?n)
         (:goals (lispp (integerp ?n)) (lisp ?out (+ ?n offset)))))
 
-(?- (phrase (adjusted ?out) (3))) ; => (((?out . 13)))
+(?- (phrase (adjusted ?out) ( 3))) ; => (((?out . 13)))
 ```
 
 `PHRASE/2` は残余入力を空列に固定し、`PHRASE/3` は残余を明示します。
@@ -199,7 +216,7 @@ Prolog 呼び出しは Lisp の再帰を使いません。
 Lisp 関数 `PHRASE` は実行時のデータから解を収集します。引数は通常の Lisp 式です。
 
 ```lisp
-(phrase '(sentence ?noun) '(the cat))
+(phrase '(sentence ?noun) '( the cat))
 (phrase '(sentence ?noun) '?tokens nil :limit 1 :gc-threshold 64)
 ```
 
@@ -274,9 +291,9 @@ freeze register によるスタック共有ではなく、継続と束縛グラ�
 
 ```lisp
 (table 'letters 2) ; 元の引数が0個なら展開後は2個
-(--> (letters) (letters) (:terminals a))
-(-> (letters))
-(?- (phrase (letters) (a a a))) ; => (NIL)
+(---> (letters) (letters) (:terminals a))
+(--> (letters))
+(?- (phrase (letters) ( a a a))) ; => (NIL)
 ```
 
 - テーブル空間は問い合わせごとに独立し、`CLOSE-QUERY` または列挙終了で解放します。
@@ -344,7 +361,7 @@ Trail は通常のルートとしてすべてを保持するのではなく、�
 回収後には所有ベクタの容量も縮めます。
 
 ```lisp
-(let ((cursor (make-query '((append ?xs ?ys (a b c))) :gc-threshold 64)))
+(let ((cursor (make-query '((append ?xs ?ys ( a b c))) :gc-threshold 64)))
   (unwind-protect
       (progn
         (next-solution cursor)
@@ -353,7 +370,7 @@ Trail は通常のルートとしてすべてを保持するのではなく、�
     (close-query cursor)))
 
 ;; NIL は自動回収を無効にする。
-(query '((append ?xs ?ys (a b c))) :gc-threshold nil)
+(query '((append ?xs ?ys ( a b c))) :gc-threshold nil)
 ```
 
 GC が抑えるのは不要になった項の保持です。探索に必要な選択点・非末尾継続・出力項が大きくなる場合、
@@ -361,5 +378,20 @@ GC が抑えるのは不要になった項の保持です。探索に必要な�
 `CLOSE-QUERY` または解の列挙終了で VM のルートと所有ベクタを解放します。
 
 節の更新は新しい命令ベクタを公開します。開始済み呼び出しの代替節は旧ベクタに残り、
-新しい呼び出しは更新後の定義を使います。ISO の動的データベース完全互換ではありません。
+新しい呼び出しは更新後の定義を使います。組み込みの assert/retract も同じ logical update view を使います。
+静的・動的述語の完全なディレクティブ分類は未対応です。
 同期機構は未実装なのでデータベースは単一スレッドで使います。
+
+## 組み込み述語
+
+`src/builtins.lisp` に101個の基本述語 indicator と7個の別名を実装しています。
+単一化は `=`、非単一化可能性の検査は `/=`、項の同一性は `==`／`/==`、
+算術比較は `===`／`=/=` です。制御には `and`、`or`、`/+`、`->` を使えます。
+ビット演算には `logand`／`logior`／`lognot` を使います。
+
+ISO の関手・引数操作、標準項順序、`sort`／`keysort`／`setof` は削除しました。
+Prolog テキストの解析・出力・演算子宣言も削除しました。
+`bagof` はグループを最初の出現順に返します。未定義述語はデフォルトで
+existence error になり、`unknown` フラグで失敗へ変更できます。
+
+詳細は [BUILTINS.md](BUILTINS.md) を参照してください。

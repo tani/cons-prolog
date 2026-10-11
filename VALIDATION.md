@@ -1,4 +1,4 @@
-# Validation — 0.5.0, 2026-10-11
+# Validation — 0.8.0, 2026-10-11
 
 SBCL 2.2.9.debian, Linux x86-64. No external Lisp libraries.
 
@@ -99,3 +99,24 @@ New cut cases run with automatic GC disabled and thresholds 1, 8, 64:
 
 This validates the implemented restriction; it is not a full SWI-Prolog/XSB
 compatibility claim.
+
+## Lisp-native builtins and cons terms
+
+SBCL 2.2.9, Linux x86-64, 2 GiB dynamic-space ceiling, 1 MiB control stack:
+**4,102 combined checks pass**. The core builtin registry contains **101 predicate
+indicators**, plus seven aliases. ISO conformance and Prolog text conversion are
+outside the specification.
+
+`tests/builtins.lisp` covers arithmetic, cons graph operations, control/cut scopes,
+meta-calls, exception rollback, dynamic updates, findall/bagof, atom/number
+conversions and character/byte streams. Forced-GC checks use thresholds 1, 8 and
+4096, as well as disabled collection. Stress cases retain 100,000 arithmetic tail
+calls, 10,000 meta-calls and a 10,000-level arithmetic expression.
+
+`tests/term-syntax.lisp` verifies native cons terms and dotted tails, cyclic inputs,
+ordinary LIST/CONS data symbols, meta-calls, exceptions, dynamic definitions,
+first-appearance BAGOF grouping, and all 27 removed predicate indicators.
+Existing 100,000-element list, WAM instruction-family, DCG, SLG and independent
+well-founded-model oracle tests remain in the combined suite.
+
+Standalone append, DCG, SLG and builtin examples are checked locally.

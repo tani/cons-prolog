@@ -1,15 +1,20 @@
 (in-package #:sprolog)
 
+
 (defstruct (logic-var (:constructor %make-var (id)))
   (id 0 :type fixnum) binding)
 (defstruct (slot-ref (:constructor slot-ref (index &optional anonymous))) index anonymous)
-(defstruct continuation code pc slots cut parent depth scopes lineage)
-(defstruct choice code pc args continuation cut trail heap age slots scopes delays lineage)
+(define-condition iso-exception (error)
+  ((term :initarg :term :reader iso-exception-term))
+  (:report (lambda (c s) (let ((*print-circle* t) (*print-level* 8) (*print-length* 12))
+                                   (format s "Prolog exception: ~S" (iso-exception-term c))))))
+(defstruct continuation code pc slots cut parent depth scopes lineage handlers)
+(defstruct choice code pc args continuation cut trail heap age slots scopes delays lineage handlers)
 (defstruct database (predicates (make-hash-table :test 'equal))
-  (tabled (make-hash-table :test 'equal)) (generation 0))
+  (tabled (make-hash-table :test 'equal)) (generation 0) iso-state)
 (defvar *database* (make-database))
 (defstruct (machine (:constructor %make-machine))
-  database code (pc 0) args slots continuation (cut 0) scopes
+  database code iso-handlers (pc 0) args slots continuation (cut 0) scopes
   slg slg-worker slg-owner slg-root slg-bypass slg-paused slg-lineage delays
   scan (mode :read) (serial 0)
   (gc-floor 4096) (gc-limit 4096) (gc-count 0) (gc-reclaimed 0)
@@ -74,7 +79,7 @@
                  (setf (gethash b partners) t)
                  (push (cons (cdr a) (cdr b)) work)
                  (push (cons (car a) (car b)) work))))
-            ((not (eql a b)) (return-from unify nil))))
+            ((not (iso-atomic-equal a b)) (return-from unify nil))))
     t))
 
 (defun map-term (root atom-function &optional allocator)
@@ -120,7 +125,8 @@
   (let ((cp (pop-clear (machine-choices vm))))
     (unwind-trail vm (choice-trail cp))
     (truncate-vector (machine-heap vm) (choice-heap cp))
-    (setf (machine-code vm) (choice-code cp) (machine-pc vm) (choice-pc cp)
+    (setf (machine-iso-handlers vm) (choice-handlers cp)
+          (machine-code vm) (choice-code cp) (machine-pc vm) (choice-pc cp)
           (machine-args vm) (choice-args cp)
           (machine-continuation vm) (choice-continuation cp)
           (machine-slg-lineage vm) (choice-lineage cp)
@@ -134,14 +140,15 @@
                 :continuation (machine-continuation vm) :cut (machine-cut vm)
                 :trail (fill-pointer (machine-trail vm))
                 :heap (fill-pointer (machine-heap vm)) :age (machine-serial vm)
-                :lineage (machine-slg-lineage vm) :delays (machine-delays vm) :slots (and branchp (machine-slots vm)) :scopes (machine-scopes vm))
+                :handlers (machine-iso-handlers vm) :lineage (machine-slg-lineage vm) :delays (machine-delays vm) :slots (and branchp (machine-slots vm)) :scopes (machine-scopes vm))
    (machine-choices vm))
   (setf (machine-max-choices vm)
         (max (machine-max-choices vm) (fill-pointer (machine-choices vm)))))
 (defun restore-continuation (vm)
   (let ((c (machine-continuation vm)))
     (unless c (error "Missing VM continuation"))
-    (setf (machine-code vm) (continuation-code c)
+    (setf (machine-iso-handlers vm) (continuation-handlers c)
+          (machine-code vm) (continuation-code c)
           (machine-pc vm) (continuation-pc c)
           (machine-slots vm) (continuation-slots c)
           (machine-slg-lineage vm) (continuation-lineage c)
@@ -151,17 +158,24 @@
     (fill (machine-args vm) nil)
     (maybe-collect vm)))
 (defun invoke-predicate (vm name arity tailp)
+  (when (iso-builtin-p name arity)
+    (return-from invoke-predicate (iso-invoke vm name arity tailp)))
+  (setf name (iso-resolve-name (machine-database vm) name arity))
   (when (gethash (cons name arity) (database-tabled (machine-database vm)))
     (if (machine-slg-bypass vm) (setf (machine-slg-bypass vm) nil)
         (return-from invoke-predicate (slg-call vm name arity tailp))))
   (let ((code (resolve-code vm name arity)))
-    (unless code (return-from invoke-predicate (backtrack vm)))
+    (unless code
+      (return-from invoke-predicate
+        (if (gethash (cons name arity) (database-tabled (machine-database vm)))
+            (backtrack vm) (iso-unknown vm name arity))))
+    (when (zerop (length code)) (return-from invoke-predicate (backtrack vm)))
     (unless tailp
       (let ((depth (1+ (if (machine-continuation vm)
                           (continuation-depth (machine-continuation vm)) 0))))
         (setf (machine-continuation vm)
               (make-continuation :code (machine-code vm) :pc (machine-pc vm)
-                                 :lineage (machine-slg-lineage vm)
+                                 :handlers (machine-iso-handlers vm) :lineage (machine-slg-lineage vm)
                                  :slots (machine-slots vm) :cut (machine-cut vm) :scopes (machine-scopes vm)
                                  :parent (machine-continuation vm) :depth depth)
               (machine-max-depth vm) (max depth (machine-max-depth vm)))))
@@ -181,7 +195,8 @@
     (let* ((instruction (aref (machine-code vm) (machine-pc vm)))
            (op (car instruction)) (operands (cdr instruction)))
       (incf (machine-pc vm)) (incf (machine-steps vm))
-      (case op
+      (handler-case
+       (case op
         ((try-me-else retry-me-else) (push-choice vm (first operands)))
         (try-branch (push-choice vm (first operands) t))
         (jump (setf (machine-pc vm) (first operands)))
@@ -223,8 +238,11 @@
                (backtrack vm)))))
         (yield (when (machine-slg vm) (slg-check-database vm))
                (setf (machine-ready vm) t) (return-from run-machine t))
-        (otherwise (unless (execute-term-instruction vm op operands)
-                     (backtrack vm))))))
+        (otherwise
+         (unless (if (iso-instruction-p op) (iso-execute vm op operands)
+                     (execute-term-instruction vm op operands))
+           (backtrack vm))))
+       (iso-exception (condition) (iso-handle-exception vm condition)))))
   nil)
 
 (defun close-query (vm)
@@ -232,7 +250,7 @@
     (slg-close (machine-slg vm)))
   (unwind-trail vm 0)
   (setf (machine-closed vm) t (machine-ready vm) nil
-        (machine-continuation vm) nil (machine-slots vm) nil (machine-scan vm) nil (machine-scopes vm) nil
+        (machine-iso-handlers vm) nil (machine-continuation vm) nil (machine-slots vm) nil (machine-scan vm) nil (machine-scopes vm) nil
         (machine-code vm) #() (machine-args vm) #()
         (machine-slg-paused vm) nil (machine-slg-lineage vm) nil
         (machine-variables vm) nil (machine-slg-root vm) nil (machine-delays vm) nil

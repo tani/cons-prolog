@@ -26,10 +26,10 @@
   (defun goals-form (goals)
     `(list ,@(mapcar #'goal-form (expand-query-goals goals)))))
 
-(defmacro -> (head &body body)
+(defmacro --> (head &body body)
   (multiple-value-bind (expanded-head expanded-body) (dcg-expand head body)
     `(add-clause ',expanded-head ,(goals-form expanded-body) nil)))
-(defmacro --> (head &body body)
+(defmacro ---> (head &body body)
   (multiple-value-bind (expanded-head expanded-body) (dcg-expand head body)
     `(add-clause ',expanded-head ,(goals-form expanded-body) t)))
 

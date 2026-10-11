@@ -1,6 +1,6 @@
 # Implementation roadmap
 
-## Completed (0.5.0)
+## Completed (0.6.0)
 
 - Independent Common Lisp implementation and ASDF integration.
 - S-expression compiler; X/A aliasing and Y environment slots.
@@ -26,11 +26,19 @@
 - Query-local table teardown, fail-closed cursors, host-operation guards and version checks.
 - Left-recursive tabled DCGs and independent alternating-fixed-point validation.
 
+## Next: ISO conformance validation
+
+Audit the predicate inventory against the published standard and corrigenda, add
+a systematic per-mode/error corpus, and test against independent expected results.
+Complete parser edge cases and directive-based static/dynamic classification;
+resolve legacy atom namespace interoperability before claiming full conformance.
+The current ISO layer implements the core predicate surface, not an ISO certification.
+
 ## Next: selected Allegro API compatibility
 
 Independent behavior specification from public documentation and a compatibility
-matrix; interactive queries, variable inspection, call and control goals,
-assert/retract, collectors, cleanup scopes. Lisp UNWIND-PROTECT alone is insufficient
+matrix; interactive queries, variable inspection and cleanup scopes.
+Call/control, assert/retract and findall/bagof now exist in `src/builtins.lisp`. Lisp UNWIND-PROTECT alone is insufficient
 for resource cleanup across Prolog backtracking; this needs a separate design.
 
 ## Later: performance

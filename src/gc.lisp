@@ -6,14 +6,25 @@ Object identity and allocation age survive compaction. Lisp GC reclaims bytes."
   (when (machine-closed vm) (return-from collect-query-garbage 0))
   (let ((marked (make-hash-table :test 'eq)) (frames (make-hash-table :test 'eq))
         (work nil) (heap (machine-heap vm)) (trail (machine-trail vm))
-        (choices (machine-choices vm)))
-    (flet ((root-vector (vector) (when vector (loop for x across vector do (push x work))))
+        (choices (machine-choices vm)) (handler-frames nil))
+    (labels ((root-handler (handler)
+               (loop while (and handler (not (gethash handler frames))) do
+                 (setf (gethash handler frames) t)
+                 (push (iso-handler-snapshot handler) handler-frames)
+                 (push (iso-handler-catcher handler) work) (push (iso-handler-recovery handler) work)
+                 (let ((cp (iso-handler-snapshot handler)))
+                   (root-vector (choice-args cp)) (root-vector (choice-slots cp))
+                   (root-continuation (choice-continuation cp)))
+                 (setf handler (iso-handler-parent handler))))
+           (root-vector (vector) (when vector (loop for x across vector do (push x work))))
            (root-continuation (c)
              (loop while (and c (not (gethash c frames))) do
                (setf (gethash c frames) t)
+               (root-handler (continuation-handlers c))
                (when (continuation-slots c)
                  (loop for x across (continuation-slots c) do (push x work)))
                (setf c (continuation-parent c)))))
+      (root-handler (machine-iso-handlers vm))
       (push (machine-slg-root vm) work)
       (root-vector (machine-args vm)) (root-vector (machine-slots vm))
       (root-continuation (machine-continuation vm))
@@ -21,6 +32,7 @@ Object identity and allocation age survive compaction. Lisp GC reclaims bytes."
       ;; Scan locations are roots even in the middle of a compound instruction sequence.
       (dolist (location (machine-scan vm)) (push (car location) work))
       (loop for cp across choices do
+        (root-handler (choice-handlers cp))
         (root-vector (choice-args cp)) (root-vector (choice-slots cp)) (root-continuation (choice-continuation cp))))
     ;; Do not dereference away variable cells: rollback and named query roots need them.
     (loop while work for x = (pop work) do
@@ -41,7 +53,7 @@ Object identity and allocation age survive compaction. Lisp GC reclaims bytes."
       (loop for cell across trail for i from 0 do
         (when (and (>= i first-trail) (gethash cell marked)) (vector-push cell live-trail))
         (setf (aref trail-prefix (1+ i)) (length live-trail)))
-      (loop for cp across choices do
+      (loop for cp in (append (coerce choices 'list) handler-frames) do
         (setf (choice-heap cp) (aref heap-prefix (choice-heap cp))
               (choice-trail cp) (aref trail-prefix (choice-trail cp))))
       (let ((reclaimed (- (length heap) (length live-heap))))
