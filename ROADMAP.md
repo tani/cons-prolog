@@ -1,57 +1,49 @@
 # Implementation roadmap
 
-## Completed (0.6.0)
+## Implemented (0.8.1)
 
-- Independent Common Lisp implementation and ASDF integration.
-- S-expression compiler; X/A aliasing and Y environment slots.
-- get/put/list/structure/constant/value/variable term families.
-- unify/set families with read/write scan state and anonymous VOID instructions.
-- Explicit choices, continuations, environment deallocation and tail execution.
-- Iterative rational-tree unification, graph copying and cyclic source compilation.
-- Nonmoving VM ownership-vector mark/compact for variables and cons cells.
-- Roots from registers, all suspended continuations, choices, query variables and scans.
-- Conditional trailing, dead undo pruning and remapped heap/trail choice-point marks.
-- Adaptive automatic GC and a public manual collection API.
-- One granular WAM execution backend; GC-disabled vs enabled regression runs.
-- DCG difference-list expansion, hygienic hidden variables and PHRASE/2,3.
-- Terminal sequences, semantic goals with lexical callbacks and inline disjunction.
-- Branch choice points with saved Y environments and GC roots.
-- Predicate-local DCG cuts and opaque PHRASE expression cut scopes.
-- Query cursors, copied answers and lexical Lisp callbacks.
-- Suspension-based SLG variant tabling; copied consumer continuations and queue scheduling.
-- Ground delayed negation and well-founded conditional answers with truth/delay API.
-- Dynamic SCC-local completion, local waiters and recursive cycle consumers.
-- XSB-style cut checks across unfinished tables; logical scope identities survive copies.
-- Ordinary helper and completed-table cuts, DCG/PHRASE scope preservation.
-- Query-local table teardown, fail-closed cursors, host-operation guards and version checks.
-- Left-recursive tabled DCGs and independent alternating-fixed-point validation.
+- Native Lisp cons graphs for terms, lists, dotted tails, sharing and rational trees.
+- One granular WAM backend: X/Y registers, get/put/unify/set, read/write modes,
+  explicit choices and continuations, and tail execution.
+- Iterative term processing and nonmoving VM ownership-vector mark/compact GC,
+  with conditional trailing, suspended-environment roots and adaptive thresholds.
+- Query cursors, copied answers, database isolation and lexical Lisp callbacks.
+- DCGs with quoted token lists, and/or/do controls, append/replace definition
+  macros, hygienic difference-list expansion and scoped cuts.
+- SLG variant tabling, copied consumer continuations, queue scheduling,
+  dynamic SCC-local completion and ground well-founded negation.
+- Runtime rejection of cuts over unfinished tables, query-local table teardown,
+  and version checks when definitions change during tabled execution.
+- 101 core builtin indicators plus seven aliases: control, arithmetic, cons term
+  operations, exceptions, dynamic definitions, collectors and character/byte I/O.
+- Logical update view for immutable clause/code snapshots.
 
-## Next: ISO conformance validation
+See [the user guide](MANUAL.md), [builtin specification](BUILTINS.md) and
+[validation results](VALIDATION.md) for behavior and current restrictions.
 
-Audit the predicate inventory against the published standard and corrigenda, add
-a systematic per-mode/error corpus, and test against independent expected results.
-Complete parser edge cases and directive-based static/dynamic classification;
-resolve legacy atom namespace interoperability before claiming full conformance.
-The current ISO layer implements the core predicate surface, not an ISO certification.
+## Scope
 
-## Next: selected Allegro API compatibility
+Lisp-native terms and embedding take priority over ISO Prolog compatibility.
+There is no separate compound-term encoding, `.pl` loader, Prolog text
+parser/printer, standard term ordering or ISO conformance target.
+PAIP / Allegro API inspiration does not imply complete API compatibility.
 
-Independent behavior specification from public documentation and a compatibility
-matrix; interactive queries, variable inspection and cleanup scopes.
-Call/control, assert/retract and findall/bagof now exist in `src/builtins.lisp`. Lisp UNWIND-PROTECT alone is insufficient
-for resource cleanup across Prolog backtracking; this needs a separate design.
+## Future API work
 
-## Later: performance
+Interactive queries, variable inspection and cleanup scopes are not implemented.
+Prolog resource cleanup across backtracking needs a separate design; host Lisp
+UNWIND-PROTECT alone does not provide those semantics.
+DCG dynamic nonterminal calls, semicontext/push-back and grammar-level
+negation/conditionals remain unsupported.
 
-Shared frozen stacks, answer tries, call/answer subsumption, table-space accounting,
-more efficient incremental SCC maintenance and immediate completion of ground
-successes. Current SLG copies continuations and recomputes SCCs iteratively.
+## Future performance work
 
+- First-argument indexing, X-register reuse and variable lifetime analysis.
+- Direct acyclic term construction, compact instruction encodings and native dispatch.
+- Shared frozen stacks, answer tries and explicit table-space accounting.
+- Incremental SCC maintenance, immediate completion of ground successes,
+  call/answer subsumption and answer aggregation.
 
-First-argument indexing, reusable X registers, lifetime analysis to move suitable
-Y variables to X registers, direct acyclic term construction without graph
-placeholders, compact instruction encodings and native dispatch within one Lisp
-function. Preserve the explicit VM control model and run the differential tests.
-
-The VM deliberately retains Lisp cons graph representation rather than a contiguous
-classic WAM tagged-cell heap. Physical memory reclamation remains the host GC's job.
+These are candidates, not a release schedule. Preserve the explicit VM control
+model and check semantics against the independent regression oracles.
+The VM retains Lisp cons graphs; physical reclamation is performed by SBCL GC.

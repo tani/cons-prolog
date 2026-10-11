@@ -8,7 +8,8 @@ sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 
 4,115 checks pass with a 1 MiB Lisp control-stack limit.
 The sole execution backend is granular WAM. The earlier reference backend and
-its selectable API are removed. The suite includes WAM-only GC comparisons and the builtin, term-model and DCG syntax regressions.
+its selectable API are removed. The suite includes WAM-only GC comparisons and
+the builtin, term-model and DCG syntax regressions.
 
 | Stress case | Result | Max VM continuation depth | Max managed heap cells |
 |---|---|---:|---:|
@@ -119,3 +120,11 @@ Existing 100,000-element list, WAM instruction-family, DCG, SLG and independent
 well-founded-model oracle tests remain in the combined suite.
 
 Standalone append, DCG, SLG and builtin examples are checked locally.
+
+## Quoted DCG syntax (0.8.1)
+
+DCG regressions use quoted token lists and and/or/do controls, including variable
+and compound tokens, empty productions, lexical callbacks, nested alternatives,
+cut boundaries, tabled grammars and forced GC. Runtime grammar data is tested
+separately from definition/query macros. Malformed and cyclic quoted token
+sequences are rejected; legacy keyword syntax remains covered for compatibility.
