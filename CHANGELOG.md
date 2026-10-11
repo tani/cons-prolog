@@ -1,3 +1,10 @@
+# 0.9.1
+
+- Add source `(let name initializer [declaration])` for nonspecial Lisp bindings in subsequent callbacks.
+- Preserve lexical mutation and escaping closures, with independent cells per invocation.
+- Support conjunctions, branch-local controls and DCG DO; retain environments across cursor yields, GC and caller-side tabling.
+- Keep dynamic special binding / `let*` outside this implementation.
+
 # 0.9.0
 
 - Make `?-` interactive: print one answer, compute another only after `;`, stop on Enter or EOF.

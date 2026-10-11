@@ -89,4 +89,5 @@
     (run-builtin-tests)
     (run-term-syntax-tests)
     (run-interactive-tests)
+    (run-let-tests)
     (format t "~D checks passed.~%" *checks*) t))

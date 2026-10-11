@@ -1,4 +1,4 @@
-# Validation — 0.9.0, 2026-10-12
+# Validation — 0.9.1, 2026-10-12
 
 SBCL 2.2.9.debian, Linux x86-64. No external Lisp libraries.
 
@@ -6,7 +6,7 @@ SBCL 2.2.9.debian, Linux x86-64. No external Lisp libraries.
 sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 ```
 
-4,141 checks pass with a 1 MiB Lisp control-stack limit.
+4,190 checks pass with a 1 MiB Lisp control-stack limit.
 The sole execution backend is granular WAM. The earlier reference backend and
 its selectable API are removed. The suite includes WAM-only GC comparisons and
 the builtin, term-model and DCG syntax regressions.
@@ -103,7 +103,7 @@ compatibility claim.
 ## Lisp-native builtins and cons terms
 
 SBCL 2.2.9, Linux x86-64, 2 GiB dynamic-space ceiling, 1 MiB control stack:
-**4,141 combined checks pass**. The core builtin registry contains **101 predicate
+**4,190 combined checks pass**. The core builtin registry contains **101 predicate
 indicators**, plus seven aliases. ISO conformance and Prolog text conversion are
 outside the specification.
 
@@ -136,3 +136,11 @@ REPEAT), EOF and explicit stop commands, invalid-command retries, ground success
 failure, cyclic answer printing, lexical callbacks, undefined SLG answers and
 cursor teardown after stop, errors and nonlocal exits. Batch regressions use a
 private collecting macro; the public `?-` interface is exercised separately.
+
+## Lexical LET (0.9.1)
+
+`tests/let.lisp` covers logic-variable and lexical initializers, shadowing, optional
+declarations, mutation, escaping closures, branch scope, initialization counts,
+DCG DO, independent cursors, compiled hidden variables, ordinary callers of
+tabled predicates and forced GC. A 10,000-call tail-recursive predicate using
+LET retains continuation depth one with a 1 MiB host control stack.

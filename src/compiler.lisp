@@ -2,6 +2,11 @@
 
 (defstruct predicate (clauses nil) (code #()))
 (defstruct host-goal function arguments output testp)
+(defstruct lexical-binding getter setter)
+(defun lexical-binding-value (binding) (funcall (lexical-binding-getter binding)))
+(defun (setf lexical-binding-value) (value binding)
+  (funcall (lexical-binding-setter binding) value))
+(defstruct sequence-goals goals)
 (defun variable-symbol-p (x)
   (and (symbolp x)
        (not (and (find-package :sprolog/atoms)
@@ -38,6 +43,9 @@
     (cond
       ((iso-control-form-p goal)
        (iso-control-instructions goal table counter tailp))
+      ((sequence-goals-p goal)
+       (loop for rest on (sequence-goals-goals goal)
+             append (goal-instructions (car rest) table counter (and tailp (null (cdr rest))))))
       ((scoped-goals-p goal)
        (list (list 'scoped-body
                    (loop for child in (scoped-goals-goals goal)

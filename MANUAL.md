@@ -120,6 +120,52 @@ Lisp side effects are not undone by backtracking.
 `unwind-protect`. A Prolog cleanup construct spanning backtracking is not
 implemented. Allegro variable APIs and full interactive API compatibility are not implemented.
 
+### Lexical LET
+
+`(let name initializer)` introduces a Lisp variable for subsequent bridge
+expressions in the same source goal sequence. It is a source control construct,
+not a logic-variable unification or a runtime callable predicate.
+
+```lisp
+(<-- (adjusted ?n ?out)
+  (let offset 10)
+  (lisp ?out (+ ?n offset)))
+(query '((adjusted 3 ?out))) ; => (((?out . 13)))
+
+(prolog
+  (let counter 0)
+  (or (= ?n 3) (= ?n 4))
+  (lisp ?out (incf counter ?n))
+  (lisp (format t "~D -> ~D~%" ?n ?out)))
+;; Prints 3 -> 3, then 4 -> 7.
+```
+
+Initializers can reference bound logic variables, surrounding Lisp lexical
+variables and earlier LET bindings. Successive LET forms bind sequentially;
+a repeated name shadows its previous binding after evaluating the initializer.
+The name must be a nonspecial Lisp variable, not a `?` logic variable, keyword
+or constant. An optional third argument may be a Lisp DECLARE form, for example
+`(let offset 10 (declare (type integer offset)))`.
+
+Bindings are visible to `lisp` / `lispp`, later initializers and source
+conjunction, disjunction, if-then, once and negation forms. Branch-local bindings stay within their source branch; callee
+bindings do not replace caller bindings. DCG `do` also supports LET.
+`setq`, `setf` and escaping closures work through a shared lexical cell.
+Lisp assignments and other side effects are not undone by backtracking.
+
+Backtracking within the continuation retains the cell; returning to a choice
+before LET and reexecuting it creates a new cell and reruns the initializer.
+Separate calls and cursors have independent cells. Cells survive cursor yields,
+GC and ordinary callers' tabled suspensions, without adding Lisp stack frames.
+Escaping Lisp closures can retain them after the cursor closes.
+
+Use LET through `<-`, `<--`, `?-`, `prolog` or DCG definition macros, which compile
+the Lisp expressions. Raw runtime `query` data does not compile embedded Lisp
+forms; it can call predicates already defined with LET.
+Existing restrictions on host callbacks in SLG generators and conditional
+answers also apply to LET initialization and access. Dynamic special bindings,
+SPECIAL declarations and Allegro-style `let*` are not implemented.
+
 ## DCGs
 
 `-->` appends a grammar clause; `--->` replaces clauses of the same grammar name

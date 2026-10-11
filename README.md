@@ -63,7 +63,7 @@ Terms and lists share the same Lisp cons representation. Write `(f a b)` or `(a 
 
 SLG supports left and mutual recursion, plus ground `tnot`. Conditional answers display `undefined` and their delayed negations. Cuts over unfinished tables raise an error. See the [user guide](MANUAL.md#slg-resolution) for details and restrictions.
 
-Use `prolog` / `lisp` / `lispp` for lexical Lisp callbacks and `make-query` / `next-solution` / `close-query` for streaming answers. Builtins cover unification, arithmetic, dynamic definitions, exceptions, answer collection and character/byte I/O.
+Use `prolog` / `lisp` / `lispp` for lexical Lisp callbacks and `(let name expression)` for a Lisp binding shared by subsequent callbacks and `make-query` / `next-solution` / `close-query` for streaming answers. Builtins cover unification, arithmetic, dynamic definitions, exceptions, answer collection and character/byte I/O.
 
 ## Examples and tests
 
@@ -73,10 +73,11 @@ sbcl --script examples/append.lisp
 sbcl --script examples/dcg.lisp
 sbcl --script examples/slg.lisp
 sbcl --script examples/builtins.lisp
+sbcl --script examples/let.lisp
 sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 ```
 
-Validated on SBCL 2.2.9 / Linux x86-64: 4,141 checks pass, including one million tail calls with a 1 MiB Lisp control stack.
+Validated on SBCL 2.2.9 / Linux x86-64: 4,190 checks pass, including one million tail calls with a 1 MiB Lisp control stack.
 
 ## Documentation
 

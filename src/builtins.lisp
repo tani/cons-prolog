@@ -145,7 +145,9 @@
 (defun iso-control-instructions (goal table counter tailp)
   (declare (ignore tailp))
   (labels ((compile-one (g) (goal-instructions
-                                (if (or (logic-var-p g) (variable-symbol-p g)) g (iso-goal g))
+                                (if (or (logic-var-p g) (variable-symbol-p g)
+                                        (host-goal-p g) (sequence-goals-p g)
+                                        (scoped-goals-p g) (disjunction-goal-p g)) g (iso-goal g))
                                 table counter nil))
            (scope (instructions) (list (list 'scoped-body instructions)))
            (cut-ir () '((cut))))

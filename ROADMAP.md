@@ -1,6 +1,6 @@
 # Implementation roadmap
 
-## Implemented (0.9.0)
+## Implemented (0.9.1)
 
 - Native Lisp cons graphs for terms, lists, dotted tails, sharing and rational trees.
 - One granular WAM backend: X/Y registers, get/put/unify/set, read/write modes,
@@ -18,6 +18,8 @@
 - 101 core builtin indicators plus seven aliases: control, arithmetic, cons term
   operations, exceptions, dynamic definitions, collectors and character/byte I/O.
 - Logical update view for immutable clause/code snapshots.
+- Source LET bindings shared by lexical callbacks, with mutation, shadowing and
+  cursor-safe lifetime. Dynamic special bindings remain future work.
 
 See [the user guide](MANUAL.md), [builtin specification](BUILTINS.md) and
 [validation results](VALIDATION.md) for behavior and current restrictions.

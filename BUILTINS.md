@@ -1,4 +1,4 @@
-# Lisp-native terms and builtins (0.9.0)
+# Lisp-native terms and builtins (0.9.1)
 
 [README](README.md) · [User guide](MANUAL.md)
 
@@ -116,3 +116,11 @@ handlers survive VM GC and rollback. The existing Lisp exception API
 their historical names; exception payloads are plain S-expressions. HALT exits SBCL
 by default. Unknown predicates raise an existence error by default; the unknown
 flag can select failure instead. These conventions are sprolog's own specification.
+
+## Source LET control
+
+`(let name expression)` binds a nonspecial Lisp variable for later host bridge
+expressions. It is compiled by source macros and is not a core predicate
+indicator. See [the user guide](MANUAL.md#lexical-let) for scope, declarations,
+backtracking and embedding restrictions. Allegro-style dynamic `let*` is not
+implemented.
