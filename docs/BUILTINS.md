@@ -1,6 +1,6 @@
 # Lisp-native terms and builtins (0.9.1)
 
-[README](README.md) · [User guide](MANUAL.md)
+[README](../README.md) · [User guide](MANUAL.md)
 
 sprolog uses Lisp cons graphs as its term model. There is no separate Prolog
 compound type and no ISO conformance claim. `(f a b)` is exactly the same cons

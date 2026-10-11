@@ -61,7 +61,7 @@ Terms and lists share the same Lisp cons representation. Write `(f a b)` or `(a 
 ;; Prints ?Y = B; type ; for another answer.
 ```
 
-SLG supports left and mutual recursion, plus ground `tnot`. Conditional answers display `undefined` and their delayed negations. Cuts over unfinished tables raise an error. See the [user guide](MANUAL.md#slg-resolution) for details and restrictions.
+SLG supports left and mutual recursion, plus ground `tnot`. Conditional answers display `undefined` and their delayed negations. Cuts over unfinished tables raise an error. See the [user guide](docs/MANUAL.md#slg-resolution) for details and restrictions.
 
 Use `prolog` / `lisp` / `lispp` for lexical Lisp callbacks and `(let name expression)` for a Lisp binding shared by subsequent callbacks and `make-query` / `next-solution` / `close-query` for streaming answers. Builtins cover unification, arithmetic, dynamic definitions, exceptions, answer collection and character/byte I/O.
 
@@ -81,8 +81,10 @@ Validated on SBCL 2.2.9 / Linux x86-64: 4,190 checks pass, including one million
 
 ## Documentation
 
-- [User guide](MANUAL.md): terms, queries, Lisp callbacks, DCGs, SLG, WAM, GC and limitations
-- [Builtins](BUILTINS.md): supported predicates and Lisp-friendly names
-- [Validation](VALIDATION.md): semantic coverage and stress tests
-- [Benchmarks](BENCHMARKS.md): timings, allocation profiles and bottlenecks
-- [Roadmap](ROADMAP.md) and [changelog](CHANGELOG.md)
+See the [documentation index](docs/README.md).
+
+- [User guide](docs/MANUAL.md): terms, queries, Lisp callbacks, DCGs, SLG, WAM, GC and limitations
+- [Builtins](docs/BUILTINS.md): supported predicates and Lisp-friendly names
+- [Validation](docs/VALIDATION.md): semantic coverage and stress tests
+- [Benchmarks](docs/BENCHMARKS.md): timings, allocation profiles and bottlenecks
+- [Roadmap](docs/ROADMAP.md) and [changelog](CHANGELOG.md)

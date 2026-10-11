@@ -16,7 +16,7 @@ disabling it did not provide a clear throughput benefit on the garbage workload.
 - 2 GiB dynamic-space ceiling and 1 MiB Lisp control stack; normal project compiler settings.
 - One warmup followed by five measurements per workload. Full host GC runs before,
   outside each timed measurement. Workload order alternates between passes.
-- Reported numbers are medians; [CSV](benchmarks/results.csv) also records run min/max.
+- Reported numbers are medians; [CSV](../benchmarks/results.csv) also records run min/max.
 - Build means MAKE-QUERY compilation. First-answer workloads time RUN-MACHINE,
   then the same binding-export graph copy used by NEXT-SOLUTION separately.
 - SLG and append-all workloads enumerate and discard every answer with NEXT-SOLUTION;
@@ -65,7 +65,7 @@ The host-tail CPU profile attributes 26.1% inclusive samples to hash-table
 creation and 22.3% to MAP-TERM; LET increases these to 30.9% and 30.8% respectively.
 These overlap and must not be summed. The waste allocation profile attributes
 42.2% inclusive allocation samples to hash-table allocation, with MAP-TERM and
-UNIFY both prominent. See the [raw profiles](benchmarks/profile-host-tail-100k-cpu.txt).
+UNIFY both prominent. See the [raw profiles](../benchmarks/profile-host-tail-100k-cpu.txt).
 
 Benchmark-only scalar shortcuts, retaining the generic path for cons graphs,
 produce the following diagnostic medians:
@@ -78,7 +78,7 @@ produce the following diagnostic medians:
 
 This isolates a roughly 19–27% time reduction and 50–60% allocation reduction
 in these cases. Separate shortcuts and raw measurements are in
-[diagnostics.csv](benchmarks/diagnostics.csv). Small differences between shortcut
+[diagnostics.csv](../benchmarks/diagnostics.csv). Small differences between shortcut
 variants can be noise; allocation counts are more stable than their timing order.
 
 First optimization: scalar fast paths and lazy creation of cycle-detection state.

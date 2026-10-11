@@ -1,6 +1,6 @@
 # sprolog user guide
 
-[README](README.md) · [Builtins](BUILTINS.md) · [Validation](VALIDATION.md)
+[README](../README.md) · [Builtins](BUILTINS.md) · [Validation](VALIDATION.md)
 
 ## Definitions and queries
 
