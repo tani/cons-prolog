@@ -6,6 +6,7 @@
  (:id "syntax.parentheses" :area "syntax" :goal "(a = a)." :expect :success)
  (:id "syntax.list" :area "syntax" :goal "[a,b,c] = [a|[b,c]]." :expect :success)
  (:id "syntax.list-tail" :area "syntax" :goal "[a,b|T] = [a,b,c], T = [c]." :expect :success)
+ (:id "syntax.list-head-tail" :area "syntax" :goal "head_tail([a,b,c], a, [b,c])." :expect :success :required t)
  (:id "syntax.anonymous-variable" :area "syntax" :goal "f(_,_) = f(a,b)." :expect :success)
  (:id "syntax.comma" :area "syntax" :goal "a = a, b = b." :expect :success)
  (:id "syntax.disjunction" :area "syntax" :goal "a = b ; a = a." :expect :success)
