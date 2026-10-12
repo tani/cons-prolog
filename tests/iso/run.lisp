@@ -203,7 +203,7 @@
                   (safe (if (eq (getf entry :status) :unsupported)
                             (getf entry :detail)
                             (getf entry :actual)))
-                  (safe (getf entry :upstream)))))))
+                  (safe (getf entry :upstream))))))))
 
 (defun run-suite (&key (output #P"compat-results/") strict)
   (let ((results nil))
