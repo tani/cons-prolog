@@ -54,7 +54,7 @@ meta.call2.compound	call(binary(a),X).	8	agree
 meta.call3	call(binary,a,b).	8	agree
 meta.call3.compound	call(ternary(a),b,c).	8	agree
 meta.call4	call(ternary,a,b,c).	8	agree
-meta.call8	call(octary,a,b,c,d,e,f,g,h).	8	agree
+meta.call8	call(octary(a),b,c,d,e,f,g,h).	8	agree
 meta.call.source	app_binary(a,Y).	8	agree
 meta.call.nested	meta_twice(X).	8	agree
 meta.call.builtin	meta_equals(X).	8	agree
