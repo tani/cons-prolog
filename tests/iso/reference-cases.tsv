@@ -6,6 +6,8 @@ facts.parent-solutions	parent(X,Y).	8	agree
 recursion.ancestor	ancestor(alice,Who).	8	agree
 recursion.ancestor-subtree	ancestor(bob,Who).	8	agree
 control.choice	choice(X).	8	agree
+limit.truncated	prefix(X).	2	agree
+limit.exhausted	choice(X).	2	agree
 control.alternative	alternative(X).	8	agree
 control.disjunction	X = red ; X = blue.	8	agree
 control.if-then	(true -> X = yes ; X = no).	8	agree
