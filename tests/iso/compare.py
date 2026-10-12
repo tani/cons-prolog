@@ -104,7 +104,7 @@ def markdown(result: dict) -> str:
         lines.append(f"## {heading}")
         lines.append("")
         cases = result[field]
-        lines.extend(f"- \`{identifier}\`" for identifier in cases)
+        lines.extend(f"- `{identifier}`" for identifier in cases)
         if not cases:
             lines.append("None.")
         lines.append("")
