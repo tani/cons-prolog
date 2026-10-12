@@ -1,3 +1,4 @@
+(defpackage #:sprolog/tests/let (:use #:cl #:sprolog/tests/interactive))
 (in-package #:sprolog/tests)
 
 (defun run-let-tests ()

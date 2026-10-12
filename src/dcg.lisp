@@ -1,3 +1,6 @@
+;; ASDF infers load order from this dependency package. Implementation symbols
+;; stay in SPROLOG so the public API and internal symbol identities are stable.
+(defpackage #:sprolog/src/dcg (:use #:cl #:sprolog/src/wam))
 (in-package #:sprolog)
 
 (defstruct disjunction-goal branches)
@@ -42,24 +45,26 @@
   (unless (finite-list-p forms) (error "DCG body must be a finite proper list"))
   (let ((work (mapcar (lambda (form) (cons :enter form)) forms))
         (colors (make-hash-table :test 'eq)))
-    (loop while work for item = (pop work) for form = (cdr item) do
-      (when (or (dcg-marker-p form :seq) (dcg-marker-p form :or))
-        (if (eq (car item) :leave) (setf (gethash form colors) :done)
-            (case (gethash form colors)
-              (:active (error "Cyclic DCG control expression"))
-              (:done nil)
-              (otherwise
-               (unless (finite-list-p form) (error "Malformed DCG control expression"))
-               (setf (gethash form colors) :active)
-               (push (cons :leave form) work)
-               (dolist (child (reverse (cdr form))) (push (cons :enter child) work)))))))))
+    (loop while work do
+      (let* ((item (pop work)) (form (cdr item)))
+        (when (or (dcg-marker-p form :seq) (dcg-marker-p form :or))
+          (if (eq (car item) :leave) (setf (gethash form colors) :done)
+              (case (gethash form colors)
+                (:active (error "Cyclic DCG control expression"))
+                (:done nil)
+                (otherwise
+                 (unless (finite-list-p form) (error "Malformed DCG control expression"))
+                 (setf (gethash form colors) :active)
+                 (push (cons :leave form) work)
+                 (dolist (child (reverse (cdr form))) (push (cons :enter child) work))))))))))
 (defun flatten-dcg-sequence (forms)
   (validate-dcg-controls forms)
   (let ((work (copy-list forms)) (result nil))
-    (loop while work for form = (pop work) do
-      (if (dcg-marker-p form :seq)
-          (dolist (child (reverse (cdr form))) (push child work))
-          (push form result)))
+    (loop while work do
+      (let* ((form (pop work)))
+        (if (dcg-marker-p form :seq)
+            (dolist (child (reverse (cdr form))) (push child work))
+            (push form result))))
     (nreverse result)))
 (defun dcg-body-goals (forms input rest)
   (let* ((forms (flatten-dcg-sequence forms))

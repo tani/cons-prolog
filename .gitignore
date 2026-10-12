@@ -1,0 +1,8 @@
+.direnv/
+result
+result-*
+coverage/
+*.fasl
+*.fas
+*.o
+*.abcl

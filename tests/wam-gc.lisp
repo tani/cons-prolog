@@ -1,3 +1,4 @@
+(defpackage #:sprolog/tests/wam-gc (:use #:cl #:sprolog/tests/tests))
 (in-package #:sprolog/tests)
 
 (defun normalize-solutions (solutions)

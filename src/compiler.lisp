@@ -1,3 +1,6 @@
+;; ASDF infers load order from this dependency package. Implementation symbols
+;; stay in SPROLOG so the public API and internal symbol identities are stable.
+(defpackage #:sprolog/src/compiler (:use #:cl #:sprolog/src/dcg))
 (in-package #:sprolog)
 
 (defstruct predicate (clauses nil) (code #()))
@@ -17,12 +20,13 @@
 (defun variables-in (form)
   (let ((result nil) (seen (make-hash-table :test 'eq))
         (cells (make-hash-table :test 'eq)) (work (list form)))
-    (loop while work for x = (pop work) do
-      (cond ((and (variable-symbol-p x) (not (anonymous-p x)))
-             (unless (gethash x seen) (setf (gethash x seen) t) (push x result)))
-            ((consp x) (unless (gethash x cells)
-                         (setf (gethash x cells) t)
-                         (push (cdr x) work) (push (car x) work)))))
+    (loop while work do
+      (let* ((x (pop work)))
+        (cond ((and (variable-symbol-p x) (not (anonymous-p x)))
+               (unless (gethash x seen) (setf (gethash x seen) t) (push x result)))
+              ((consp x) (unless (gethash x cells)
+                           (setf (gethash x cells) t)
+                           (push (cdr x) work) (push (car x) work))))))
     (nreverse result)))
 (defun term-template (term table counter)
   (map-term term

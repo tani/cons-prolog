@@ -1,3 +1,4 @@
+(defpackage #:sprolog/tests/slg (:use #:cl #:sprolog/tests/dcg))
 (in-package #:sprolog/tests)
 
 (defun slg-values (name solutions)

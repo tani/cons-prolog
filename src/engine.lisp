@@ -1,3 +1,6 @@
+;; ASDF infers load order from this dependency package. Implementation symbols
+;; stay in SPROLOG so the public API and internal symbol identities are stable.
+(defpackage #:sprolog/src/engine (:use #:cl #:sprolog/src/package))
 (in-package #:sprolog)
 
 
@@ -58,28 +61,28 @@
             (max (machine-max-trail vm) (fill-pointer (machine-trail vm))))))
   (setf (logic-var-binding var) value))
 (defun unwind-trail (vm mark)
-  (loop while (> (fill-pointer (machine-trail vm)) mark)
-        for v = (pop-clear (machine-trail vm))
-        do (setf (logic-var-binding v) v)))
+  (loop while (> (fill-pointer (machine-trail vm)) mark) do
+    (let* ((v (pop-clear (machine-trail vm))))
+      (setf (logic-var-binding v) v))))
 
 (defun unify (vm left right)
   "Iterative rational-tree unification; failure is rolled back by the VM."
   (let ((work (list (cons left right))) (seen (make-hash-table :test 'eq)))
-    (loop while work for pair = (pop work)
-          for a = (deref (car pair)) for b = (deref (cdr pair)) do
-      (cond ((eq a b))
-            ((logic-var-p a)
-             (if (and (logic-var-p b) (< (logic-var-id a) (logic-var-id b)))
-                 (bind-var vm b a) (bind-var vm a b)))
-            ((logic-var-p b) (bind-var vm b a))
-            ((and (consp a) (consp b))
-             (let ((partners (or (gethash a seen)
-                                 (setf (gethash a seen) (make-hash-table :test 'eq)))))
-               (unless (gethash b partners)
-                 (setf (gethash b partners) t)
-                 (push (cons (cdr a) (cdr b)) work)
-                 (push (cons (car a) (car b)) work))))
-            ((not (iso-atomic-equal a b)) (return-from unify nil))))
+    (loop while work do
+      (let* ((pair (pop work)) (a (deref (car pair))) (b (deref (cdr pair))))
+        (cond ((eq a b))
+              ((logic-var-p a)
+               (if (and (logic-var-p b) (< (logic-var-id a) (logic-var-id b)))
+                   (bind-var vm b a) (bind-var vm a b)))
+              ((logic-var-p b) (bind-var vm b a))
+              ((and (consp a) (consp b))
+               (let ((partners (or (gethash a seen)
+                                   (setf (gethash a seen) (make-hash-table :test 'eq)))))
+                 (unless (gethash b partners)
+                   (setf (gethash b partners) t)
+                   (push (cons (cdr a) (cdr b)) work)
+                   (push (cons (car a) (car b)) work))))
+              ((not (iso-atomic-equal a b)) (return-from unify nil)))))
     t))
 
 (defun map-term (root atom-function &optional allocator)
@@ -189,6 +192,11 @@
     (maybe-collect vm)
     t))
 
+;; This dispatch point is replaceable for instrumentation. Some native Lisp
+;; linkers cache ordinary calls after the first invocation, so resolve the
+;; current function cell explicitly (also preventing FUNCALL simplification).
+(declaim (notinline execute-term-instruction))
+
 (defun run-machine (vm)
   (loop until (machine-closed vm) do
     (when (machine-slg-paused vm) (return-from run-machine nil))
@@ -240,7 +248,7 @@
                (setf (machine-ready vm) t) (return-from run-machine t))
         (otherwise
          (unless (if (iso-instruction-p op) (iso-execute vm op operands)
-                     (execute-term-instruction vm op operands))
+                     (funcall (symbol-function 'execute-term-instruction) vm op operands))
            (backtrack vm))))
        (iso-exception (condition) (iso-handle-exception vm condition)))))
   nil)
@@ -265,19 +273,22 @@
   (when (machine-ready vm)
     (setf (machine-ready vm) nil)
     (unless (backtrack vm) (return-from next-solution (values nil nil))))
-  (when (handler-case (run-machine vm)
-          (error (condition)
-            ;; An interrupted SLG scheduler cannot be resumed as ordinary WAM
-            ;; code past the failed CALL/CUT. Abort the cursor before re-signaling.
-            (close-query vm)
-            (error condition)))
-    (let ((names (make-hash-table :test 'eq)))
-      (return-from next-solution
-        (values (mapcar (lambda (entry) (cons (car entry) (reify (cdr entry) names)))
-                        (machine-variables vm)) t
-                (if (machine-delays vm) :undefined :true)
-                (mapcar (lambda (table) (slg-table-goal (machine-slg vm) table))
-                        (machine-delays vm))))))
+  ;; Bind the result before testing it. ECL/MKCL's native compilers can
+  ;; duplicate a HANDLER-CASE expression in conditional position, which would
+  ;; resume the VM a second time after YIELD without backtracking.
+  (let ((foundp (handler-case (run-machine vm)
+                  (error (condition)
+                    ;; Abort an interrupted cursor before re-signaling.
+                    (close-query vm)
+                    (error condition)))))
+    (when foundp
+      (let ((names (make-hash-table :test 'eq)))
+        (return-from next-solution
+          (values (mapcar (lambda (entry) (cons (car entry) (reify (cdr entry) names)))
+                          (machine-variables vm)) t
+                  (if (machine-delays vm) :undefined :true)
+                  (mapcar (lambda (table) (slg-table-goal (machine-slg vm) table))
+                          (machine-delays vm)))))))
   (values nil nil))
 (defun query-statistics (vm)
   (list :instructions (machine-steps vm) :max-continuation-depth (machine-max-depth vm)
