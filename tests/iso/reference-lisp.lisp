@@ -95,13 +95,20 @@ Repeated unbound variables receive stable per-solution numeric identities."
 
 (defun prolog-exception-name (condition)
   (let* ((value (sprolog:iso-exception-term condition))
-         (head (if (and (consp value)
-                        (string= (string-downcase (symbol-name (car value))) "error"))
-                   (second value) value)))
-    (if (consp head)
-        (string-downcase (symbol-name (car head)))
-        (if (symbolp head) (string-downcase (symbol-name head))
-            (princ-to-string head)))))
+         (descriptor (if (and (consp value)
+                              (symbolp (car value))
+                              (string-equal (symbol-name (car value)) "error"))
+                         (second value)
+                         value)))
+    (cond
+      ((sprolog/iso:atom-p descriptor)
+       (sprolog/iso:term-functor descriptor))
+      ((sprolog/iso:compound-p descriptor)
+       (sprolog/iso:term-functor descriptor))
+      ((and (consp descriptor) (symbolp (car descriptor)))
+       (string-downcase (symbol-name (car descriptor))))
+      ((symbolp descriptor) (string-downcase (symbol-name descriptor)))
+      (t (princ-to-string descriptor)))))
 
 (defun run-goal (source limit)
   (handler-case
