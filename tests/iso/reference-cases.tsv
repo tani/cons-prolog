@@ -59,6 +59,8 @@ meta.call.source	app_binary(a,Y).	8	agree
 meta.call.nested	meta_twice(X).	8	agree
 meta.call.builtin	meta_equals(X).	8	agree
 meta.call.alias	meta_alias(X,Y), X = a.	8	agree
+meta.call.runtime-variable	P = unary, call(P,X).	8	agree
+meta.call.runtime-partial	P = binary(a), call(P,Y).	8	agree
 meta.call.type	call(42,a).	8	agree
 meta.call.instantiation	call(C,a).	8	agree
 meta.call.unknown	call(unknown_predicate,a).	8	agree
