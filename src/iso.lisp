@@ -136,8 +136,11 @@ object-level conditional, preserving its commit point."
     ((or (name-is goal ";" 2) (name-is goal "->" 2))
      (dolist (child (term-arguments goal))
        (validate-goal child nil)))
-    ((or (name-is goal "call" 1) (name-is goal "once" 1)
-         (name-is goal "\\+" 1))
+    ((and (compound-p goal)
+          (string= (term-functor goal) "call")
+          (<= 1 (length (term-arguments goal)) 8))
+     (validate-goal (first (term-arguments goal)) nil))
+    ((or (name-is goal "once" 1) (name-is goal "\\+" 1))
      (validate-goal (first (term-arguments goal)) nil))
     ((name-is goal "catch" 3)
      (validate-goal (first (term-arguments goal)) nil)
@@ -151,7 +154,9 @@ object-level conditional, preserving its commit point."
           (name-is head (car indicator) (cdr indicator)))
         '(("true" . 0) ("fail" . 0) ("!" . 0)
           ("," . 2) (";" . 2) ("->" . 2) ("=" . 2)
-          ("call" . 1) ("once" . 1) ("\\+" . 1)
+          ("call" . 1) ("call" . 2) ("call" . 3) ("call" . 4)
+          ("call" . 5) ("call" . 6) ("call" . 7) ("call" . 8)
+          ("once" . 1) ("\\+" . 1)
           ("catch" . 3) ("throw" . 1)
           ("is" . 2) ("==" . 2) ("\\==" . 2) ("\\=" . 2)
           ("unify_with_occurs_check" . 2)
@@ -306,6 +311,23 @@ The ISO term representation stays tagged everywhere else."
            (mapcar #'iso-arithmetic->native (term-arguments term))))
     (t (sprolog::iso-error "type_error" (sprolog::iso-atom "evaluable") term))))
 
+;; Preserve logical-variable identity when appending arguments to a closure:
+;; a Lisp bridge would reify ?-variables and break their aliases.
+;; The append and closure construction are entirely native Prolog relations.
+(defmacro install-extended-calls ()
+  `(progn
+     ,@(loop for arity from 2 to 8
+             for closure = (gensym "?CLOSURE-")
+             for expanded = (gensym "?EXPANDED-")
+             for extra = (loop repeat (1- arity) collect (gensym "?EXTRA-"))
+             collect
+               `(sprolog:<- (iso-solve (:iso-compound
+                                       sprolog/atoms::|call|
+                                       ,closure ,@extra))
+                  (lispp (ensure-callable ,closure))
+                  (iso-extend-closure ,closure (,@extra) ,expanded)
+                  (iso-solve ,expanded)))))
+
 (defun install-interpreter (database)
   "Bootstrap the control evaluator USING native S-expression Prolog clauses.
 Native -> and once introduce the correct opacity/commit semantics for
@@ -332,6 +354,15 @@ the supported ISO constructs. Cut is eliminated at consult time."
     (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|call| ?goal))
       (lispp (ensure-callable ?goal))
       (iso-solve ?goal))
+    (sprolog:<-- (iso-append () ?rest ?rest))
+    (sprolog:<- (iso-append (?first . ?more) ?tail (?first . ?result))
+      (iso-append ?more ?tail ?result))
+    (sprolog:<- (iso-extend-closure (:iso-atom ?name) ?extra
+                                    (:iso-compound ?name . ?extra)))
+    (sprolog:<- (iso-extend-closure (:iso-compound ?name . ?existing)
+                                    ?extra (:iso-compound ?name . ?combined))
+      (iso-append ?existing ?extra ?combined))
+    (install-extended-calls)
     (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|once| ?goal))
       (lispp (ensure-callable ?goal))
       (once (iso-solve ?goal)))
