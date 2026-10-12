@@ -3,6 +3,7 @@
 (defpackage #:sprolog/src/iso
   (:nicknames #:sprolog/iso)
   (:use #:cl #:sprolog/src/prolog-loader)
+  (:shadow #:atom)
   (:export #:make-runtime #:runtime-database #:consult #:query
            #:parse-term #:parse-goal #:atom #:compound #:atom-p
            #:compound-p #:term-functor #:term-arguments
