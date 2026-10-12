@@ -11,7 +11,7 @@
 (defparameter *root* (uiop:pathname-directory-pathname *load-truename*))
 (defparameter *program* (merge-pathnames "core.pl" *root*))
 (defparameter *manifest* (merge-pathnames "cases.sexp" *root*))
-(defparameter *package* (find-package :sprolog/iso-benchmark))
+(defparameter *target-package* (find-package :sprolog/iso-benchmark))
 (defparameter *statuses* '(:pass :fail :error :unsupported))
 (defparameter *groups* '("syntax" "unification" "control" "clauses"
                           "arithmetic" "types" "exceptions" "dcg" "io"))
@@ -83,9 +83,9 @@
           (let ((count
                   (flet ((run ()
                            (sprolog:load-prolog *program*
-                             :package *package* :database sprolog:*database*)
+                             :package *target-package* :database sprolog:*database*)
                            (let* ((goal (sprolog:parse-prolog-goal
-                                          (getf case :goal) :package *package*))
+                                          (getf case :goal) :package *target-package*))
                                   (limit (if (and (consp expected)
                                                   (eq (first expected) :count))
                                              (1+ (second expected)) 1)))
