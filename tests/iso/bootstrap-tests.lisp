@@ -57,8 +57,10 @@
         (sprolog/iso:consult program :runtime runtime)
       (verify (eq same runtime))
       (verify (= number 13)))
-    (verify (null (sprolog/iso:query "parent(alice,bob)." :runtime fresh))
-            "Runtimes have independent clause databases")
+    (verify (handler-case
+                (progn (sprolog/iso:query "parent(alice,bob)." :runtime fresh) nil)
+              (sprolog:iso-exception () t))
+            "Runtimes have independent clauses and missing names signal existence_error")
     (verify (= 2 (length (sprolog/iso:query "parent(X,Y)." :runtime runtime))))
     (let* ((answers (sprolog/iso:query "ancestor(alice,Who)." :runtime runtime))
            (names (mapcar (lambda (row)
