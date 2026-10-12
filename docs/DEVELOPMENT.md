@@ -66,8 +66,10 @@ other implementations use an ANSI CL compiled binding probe.
 Worklist loops test for termination before popping their next item, avoiding
 implementation differences in `LOOP` clause ordering. Guarded VM execution is
 bound to a variable before testing it, preventing duplicate native evaluation
-in ECL/MKCL. The term-instruction dispatch resolves its function cell explicitly
-so instrumentation still works after those implementations warm their call cache.
+in ECL/MKCL. The term-instruction dispatch and interactive cursor construction resolve their
+function cells explicitly so instrumentation still works after those implementations
+warm their call cache. Circular interactive answers use ordinary circle-aware
+printing to avoid a CCL pretty-printer hang.
 
 The allocation/profiling scripts under `benchmarks/` remain SBCL-specific.
 The ordinary library and semantic tests do not require SBCL internals.

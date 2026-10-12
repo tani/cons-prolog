@@ -109,7 +109,9 @@
 (defmacro <-- (head &body body)
   `(add-clause ',head ,(goals-form body) t))
 (defun display-query-answer (solution truth delays stream)
-  (let ((*print-circle* t) (*print-pretty* t) (*print-readably* nil))
+  ;; Pretty-print dispatch can loop on rational cons terms in CCL. The
+  ;; ordinary circle-aware printer also keeps each binding on one line.
+  (let ((*print-circle* t) (*print-pretty* nil) (*print-readably* nil))
     (fresh-line stream)
     (dolist (binding solution)
       (format stream "~S = ~S~%" (car binding) (cdr binding)))
@@ -128,9 +130,13 @@
               ((member command '("" "." "q") :test #'string-equal) (return nil))
               (t (format stream "Type ; for the next answer, or Enter to stop.~%")))))))
 
+;; Keep cursor construction replaceable for ownership instrumentation, even
+;; after a native implementation has cached earlier calls.
+(declaim (notinline make-query))
+
 (defun interactive-query (goals)
   "Display one answer at a time through *QUERY-IO*, without lookahead."
-  (let ((vm (make-query goals)))
+  (let ((vm (funcall (symbol-function 'make-query) goals)))
     (unwind-protect
          (loop
            (multiple-value-bind (solution foundp truth delays) (next-solution vm)
