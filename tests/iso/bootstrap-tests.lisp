@@ -97,7 +97,7 @@
            (progn
              (with-open-file (out tmp :direction :output :if-exists :supersede)
                (write-line "new_fact(a)." out)
-               (write-line "bad(X) :- X is 1." out))
+               (write-line "bad(X) :- call(!)." out))
              (verify (errors-p (lambda () (sprolog/iso:consult tmp :runtime runtime))
                                'sprolog/iso:unsupported-iso-goal))
              (verify (null (sprolog/iso:query "new_fact(a)." :runtime runtime))
