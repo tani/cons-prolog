@@ -2,4 +2,4 @@
   :defsystem-depends-on ("sprolog/asdf")
   :depends-on ("sprolog")
   :serial t
-  :components ((:prolog "fixtures/relations" :package "SPROLOG/TESTS")))
+  :components ((:prolog "fixtures/relations" :package "CL-USER")))
