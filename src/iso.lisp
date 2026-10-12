@@ -335,6 +335,11 @@ the supported ISO constructs. Cut is eliminated at consult time."
   (let ((sprolog:*database* database))
     (sprolog:<-- (iso-solve (:iso-atom sprolog/atoms::|true|)))
     (sprolog:<- (iso-solve (:iso-atom sprolog/atoms::|fail|)) fail)
+    ;; A cut materialized at runtime through call/1 is not a failure.
+    ;; Until explicit choice-point barriers exist, reject it rather than
+    ;; silently changing the semantics of the enclosing predicate.
+    (sprolog:<- (iso-solve (:iso-atom sprolog/atoms::|!|))
+      (lispp (error 'unsupported-iso-goal :goal (atom "!"))))
     (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|=| ?x ?y))
       (= ?x ?y))
     (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|,| ?a ?b))
