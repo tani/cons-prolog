@@ -64,3 +64,5 @@ meta.call.runtime-partial	P = binary(a), call(P,Y).	8	agree
 meta.call.type	call(42,a).	8	agree
 meta.call.instantiation	call(C,a).	8	agree
 meta.call.unknown	call(unknown_predicate,a).	8	agree
+meta.direct	meta_direct(unary(a)).	8	agree
+meta.direct.instantiation	meta_direct(P).	8	agree
