@@ -51,6 +51,8 @@ def read_observations(path: Path) -> dict[str, dict]:
                 raise ValueError(f"{path}:{number}: unknown status {row.get('status')}")
             if row["status"] == "ok" and not isinstance(row.get("solutions"), list):
                 raise ValueError(f"{path}:{number}: missing solutions")
+            if row["status"] == "ok" and not isinstance(row.get("truncated"), bool):
+                raise ValueError(f"{path}:{number}: missing solution-exhaustion flag")
             if row["status"] == "exception" and not isinstance(row.get("exception"), str):
                 raise ValueError(f"{path}:{number}: missing exception class")
             result[identifier] = row
@@ -61,7 +63,8 @@ def meaningful(observation: dict) -> dict:
     status = observation["status"]
     if status == "ok":
         # JSON objects represent bindings; object key order is immaterial.
-        return {"status": status, "solutions": observation["solutions"]}
+        return {"status": status, "solutions": observation["solutions"],
+                "truncated": observation.get("truncated", False)}
     if status == "exception":
         return {"status": status, "exception": observation["exception"]}
     return {"status": status, "message": observation.get("message", "")}
