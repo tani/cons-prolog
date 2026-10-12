@@ -141,9 +141,11 @@ proper streams, or a standalone
 ISO module system. The ISO lexer/parser is still deliberately restricted:
 floating-point and double-quoted syntax are not accepted.
 
-Other unimplemented predicates currently behave as absent facts
-(failure) rather than signalling ISO `existence_error`, which is a
-**known semantic deviation**. The reader protects the implemented static/control predicate indicators,
+Calling a predicate without a definition now raises ISO
+`existence_error`, including from `call/1` and within negation. Calling a
+defined predicate whose clauses do not match still fails normally.
+Exception contexts and all ISO permission/domain errors remain incomplete.
+The reader protects the implemented static/control predicate indicators,
 but does not yet enforce the full ISO static/dynamic predicate rules.
 
 This subsystem is a *bootstrap interpretation layer*, not an implementation
