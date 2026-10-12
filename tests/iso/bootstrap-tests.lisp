@@ -67,6 +67,13 @@
               "Native meta-interpreter evaluates left-recursive alternatives"))
     (verify (= 1 (length (sprolog/iso:query "parent(X,Y)." :runtime runtime :limit 1))))
     (verify (sprolog/iso:query "f(a,b) = f(a,b)." :runtime runtime))
+    (verify (sprolog/iso:query "f(_,_) = f(a,b)." :runtime runtime)
+            "Distinct anonymous variables")
+    (verify (null (sprolog/iso:query "f(X,X) = f(a,b)." :runtime runtime))
+            "Repeated named variables share identity")
+    (verify (sprolog/iso:query "X = [a|Tail], Tail = [b], X = [a,b]."
+                               :runtime runtime)
+            "ISO list tails and variables retain sharing")
     (verify (null (sprolog/iso:query "f(a,b) = [f,a,b]." :runtime runtime))
             "Tagged ISO f/2 and ./2 lists cannot unify")
     (verify (null (sprolog/iso:query "[] = nil." :runtime runtime)))
