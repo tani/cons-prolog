@@ -143,7 +143,7 @@ object-level conditional, preserving its commit point."
      (validate-goal (first (term-arguments goal)) nil)
      (validate-goal (third (term-arguments goal)) nil))
     ((name-is goal "throw" 1) nil)
-    ((or (name-is goal "*->" 2) (name-is goal "is" 2))
+    ((name-is goal "*->" 2)
      (error 'unsupported-iso-goal :goal goal))))
 (defun read-program (pathname)
   "Parse all clauses before mutating a database. No directives/DCGs yet."
@@ -256,6 +256,19 @@ explicit choice/cut scope in its object-level disjunction."
 (defstruct (runtime (:constructor %make-runtime (database &optional clauses)))
   database clauses)
 
+(defun iso-arithmetic->native (term)
+  "Bridge ISO arithmetic syntax to the existing native numeric evaluator.
+The ISO term representation stays tagged everywhere else."
+  (cond
+    ((numberp term) term)
+    ((and (symbolp term) (sprolog::variable-symbol-p term))
+     (sprolog::iso-error "instantiation_error"))
+    ((atom-p term) (iso-symbol (term-functor term)))
+    ((compound-p term)
+     (cons (iso-symbol (term-functor term))
+           (mapcar #'iso-arithmetic->native (term-arguments term))))
+    (t (sprolog::iso-error "type_error" (sprolog::iso-atom "evaluable") term))))
+
 (defun install-interpreter (database)
   "Bootstrap the control evaluator USING native S-expression Prolog clauses.
 Native -> and once introduce the correct opacity/commit semantics for
@@ -292,6 +305,39 @@ the supported ISO constructs. Cut is eliminated at consult time."
       (catch (iso-solve ?protected) ?catcher (iso-solve ?recovery)))
     (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|throw| ?ball))
       (throw ?ball))
+    ;; Structural term predicates run on the tagged ISO representation,
+    ;; not on the host's Lisp cons/atom classification.
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|==| ?x ?y))
+      (== ?x ?y))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|\\==| ?x ?y))
+      (|\\==| ?x ?y))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|\\=| ?x ?y))
+      (|\\=| ?x ?y))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|unify_with_occurs_check| ?x ?y))
+      (unify_with_occurs_check ?x ?y))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|var| ?x))
+      (lispp (sprolog::variable-symbol-p ?x)))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|nonvar| ?x))
+      (lispp (not (sprolog::variable-symbol-p ?x))))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|atom| ?x))
+      (lispp (atom-p ?x)))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|atomic| ?x))
+      (lispp (or (atom-p ?x) (numberp ?x))))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|compound| ?x))
+      (lispp (compound-p ?x)))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|callable| ?x))
+      (lispp (iso-callable-p ?x)))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|integer| ?x))
+      (lispp (integerp ?x)))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|number| ?x))
+      (lispp (numberp ?x)))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|ground| ?x))
+      (lispp (null (sprolog::variables-in ?x))))
+    ;; The WAM numeric evaluator remains the source of integer operations,
+    ;; instantiation/type errors, and arithmetic exceptions.
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|is| ?x ?e))
+      (lisp ?native (iso-arithmetic->native ?e))
+      (is ?x ?native))
     ;; Remains defined (as failure) until source predicates are consulted.
     (sprolog:<-- (iso-clause ?head ?body) fail)
     (sprolog:<- (iso-solve ?goal)
