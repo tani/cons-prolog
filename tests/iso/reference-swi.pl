@@ -33,6 +33,10 @@ oracle_term(Term, Dict) :-
     ; integer(Term) ->
         number_string(Term, Text),
         Dict = _{integer:Text}
+    ; Term == [] ->
+        % SWI 7+ represents [] as a special constant rather than an ISO atom.
+        % Normalize the representation, but keep SWI's predicate behavior intact.
+        Dict = _{atom:"[]"}
     ; atom(Term) ->
         atom_string(Term, Text),
         Dict = _{atom:Text}
@@ -61,8 +65,10 @@ oracle_answer(Variables, Dict) :-
 oracle_run(GoalText, Limit, Result) :-
     read_term_from_atom(GoalText, Goal,
                         [variable_names(Variables), syntax_errors(error)]),
-    findnsols(Limit, Variables,
-              call_with_time_limit(5, call(Goal)), Answers),
+    % Put the watchdog around *the complete search*. Wrapping each Goal
+    % invocation with call_with_time_limit/2 can discard alternatives.
+    call_with_time_limit(5,
+        findnsols(Limit, Variables, call(Goal), Answers)),
     maplist(oracle_answer, Answers, Solutions),
     Result = _{status:"ok", solutions:Solutions}.
 
