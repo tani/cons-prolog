@@ -21,7 +21,7 @@
     (load-prolog source :package :sprolog/tests)
     (check (equal (mapcar (lambda (s) (value-of '?who s))
                           (query '((pl_ancestor alice ?who))))
-                  '(bob charlie)) "ASDF loaded multiple Prolog clauses")
+                  '(bob charlie)) "loaded multiple Prolog clauses")
     (check (equal '(a b) (value-of '?rest
                        (first (query '((pl_split (z a b) ?head ?rest))))))
            "Prolog list tail syntax")
