@@ -95,5 +95,21 @@
              (sprolog:iso-exception () t))
            "once/1 requires a callable term")
     (check (rejected db "X is 1") "ISO arithmetic not yet supported")
+    ;; Nested cuts need an explicit branch barrier; reject rather than
+    ;; incorrectly pruning the WAM's surrounding meta-interpreter frame.
+    (let ((bad (merge-pathnames "sprolog-iso-nested-cut.pl"
+                               (uiop:temporary-directory))))
+      (unwind-protect
+           (progn
+             (with-open-file (stream bad :direction :output
+                                          :if-exists :supersede)
+               (write-line "bad(X) :- (X = a ; !)." stream))
+             (check (handler-case
+                        (progn (sprolog/iso:consult bad :runtime db) nil)
+                      (sprolog/iso:unsupported-iso-goal () t))
+                    "nested cut is rejected, not silently given native cut semantics")
+             (check (null (results db "bad(a)."))
+                    "failed consult does not install partial source clauses"))
+        (when (probe-file bad) (delete-file bad))))
     (format t "~D ISO control checks passed.~%" *checks*)))
 (main)
