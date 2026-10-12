@@ -24,6 +24,15 @@ class ReferenceCompareTests(unittest.TestCase):
             {"X": {"atom": "a"}}, {"X": {"atom": "b"}}]}}
         self.assertEqual(MODULE.compare(base, reference, candidate)["summary"]["pass"], 1)
 
+    def test_solution_exhaustion_is_part_of_equality(self):
+        rows = [{"id": "bounded", "goal": "choice(X).", "baseline": "agree", "limit": 2}]
+        base = {"bounded": {"status": "ok", "solutions": [{"X": {"atom": "a"}}],
+                            "truncated": False}}
+        more = {"bounded": {"status": "ok", "solutions": [{"X": {"atom": "a"}}],
+                            "truncated": True}}
+        self.assertEqual(MODULE.compare(rows, base, more)["summary"]["unexpected"], 1)
+        self.assertEqual(MODULE.compare(rows, base, base)["summary"]["pass"], 1)
+
     def test_known_divergence_not_silent_skip(self):
         rows = [{"id": "u", "goal": "unknown.", "baseline": "diverge", "limit": 4}]
         swipl = {"u": {"status": "exception", "exception": "existence_error"}}
