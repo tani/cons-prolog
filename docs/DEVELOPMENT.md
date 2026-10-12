@@ -63,6 +63,12 @@ The default halt hook uses `uiop:quit`. Globally special Lisp variables are
 rejected by the `let` bridge: SBCL uses its declaration introspection, and
 other implementations use an ANSI CL compiled binding probe.
 
+Worklist loops test for termination before popping their next item, avoiding
+implementation differences in `LOOP` clause ordering. Guarded VM execution is
+bound to a variable before testing it, preventing duplicate native evaluation
+in ECL/MKCL. The term-instruction dispatch resolves its function cell explicitly
+so instrumentation still works after those implementations warm their call cache.
+
 The allocation/profiling scripts under `benchmarks/` remain SBCL-specific.
 The ordinary library and semantic tests do not require SBCL internals.
 For SBCL's explicit small-stack regression, run:

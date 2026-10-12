@@ -192,6 +192,11 @@
     (maybe-collect vm)
     t))
 
+;; This dispatch point is replaceable for instrumentation. Some native Lisp
+;; linkers cache ordinary calls after the first invocation, so resolve the
+;; current function cell explicitly (also preventing FUNCALL simplification).
+(declaim (notinline execute-term-instruction))
+
 (defun run-machine (vm)
   (loop until (machine-closed vm) do
     (when (machine-slg-paused vm) (return-from run-machine nil))
@@ -243,7 +248,7 @@
                (setf (machine-ready vm) t) (return-from run-machine t))
         (otherwise
          (unless (if (iso-instruction-p op) (iso-execute vm op operands)
-                     (execute-term-instruction vm op operands))
+                     (funcall (symbol-function 'execute-term-instruction) vm op operands))
            (backtrack vm))))
        (iso-exception (condition) (iso-handle-exception vm condition)))))
   nil)
