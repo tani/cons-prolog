@@ -85,6 +85,28 @@ Logtalk test ID. A future upstream import adapter must record provenance,
 skip unsupported Logtalk test DSL features, and preserve the original test
 expectations rather than silently rewriting failing examples.
 
+## Comparing two runs
+
+Download `results.json` from the GitHub Actions artifacts of two commits
+and run:
+
+```sh
+python3 tests/iso/compare.py old/results.json new/results.json --fail-on-regression
+python3 tests/iso/compare.py old/results.json new/results.json --json-out delta.json
+```
+
+The comparison is keyed by stable test ID. It lists passing cases that
+regressed, newly passing cases, newly added cases and removed cases separately.
+A changing denominator is never hidden in an apparent percentage improvement.
+
+The local manifest also contains a small number of **source-equivalent
+adaptations** of published Logtalk ISO-prefixed test cases, with explicit
+`:upstream` paths and IDs. These are selected, adapted cases, **not**
+unmodified execution of the upstream Logtalk suite. In the JSON report,
+`upstream` is empty for locally authored probes. Logtalk test cases requiring
+floating-point source syntax are marked `UNSUPPORTED` rather than counted as
+passing.
+
 ## Known differences
 
 sprolog models compound terms and lists using native Common Lisp cons cells,
