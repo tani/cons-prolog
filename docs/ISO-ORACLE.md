@@ -86,10 +86,17 @@ The baseline is either `agree` or `diverge`:
   `resolved` as an improvement.
 - An oracle error or missing result always fails CI, regardless of baseline.
 
-The initial known discrepancy is the handling of undefined predicates:
-`sprolog/iso` currently fails where SWI-Prolog raises a Prolog
-`existence_error`. This is deliberately measured rather than papered over
-by an adapter or the reference implementation.
+Initially, unknown predicate calls exposed a missing `existence_error`
+in `sprolog/iso`; that problem is now corrected and the corresponding
+`unknown.*` cases are required to agree with SWI-Prolog.
+
+SWI-Prolog 7 and later deliberately treats the empty list `[]` as a
+special constant that is **not** an atom and is distinct from the
+quoted atom `'[]'`. Traditional ISO Prolog treats `[]` as an atom.
+The cases `types.atom` and `types.empty-equivalence` are therefore
+declared divergences, not changes to force sprolog to imitate SWI's
+non-ISO representation. See the
+[SWI-Prolog list representation documentation](https://www.swi-prolog.org/pldoc/man?section=ext-lists).
 
 A solution limit bounds memory and runtime, but a test that can generate more
 answers than the limit only compares the finite prefix. The two interpreters
