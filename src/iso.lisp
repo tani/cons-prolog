@@ -145,6 +145,20 @@ object-level conditional, preserving its commit point."
     ((name-is goal "throw" 1) nil)
     ((name-is goal "*->" 2)
      (error 'unsupported-iso-goal :goal goal))))
+(defun reserved-iso-head-p (head)
+  "Protect the static/control predicate indicators implemented by Stage 2."
+  (some (lambda (indicator)
+          (name-is head (car indicator) (cdr indicator)))
+        '(("true" . 0) ("fail" . 0) ("!" . 0)
+          ("," . 2) (";" . 2) ("->" . 2) ("=" . 2)
+          ("call" . 1) ("once" . 1) ("\\+" . 1)
+          ("catch" . 3) ("throw" . 1)
+          ("is" . 2) ("==" . 2) ("\\==" . 2) ("\\=" . 2)
+          ("unify_with_occurs_check" . 2)
+          ("atom" . 1) ("atomic" . 1) ("compound" . 1)
+          ("callable" . 1) ("var" . 1) ("nonvar" . 1)
+          ("integer" . 1) ("number" . 1) ("ground" . 1))))
+
 (defun read-program (pathname)
   "Parse all clauses before mutating a database. No directives/DCGs yet."
   (with-open-file (stream pathname :direction :input)
@@ -157,6 +171,10 @@ object-level conditional, preserving its commit point."
         (let ((head (encode-term (sprolog::pl-expression reader 16))))
           (unless (iso-callable-p head)
             (sprolog::pl-error reader "Clause head must be callable"))
+          (when (reserved-iso-head-p head)
+            (sprolog::pl-error reader
+              "Cannot redefine a static ISO control or builtin predicate: ~S"
+              head))
           (let ((body
                   (cond ((sprolog::pl-accept reader ".") (atom "true"))
                         ((sprolog::pl-accept reader ":-")
