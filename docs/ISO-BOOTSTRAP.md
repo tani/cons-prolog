@@ -81,6 +81,9 @@ the following additional object-language operators:
 | `If -> Then` | Use native committed if-then |
 | `catch(G, Ball, Recovery)` | Use the existing WAM exception handler and unwind trail |
 | `throw(Ball)` | Propagate tagged ISO terms through the existing exception mechanism |
+| `var/1`, `nonvar/1`, `atom/1`, `compound/1`, etc. | Inspect tagged ISO terms, not Lisp cons objects |
+| `==/2`, `\\=/2`, `unify_with_occurs_check/2` | Use the native WAM unifier and term predicates on tagged ISO terms |
+| `is/2` | Translate tagged arithmetic expressions into the native numeric evaluator |
 
 ### Predicate-local cut without leaking through the meta-interpreter
 
@@ -132,15 +135,16 @@ The interpreter supports finite Horn programs, recursion, conjunction,
 disjunction, truth, failure, equality, restricted predicate-local cuts,
 `call/1`, `once/1`, `\\+/1`, if-then-else, `catch/3` and `throw/1`.
 It does **not** implement general arbitrary-position ISO cut,
-`call/N` for `N>1`, arithmetic builtins, DCGs, directives, dynamic
-predicates, operator declarations, proper streams, or a standalone
+`call/N` for `N>1`, arithmetic comparisons and some ISO arithmetic
+functions, DCGs, directives, dynamic predicates, operator declarations,
+proper streams, or a standalone
 ISO module system. The ISO lexer/parser is still deliberately restricted:
 floating-point and double-quoted syntax are not accepted.
 
 Other unimplemented predicates currently behave as absent facts
 (failure) rather than signalling ISO `existence_error`, which is a
-**known semantic deviation**. The reader also does not enforce the full
-ISO static/dynamic predicate protection rules.
+**known semantic deviation**. The reader protects the implemented static/control predicate indicators,
+but does not yet enforce the full ISO static/dynamic predicate rules.
 
 This subsystem is a *bootstrap interpretation layer*, not an implementation
 claiming complete ISO/IEC 13211-1 compliance. Its tests are separate from
@@ -151,7 +155,14 @@ those of the native `.pl` loader.
 ```sh
 sbcl --noinform --disable-debugger --script tests/iso/bootstrap-tests.lisp
 sbcl --noinform --disable-debugger --script tests/iso/control-tests.lisp
+sbcl --noinform --disable-debugger --script tests/iso/differential-tests.lisp
 ```
+
+The differential suite executes identical Prolog input against both the
+legacy `sprolog:load-prolog` path and the tagged ISO interpreter, checking
+shared results and recording intentional representation differences:
+`f(a,b)` vs `[f,a,b]`, `[]` vs `nil`, and case-sensitive atoms.
+These are behavioral smoke tests, not proof of semantic equivalence.
 
 GitHub Actions runs these assertions independently of the pre-existing
 `tests/iso/run.lisp` compatibility suite, which exercises the **native** .pl
