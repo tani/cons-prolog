@@ -52,6 +52,9 @@
               (error "Unknown ISO area in ~A: ~A" id area))
             (unless (valid-expect-p expected)
               (error "Invalid expectation in ~A: ~S" id expected))
+            (when (and (getf case :upstream)
+                       (not (stringp (getf case :upstream))))
+              (error "Invalid upstream reference in ~A" id))
             (when (gethash id seen)
               (error "Duplicate ISO case id: ~A" id))
             (setf (gethash id seen) t)
@@ -163,7 +166,7 @@
     (loop for result in results for first = t then nil do
       (unless first (write-char #\, out))
       (write-string (format nil "~%{") out)
-      (loop for (key json-key) on '(:id "id" :area "area" :goal "goal"
+      (loop for (key json-key) on '( :id "id" :area "area" :goal "goal" :upstream "upstream"
                                     :expected "expected" :status "status"
                                     :actual "actual" :detail "detail"
                                     :required "required") by #'cddr
@@ -182,29 +185,32 @@
       (format out "Exercised: **~D/~D passed (~,1F%%)**. Unsupported: **~D** (excluded from the exercised denominator).~%~%"
               passed attempted (if (plusp attempted) (* 100.0 (/ passed attempted)) 0.0)
               (count-status results :unsupported))
+      (format out "Source-equivalent adaptations of ISO-prefixed Logtalk test IDs: **~D** (the native Logtalk runner is not used).~%~%"
+              (count-if (lambda (x) (plusp (length (getf x :upstream)))) results))
       (format out "| Area | PASS | FAIL | ERROR | UNSUPPORTED |~%|---|---:|---:|---:|---:|~%")
       (dolist (area *groups*)
         (when (find area results :key (lambda (x) (getf x :area)) :test #'equal)
           (format out "| ~A | ~D | ~D | ~D | ~D |~%"
                   area (count-status results :pass area) (count-status results :fail area)
                   (count-status results :error area) (count-status results :unsupported area))))
-      (format out "~%## Cases~%~%| ID | Status | Expected | Observed or reason |~%|---|---|---|---|~%")
+      (format out "~%## Cases~%~%| ID | Status | Expected | Observed or reason | Upstream reference |~%|---|---|---|---|---|~%")
       (dolist (entry results)
         (flet ((safe (text)
                  (substitute #\/ #\| (substitute #\Space #\Newline (princ-to-string text)))))
-          (format out "| ~A | ~A | ~A | ~A |~%"
+          (format out "| ~A | ~A | ~A | ~A | ~A |~%"
                   (safe (getf entry :id)) (safe (getf entry :status))
                   (safe (getf entry :expected))
                   (safe (if (eq (getf entry :status) :unsupported)
                             (getf entry :detail)
-                            (getf entry :actual)))))))))
+                            (getf entry :actual)))
+                  (safe (getf entry :upstream)))))))
 
 (defun run-suite (&key (output #P"compat-results/") strict)
   (let ((results nil))
     (dolist (case (read-cases))
       (multiple-value-bind (status actual detail) (execute-case case)
         (let ((row (list :id (getf case :id) :area (getf case :area)
-                         :goal (getf case :goal)
+                         :goal (getf case :goal) :upstream (or (getf case :upstream) "")
                          :expected (prin1-to-string (getf case :expect))
                          :status status :actual actual :detail detail
                          :required (if (getf case :required) "true" "false"))))
