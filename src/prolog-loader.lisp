@@ -232,3 +232,20 @@ its previous definition; later clauses append. Syntax errors leave DB untouched.
                          (not (gethash key seen)) database)
              (setf (gethash key seen) t))))))
     pathname))
+
+
+(defun parse-prolog-goal (source &key (package *package*))
+  "Read one conventional Prolog goal from SOURCE (a string). A final full
+stop is optional. Symbols use PACKAGE; variables X map to Lisp ?X."
+  (let ((package (or (find-package package)
+                     (error "Unknown Prolog package: ~S" package))))
+    (with-input-from-string (stream source)
+      (let* ((reader (make-pl-reader stream package))
+             (goal (pl-normalize (pl-expression reader 0))))
+        (pl-accept reader ".")
+        (unless (eq (car (pl-peek reader)) :eof)
+          (pl-error reader "Unexpected token after goal: ~S"
+                    (cdr (pl-peek reader))))
+        (cond ((symbolp goal) (list goal))
+              ((and (consp goal) (symbolp (car goal))) goal)
+              (t (pl-error reader "Expected a callable goal: ~S" goal)))))))
