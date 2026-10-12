@@ -45,7 +45,10 @@ A missing, duplicate, or unexpected test result is an error.
 
 Each newline is a JSON object with a stable test ID. A successful observation
 contains an **ordered array of all answers up to the test's explicit limit**,
-including each answer's named variable bindings. ISO terms are *not* printed
+including each answer's named variable bindings. Both runners probe one
+additional solution and report `"truncated":true` when more answers exist.
+Thus, equal prefixes with different search exhaustion do not count as
+agreement. ISO terms are *not* printed
 using host language conventions: they are recursively encoded.
 
 | ISO term | Canonical JSON |
@@ -98,10 +101,11 @@ declared divergences, not changes to force sprolog to imitate SWI's
 non-ISO representation. See the
 [SWI-Prolog list representation documentation](https://www.swi-prolog.org/pldoc/man?section=ext-lists).
 
-A solution limit bounds memory and runtime, but a test that can generate more
-answers than the limit only compares the finite prefix. The two interpreters
-must not be claimed equivalent outside the tested prefix. Add tests for exact
-counts or enumeration exhaustion when completing a feature.
+A solution limit bounds memory and runtime. The harness checks up to one
+additional answer to distinguish complete enumeration from truncation, but
+for truly larger/infinite search spaces the comparison still concerns only
+the finite observed prefix and its truncation bit. The two interpreters must
+not be claimed equivalent beyond that prefix.
 
 ## Coverage development
 
