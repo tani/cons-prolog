@@ -150,6 +150,14 @@ This subsystem is a *bootstrap interpretation layer*, not an implementation
 claiming complete ISO/IEC 13211-1 compliance. Its tests are separate from
 those of the native `.pl` loader.
 
+## Independent reference comparison
+
+In addition to the built-in `sprolog` versus tagged-ISO comparisons,
+the new [SWI-Prolog reference oracle](ISO-ORACLE.md) evaluates the same
+Prolog programs with a separately implemented Prolog runtime. It compares
+all observed ordered answers, actual bound term trees, and exception classes.
+Known differences are tracked rather than excluded.
+
 ## Test and future milestones
 
 ```sh
