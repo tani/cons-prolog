@@ -120,6 +120,11 @@ When extending this corpus, prioritize:
 4. Exception categories, error balls, and contexts.
 5. Logical update view, I/O behavior, and declaration semantics.
 
+The suite includes finite `call/2..8` closure and unbound-variable
+regressions, and tracks exhaustion beyond answer limits separately.
+The interpreter's unsupported dynamic meta-call cuts are documented in
+[ISO-CALL-N.md](ISO-CALL-N.md).
+
 Add expected divergences explicitly and with an explanation in the manifest.
 Never change a Prolog goal to make it match the candidate runtime or convert
 an observed discrepancy into an invisible skipped test. The independent oracle
