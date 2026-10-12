@@ -136,5 +136,20 @@
              (check (null (results db "bad(a)."))
                     "failed consult does not install partial source clauses"))
         (when (probe-file bad) (delete-file bad))))
+    (let ((bad (merge-pathnames "sprolog-iso-static.pl"
+                               (uiop:temporary-directory))))
+      (unwind-protect
+           (progn
+             (with-open-file (stream bad :direction :output
+                                          :if-exists :supersede)
+               (write-line "p(a)." stream)
+               (write-line "true." stream))
+             (check (handler-case
+                        (progn (sprolog/iso:consult bad :runtime db) nil)
+                      (error () t))
+                    "ISO static predicate definitions are rejected")
+             (check (null (results db "p(a)."))
+                    "static predicate protection is atomic before mutation"))
+        (when (probe-file bad) (delete-file bad))))
     (format t "~D ISO control checks passed.~%" *checks*)))
 (main)
