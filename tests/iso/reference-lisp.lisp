@@ -80,7 +80,8 @@ Repeated unbound variables receive stable per-solution numeric identities."
            for first = t then nil do
        (unless first (write-char #\, output))
        (serialize-answer answer output))
-     (write-string "]" output))
+     (write-string "],\"truncated\":" output)
+     (write-string (if (third result) "true" "false") output))
     ((eq (first result) :exception)
      (write-string ",\"status\":\"exception\",\"exception\":" output)
      (json-string (second result) output))
@@ -114,7 +115,11 @@ Repeated unbound variables receive stable per-solution numeric identities."
   (handler-case
       (let ((runtime (sprolog/iso:make-runtime)))
         (dolist (file *sources*) (sprolog/iso:consult file :runtime runtime))
-        (list :ok (sprolog/iso:query source :runtime runtime :limit limit)))
+        (let ((observed (sprolog/iso:query source :runtime runtime
+                                           :limit (1+ limit))))
+          (list :ok (if (> (length observed) limit)
+                        (subseq observed 0 limit) observed)
+                (> (length observed) limit))))
     (sprolog:iso-exception (condition)
       (list :exception (prolog-exception-name condition)))
     (sprolog/iso:unsupported-iso-goal (condition)
