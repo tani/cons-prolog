@@ -15,3 +15,4 @@ part_ternary(Z) :- call(ternary(a,b), Z).
 meta_twice(X) :- call(call(unary), X).
 meta_equals(X) :- call(=, X, a).
 meta_alias(X,Y) :- call(=, X, Y).
+meta_direct(P) :- P.
