@@ -110,18 +110,39 @@
        (string= (term-functor term) name)
        (or (zerop arity) (= arity (length (term-arguments term))))))
 
-(defun validate-goal (goal)
-  ;; Never execute cut/negation/if-then with incorrect meta-interpreter
-  ;; semantics. A future control-frame implementation must handle them.
-  (cond ((or (name-is goal "," 2) (name-is goal ";" 2))
-         (dolist (child (term-arguments goal)) (validate-goal child)))
-        ((or (name-is goal "!" 0) (name-is goal "->" 2)
-             (name-is goal "*->" 2) (name-is goal "\\+" 1)
-             (name-is goal "call" 1) (name-is goal "once" 1)
-             (name-is goal "catch" 3) (name-is goal "throw" 1)
-             (name-is goal "is" 2))
-         (error 'unsupported-iso-goal :goal goal))))
+(defun iso-control-branch-p (term)
+  (name-is term "->" 2))
 
+(defun ensure-callable (value)
+  "Check the already-reified ISO call target in a native Lisp bridge."
+  (unless (iso-callable-p value)
+    (if (and (symbolp value) (sprolog::variable-symbol-p value))
+        (sprolog::iso-error "instantiation_error")
+        (sprolog::iso-error "type_error" (sprolog::iso-atom "callable") value)))
+  t)
+
+(defun validate-goal (goal &optional allow-cut)
+  "Conservatively admit only control constructs with implemented semantics.
+Cut is accepted solely in the top-level conjunction of a source clause;
+the enclosing predicate's clause alternatives are compiled into one guarded
+object-level conditional, preserving its commit point."
+  (cond
+    ((name-is goal "," 2)
+     (dolist (child (term-arguments goal))
+       (validate-goal child allow-cut)))
+    ((name-is goal "!" 0)
+     (unless allow-cut
+       (error 'unsupported-iso-goal :goal goal)))
+    ((or (name-is goal ";" 2) (name-is goal "->" 2))
+     (dolist (child (term-arguments goal))
+       (validate-goal child nil)))
+    ((or (name-is goal "call" 1) (name-is goal "once" 1)
+         (name-is goal "\\+" 1))
+     (validate-goal (first (term-arguments goal)) nil))
+    ((or (name-is goal "*->" 2)
+         (name-is goal "catch" 3) (name-is goal "throw" 1)
+         (name-is goal "is" 2))
+     (error 'unsupported-iso-goal :goal goal))))
 (defun read-program (pathname)
   "Parse all clauses before mutating a database. No directives/DCGs yet."
   (with-open-file (stream pathname :direction :input)
@@ -141,27 +162,130 @@
                            (sprolog::pl-expect reader ".")))
                         (t (sprolog::pl-error reader
                               "Expected '.' or ':-' after clause head")))))
-            (validate-goal body)
+            (validate-goal body t)
             (push (cons head body) clauses)))))))
 
-(defstruct (runtime (:constructor %make-runtime (database)))
-  database)
+(defun control (name &rest args)
+  (if args (apply #'compound name args) (atom name)))
+
+(defun goal-sequence (goal)
+  "Flatten only top-level conjunction. Nested control remains opaque."
+  (if (name-is goal "," 2)
+      (append (goal-sequence (first (term-arguments goal)))
+              (goal-sequence (second (term-arguments goal))))
+      (list goal)))
+
+(defun conjunction (goals)
+  (if (null goals) (atom "true")
+      (reduce (lambda (left right) (control "," left right))
+              (cdr goals) :initial-value (car goals))))
+
+(defun iso-rename-clause (clause)
+  "Standardize apart all variables, preserving each within-clause alias."
+  (let ((variables (make-hash-table :test 'eq)))
+    (destructuring-bind (head . body)
+        (sprolog::map-term
+         (list (car clause) (cdr clause))
+         (lambda (value)
+           (if (and (symbolp value) (sprolog::variable-symbol-p value))
+               (or (gethash value variables)
+                   (setf (gethash value variables) (gensym "?ISO-")))
+               value)))
+      (cons head (car body)))))
+
+(defun head-key (head)
+  (cond ((atom-p head) (cons (term-functor head) 0))
+        ((compound-p head)
+         (cons (term-functor head) (length (term-arguments head))))
+        (t (error "Invalid ISO head ~S" head))))
+
+(defun clause-prototype (key)
+  (if (zerop (cdr key)) (atom (car key))
+      (apply #'compound (car key)
+             (loop repeat (cdr key) collect (gensym "?ARG-")))))
+
+(defun split-at-cut (goals)
+  (let ((prefix nil))
+    (dolist (goal goals (values nil nil nil))
+      (if (name-is goal "!" 0)
+          (return-from split-at-cut
+            (values (nreverse prefix) (cdr (member goal goals :test #'eq)) t))
+          (push goal prefix)))))
+
+(defun compile-guarded-clause (prototype clause alternatives)
+  "Eliminate a top-level cut by guarding the remaining clauses with ->.
+The condition commits on its FIRST successful prefix, *even if* the
+suffix then fails. The ELSE alternative is considered only when the
+prefix fails. Earlier clauses remain in the outer disjunction."
+  (let* ((entry (iso-rename-clause clause))
+         (head-test (control "=" prototype (car entry)))
+         (goals (goal-sequence (cdr entry))))
+    (labels ((lower (pending alternative extra)
+               (multiple-value-bind (prefix suffix cutp) (split-at-cut pending)
+                 (if cutp
+                     (control ";" (control "->"
+                                            (conjunction (append extra prefix))
+                                            (lower suffix (atom "fail") nil))
+                              alternative)
+                     (let ((this (conjunction (append extra pending))))
+                       (if (name-is alternative "fail" 0) this
+                           (control ";" this alternative)))))))
+      (lower goals alternatives (list head-test)))))
+
+(defun grouped-iso-clauses (clauses)
+  "Compile all source clauses for each predicate into a single meta clause.
+This leaves ISO resolution inside iso-solve, while giving each predicate one
+explicit choice/cut scope in its object-level disjunction."
+  (let ((keys nil) (groups (make-hash-table :test 'equal)))
+    (dolist (clause clauses)
+      (let ((key (head-key (car clause))))
+        (unless (gethash key groups) (push key keys))
+        (push clause (gethash key groups))))
+    (loop for key in (nreverse keys)
+          for prototype = (clause-prototype key)
+          for cases = (nreverse (gethash key groups))
+          collect (cons prototype
+                        (reduce (lambda (source later)
+                                  (compile-guarded-clause prototype source later))
+                                (reverse cases)
+                                :initial-value (atom "fail"))))))
+
+(defstruct (runtime (:constructor %make-runtime (database &optional clauses)))
+  database clauses)
 
 (defun install-interpreter (database)
-  "Bootstrap the goal evaluator USING SPROLOG CLAUSES, not a Lisp evaluator."
+  "Bootstrap the control evaluator USING native S-expression Prolog clauses.
+Native -> and once introduce the correct opacity/commit semantics for
+the supported ISO constructs. Cut is eliminated at consult time."
   (let ((sprolog:*database* database))
-    ;; Distinct tagged terms prevent f(a,b) from unifying with [f,a,b].
     (sprolog:<-- (iso-solve (:iso-atom sprolog/atoms::|true|)))
     (sprolog:<- (iso-solve (:iso-atom sprolog/atoms::|fail|)) fail)
     (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|=| ?x ?y))
       (= ?x ?y))
     (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|,| ?a ?b))
       (iso-solve ?a) (iso-solve ?b))
+    ;; The first alternative of a conditional disjunction must commit
+    ;; at this disjunction's frame, including when its THEN branch fails.
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|;|
+                            (:iso-compound sprolog/atoms::|->| ?condition ?then)
+                            ?otherwise))
+      (or (-> (iso-solve ?condition) (iso-solve ?then))
+          (iso-solve ?otherwise)))
     (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|;| ?a ?b))
-      (iso-solve ?a))
-    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|;| ?a ?b))
-      (iso-solve ?b))
-    ;; The empty definition prevents a native undefined-predicate exception.
+      (lispp (not (iso-control-branch-p ?a)))
+      (or (iso-solve ?a) (iso-solve ?b)))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|->| ?if ?then))
+      (-> (iso-solve ?if) (iso-solve ?then)))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|call| ?goal))
+      (lispp (ensure-callable ?goal))
+      (iso-solve ?goal))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|once| ?goal))
+      (lispp (ensure-callable ?goal))
+      (once (iso-solve ?goal)))
+    (sprolog:<- (iso-solve (:iso-compound sprolog/atoms::|\\+| ?goal))
+      (lispp (ensure-callable ?goal))
+      (|\\+| (iso-solve ?goal)))
+    ;; Remains defined (as failure) until source predicates are consulted.
     (sprolog:<-- (iso-clause ?head ?body) fail)
     (sprolog:<- (iso-solve ?goal)
       (iso-clause ?goal ?body)
@@ -174,13 +298,17 @@
     (%make-runtime database)))
 
 (defun consult (pathname &key (runtime (make-runtime)))
-  "Append ISO facts and Horn clauses to RUNTIME via native S-expression facts."
-  (let ((clauses (read-program pathname))
-        (database (runtime-database runtime)))
-    (dolist (clause clauses)
-      (sprolog::add-clause
-       (list 'iso-clause (car clause) (cdr clause)) nil nil database))
-    (values runtime (length clauses))))
+  "Parse before modifying RUNTIME; then rebuild grouped meta clauses."
+  (let* ((new (read-program pathname))
+         (all (append (runtime-clauses runtime) new))
+         (grouped (grouped-iso-clauses all))
+         (database (runtime-database runtime)))
+    (sprolog::add-clause '(iso-clause ?head ?body) '((fail)) t database)
+    (dolist (entry grouped)
+      (sprolog::add-clause (list 'iso-clause (car entry) (cdr entry))
+                          nil nil database))
+    (setf (runtime-clauses runtime) all)
+    (values runtime (length new))))
 
 (defun query (text &key (runtime (make-runtime)) limit)
   "Solve a Prolog-source goal via the S-expression meta-interpreter.
