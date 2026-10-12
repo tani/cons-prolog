@@ -9,7 +9,7 @@
 (defvar *assertions* 0)
 (defun verify (truth &optional (description "ISO bootstrap regression"))
   (incf *assertions*)
-  (unless truth (error "FAILED: ~A" description)))
+  (unless truth (error "FAILED: assertion ~D (~A)" *assertions* description)))
 (defun errors-p (thunk &optional type)
   (handler-case (progn (funcall thunk) nil)
     (error (condition)
