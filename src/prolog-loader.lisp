@@ -119,7 +119,7 @@
              (pl-expect reader "]")
              (return))
             (t (pl-expect reader "]") (return))))
-    (make-pl-list (reduce #'cons elements :from-end t :initial-value tail))))
+    (make-pl-list (reduce #'cons (nreverse elements) :from-end t :initial-value tail))))
 (defun pl-primary (reader)
   (let* ((token (pl-take reader)) (kind (car token)) (spelling (cdr token)))
     (cond
