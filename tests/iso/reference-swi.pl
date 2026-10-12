@@ -48,8 +48,8 @@ oracle_term(Term, Dict) :-
     ; throw(error(type_error(iso_term, Term), oracle_term/2))
     ).
 
-oracle_pair(Name=Value, Key-JSON) :-
-    atom_string(Name, Key),
+oracle_pair(Name=Value, Name-JSON) :-
+    % Dict keys must be atoms; read_term's variable_names/1 supplies atoms.
     oracle_term(Value, JSON).
 
 oracle_answer(Variables, Dict) :-
