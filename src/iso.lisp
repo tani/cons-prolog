@@ -245,10 +245,11 @@ explicit choice/cut scope in its object-level disjunction."
           for prototype = (clause-prototype key)
           for cases = (nreverse (gethash key groups))
           collect (cons prototype
-                        (reduce (lambda (source later)
-                                  (compile-guarded-clause prototype source later))
-                                (reverse cases)
-                                :initial-value (atom "fail"))))))
+                        (loop with result = (atom "fail")
+                              for source in (reverse cases)
+                              do (setf result (compile-guarded-clause
+                                               prototype source result))
+                              finally (return result))))))
 
 (defstruct (runtime (:constructor %make-runtime (database &optional clauses)))
   database clauses)
