@@ -268,19 +268,22 @@
   (when (machine-ready vm)
     (setf (machine-ready vm) nil)
     (unless (backtrack vm) (return-from next-solution (values nil nil))))
-  (when (handler-case (run-machine vm)
-          (error (condition)
-            ;; An interrupted SLG scheduler cannot be resumed as ordinary WAM
-            ;; code past the failed CALL/CUT. Abort the cursor before re-signaling.
-            (close-query vm)
-            (error condition)))
-    (let ((names (make-hash-table :test 'eq)))
-      (return-from next-solution
-        (values (mapcar (lambda (entry) (cons (car entry) (reify (cdr entry) names)))
-                        (machine-variables vm)) t
-                (if (machine-delays vm) :undefined :true)
-                (mapcar (lambda (table) (slg-table-goal (machine-slg vm) table))
-                        (machine-delays vm))))))
+  ;; Bind the result before testing it. ECL/MKCL's native compilers can
+  ;; duplicate a HANDLER-CASE expression in conditional position, which would
+  ;; resume the VM a second time after YIELD without backtracking.
+  (let ((foundp (handler-case (run-machine vm)
+                  (error (condition)
+                    ;; Abort an interrupted cursor before re-signaling.
+                    (close-query vm)
+                    (error condition)))))
+    (when foundp
+      (let ((names (make-hash-table :test 'eq)))
+        (return-from next-solution
+          (values (mapcar (lambda (entry) (cons (car entry) (reify (cdr entry) names)))
+                          (machine-variables vm)) t
+                  (if (machine-delays vm) :undefined :true)
+                  (mapcar (lambda (table) (slg-table-goal (machine-slg vm) table))
+                          (machine-delays vm)))))))
   (values nil nil))
 (defun query-statistics (vm)
   (list :instructions (machine-steps vm) :max-continuation-depth (machine-max-depth vm)
