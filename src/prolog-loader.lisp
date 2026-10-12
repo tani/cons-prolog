@@ -17,7 +17,7 @@
 (defun pl-word-char-p (character)
   (and character (or (alphanumericp character) (char= character #\_))))
 (defun pl-operator-char-p (character)
-  (and character (find character "!#!#$&*+-/:<=>?@\^~*+-/:<=>?@\\^~" :test #'char=)))
+  (and character (find character "!#$&*+-/:<=>?@\\^~" :test #'char=)))
 (defun pl-quoted-token (reader quote)
   (with-output-to-string (out)
     (loop for character = (pl-get-char reader) do
