@@ -27,6 +27,13 @@ clauses, generated from the `install-extended-calls` macro, handle
 the existing native WAM machinery; no Lisp data-copy bridge is involved
 in creating the extended goal.
 
+Both statically supplied closures and runtime-bound closures are supported.
+A variable used directly as an object-language clause body is now checked
+at the `iso-solve/1` entry point *before* clause-head unification.
+Execution uses a dedicated `iso-dispatch/1` relation only after the check,
+so an unbound body variable cannot incorrectly become `true`, `fail`,
+or `!` merely by unifying against dispatch rules.
+
 An unbound closure raises `instantiation_error` and a noncallable
 closure raises `type_error(callable, ...)`. The expanded goal is
 resolved by the same ISO interpreter, including its current
