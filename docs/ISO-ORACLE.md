@@ -22,7 +22,8 @@ swipl -q -s tests/iso/reference-swi.pl -- \
   tests/iso/reference-cases.tsv \
   compat-results/oracle/swi.jsonl \
   tests/iso/bootstrap.pl \
-  tests/iso/controls.pl
+  tests/iso/controls.pl \
+  tests/iso/call-n.pl
 
 sbcl --noinform --disable-debugger --script \
   tests/iso/reference-lisp.lisp \
