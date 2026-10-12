@@ -55,7 +55,7 @@
     ;; Cut, once, call, negation, if-then and exceptions use the
     ;; existing native control primitives but an ISO object-language solver.
     (dolist (case '(("stop(X)." (1 1))
-                    ("stop(fallback)." (0 0))
+                    ("stop(fallback)." (1 1))
                     ("cut_then_fail(X)." (0 0))
                     ("before_cut(X)." (2 2))
                     ("after_cut(X)." (2 2))
