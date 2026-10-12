@@ -69,6 +69,11 @@ clauses equivalent to:
   (iso-solve ?body))
 ```
 
+The top-level `iso-solve/1` relation first validates that the target
+goal is callable and only then delegates to `iso-dispatch/1`. This prevents
+an unbound object-language goal from being spuriously bound by the head of
+a built-in control clause; such calls instead raise `instantiation_error`.
+
 The interpreter also supports `call/2..8` by a separate relational closure
 expansion, preserving variable identity without Lisp reification; see
 [the call/N implementation notes](ISO-CALL-N.md). It does **not** generalize
