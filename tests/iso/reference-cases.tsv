@@ -25,6 +25,9 @@ unification.different	f(a,b) = [f,a,b].	8	agree
 unification.empty-list	[] = nil.	8	agree
 unification.list	[a,b] = [a|[b]].	8	agree
 unification.variable	X = a, Y = [b,c].	8	agree
+unification.alias	X = Y.	8	agree
+unification.repeated-alias	X = f(Y,Y), Z = Y.	8	agree
+unification.nonunifiable	a \\= b.	8	agree
 # SWI 7+ treats [] as a special non-atom, unlike ISO/IEC 13211-1.
 types.atom	atom([]).	8	diverge
 types.empty-atom	atom('[]').	8	agree
