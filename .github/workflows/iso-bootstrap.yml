@@ -20,3 +20,5 @@ jobs:
         run: sbcl --noinform --disable-debugger --script tests/iso/bootstrap-tests.lisp
       - name: Check ISO control, cut and conditional semantics
         run: sbcl --noinform --disable-debugger --script tests/iso/control-tests.lisp
+      - name: Compare tagged ISO evaluator with the original .pl execution path
+        run: sbcl --noinform --disable-debugger --script tests/iso/differential-tests.lisp
