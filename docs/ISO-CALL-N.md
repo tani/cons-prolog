@@ -109,10 +109,17 @@ scope3(X) :- (X = a -> (X = a, !) ; X = b).
 scope3(fallback).
 ```
 
-These are *design fixtures*, not passing compatibility claims.
-The first implementation of a full cut frame should add them as
-executable oracle cases rather than updating the expected results
-to match the candidate.
+An executable version of the cut-scope requirements now lives in
+`tests/iso/cut-boundaries-swi.pl`. It runs **only on SWI-Prolog**
+within the independent reference workflow and covers cut in left and
+right disjunction branches, post-cut failure, caller/callee boundaries,
+meta-call opacity, condition opacity, and transparent THEN/ELSE branches.
+
+These SWI-side passes are **not sprolog/iso passes**. They define the
+reference outcomes to which the eventual explicit choice-point barrier
+implementation must conform. At that point they should be moved to the
+shared `reference-cases.tsv` corpus rather than rewriting expected
+results to accommodate the candidate.
 
 ## Non-goals
 
