@@ -67,10 +67,19 @@ oracle_run(GoalText, Limit, Result) :-
                         [variable_names(Variables), syntax_errors(error)]),
     % Put the watchdog around *the complete search*. Wrapping each Goal
     % invocation with call_with_time_limit/2 can discard alternatives.
+    ProbeLimit is Limit + 1,
     call_with_time_limit(5,
-        findnsols(Limit, Variables, call(Goal), Answers)),
+        findnsols(ProbeLimit, Variables, call(Goal), AllAnswers)),
+    length(AllAnswers, Observed),
+    ( Observed > Limit ->
+        length(Answers, Limit),
+        append(Answers, _, AllAnswers),
+        Truncated = true
+    ; Answers = AllAnswers,
+      Truncated = false
+    ),
     maplist(oracle_answer, Answers, Solutions),
-    Result = _{status:"ok", solutions:Solutions}.
+    Result = _{status:"ok", solutions:Solutions, truncated:Truncated}.
 
 oracle_observation(Id, GoalText, Limit, Result) :-
     catch(oracle_run(GoalText, Limit, Body), Error,
