@@ -1,3 +1,4 @@
+(defpackage #:sprolog/tests/slg-cut (:use #:cl #:sprolog/tests/slg))
 (in-package #:sprolog/tests)
 
 (defun incomplete-cut-p (thunk)

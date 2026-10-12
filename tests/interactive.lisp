@@ -1,3 +1,4 @@
+(defpackage #:sprolog/tests/interactive (:use #:cl #:sprolog/tests/term-syntax))
 (in-package #:sprolog/tests)
 
 (defun interactive-output (commands thunk)

@@ -1,3 +1,4 @@
+(defpackage #:sprolog/tests/term-syntax (:use #:cl #:sprolog/tests/builtins))
 (in-package #:sprolog/tests)
 
 (defun run-term-syntax-tests ()

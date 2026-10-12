@@ -1,6 +1,6 @@
 # sprolog
 
-S-expression Prolog for SBCL, with native Lisp cons terms, an explicit WAM execution model, DCGs, SLG variant tabling and VM garbage collection.
+S-expression Prolog for Common Lisp, with native Lisp cons terms, an explicit WAM execution model, DCGs, SLG variant tabling and VM garbage collection.
 
 An independent implementation inspired by the PAIP / Allegro Prolog APIs. ISO Prolog conformance and full Allegro compatibility are outside its scope. [MIT licensed](LICENSE).
 
@@ -14,6 +14,30 @@ No external Lisp libraries are required. From the repository directory:
 (asdf:load-system "sprolog")
 (use-package :sprolog)
 ```
+
+## Nix
+
+The flake follows [nix-common-lisp](https://github.com/tani/nix-common-lisp),
+with a pinned `flake.lock` and no external Lisp dependencies.
+
+```sh
+nix develop                    # all available implementations
+nix develop .#sbcl -c sbcl      # one implementation
+nix run .#main-sbcl             # REPL with sprolog loaded
+nix run .#test-sbcl             # complete test suite
+nix build .#lib-sbcl            # ASDF library
+nix flake check -L              # test all available implementations
+```
+
+Replace `sbcl` with `ecl`, `abcl`, `ccl`, `mkcl`, `clisp`, `cmucl_binary`
+or `clasp-common-lisp`. Outputs are provided only where the pinned Nixpkgs
+supports the implementation. GitHub Actions tests those outputs on Linux
+(x86-64 and ARM64) and macOS (ARM64).
+
+ASDF uses `package-inferred-system`: module dependencies are declared by each
+file's `defpackage`. The implementation remains in the shared `sprolog`
+package, preserving public symbols and existing `sprolog::` references.
+See [development notes](docs/DEVELOPMENT.md) for module layout and portability.
 
 ## Define and query
 

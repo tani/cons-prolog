@@ -1,3 +1,4 @@
+(defpackage #:sprolog/tests/builtins (:use #:cl #:sprolog/tests/slg-cut))
 (in-package #:sprolog/tests)
 
 (defun iso-value (name goals &optional (gc 1))

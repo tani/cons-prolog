@@ -1,3 +1,6 @@
+;; ASDF infers load order from this dependency package. Implementation symbols
+;; stay in SPROLOG so the public API and internal symbol identities are stable.
+(defpackage #:sprolog/src/gc (:use #:cl #:sprolog/src/engine))
 (in-package #:sprolog)
 
 (defun collect-query-garbage (vm)
@@ -35,11 +38,12 @@ Object identity and allocation age survive compaction. Lisp GC reclaims bytes."
         (root-handler (choice-handlers cp))
         (root-vector (choice-args cp)) (root-vector (choice-slots cp)) (root-continuation (choice-continuation cp))))
     ;; Do not dereference away variable cells: rollback and named query roots need them.
-    (loop while work for x = (pop work) do
-      (when (and (or (logic-var-p x) (consp x)) (not (gethash x marked)))
-        (setf (gethash x marked) t)
-        (if (logic-var-p x) (push (logic-var-binding x) work)
-            (progn (push (car x) work) (push (cdr x) work)))))
+    (loop while work do
+      (let* ((x (pop work)))
+        (when (and (or (logic-var-p x) (consp x)) (not (gethash x marked)))
+          (setf (gethash x marked) t)
+          (if (logic-var-p x) (push (logic-var-binding x) work)
+              (progn (push (car x) work) (push (cdr x) work))))))
     (let* ((heap-prefix (make-array (1+ (length heap)) :initial-element 0))
            (trail-prefix (make-array (1+ (length trail)) :initial-element 0))
            (live-heap (make-array (max 64 (length heap)) :adjustable t :fill-pointer 0))

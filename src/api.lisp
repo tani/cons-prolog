@@ -1,6 +1,21 @@
+;; ASDF infers load order from this dependency package. Implementation symbols
+;; stay in SPROLOG so the public API and internal symbol identities are stable.
+(defpackage #:sprolog/src/api (:use #:cl #:sprolog/src/slg))
 (in-package #:sprolog)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
+  (defun globally-special-p (symbol)
+    #+sbcl (eq (sb-int:info :variable :kind symbol) :special)
+    #-sbcl
+    ;; ANSI CL exposes no declaration introspection. A compiled LET binds a
+    ;; globally special symbol dynamically; SYMBOL-VALUE observes that binding.
+    (let ((marker (gensym "SPECIAL-PROBE-")))
+      (funcall (compile nil
+                        `(lambda ()
+                           (let ((,symbol ',marker))
+                             (declare (ignorable ,symbol))
+                             (and (boundp ',symbol)
+                                  (eq (symbol-value ',symbol) ',marker))))))))
   (defun host-goal-form (goal &optional bindings)
     (let* ((testp (string= (symbol-name (car goal)) "LISPP"))
            (output (and (not testp) (= (length goal) 3) (second goal)))
@@ -23,11 +38,12 @@
          (member (symbol-name (car goal)) names :test #'string=)))
   (defun source-sequence (goals)
     (let ((work (copy-list goals)) (result nil))
-      (loop while work for goal = (pop work) do
-        (if (and (source-control-p goal '("AND" ","))
-                 (finite-list-p goal) (= (length goal) 3))
-            (progn (push (third goal) work) (push (second goal) work))
-            (push goal result)))
+      (loop while work do
+        (let* ((goal (pop work)))
+          (if (and (source-control-p goal '("AND" ","))
+                   (finite-list-p goal) (= (length goal) 3))
+              (progn (push (third goal) work) (push (second goal) work))
+              (push goal result))))
       (nreverse result)))
   (defun goal-form (goal &optional bindings)
     (cond
@@ -56,7 +72,7 @@
                            (symbolp (second goal)) (second goal)
                            (not (or (keywordp (second goal)) (constantp (second goal))
                                     (variable-symbol-p (second goal))
-                                    (eq (sb-int:info :variable :kind (second goal)) :special))))
+                                    (globally-special-p (second goal)))))
                 (error "LET requires a nonspecial Lisp variable and an initializer"))
               (let* ((name (second goal)) (declaration (fourth goal))
                      (slot (gensym "?LET-")) (value (gensym "VALUE-")))

@@ -1,3 +1,4 @@
+(defpackage #:sprolog/tests/dcg (:use #:cl #:sprolog/tests/wam-gc))
 (in-package #:sprolog/tests)
 (defun signals-error-p (thunk)
   (handler-case (progn (funcall thunk) nil) (error () t)))

@@ -1,3 +1,6 @@
+;; ASDF infers load order from this dependency package. Implementation symbols
+;; stay in SPROLOG so the public API and internal symbol identities are stable.
+(defpackage #:sprolog/src/engine (:use #:cl #:sprolog/src/package))
 (in-package #:sprolog)
 
 
@@ -58,28 +61,28 @@
             (max (machine-max-trail vm) (fill-pointer (machine-trail vm))))))
   (setf (logic-var-binding var) value))
 (defun unwind-trail (vm mark)
-  (loop while (> (fill-pointer (machine-trail vm)) mark)
-        for v = (pop-clear (machine-trail vm))
-        do (setf (logic-var-binding v) v)))
+  (loop while (> (fill-pointer (machine-trail vm)) mark) do
+    (let* ((v (pop-clear (machine-trail vm))))
+      (setf (logic-var-binding v) v))))
 
 (defun unify (vm left right)
   "Iterative rational-tree unification; failure is rolled back by the VM."
   (let ((work (list (cons left right))) (seen (make-hash-table :test 'eq)))
-    (loop while work for pair = (pop work)
-          for a = (deref (car pair)) for b = (deref (cdr pair)) do
-      (cond ((eq a b))
-            ((logic-var-p a)
-             (if (and (logic-var-p b) (< (logic-var-id a) (logic-var-id b)))
-                 (bind-var vm b a) (bind-var vm a b)))
-            ((logic-var-p b) (bind-var vm b a))
-            ((and (consp a) (consp b))
-             (let ((partners (or (gethash a seen)
-                                 (setf (gethash a seen) (make-hash-table :test 'eq)))))
-               (unless (gethash b partners)
-                 (setf (gethash b partners) t)
-                 (push (cons (cdr a) (cdr b)) work)
-                 (push (cons (car a) (car b)) work))))
-            ((not (iso-atomic-equal a b)) (return-from unify nil))))
+    (loop while work do
+      (let* ((pair (pop work)) (a (deref (car pair))) (b (deref (cdr pair))))
+        (cond ((eq a b))
+              ((logic-var-p a)
+               (if (and (logic-var-p b) (< (logic-var-id a) (logic-var-id b)))
+                   (bind-var vm b a) (bind-var vm a b)))
+              ((logic-var-p b) (bind-var vm b a))
+              ((and (consp a) (consp b))
+               (let ((partners (or (gethash a seen)
+                                   (setf (gethash a seen) (make-hash-table :test 'eq)))))
+                 (unless (gethash b partners)
+                   (setf (gethash b partners) t)
+                   (push (cons (cdr a) (cdr b)) work)
+                   (push (cons (car a) (car b)) work))))
+              ((not (iso-atomic-equal a b)) (return-from unify nil)))))
     t))
 
 (defun map-term (root atom-function &optional allocator)

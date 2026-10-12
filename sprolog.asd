@@ -1,10 +1,19 @@
 (asdf:defsystem "sprolog"
+  :class :package-inferred-system
   :description "Stack-safe S-expression Prolog with a WAM-derived register VM"
-  :version "0.9.1" :license "MIT" :serial t
-  :components ((:file "src/package") (:file "src/engine") (:file "src/gc") (:file "src/wam") (:file "src/dcg") (:file "src/compiler") (:file "src/wam-compiler") (:file "src/slg") (:file "src/api") (:file "src/builtins"))
+  :version "0.9.1"
+  :license "MIT"
+  :depends-on ("uiop" "sprolog/src/builtins")
   :in-order-to ((asdf:test-op (asdf:test-op "sprolog/tests"))))
+
+;; The inferred module packages declare dependencies while implementation
+;; definitions share SPROLOG. Map its public nickname to the defining module.
+(asdf:register-system-packages "sprolog/src/package" '("SPROLOG"))
+(asdf:register-system-packages "sprolog/src/builtins" '("SPROLOG/ATOMS"))
+(asdf:register-system-packages "sprolog/tests/tests" '("SPROLOG/TESTS"))
+
 (asdf:defsystem "sprolog/tests"
-  :depends-on ("sprolog") :components ((:file "tests/tests") (:file "tests/wam-gc") (:file "tests/dcg") (:file "tests/slg") (:file "tests/slg-cut") (:file "tests/builtins") (:file "tests/term-syntax") (:file "tests/interactive") (:file "tests/let"))
+  :depends-on ("sprolog/tests/let")
   :perform (asdf:test-op (op system)
              (declare (ignore op system))
              (uiop:symbol-call :sprolog/tests :run-tests)))
