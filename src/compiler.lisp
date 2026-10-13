@@ -3,7 +3,7 @@
 (defpackage #:sprolog/src/compiler (:use #:cl #:sprolog/src/dcg))
 (in-package #:sprolog)
 
-(defstruct predicate (clauses nil) (code #()))
+(defstruct predicate (clauses nil) (code #()) adapter-context)
 (defstruct host-goal function arguments output testp)
 (defstruct lexical-binding getter setter)
 (defun lexical-binding-value (binding) (funcall (lexical-binding-getter binding)))

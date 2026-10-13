@@ -1,4 +1,4 @@
-(defpackage #:sprolog/tests/tests (:nicknames #:sprolog/tests) (:use #:cl #:sprolog #:sprolog/src/builtins) (:export #:run-tests))
+(defpackage #:sprolog/tests/tests (:nicknames #:sprolog/tests) (:use #:cl #:sprolog #:sprolog/src/standard-library) (:export #:run-tests))
 (in-package #:sprolog/tests)
 (defmacro solutions (&body goals)
   `(query ,(sprolog::goals-form goals)))
@@ -90,4 +90,5 @@
     (run-term-syntax-tests)
     (run-interactive-tests)
     (run-let-tests)
+    (run-standard-library-tests)
     (format t "~D checks passed.~%" *checks*) t))
