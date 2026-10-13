@@ -1,12 +1,10 @@
 # Predicate implementation layers
 
-This refactoring was made against `main` at `3504d947`. The public inventory stays
-at **101 predicate indicators**, plus the existing seven aliases. Implementation
-is now separated into **62 public runtime primitives/adapters**, **8 compiler
-forms**, and **31 derived predicates**. Five private adapter operations and three
-private library helpers are excluded from the public inventory. This is a
-boundary reduction, not a claim that 62 operations are a mathematically minimal
-basis, nor a performance optimization or an ISO conformance claim.
+The public inventory contains **128 predicate indicators**, plus seven aliases:
+**74 public runtime primitives/adapters**, **8 compiler forms**, and **46 derived
+predicates**. Five private adapter operations and three private library helpers
+are excluded. This is a separation of responsibilities, not an ISO conformance
+claim or a claim of mathematical minimality.
 
 ## P1: protected shared library
 
@@ -153,3 +151,19 @@ and is the sole implementation
 package with the `sprolog` nickname. Internal functions are owned by their modules;
 old `sprolog::` internal references have been updated in tests, examples, and
 benchmarks. See [Development](DEVELOPMENT.md) for cycle boundaries and dispatch costs.
+
+## Cons-model operations and S-expression I/O
+
+`term-relations.lisp` owns FUNCTOR, ARG, UNIV, COMPARE, SORT and KEYSORT.
+**Retention:** graph decomposition/construction and dereferencing variable
+identity require the host boundary. Sorting accesses variable and opaque Lisp
+identity through the same comparator; it copies only the input list spine.
+The four order comparisons and SETOF remain ordinary clauses over COMPARE,
+BAGOF and SORT. SETOF deliberately preserves BAGOF group encounter order.
+
+`term-io.lisp` owns explicit-stream READ_TERM/WRITE_TERM and database-local
+operator/conversion tables. **Retention:** these operations access host streams,
+reader/printer state and persistent database configuration. All read/write
+convenience forms use ordinary clauses, with public exception contexts preserved.
+The accepted format and its limits are specified in [BUILTINS.md](BUILTINS.md).
+No new VM instruction, term tag, or public Lisp export is introduced.

@@ -70,8 +70,8 @@
     (<-- (derived-tabled ?x) (ground ?x) (nonvar ?x) (callable ?x))
     (table 'derived-tabled 1)
     (check (query '((derived-tabled a))) "derived library inside SLG generator")
-    (check (= 101 (length (builtin-predicate-inventory))) "public inventory stable")
-    (check (= 101 (+ (length (builtin-predicate-inventory :kind :primitive))
+    (check (= 128 (length (builtin-predicate-inventory))) "public inventory stable")
+    (check (= 128 (+ (length (builtin-predicate-inventory :kind :primitive))
                     (length (builtin-predicate-inventory :kind :syntax))
                     (length (builtin-predicate-inventory :kind :derived)))) "disjoint registry layers")
     ;; Error contexts are public indicators, and are restored at call/choice boundaries.

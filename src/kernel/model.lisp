@@ -16,6 +16,7 @@
     #:host-goal-testp #:iso-exception #:iso-exception-term #:iso-handler #:iso-handler-catcher
     #:iso-handler-p #:iso-handler-parent #:iso-handler-recovery #:iso-handler-snapshot
     #:iso-handler-tailp #:iso-state #:iso-state-aliases #:iso-state-dynamic #:iso-state-flags
+    #:iso-state-order-ids #:iso-state-operators #:iso-state-conversions
     #:iso-state-input #:iso-state-output #:iso-state-p #:iso-state-streams #:iso-stream
     #:iso-stream-alias #:iso-stream-byte-look #:iso-stream-eof-action #:iso-stream-file
     #:iso-stream-mode #:iso-stream-p #:iso-stream-past-end #:iso-stream-reposition
@@ -54,10 +55,13 @@
 ;;; Streams and options.
 (defstruct iso-stream stream file mode (type "text") alias (reposition nil) (eof-action "eof_code") (past-end nil) (byte-look :empty))
 
-;;; Database-local flags and stream aliases.
+;;; Database-local flags, streams, native term identities and future reader tables.
 (defstruct iso-state (flags (make-hash-table :test 'equal))
   (streams (make-hash-table :test 'eq)) (aliases (make-hash-table :test 'equal))
   (input *standard-input*) (output *standard-output*)
+  (order-ids (make-hash-table :test 'eq))
+  (operators (make-hash-table :test 'equal))
+  (conversions (make-hash-table :test 'eql))
   (dynamic (make-hash-table :test 'equal)))
 (defstruct iso-handler snapshot catcher recovery parent tailp)
 

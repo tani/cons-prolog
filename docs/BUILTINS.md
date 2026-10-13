@@ -27,7 +27,7 @@ the query/definition macros.
 
 ## Supported builtins
 
-The registry exposes 101 public predicate indicators, plus seven aliases.
+The registry exposes 128 public predicate indicators, plus seven aliases.
 `src/adapters/builtins.lisp` registers primitive adapters and syntax;
 `src/library/standard-library.lisp` installs the derived predicates.
 `(sprolog:builtin-predicate-inventory)` lists the core indicators by name/arity;
@@ -84,26 +84,84 @@ BAGOF groups variant free-variable bindings in first-appearance order and retain
 answer order inside each group; no standard term ordering is imposed. FINDALL
 keeps every answer in execution order.
 
-## Deliberately removed operations
+## Cons inspection, order, and collections
 
-The following 11 term-model/ordering predicates are removed:
+Every cons, including a proper list and `(f)`, has functor `cons` and arity 2.
+`arg/3` selects CAR at index 1 and CDR at index 2; index 0 or greater than 2
+fails. Non-cons Lisp values have arity 0. Constructing a positive-arity term
+requires the name `cons` and arity 2; other shapes raise `domain_error`.
+`=../2` maps a cons to `(cons car cdr)` and a non-cons value to `(value)`.
+The marker is interpreted only by these predicates: literal `(cons a b)` still
+has CAR CONS and CDR `(a b)`. Inspection and construction support rational trees.
 
-- `functor/3`, `arg/3`, `=../2`.
-- `@</2`, `@=</2`, `@>/2`, `@>=/2`, `compare/3`.
-- `sort/2`, `keysort/2`, `setof/3`.
+```lisp
+(query '((functor (f a b) cons 2) (arg 2 (f a b) ?tail))) ; ?tail = (a b)
+(query '((=.. ?pair (cons a b))))                         ; ?pair = (a . b)
+(query '((sort (3 1 2 1) ?sorted)))                      ; ?sorted = (1 2 3)
+(query '((keysort ((2 . b) (1 . a) (2 . c)) ?pairs)))
+```
 
-Prolog text translation and output are also removed:
+`compare/3` and `@</2`, `@=</2`, `@>/2`, `@>=/2` use the order
+variable < number < symbol < other Lisp non-cons object < cons. Cons comparison
+is lexicographic CAR then CDR, using iterative traversal. Variables use creation
+IDs; equal IDs from different machines are distinguished by database-local IDs.
+Numbers compare real part, imaginary part, then numeric representation (integer,
+ratio, float format, complex). Symbols compare exact symbol name, package name,
+then identity for uninterned symbols. Other Lisp objects use database-local
+identity IDs assigned on first comparison. This is a Lisp-native total order;
+it deliberately distinguishes package symbols even where builtin-generated atom
+names can bridge them during unification. Opaque identity ordering is stable
+within a database, not across program runs. Cyclic terms raise
+`representation_error(acyclic_term)` in ordering operations. Terms may contain
+unbound variables, and later bindings can change their order.
 
-- `read/1,2`, `read_term/2,3`.
-- `write/1,2`, `writeq/1,2`, `write_canonical/1,2`, `write_term/2,3`.
-- `op/3`, `current_op/3`, `char_conversion/2`, `current_char_conversion/2`.
-- Lisp APIs `iso-read-term`, `iso-write-term`, `iso-predicate-inventory`.
-- Operator tables and lexer-only flags `char_conversion`, `double_quotes`, `max_arity`.
+`sort/2` sorts a copied list spine and removes duplicates under this order;
+`keysort/2` stably sorts native `(key . value)` pairs without removing duplicates.
+Neither mutates the input spine nor copies its elements. `setof/3` is the ordinary
+clause BAGOF followed by SORT. It preserves BAGOF's first-appearance group order,
+sorts/deduplicates each group, supports existential `^`, and fails with no answers.
 
-There is no `.pl` loader, Prolog parser/printer, or automatic conversion to Prolog
-terms. Use Common Lisp I/O through the Lisp bridge when S-expression I/O is needed.
-Character/byte stream operations remain supported. Removed predicate names follow
-the normal unknown-predicate behavior and may be defined as user predicates.
+## S-expression term I/O and reader configuration
+
+`read/1,2`, `read_term/2,3`, `write/1,2`, `writeq/1,2`,
+`write_canonical/1,2`, and `write_term/2,3` operate on text streams in S-expression
+format. Current-stream and default-option forms are ordinary library clauses.
+There is no `.pl` loader or Prolog-style parser yet.
+
+Reading uses a fresh standard Lisp readtable with case preservation, the generated
+atom package, and `*read-eval*` disabled. `?Name` becomes a fresh logic variable
+per read, repeated names share it, and each `?` is anonymous. Lisp `#n=` / `#n#`
+sharing and cycles are supported. EOF returns `end_of_file`; malformed input
+raises `syntax_error(s_expression)`. Stream direction, text type, and EOF action
+are checked. `read_term` options are `variables`, `variable_names`, and `singletons`.
+The first returns all variables in encounter order (including anonymous ones);
+the other two return native `(name . variable)` pairs and omit anonymous variables.
+
+Writing dereferences terms, preserves sharing/cycles with Lisp circle notation,
+and names unbound variables `?G0`, `?G1`, etc. `writeq` and `write_canonical`
+enable quoted Lisp output; both have the same S-expression representation.
+`write_term` supports `quoted` and `variable_names` (native pairs with names
+beginning with `?`). In quoted query source those names must be atoms from
+`sprolog/atoms` (for example `(intern "?Name" :sprolog/atoms)`), since ordinary
+Lisp symbols beginning with `?` are compiled as variables. Duplicate names for
+different variables and the anonymous name `?` are rejected. `ignore_ops` and `numbervars` validate booleans but have no
+effect in this format: operators do not affect Lisp syntax and there is no
+special numbered-variable term. Decimal output and unlimited print depth/length
+do not depend on ambient printer settings. Non-readable host objects retain
+Common Lisp's printed representation; the Lisp reader/printer's own depth limits
+apply to I/O, unlike iterative VM term operations.
+
+`op/3` stores priority 1..1200 and `fx/fy/xf/yf/xfx/xfy/yfx` by atom name and
+specifier; priority 0 removes the entry. Atom lists are accepted for names.
+`current_op/3` enumerates this initially empty table. `char_conversion/2` stores
+one-character atom mappings. With bound input, `current_char_conversion/2`
+returns its mapping or identity; with variable input, it enumerates explicitly
+configured entries only, including configured identities. Enumeration order of
+both configuration tables is unspecified. These tables are database-local,
+persist across backtracking, and do not alter the Lisp reader. They are reserved
+for the future Prolog-style reader. Like stream and flag configuration, clearing clauses does not reset these tables.
+The former Lisp APIs `iso-read-term`, `iso-write-term`, and
+`iso-predicate-inventory` are not restored.
 
 ## Runtime and embedding
 
@@ -129,6 +187,6 @@ implemented.
 
 ## Implementation layers
 
-The public inventory is unchanged. 31 indicators now run as ordinary protected
+46 indicators run as ordinary protected
 Prolog clauses; see [implementation layers](PRIMITIVES.md) for the classification,
 private adapter boundary, source organization, and validation results.

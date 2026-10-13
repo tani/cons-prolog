@@ -1,3 +1,11 @@
+# Unreleased
+
+- Add 27 ISO-named predicate indicators with Lisp-native cons semantics:
+  cons inspection/construction, term order, sorting/SETOF, S-expression term I/O,
+  and database-local future-reader operator/character configuration.
+- Keep derived comparisons, SETOF, and current-stream I/O as ordinary clauses.
+- Preserve rational-tree terms; cyclic ordering reports an explicit representation error.
+
 # 0.9.1
 
 - Add source `(let name initializer [declaration])` for nonspecial Lisp bindings in subsequent callbacks.

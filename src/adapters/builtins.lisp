@@ -2,6 +2,8 @@
   (:use #:cl)
   (:import-from #:sprolog/src/adapters/adapter
     #:iso-deterministic #:iso-state-for)
+  (:import-from #:sprolog/src/adapters/term-io #:iso-term-io #:iso-reader-state-results)
+  (:import-from #:sprolog/src/adapters/term-relations #:iso-term-operation)
   (:import-from #:sprolog/src/adapters/collection
     #:iso-collect)
   (:import-from #:sprolog/src/adapters/dynamic
@@ -57,6 +59,8 @@
        (maphash (lambda (key value) (push (iso-result (list (iso-atom key) (if (keywordp value) (iso-atom (string-downcase (symbol-name value))) value))) results))
                 (iso-state-flags (iso-state-for db))))
 
+      ((member name '("CURRENT_OP" "CURRENT_CHAR_CONVERSION") :test #'string=)
+       (return-from iso-enumerate (iso-reader-state-results vm name args)))
       ((string= name "STREAM_PROPERTY") (return-from iso-enumerate (iso-stream-properties vm args)))
       (t (error "No builtin enumerator for ~A" name)))
     (nreverse results)))
@@ -76,9 +80,13 @@
       ((string= name "CATCH")
        (iso-catch vm (first args) (second args) (third args) tailp))
       ((string= name "THROW") (error 'iso-exception :term (iso-copy (iso-required (first args)))))
-      ((member name '("ATOM_CONCAT" "CURRENT_PREDICATE" "CURRENT_PROLOG_FLAG" "STREAM_PROPERTY" "CLAUSE" "RETRACT" "%RETRACT_HEAD" "FINDALL" "BAGOF") :test #'string=)
+      ((member name '("ATOM_CONCAT" "CURRENT_PREDICATE" "CURRENT_PROLOG_FLAG" "STREAM_PROPERTY" "CLAUSE" "RETRACT" "%RETRACT_HEAD" "FINDALL" "BAGOF" "CURRENT_OP" "CURRENT_CHAR_CONVERSION") :test #'string=)
        (iso-alternatives vm (iso-enumerate vm name args) tailp))
-      (t (if (iso-deterministic vm name args)
+      (t (if (cond ((member name '("READ_TERM" "WRITE_TERM" "OP" "CHAR_CONVERSION") :test #'string=)
+                       (iso-term-io vm name args))
+                      ((member name '("FUNCTOR" "ARG" "=.." "COMPARE" "SORT" "KEYSORT") :test #'string=)
+                       (iso-term-operation vm name args))
+                      (t (iso-deterministic vm name args)))
              (progn (when tailp (restore-continuation vm)) t) (backtrack vm))))))
 
 (eval-when (:load-toplevel :execute)
@@ -97,6 +105,10 @@
                   "asserta" "assertz" "retract" "abolish" "current_predicate" "current_input" "current_output" "set_input" "set_output" "flush_output" "at_end_of_stream" "halt")) (iso-register name '(1)))
   (dolist (name '("unify_with_occurs_check" "subsumes_term" "==" "term_variables" "is" "=<" "<" ">=" ">" "=:=" "=\\=" "clause" "close" "stream_property" "set_stream_position"         "atom_codes" "char_code" "number_codes" "set_prolog_flag" "current_prolog_flag")) (iso-register name '(2)))
   (dolist (name '("catch" "findall" "bagof" "atom_concat")) (iso-register name '(3)))
+  (dolist (name '("functor" "arg" "compare")) (iso-register name '(3)))
+  (dolist (name '("=.." "sort" "keysort")) (iso-register name '(2)))
+  (dolist (name '("read_term" "write_term" "op" "current_op")) (iso-register name '(3)))
+  (dolist (name '("char_conversion" "current_char_conversion")) (iso-register name '(2)))
   (iso-register "open" '(4))
   (dolist (name '("get_char" "get_code" "peek_char" "peek_code" "put_char" "put_code" "get_byte" "peek_byte" "put_byte")) (iso-register name '(2)))
   (iso-register "%chars_arguments" '(3))

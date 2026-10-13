@@ -28,7 +28,9 @@
                                     "AT_END_OF_STREAM" "GET_CHAR" "GET_CODE"
                                     "PEEK_CHAR" "PEEK_CODE" "GET_BYTE" "PEEK_BYTE"
                                     "PUT_CHAR" "PUT_CODE" "PUT_BYTE" "ATOM_LENGTH"
-                                    "ATOM_CHARS" "NUMBER_CHARS" "SUB_ATOM" "RETRACTALL")
+                                    "ATOM_CHARS" "NUMBER_CHARS" "SUB_ATOM" "RETRACTALL"
+                                    "@<" "@=<" "@>" "@>=" "SETOF" "READ" "READ_TERM"
+                                    "WRITE" "WRITEQ" "WRITE_CANONICAL" "WRITE_TERM")
                                   :test #'string=)))))
 
 (eval-when (:load-toplevel :execute)
@@ -105,3 +107,24 @@
               ((%chars_codes (?char . ?chars) (?code . ?codes))
                (char_code ?char ?code) (%chars_codes ?chars ?codes)))))
     (install-standard-predicate clauses)))
+
+(eval-when (:load-toplevel :execute)
+  (dolist (clauses
+           '((((@< ?a ?b) (compare < ?a ?b)))
+             (((@> ?a ?b) (compare > ?a ?b)))
+             (((@=< ?a ?b) (compare ?order ?a ?b) (|\\==| ?order >)))
+             (((@>= ?a ?b) (compare ?order ?a ?b) (|\\==| ?order <)))
+             (((setof ?template ?goal ?set) (bagof ?template ?goal ?bag) (sort ?bag ?set)))))
+    (install-standard-predicate clauses)))
+
+(eval-when (:load-toplevel :execute)
+  (dolist (clauses
+           '((((read ?term) (current_input ?stream) (read ?stream ?term)))
+             (((read ?stream ?term) (read_term ?stream ?term ())))
+             (((read_term ?term ?options) (current_input ?stream) (read_term ?stream ?term ?options)))
+             (((write_term ?term ?options) (current_output ?stream) (write_term ?stream ?term ?options)))))
+    (install-standard-predicate clauses))
+  (dolist (name '(write writeq write_canonical))
+    (install-standard-predicate (list (list (list name '?term) '(current_output ?stream) (list name '?stream '?term))))
+    (install-standard-predicate (list (list (list name '?stream '?term)
+      (list 'write_term '?stream '?term (if (eq name 'write) nil '((quoted true)))))))))
