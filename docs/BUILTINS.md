@@ -27,7 +27,9 @@ the query/definition macros.
 
 ## Supported builtins
 
-`src/builtins.lisp` registers 101 core predicate indicators, plus seven aliases.
+The registry exposes 101 public predicate indicators, plus seven aliases.
+`src/adapters/builtins.lisp` registers primitive adapters and syntax;
+`src/library/standard-library.lisp` installs the derived predicates.
 `(sprolog:builtin-predicate-inventory)` lists the core indicators by name/arity;
 aliases are listed below. This inventory excludes user predicates and separate
 DCG/SLG APIs such as PHRASE and TNOT.
@@ -124,3 +126,9 @@ expressions. It is compiled by source macros and is not a core predicate
 indicator. See [the user guide](MANUAL.md#lexical-let) for scope, declarations,
 backtracking and embedding restrictions. Allegro-style dynamic `let*` is not
 implemented.
+
+## Implementation layers
+
+The public inventory is unchanged. 31 indicators now run as ordinary protected
+Prolog clauses; see [implementation layers](PRIMITIVES.md) for the classification,
+private adapter boundary, source organization, and validation results.

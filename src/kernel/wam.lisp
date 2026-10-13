@@ -1,7 +1,21 @@
-;; ASDF infers load order from this dependency package. Implementation symbols
-;; stay in SPROLOG so the public API and internal symbol identities are stable.
-(defpackage #:sprolog/src/wam (:use #:cl #:sprolog/src/gc))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/kernel/wam
+  (:use #:cl)
+  (:import-from #:sprolog/src/kernel/engine
+    #:bind-var #:deref #:fresh-cons #:fresh-var #:unify)
+  (:import-from #:sprolog/src/kernel/instructions
+    #:get-constant #:get-list #:get-structure #:get-value #:get-variable #:put-constant
+    #:put-list #:put-structure #:put-value #:put-variable #:set-constant #:set-value
+    #:set-variable #:set-void #:unify-constant #:unify-value #:unify-variable #:unify-void)
+  (:import-from #:sprolog/src/kernel/model
+    #:logic-var-p #:machine-args #:machine-mode #:machine-scan #:machine-slots)
+  (:import-from #:sprolog/src/kernel/protocol)
+  (:import-from #:sprolog/src/api/state)
+  (:import-from #:sprolog/src/kernel/gc)
+  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:export #:begin-list #:begin-structure #:ensure-registers #:execute-term-instruction
+    #:new-structure #:register-value #:scan-instruction #:scan-value))
+(in-package #:sprolog/src/kernel/wam)
+
 
 (defun ensure-registers (vm count)
   (when (< (length (machine-args vm)) count)
@@ -112,3 +126,8 @@
        (error "SET instruction in read mode"))
      (dotimes (i (first operands)) (scan-instruction vm :void nil)) t)
     (otherwise (error "Unknown instruction ~S" op))))
+
+(eval-when (:load-toplevel :execute)
+  (register-provider 'sprolog/src/kernel/protocol:ensure-registers 'ensure-registers)
+  (register-provider 'sprolog/src/kernel/protocol:execute-term-instruction 'execute-term-instruction)
+)

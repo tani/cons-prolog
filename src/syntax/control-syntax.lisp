@@ -1,0 +1,76 @@
+(uiop:define-package #:sprolog/src/syntax/control-syntax
+  (:use #:cl)
+  (:import-from #:sprolog/src/kernel/engine
+    #:map-term)
+  (:import-from #:sprolog/src/kernel/instructions
+    #:call #:cut #:fail #:iso-if #:or-branches #:scoped-body)
+  (:import-from #:sprolog/src/kernel/model
+    #:disjunction-goal-p #:host-goal-p #:logic-var-p #:scoped-goals-p #:sequence-goals-p)
+  (:import-from #:sprolog/src/kernel/protocol
+    #:goal-instructions #:iso-atom #:iso-error #:iso-goal #:iso-predicate-name #:table
+    #:variable-symbol-p)
+  (:import-from #:sprolog/src/api/state)
+  (:import-from #:sprolog/src/syntax/dcg)
+  (:export #:iso-control-form-p #:iso-control-instructions #:source-meta-goal-p
+    #:validate-static-meta-goal))
+(in-package #:sprolog/src/syntax/control-syntax)
+
+
+(defun source-meta-goal-p (goal)
+  ;; Lexical callbacks are compiler objects, not first-class runtime terms.
+  (let ((found nil))
+    (map-term goal (lambda (x)
+                     (when (or (host-goal-p x) (sequence-goals-p x)
+                               (scoped-goals-p x) (disjunction-goal-p x))
+                       (setf found t)) x))
+    found))
+(defun iso-control-form-p (goal)
+  (or (logic-var-p goal) (variable-symbol-p goal)
+      (and (consp goal) (symbolp (car goal))
+           (let ((name (iso-predicate-name (car goal) (length (cdr goal)))))
+             (or (member name '(";" "," "->" "FALSE") :test #'string=)
+                 (and (member name '("ONCE" "\\+") :test #'string=)
+                      (source-meta-goal-p goal)))))))
+(defun iso-control-instructions (goal table counter tailp)
+  (declare (ignore tailp))
+  (labels ((compile-one (g) (goal-instructions
+                                (if (or (logic-var-p g) (variable-symbol-p g)
+                                        (host-goal-p g) (sequence-goals-p g)
+                                        (scoped-goals-p g) (disjunction-goal-p g)) g (iso-goal g))
+                                table counter nil))
+           (scope (instructions) (list (list 'scoped-body instructions)))
+           (cut-ir () '((cut))))
+    (cond ((or (logic-var-p goal) (variable-symbol-p goal))
+           (goal-instructions (list 'call goal) table counter nil))
+          (t (let ((name (iso-predicate-name (car goal) (length (cdr goal)))) (args (cdr goal)))
+               (unless (= (length args) (if (member name '(";" "," "->") :test #'string=) 2
+                                          (if (string= name "FALSE") 0 1)))
+                 (iso-error "type_error" (iso-atom "callable") goal))
+               (cond ((string= name "FALSE") '((fail)))
+                     ((string= name ",") (append (compile-one (first args)) (compile-one (second args))))
+                     ((string= name "->") (list (list 'iso-if (compile-one (first args))
+                                                       (compile-one (second args)) '((fail)))))
+                     ((string= name ";")
+                      (let ((left (first args)))
+                        (if (and (consp left) (symbolp (car left)) (string= (iso-predicate-name (car left) (length (cdr left))) "->"))
+                            (list (list 'iso-if (compile-one (second left)) (compile-one (third left))
+                                        (compile-one (second args))))
+                            (list (list 'or-branches (list (compile-one left) (compile-one (second args))))))))
+                     ((string= name "ONCE") (scope (append (compile-one (first args)) (cut-ir))))
+                     (t (scope (list (list 'or-branches
+                                         (list (append (scope (compile-one (first args))) (cut-ir) '((fail))) nil)))))))))))
+
+(defun validate-static-meta-goal (goal)
+  "Preserve source-time callable errors when meta syntax becomes a library call."
+  (let ((work (list goal)))
+    (loop while work do
+      (let ((g (pop work)))
+        (unless (or (logic-var-p g) (variable-symbol-p g) (source-meta-goal-p g))
+          (let* ((form (iso-goal g))
+                 (name (iso-predicate-name (car form) (length (cdr form))))
+                 (arity (cond ((member name '(";" "," "->") :test #'string=) 2)
+                              ((member name '("ONCE" "\\+") :test #'string=) 1))))
+            (when arity
+              (unless (= arity (length (cdr form)))
+                (iso-error "type_error" (iso-atom "callable") g))
+              (setf work (append (cdr form) work)))))))))

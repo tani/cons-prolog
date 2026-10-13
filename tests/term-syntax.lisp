@@ -1,5 +1,9 @@
-(defpackage #:sprolog/tests/term-syntax (:use #:cl #:sprolog/tests/builtins))
-(in-package #:sprolog/tests)
+(uiop:define-package #:sprolog/tests/term-syntax
+  (:use #:cl #:sprolog)
+  (:import-from #:sprolog/tests/builtins #:iso-error-p)
+  (:import-from #:sprolog/tests/tests #:check #:solutions #:value-of)
+  (:export #:run-term-syntax-tests))
+(in-package #:sprolog/tests/term-syntax)
 
 (defun run-term-syntax-tests ()
   (let ((*database* (make-database)))
@@ -32,7 +36,7 @@
                          (write . 1) (write . 2) (writeq . 1) (writeq . 2)
                          (write_canonical . 1) (write_canonical . 2) (write_term . 2) (write_term . 3)
                          (op . 3) (current_op . 3) (char_conversion . 2) (current_char_conversion . 2)))
-      (check (not (sprolog::iso-builtin-p (car indicator) (cdr indicator))) "removed builtin is unregistered"))
+      (check (not (sprolog/src/api/registry:iso-builtin-p (car indicator) (cdr indicator))) "removed builtin is unregistered"))
     (check (iso-error-p '((functor (f a) ?name ?arity)) "existence_error") "removed builtin follows normal unknown-predicate behavior")
     (let ((ring (cons 'f nil)))
       (setf (cdr ring) ring)

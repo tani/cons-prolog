@@ -1,0 +1,84 @@
+(uiop:define-package #:sprolog/src/api/api
+  (:use #:cl)
+  (:import-from #:sprolog/src/kernel/engine
+    #:close-query #:next-solution)
+  (:import-from #:sprolog/src/syntax/compiler
+    #:add-clause #:make-query)
+  (:import-from #:sprolog/src/syntax/dcg
+    #:dcg-expand)
+  (:import-from #:sprolog/src/syntax/host-syntax
+    #:goals-form)
+  (:import-from #:sprolog/src/kernel/protocol)
+  (:import-from #:sprolog/src/kernel/model)
+  (:import-from #:sprolog/src/api/state)
+  (:import-from #:sprolog/src/kernel/instructions)
+  (:export #:---> #:--> #:<- #:<-- #:?- #:display-query-answer #:interactive-query #:prolog
+    #:query-more-p))
+(in-package #:sprolog/src/api/api)
+
+
+(defmacro --> (head &body body)
+  (multiple-value-bind (expanded-head expanded-body) (dcg-expand head body)
+    `(add-clause ',expanded-head ,(goals-form expanded-body) nil)))
+(defmacro ---> (head &body body)
+  (multiple-value-bind (expanded-head expanded-body) (dcg-expand head body)
+    `(add-clause ',expanded-head ,(goals-form expanded-body) t)))
+
+(defmacro <- (head &body body)
+  `(add-clause ',head ,(goals-form body) nil))
+(defmacro <-- (head &body body)
+  `(add-clause ',head ,(goals-form body) t))
+(defun display-query-answer (solution truth delays stream)
+  ;; Pretty-print dispatch can loop on rational cons terms in CCL. The
+  ;; ordinary circle-aware printer also keeps each binding on one line.
+  (let ((*print-circle* t) (*print-pretty* nil) (*print-readably* nil))
+    (fresh-line stream)
+    (dolist (binding solution)
+      (format stream "~S = ~S~%" (car binding) (cdr binding)))
+    (if (eq truth :undefined)
+        (format stream "undefined; delayed negation: ~S~%" delays)
+        (unless solution (format stream "true.~%")))))
+
+(defun query-more-p (stream)
+  (loop
+    (format stream "More? [; = next, Enter = stop] ")
+    (finish-output stream)
+    (let ((line (read-line stream nil nil)))
+      (unless line (return nil))
+      (let ((command (string-trim '(#\Space #\Tab #\Return) line)))
+        (cond ((string= command ";") (return t))
+              ((member command '("" "." "q") :test #'string-equal) (return nil))
+              (t (format stream "Type ; for the next answer, or Enter to stop.~%")))))))
+
+;; Keep cursor construction replaceable for ownership instrumentation, even
+;; after a native implementation has cached earlier calls.
+(declaim (notinline make-query))
+
+(defun interactive-query (goals)
+  "Display one answer at a time through *QUERY-IO*, without lookahead."
+  (let ((vm (funcall (symbol-function 'make-query) goals)))
+    (unwind-protect
+         (loop
+           (multiple-value-bind (solution foundp truth delays) (next-solution vm)
+             (unless foundp
+               (fresh-line *query-io*)
+               (format *query-io* "false.~%")
+               (finish-output *query-io*)
+               (return))
+             (display-query-answer solution truth delays *query-io*)
+             (unless (query-more-p *query-io*) (return))))
+      (close-query vm)))
+  (values))
+
+(defmacro ?- (&body goals)
+  "Interactively display answers; ; requests another, Enter or EOF stops."
+  `(interactive-query ,(goals-form goals)))
+(defmacro prolog (&body goals)
+  "Enumerate goals with lexical Lisp callbacks; RETURN-FROM PROLOG exits safely."
+  (let ((vm (gensym "VM")) (solution (gensym "SOLUTION")) (found (gensym "FOUND")))
+    `(block prolog
+       (let ((,vm (make-query ,(goals-form goals))))
+         (unwind-protect
+              (loop (multiple-value-bind (,solution ,found) (next-solution ,vm)
+                      (declare (ignore ,solution)) (unless ,found (return nil))))
+           (close-query ,vm))))))

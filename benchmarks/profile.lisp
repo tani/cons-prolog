@@ -13,6 +13,6 @@
       (unwind-protect
            (if (bench-case-all case)
                (loop while (nth-value 1 (next-solution vm)))
-               (progn (sprolog::run-machine vm) (export-answer vm)))
+               (progn (sprolog/src/kernel/engine:run-machine vm) (export-answer vm)))
         (close-query vm))))
   (sb-sprof:report :type :flat :max 60))

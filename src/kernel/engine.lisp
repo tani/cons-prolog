@@ -1,32 +1,41 @@
-;; ASDF infers load order from this dependency package. Implementation symbols
-;; stay in SPROLOG so the public API and internal symbol identities are stable.
-(defpackage #:sprolog/src/engine (:use #:cl #:sprolog/src/package))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/kernel/engine
+  (:use #:cl)
+  (:import-from #:sprolog/src/kernel/instructions
+    #:allocate #:call #:clear-x #:cut #:deallocate #:enter-cut-scope #:execute #:fail #:host
+    #:jump #:leave-cut-scope #:proceed #:retry-me-else #:table-answer #:tnot #:trust-me
+    #:try-branch #:try-me-else #:yield)
+  (:import-from #:sprolog/src/kernel/model
+    #:%make-machine #:%make-var #:choice #:choice-age #:choice-args #:choice-builtin-context
+    #:choice-code #:choice-continuation #:choice-cut #:choice-delays #:choice-handlers
+    #:choice-heap #:choice-lineage #:choice-pc #:choice-scopes #:choice-slots #:choice-trail
+    #:continuation #:continuation-builtin-context #:continuation-code #:continuation-cut
+    #:continuation-depth #:continuation-handlers #:continuation-lineage #:continuation-parent
+    #:continuation-pc #:continuation-scopes #:continuation-slots #:database
+    #:database-predicates #:database-tabled #:iso-exception #:iso-exception-term #:iso-state
+    #:logic-var #:logic-var-binding #:logic-var-id #:logic-var-p #:machine #:machine-allocations
+    #:machine-args #:machine-builtin-context #:machine-choices #:machine-closed #:machine-code
+    #:machine-continuation #:machine-cut #:machine-database #:machine-delays #:machine-gc-count
+    #:machine-gc-reclaimed #:machine-heap #:machine-iso-handlers #:machine-max-choices
+    #:machine-max-depth #:machine-max-heap #:machine-max-live #:machine-max-trail #:machine-pc
+    #:machine-ready #:machine-scan #:machine-scopes #:machine-serial #:machine-slg
+    #:machine-slg-bypass #:machine-slg-lineage #:machine-slg-paused #:machine-slg-root
+    #:machine-slg-worker #:machine-slots #:machine-steps #:machine-trail #:machine-variables
+    #:make-choice #:make-continuation #:make-database #:predicate-adapter-context
+    #:predicate-code #:slot-ref #:slot-ref-index #:slot-ref-p)
+  (:import-from #:sprolog/src/kernel/protocol
+    #:ensure-registers #:execute-term-instruction #:iso-atom #:iso-atomic-equal #:iso-compound
+    #:iso-execute #:iso-handle-exception #:iso-instruction-p #:iso-invoke #:iso-primitive-p
+    #:iso-resolve-name #:iso-syntax-p #:iso-unknown #:maybe-collect #:slg-call #:slg-check-cut
+    #:slg-check-database #:slg-close #:slg-enter-cut-frame #:slg-negative #:slg-return-answer
+    #:slg-statistics #:slg-table-goal #:standard-predicate #:table)
+  (:import-from #:sprolog/src/api/state)
+  (:export #:*database* #:backtrack #:bind-var #:close-query #:deref #:fresh-cons #:fresh-var
+    #:instantiate #:invoke-predicate #:map-term #:next-solution #:pop-clear #:predicate-key
+    #:push-choice #:query-statistics #:record-cell #:reify #:resolve-code #:restore-continuation
+    #:run-machine #:truncate-vector #:unify #:unwind-trail))
+(in-package #:sprolog/src/kernel/engine)
 
-
-(defstruct (logic-var (:constructor %make-var (id)))
-  (id 0 :type fixnum) binding)
-(defstruct (slot-ref (:constructor slot-ref (index &optional anonymous))) index anonymous)
-(define-condition iso-exception (error)
-  ((term :initarg :term :reader iso-exception-term))
-  (:report (lambda (c s) (let ((*print-circle* t) (*print-level* 8) (*print-length* 12))
-                                   (format s "Prolog exception: ~S" (iso-exception-term c))))))
-(defstruct continuation code pc slots cut parent depth scopes lineage handlers)
-(defstruct choice code pc args continuation cut trail heap age slots scopes delays lineage handlers)
-(defstruct database (predicates (make-hash-table :test 'equal))
-  (tabled (make-hash-table :test 'equal)) (generation 0) iso-state)
 (defvar *database* (make-database))
-(defstruct (machine (:constructor %make-machine))
-  database code iso-handlers (pc 0) args slots continuation (cut 0) scopes
-  slg slg-worker slg-owner slg-root slg-bypass slg-paused slg-lineage delays
-  scan (mode :read) (serial 0)
-  (gc-floor 4096) (gc-limit 4096) (gc-count 0) (gc-reclaimed 0)
-  (allocations 0) (max-trail 0) (max-live 0)
-  (heap (make-array 64 :adjustable t :fill-pointer 0))
-  (trail (make-array 64 :adjustable t :fill-pointer 0))
-  (choices (make-array 16 :adjustable t :fill-pointer 0))
-  variables (ready nil) (closed nil) (steps 0) (max-depth 0)
-  (max-choices 0) (max-heap 0))
 
 (defun pop-clear (vector)
   (let* ((index (1- (fill-pointer vector))) (value (aref vector index)))
@@ -120,7 +129,8 @@
 (defun resolve-code (vm name arity)
   (let ((definition (gethash (cons name arity)
                              (database-predicates (machine-database vm)))))
-    (and definition (predicate-code definition))))
+    (let ((definition (or definition (standard-predicate name arity))))
+      (and definition (predicate-code definition)))))
 (defun backtrack (vm)
   (when (zerop (fill-pointer (machine-choices vm)))
     (close-query vm)
@@ -128,7 +138,8 @@
   (let ((cp (pop-clear (machine-choices vm))))
     (unwind-trail vm (choice-trail cp))
     (truncate-vector (machine-heap vm) (choice-heap cp))
-    (setf (machine-iso-handlers vm) (choice-handlers cp)
+    (setf (machine-builtin-context vm) (choice-builtin-context cp)
+          (machine-iso-handlers vm) (choice-handlers cp)
           (machine-code vm) (choice-code cp) (machine-pc vm) (choice-pc cp)
           (machine-args vm) (choice-args cp)
           (machine-continuation vm) (choice-continuation cp)
@@ -143,14 +154,15 @@
                 :continuation (machine-continuation vm) :cut (machine-cut vm)
                 :trail (fill-pointer (machine-trail vm))
                 :heap (fill-pointer (machine-heap vm)) :age (machine-serial vm)
-                :handlers (machine-iso-handlers vm) :lineage (machine-slg-lineage vm) :delays (machine-delays vm) :slots (and branchp (machine-slots vm)) :scopes (machine-scopes vm))
+                :builtin-context (machine-builtin-context vm) :handlers (machine-iso-handlers vm) :lineage (machine-slg-lineage vm) :delays (machine-delays vm) :slots (and branchp (machine-slots vm)) :scopes (machine-scopes vm))
    (machine-choices vm))
   (setf (machine-max-choices vm)
         (max (machine-max-choices vm) (fill-pointer (machine-choices vm)))))
 (defun restore-continuation (vm)
   (let ((c (machine-continuation vm)))
     (unless c (error "Missing VM continuation"))
-    (setf (machine-iso-handlers vm) (continuation-handlers c)
+    (setf (machine-builtin-context vm) (continuation-builtin-context c)
+          (machine-iso-handlers vm) (continuation-handlers c)
           (machine-code vm) (continuation-code c)
           (machine-pc vm) (continuation-pc c)
           (machine-slots vm) (continuation-slots c)
@@ -161,7 +173,7 @@
     (fill (machine-args vm) nil)
     (maybe-collect vm)))
 (defun invoke-predicate (vm name arity tailp)
-  (when (iso-builtin-p name arity)
+  (when (or (iso-primitive-p name arity) (iso-syntax-p name arity))
     (return-from invoke-predicate (iso-invoke vm name arity tailp)))
   (setf name (iso-resolve-name (machine-database vm) name arity))
   (when (gethash (cons name arity) (database-tabled (machine-database vm)))
@@ -178,12 +190,17 @@
                           (continuation-depth (machine-continuation vm)) 0))))
         (setf (machine-continuation vm)
               (make-continuation :code (machine-code vm) :pc (machine-pc vm)
-                                 :handlers (machine-iso-handlers vm) :lineage (machine-slg-lineage vm)
+                                 :builtin-context (machine-builtin-context vm) :handlers (machine-iso-handlers vm) :lineage (machine-slg-lineage vm)
                                  :slots (machine-slots vm) :cut (machine-cut vm) :scopes (machine-scopes vm)
                                  :parent (machine-continuation vm) :depth depth)
               (machine-max-depth vm) (max depth (machine-max-depth vm)))))
     (when (machine-slg-worker vm)
       (slg-enter-cut-frame vm))
+    (let ((library (standard-predicate name arity)))
+      (when (and library (predicate-adapter-context library)
+                 (null (machine-builtin-context vm)))
+        (setf (machine-builtin-context vm)
+              (iso-compound (iso-atom "/") name arity))))
     ;; A_i aliases X_i; only the actual arguments survive a call boundary.
     (setf (machine-args vm) (subseq (machine-args vm) 0 arity)
           (machine-code vm) code (machine-pc vm) 0 (machine-slots vm) nil
@@ -258,7 +275,7 @@
     (slg-close (machine-slg vm)))
   (unwind-trail vm 0)
   (setf (machine-closed vm) t (machine-ready vm) nil
-        (machine-iso-handlers vm) nil (machine-continuation vm) nil (machine-slots vm) nil (machine-scan vm) nil (machine-scopes vm) nil
+        (machine-builtin-context vm) nil (machine-iso-handlers vm) nil (machine-continuation vm) nil (machine-slots vm) nil (machine-scan vm) nil (machine-scopes vm) nil
         (machine-code vm) #() (machine-args vm) #()
         (machine-slg-paused vm) nil (machine-slg-lineage vm) nil
         (machine-variables vm) nil (machine-slg-root vm) nil (machine-delays vm) nil

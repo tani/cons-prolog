@@ -1,5 +1,9 @@
-(defpackage #:sprolog/tests/slg (:use #:cl #:sprolog/tests/dcg))
-(in-package #:sprolog/tests)
+(uiop:define-package #:sprolog/tests/slg
+  (:use #:cl #:sprolog)
+  (:import-from #:sprolog/tests/tests #:check #:solutions #:value-of)
+  (:import-from #:sprolog/tests/dcg)
+  (:export #:run-slg-depth-tests #:run-slg-tests #:run-wfs-exhaustive-tests #:run-wfs-oracle-tests #:signals-error-p #:slg-values #:wfs-oracle))
+(in-package #:sprolog/tests/slg)
 
 (defun slg-values (name solutions)
   (sort (mapcar (lambda (s) (value-of name s)) solutions) #'string< :key #'prin1-to-string))
@@ -136,7 +140,7 @@
     (untable 'zero 0)
     (check (= 2 (length (solutions (zero)))) "untable restores SLD duplicate enumeration")
     (clear-database)
-    (check (zerop (hash-table-count (sprolog::database-tabled *database*))) "clear removes declarations")))
+    (check (zerop (hash-table-count (sprolog/src/kernel/model:database-tabled *database*))) "clear removes declarations")))
 
 (defun wfs-oracle (rules count)
   "Independent alternating fixed point on a finite propositional reduct."
@@ -169,7 +173,7 @@
           (dolist (name names) (table name 0))
           (dolist (rule rules)
             (destructuring-bind (head positives negatives) rule
-              (sprolog::add-clause
+              (sprolog/src/syntax/compiler:add-clause
                (list (nth head names))
                (append (loop for name in names for i from 0 when (logbitp i positives) collect (list name))
                        (loop for name in names for i from 0 when (logbitp i negatives) collect (list 'tnot (list name)))) nil)))
@@ -195,7 +199,7 @@
         (dolist (name names) (table name 0))
         (dolist (rule rules)
           (destructuring-bind (head pos neg) rule
-            (sprolog::add-clause
+            (sprolog/src/syntax/compiler:add-clause
              (list (nth head names))
              (append (loop for name in names for i from 0 when (logbitp i pos) collect (list name))
                      (loop for name in names for i from 0 when (logbitp i neg) collect (list 'tnot (list name)))) nil)))
@@ -211,7 +215,7 @@
     (table 'tabled-chain 1)
     (<-- (tabled-chain ?x) (chain-edge ?x ?y) (tabled-chain ?y))
     (<- (tabled-chain 500))
-    (dotimes (i 500) (sprolog::add-clause (list 'chain-edge i (1+ i)) nil nil))
+    (dotimes (i 500) (sprolog/src/syntax/compiler:add-clause (list 'chain-edge i (1+ i)) nil nil))
     (let ((vm (make-query '((tabled-chain 0)) :gc-threshold 1)))
       (unwind-protect
            (progn

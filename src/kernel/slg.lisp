@@ -1,24 +1,51 @@
-;; ASDF infers load order from this dependency package. Implementation symbols
-;; stay in SPROLOG so the public API and internal symbol identities are stable.
-(defpackage #:sprolog/src/slg (:use #:cl #:sprolog/src/wam-compiler))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/kernel/slg
+  (:use #:cl)
+  (:import-from #:sprolog/src/kernel/engine
+    #:*database* #:backtrack #:close-query #:deref #:fresh-cons #:fresh-var #:instantiate
+    #:predicate-key #:push-choice #:reify #:restore-continuation #:run-machine #:truncate-vector
+    #:unify)
+  (:import-from #:sprolog/src/kernel/gc
+    #:maybe-collect)
+  (:import-from #:sprolog/src/kernel/instructions
+    #:call #:table-answer #:true #:yield)
+  (:import-from #:sprolog/src/kernel/model
+    #:%make-machine #:%make-var #:choice-args #:choice-continuation #:choice-handlers #:choice-p
+    #:choice-scopes #:choice-slots #:continuation-cut #:continuation-handlers #:continuation-p
+    #:continuation-parent #:continuation-scopes #:continuation-slots #:copy-choice
+    #:copy-continuation #:copy-iso-handler #:copy-machine #:database #:database-generation
+    #:database-tabled #:iso-handler-catcher #:iso-handler-p #:iso-handler-parent
+    #:iso-handler-recovery #:iso-handler-snapshot #:logic-var-binding #:logic-var-id
+    #:logic-var-p #:machine-args #:machine-choices #:machine-closed #:machine-code
+    #:machine-continuation #:machine-cut #:machine-database #:machine-delays #:machine-gc-floor
+    #:machine-heap #:machine-iso-handlers #:machine-p #:machine-pc #:machine-ready
+    #:machine-scan #:machine-scopes #:machine-slg #:machine-slg-lineage #:machine-slg-owner
+    #:machine-slg-paused #:machine-slg-root #:machine-slg-worker #:machine-slots #:machine-steps
+    #:machine-trail #:machine-variables #:make-slg-answer #:make-slg-consumer #:make-slg-context
+    #:make-slg-table #:make-slg-waiter #:slg-answer #:slg-answer-delays #:slg-answer-tokens
+    #:slg-consumer #:slg-consumer-tailp #:slg-consumer-vm #:slg-context #:slg-context-answers
+    #:slg-context-atoms #:slg-context-closed #:slg-context-components-completed
+    #:slg-context-constants #:slg-context-copies #:slg-context-generation #:slg-context-guards
+    #:slg-context-local-waits #:slg-context-max-component-size #:slg-context-queue
+    #:slg-context-resumptions #:slg-context-running #:slg-context-scope-serial
+    #:slg-context-steps #:slg-context-suspensions #:slg-context-tables #:slg-context-tail
+    #:slg-incomplete-cut #:slg-incomplete-cut-table #:slg-table #:slg-table-answers
+    #:slg-table-arity #:slg-table-complete #:slg-table-consumers #:slg-table-dependencies
+    #:slg-table-falsep #:slg-table-id #:slg-table-index #:slg-table-name #:slg-table-tokens
+    #:slg-table-waiters #:slg-waiter #:slg-waiter-negativep #:slg-waiter-tailp #:slg-waiter-vm)
+  (:import-from #:sprolog/src/kernel/protocol)
+  (:import-from #:sprolog/src/api/state)
+  (:import-from #:sprolog/src/syntax/wam-compiler)
+  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:export #:slg-add-answer #:slg-answer-key #:slg-call #:slg-check-cut #:slg-check-database
+    #:slg-check-database-if-present #:slg-close #:slg-complete-component #:slg-component-idle-p
+    #:slg-components #:slg-context-for #:slg-copy-machine #:slg-cycle-consumer #:slg-delays
+    #:slg-dequeue #:slg-dispatch #:slg-enqueue #:slg-enter-cut-frame #:slg-evaluate #:slg-freeze
+    #:slg-get-table #:slg-negative #:slg-negative-result #:slg-rebase-consumer
+    #:slg-register-guard #:slg-release-cycles #:slg-resume #:slg-return-answer #:slg-settle
+    #:slg-simplify #:slg-statistics #:slg-table-goal #:slg-task-owner #:slg-thaw
+    #:slg-unconditional-p #:slg-wait #:table #:untable))
+(in-package #:sprolog/src/kernel/slg)
 
-;; Copying SLG: each consumer owns an isolated WAM continuation. The work queue
-;; propagates each new (possibly conditional) answer exactly once to each consumer.
-;; Dynamic SCCs complete independently, before external waiters consume answers.
-(defstruct slg-context
-  database generation (tables (make-hash-table :test 'equal))
-  (atoms (make-hash-table :test 'eql))
-  (constants (make-array 16 :adjustable t :fill-pointer 0))
-  queue tail (running nil) (closed nil) (suspensions 0) (resumptions 0)
-  (steps 0) (answers 0) (copies 0) (scope-serial 0)
-  (guards (make-hash-table)) (components-completed 0) (max-component-size 0)
-  (local-waits 0))
-(defstruct slg-table id name arity tokens
-  (answers nil) (index (make-hash-table :test 'equal)) consumers complete falsep dependencies waiters)
-(defstruct slg-answer tokens delays)
-(defstruct slg-consumer vm tailp)
-(defstruct slg-waiter vm tailp negativep)
 
 (defun table (name arity &optional (database *database*))
   "Enable variant tabling for NAME/ARITY (DCG declarations use expanded arity)."
@@ -295,13 +322,6 @@ Code, table entries and host functions are immutable and shared."
     (clrhash (slg-context-guards context))
     (setf (slg-context-constants context) #() (slg-context-queue context) nil
           (slg-context-tail context) nil (slg-context-closed context) t)))
-
-(define-condition slg-incomplete-cut (error)
-  ((table :initarg :table :reader slg-incomplete-cut-table))
-  (:report (lambda (condition stream)
-             (let ((table (slg-incomplete-cut-table condition)))
-               (format stream "Illegal CUT over incomplete tabled subgoal ~S/~D"
-                       (slg-table-name table) (slg-table-arity table))))))
 (defun slg-enter-cut-frame (vm)
   (push (incf (slg-context-scope-serial (machine-slg vm))) (machine-slg-lineage vm)))
 (defun slg-register-guard (vm table)
@@ -478,3 +498,16 @@ Code, table entries and host functions are immutable and shared."
            ;; Simplification may need another round without runnable work.
            (t nil)))
     (setf (slg-context-running context) nil)))
+
+(eval-when (:load-toplevel :execute)
+  (register-provider 'sprolog/src/kernel/protocol:slg-call 'slg-call)
+  (register-provider 'sprolog/src/kernel/protocol:slg-check-cut 'slg-check-cut)
+  (register-provider 'sprolog/src/kernel/protocol:slg-check-database 'slg-check-database)
+  (register-provider 'sprolog/src/kernel/protocol:slg-close 'slg-close)
+  (register-provider 'sprolog/src/kernel/protocol:slg-enter-cut-frame 'slg-enter-cut-frame)
+  (register-provider 'sprolog/src/kernel/protocol:slg-negative 'slg-negative)
+  (register-provider 'sprolog/src/kernel/protocol:slg-return-answer 'slg-return-answer)
+  (register-provider 'sprolog/src/kernel/protocol:slg-statistics 'slg-statistics)
+  (register-provider 'sprolog/src/kernel/protocol:slg-table-goal 'slg-table-goal)
+  (register-provider 'sprolog/src/kernel/protocol:table 'table)
+)
