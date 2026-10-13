@@ -151,3 +151,17 @@ LET retains continuation depth one with a 1 MiB host control stack.
 workloads, CPU and allocation profiles, and process-local diagnostic experiments
 on revision be479795 (0.9.1). Timing, cumulative allocated bytes and peak managed
 cells are distinct metrics. No runtime optimizer was installed by the investigation.
+
+## Cons operations and S-expression term I/O
+
+The cons-model extension adds 27 indicators, bringing the public inventory to
+128 (74 primitive/adapters, 8 syntax, 46 derived). SBCL with a 1 MiB control stack
+and CLISP both pass **4,475 checks**. The existing derived-observation output is
+byte-for-byte identical to the namespace-refactor reference output.
+New checks cover finite application decomposition/construction, zero-arity canonicalization,
+callable reconstructed goals, cyclic argument graphs and shared
+variables, stable pair sorting, SETOF grouping/existentials, forced GC, deep term
+comparison, deep finite arities, SLG term operations and ordering, protected definitions, reader options and disabled
+read-time evaluation, cyclic I/O round trips, EOF, variable-name collisions,
+public wrapper exception contexts, and database-local configuration retained
+through failure and clause clearing.

@@ -1,6 +1,7 @@
 (uiop:define-package #:sprolog/tests/suite
   (:use #:cl #:sprolog)
   (:nicknames #:sprolog/tests)
+  (:import-from #:sprolog/tests/cons-operations #:run-cons-operation-tests)
   (:import-from #:sprolog/tests/builtins #:run-builtin-tests)
   (:import-from #:sprolog/tests/dcg #:run-dcg-tests)
   (:import-from #:sprolog/tests/interactive #:run-interactive-tests)
@@ -115,6 +116,7 @@
     (run-slg-cut-tests)
     (run-builtin-tests)
     (run-term-syntax-tests)
+    (run-cons-operation-tests)
     (run-interactive-tests)
     (run-let-tests)
     (run-standard-library-tests)

@@ -15,7 +15,7 @@
   dynamic SCC-local completion and ground well-founded negation.
 - Runtime rejection of cuts over unfinished tables, query-local table teardown,
   and version checks when definitions change during tabled execution.
-- 101 core builtin indicators plus seven aliases: control, arithmetic, cons term
+- 128 core builtin indicators plus seven aliases: control, arithmetic, cons term
   operations, exceptions, dynamic definitions, collectors and character/byte I/O.
 - Logical update view for immutable clause/code snapshots.
 - Source LET bindings shared by lexical callbacks, with mutation, shadowing and
