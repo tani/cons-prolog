@@ -16,7 +16,7 @@
     #:host-goal-testp #:iso-exception #:iso-exception-term #:iso-handler #:iso-handler-catcher
     #:iso-handler-p #:iso-handler-parent #:iso-handler-recovery #:iso-handler-snapshot
     #:iso-handler-tailp #:iso-state #:iso-state-aliases #:iso-state-dynamic #:iso-state-flags
-    #:iso-state-order-ids #:iso-state-operators #:iso-state-conversions
+    #:iso-state-reader-initialized #:iso-state-loaded-files #:iso-state-declarations #:iso-state-order-ids #:iso-state-operators #:iso-state-conversions
     #:iso-state-input #:iso-state-output #:iso-state-p #:iso-state-streams #:iso-stream
     #:iso-stream-alias #:iso-stream-byte-look #:iso-stream-eof-action #:iso-stream-file
     #:iso-stream-mode #:iso-stream-p #:iso-stream-past-end #:iso-stream-reposition
@@ -60,6 +60,9 @@
   (streams (make-hash-table :test 'eq)) (aliases (make-hash-table :test 'equal))
   (input *standard-input*) (output *standard-output*)
   (order-ids (make-hash-table :test 'eq))
+  (reader-initialized nil)
+  (loaded-files (make-hash-table :test 'equal))
+  (declarations (make-hash-table :test 'equal))
   (operators (make-hash-table :test 'equal))
   (conversions (make-hash-table :test 'eql))
   (dynamic (make-hash-table :test 'equal)))

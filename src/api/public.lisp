@@ -2,6 +2,8 @@
 (uiop:define-package #:sprolog/src/api/public
   (:use #:cl)
   (:import-from #:sprolog/src/library/standard-library)
+  (:import-from #:sprolog/src/prolog/loader #:load-prolog #:load-prolog-string #:load-prolog-file)
+  (:import-from #:sprolog/src/prolog/reader #:read-prolog-term #:parse-prolog-string)
   (:import-from #:sprolog/src/api/api #:<- #:<-- #:?- #:prolog #:--> #:--->)
   (:import-from #:sprolog/src/api/registry #:builtin-predicate-inventory)
   (:import-from #:sprolog/src/api/state #:*iso-halt-function*)
@@ -15,7 +17,8 @@
   (:import-from #:sprolog/src/syntax/compiler #:query #:make-query #:clear-database
     #:disassemble-predicate)
   (:import-from #:sprolog/src/syntax/dcg #:phrase #:dcg-expand)
-  (:export #:<- #:<-- #:?- #:prolog #:--> #:---> #:phrase #:dcg-expand #:query #:make-query
+  (:export #:load-prolog #:load-prolog-string #:load-prolog-file #:read-prolog-term #:parse-prolog-string
+    #:<- #:<-- #:?- #:prolog #:--> #:---> #:phrase #:dcg-expand #:query #:make-query
     #:next-solution #:slg-incomplete-cut #:table #:untable #:tnot #:close-query #:clear-database
     #:*database* #:make-database #:*iso-halt-function* #:iso-exception #:iso-exception-term
     #:builtin-predicate-inventory #:collect-query-garbage #:query-statistics

@@ -1,5 +1,8 @@
 # Unreleased
 
+- Add an independent `src/prolog/` textual reader/loader with string, file and
+  stream APIs, operator parsing, common load-time directives and DCG expansion.
+
 - Align FUNCTOR, ARG and UNIV with predicate-call name and finite argument count;
   canonicalize zero-arity construction to atoms and retain arbitrary argument graphs.
 

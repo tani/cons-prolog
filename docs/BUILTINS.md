@@ -141,7 +141,8 @@ sorts/deduplicates each group, supports existential `^`, and fails with no answe
 `read/1,2`, `read_term/2,3`, `write/1,2`, `writeq/1,2`,
 `write_canonical/1,2`, and `write_term/2,3` operate on text streams in S-expression
 format. Current-stream and default-option forms are ordinary library clauses.
-There is no `.pl` loader or Prolog-style parser yet.
+The separate [textual loader](PROLOG-LOADER.md) reads `.pl` syntax; these stream
+predicates continue to read/write S-expressions.
 
 Reading uses a fresh standard Lisp readtable with case preservation, the generated
 atom package, and `*read-eval*` disabled. `?Name` becomes a fresh logic variable
@@ -168,13 +169,13 @@ apply to I/O, unlike iterative VM term operations.
 
 `op/3` stores priority 1..1200 and `fx/fy/xf/yf/xfx/xfy/yfx` by atom name and
 specifier; priority 0 removes the entry. Atom lists are accepted for names.
-`current_op/3` enumerates this initially empty table. `char_conversion/2` stores
+`current_op/3` enumerates this initially empty table. The first textual-reader call initializes
+default operators. `char_conversion/2` stores
 one-character atom mappings. With bound input, `current_char_conversion/2`
 returns its mapping or identity; with variable input, it enumerates explicitly
 configured entries only, including configured identities. Enumeration order of
 both configuration tables is unspecified. These tables are database-local,
-persist across backtracking, and do not alter the Lisp reader. They are reserved
-for the future Prolog-style reader. Like stream and flag configuration, clearing clauses does not reset these tables.
+persist across backtracking, and do not alter the Lisp reader. The textual reader uses them as described in [PROLOG-LOADER.md](PROLOG-LOADER.md). Like stream and flag configuration, clearing clauses does not reset these tables.
 The former Lisp APIs `iso-read-term`, `iso-write-term`, and
 `iso-predicate-inventory` are not restored.
 

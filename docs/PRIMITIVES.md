@@ -167,3 +167,12 @@ reader/printer state and persistent database configuration. All read/write
 convenience forms use ordinary clauses, with public exception contexts preserved.
 The accepted format and its limits are specified in [BUILTINS.md](BUILTINS.md).
 No new VM instruction, term tag, or public Lisp export is introduced.
+
+## Textual loader boundary
+
+The five Lisp text APIs are owned by `src/prolog/reader.lisp` and
+`src/prolog/loader.lisp`, with lexing in `src/prolog/lexer.lisp`. They translate
+source syntax into existing cons terms and compiler input. Load-time declarations
+remain at this boundary; the VM has no new instruction or compound-term tag.
+The OP and character-conversion adapters supply database-local reader state;
+read/write predicates continue to use the S-expression stream adapter.

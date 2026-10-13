@@ -114,3 +114,6 @@ See the [documentation index](docs/README.md).
 - [Validation](docs/VALIDATION.md): semantic coverage and stress tests
 - [Benchmarks](docs/BENCHMARKS.md): timings, allocation profiles and bottlenecks
 - [Roadmap](docs/ROADMAP.md) and [changelog](CHANGELOG.md)
+
+Prolog text can also be loaded with `load-prolog-string`, `load-prolog-file`, or
+`load-prolog` from a stream. See [the textual interface](docs/PROLOG-LOADER.md).

@@ -3,6 +3,7 @@
 [Project README](../README.md)
 
 - [User guide](MANUAL.md): term syntax, queries, lexical `let`, Lisp callbacks, DCGs, SLG, WAM and GC.
+- [Prolog textual loader](PROLOG-LOADER.md): string/file/stream APIs, operators, directives and limits.
 - [Builtin reference](BUILTINS.md): supported predicates, arithmetic and Lisp-friendly names.
 - [Validation](VALIDATION.md): test coverage, stress tests and current limitations.
 - [Benchmarks](BENCHMARKS.md): measured performance, allocation profiles, bottlenecks and reproduction commands.
