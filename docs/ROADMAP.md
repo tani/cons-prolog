@@ -27,8 +27,9 @@ See [the user guide](MANUAL.md), [builtin specification](BUILTINS.md) and
 ## Scope
 
 Lisp-native terms and embedding take priority over ISO Prolog compatibility.
-There is no separate compound-term encoding, `.pl` loader, Prolog text
-parser/printer, standard term ordering or ISO conformance target.
+There is no separate compound-term encoding or ISO conformance target.
+A textual `.pl` loader maps into native conses; term ordering is Lisp-native.
+Prolog-style output remains unimplemented.
 PAIP / Allegro API inspiration does not imply complete API compatibility.
 
 ## Future API work

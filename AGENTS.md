@@ -25,10 +25,13 @@
   semantic necessities from optimized or compatibility-preserving implementations.
 
 - Keep source responsibilities in `src/api/`, `src/kernel/`, `src/syntax/`,
-  `src/adapters/`, and `src/library/`. Dependency package names must match
+  `src/adapters/`, `src/library/`, and `src/prolog/`. Dependency package names must match
   `sprolog/src/<layer>/<file>`. Implementation namespaces are distinct. Match package dependencies to the
   actual interfaces and initialization requirements; internal names are not facade API.
 
 - FUNCTOR, ARG and UNIV interpret nonempty proper lists as symbol-name plus finite
   arguments, matching call name/arity. Reject open/improper/cyclic outer spines;
   retain arbitrary graphs inside arguments. Zero-arity construction yields atoms.
+
+- Keep the Prolog textual interface in `src/prolog/`; parse without Lisp EVAL.
+  Reader syntax marks are transient and must not change the native cons term model.

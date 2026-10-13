@@ -165,3 +165,14 @@ comparison, deep finite arities, SLG term operations and ordering, protected def
 read-time evaluation, cyclic I/O round trips, EOF, variable-name collisions,
 public wrapper exception contexts, and database-local configuration retained
 through failure and clause clearing.
+
+## Prolog textual loader
+
+The textual interface adds five Lisp APIs without changing the 128 predicate
+indicator inventory. The complete SBCL suite (1 MiB control stack) and CLISP each pass
+**4,540 checks**. New checks cover native list/compound mapping, per-term variable
+scope, operator precedence and fixities, numeric/quoted text, character conversion,
+reader flags, stream lookahead/EOF, load replacement, multifile and empty dynamic
+declarations, initialization, relative includes, ensure-loaded cache invalidation,
+recursive includes, DCG expansion, long flat terms and controlled nesting errors.
+The preexisting derived-observation output remains byte-for-byte unchanged.

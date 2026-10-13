@@ -8,7 +8,7 @@
     #:or-branches #:proceed #:put-args #:retry-me-else #:scoped-body #:tnot #:true #:trust-me
     #:try-branch #:try-me-else #:yield)
   (:import-from #:sprolog/src/kernel/model
-    #:%make-machine #:database #:database-generation #:database-predicates #:database-tabled
+    #:database-iso-state #:iso-state-loaded-files #:%make-machine #:database #:database-generation #:database-predicates #:database-tabled
     #:disjunction-goal-branches #:disjunction-goal-p #:host-goal #:host-goal-arguments
     #:host-goal-function #:host-goal-output #:host-goal-p #:host-goal-testp #:logic-var-p
     #:machine-slots #:machine-variables #:make-predicate #:predicate #:predicate-clauses
@@ -148,7 +148,9 @@
 (defun clear-database (&optional (database *database*))
   (incf (database-generation database))
   (clrhash (database-tabled database))
-  (clrhash (database-predicates database)) nil)
+  (clrhash (database-predicates database))
+  (when (database-iso-state database)
+    (clrhash (iso-state-loaded-files (database-iso-state database)))) nil)
 (defun make-query (goals &key (database *database*) (gc-threshold 4096))
   (unless (or (null gc-threshold) (and (integerp gc-threshold) (plusp gc-threshold)))
     (error "GC-THRESHOLD must be NIL or a positive integer"))
