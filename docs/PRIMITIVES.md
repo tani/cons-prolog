@@ -98,7 +98,7 @@ list grouping operation.
 | `syntax/control-syntax` | Conjunction/disjunction/if, lexical meta-form fallback |
 | `syntax/let-syntax` | Lisp lexical cells and `let` expansion |
 | `syntax/host-syntax`, `syntax/dcg` | Host callback construction and DCGs |
-| `api/package`, `api/api`, `api/registry`, `api/state` | Public package/macros and predicate namespaces/inventory |
+| `api/package`, `api/public`, `api/api`, `api/registry`, `api/state` | Public package/macros and predicate namespaces/inventory |
 | `adapters/term-ops` | Graph inspection, copying, identity, checked unification |
 | `adapters/arithmetic`, `adapters/adapter` | Numeric evaluation, type/atom/flag boundaries |
 | `adapters/dynamic`, `adapters/collection`, `adapters/streams` | Database updates, answer collection, stream state |
@@ -119,7 +119,7 @@ through runtime entry. Punctuation aliases keep their previous meanings.
 
 ## Validation
 
-- SBCL 2.2.9: the complete suite passes **4,319 checks**, including the existing
+- SBCL 2.2.9: the complete suite passes **4,320 checks**, including the existing
   100,000-step tail-call and 10,000-token DCG checks, with a **1 MiB control stack**.
 - New tests cover registry separation/protection, clearing databases, repeat,
   caller cut scope, failed partial unification, cyclic copies, character conversion
@@ -142,12 +142,14 @@ diff -u before.txt after.txt
 
 ## Implementation packages
 
-A clean-cache SBCL build passes 4,319 checks, including package ownership and
+A clean-cache SBCL build passes 4,320 checks, including package ownership and
 facade isolation checks; the observation comparison remains identical.
 
 The package refactoring uses `uiop:define-package` and matching `in-package`
 forms in source and test modules. Public `sprolog:` names are selective reexports
-from their providers through `src/api/package.lisp`, the sole implementation
+from their providers through `src/api/public.lisp`. The final
+`src/api/package.lisp` uses `:use-reexport` to aggregate that selected interface
+and is the sole implementation
 package with the `sprolog` nickname. Internal functions are owned by their modules;
 old `sprolog::` internal references have been updated in tests, examples, and
 benchmarks. See [Development](DEVELOPMENT.md) for cycle boundaries and dispatch costs.

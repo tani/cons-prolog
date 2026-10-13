@@ -10,8 +10,9 @@ There is no hand-maintained ASDF component list.
 Each source file uses `uiop:define-package` and enters that same package with
 `in-package`. Definitions belong to their implementation module. Cross-module
 calls use explicit `:import-from`, and modules export the interfaces used by their
-consumers. Only the final public facade has the `sprolog` nickname. It imports and
-exports the selected public API; internal interfaces are not reexported through it.
+consumers. Only the final public facade has the `sprolog` nickname. It uses
+`:use-reexport` to aggregate `api/public`, whose explicit imports and
+exports select the public API. Internal interfaces are not reexported through it.
 Tests follow the same arrangement, with shared test helpers and a final runner.
 The test runner alone has the `sprolog/tests` nickname.
 
@@ -99,7 +100,7 @@ sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 
 | Directory | Responsibility |
 | --- | --- |
-| `src/api/` | Public package, Lisp query/definition API, protected predicate registry |
+| `src/api/` | Public interface selection/facade, Lisp query/definition API, predicate registry |
 | `src/kernel/` | Execution machine, WAM instructions, GC, SLG, meta-call and exceptions |
 | `src/syntax/` | Clause compiler, lowering, DCG and lexical/control source expansion |
 | `src/adapters/` | Term graphs, host types, arithmetic, dynamic database, solution collection, streams, dispatch |
