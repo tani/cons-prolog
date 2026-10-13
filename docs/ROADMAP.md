@@ -1,6 +1,6 @@
 # Implementation roadmap
 
-## Implemented (0.9.1)
+## Implemented (0.10.0)
 
 - Native Lisp cons graphs for terms, lists, dotted tails, sharing and rational trees.
 - One granular WAM backend: X/Y registers, get/put/unify/set, read/write modes,

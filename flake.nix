@@ -13,7 +13,7 @@
       perSystem = { config, pkgs, lib, system, ... }:
         let
           pname = "sprolog";
-          version = "0.9.1";
+          version = "0.10.0";
           src = lib.cleanSource ./.;
           implementations = {
             sbcl = { program = "sbcl"; args = "--noinform --disable-debugger"; eval = "--eval"; };

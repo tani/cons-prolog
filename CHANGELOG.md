@@ -1,5 +1,8 @@
-# Unreleased
+# 0.10.0 — 2026-10-13
 
+- Separate implementation packages by responsibility and aggregate only the public
+  interface with UIOP use-reexport. Move derived predicates into protected library clauses.
+- Fix portable decimal number output across Lisp implementations.
 - Add an independent `src/prolog/` textual reader/loader with string, file and
   stream APIs, operator parsing, common load-time directives and DCG expansion.
 
@@ -8,7 +11,7 @@
 
 - Add 27 ISO-named predicate indicators with Lisp-native cons semantics:
   cons inspection/construction, term order, sorting/SETOF, S-expression term I/O,
-  and database-local future-reader operator/character configuration.
+  and database-local operator/character configuration.
 - Keep derived comparisons, SETOF, and current-stream I/O as ordinary clauses.
 - Preserve rational-tree terms; cyclic ordering reports an explicit representation error.
 

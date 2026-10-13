@@ -1,7 +1,7 @@
 (asdf:defsystem "sprolog"
   :class :package-inferred-system
   :description "Stack-safe S-expression Prolog with a WAM-derived register VM"
-  :version "0.9.1"
+  :version "0.10.0"
   :license "MIT"
   :depends-on ("uiop" "sprolog/src/api/package")
   :in-order-to ((asdf:test-op (asdf:test-op "sprolog/tests"))))

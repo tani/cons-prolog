@@ -1,12 +1,13 @@
-# Validation — 0.9.1, 2026-10-12
+# Validation — 0.10.0, 2026-10-13
 
-SBCL 2.2.9.debian, Linux x86-64. No external Lisp libraries.
+SBCL 2.2.9.debian and CLISP 2.49.93+, Linux x86-64. No external Lisp libraries.
 
 ```sh
 sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 ```
 
-4,190 checks pass with a 1 MiB Lisp control-stack limit.
+4,540 checks pass on SBCL with a 1 MiB Lisp control-stack limit and on CLISP.
+The Prolog-loader PR passed all 17 CI jobs before merging.
 The sole execution backend is granular WAM. The earlier reference backend and
 its selectable API are removed. The suite includes WAM-only GC comparisons and
 the builtin, term-model and DCG syntax regressions.

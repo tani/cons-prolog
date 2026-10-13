@@ -1,4 +1,4 @@
-# Lisp-native terms and builtins (0.9.1)
+# Lisp-native terms and builtins (0.10.0)
 
 [README](../README.md) · [User guide](MANUAL.md)
 
