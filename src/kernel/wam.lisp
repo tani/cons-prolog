@@ -1,6 +1,6 @@
 ;; ASDF infers load order from this dependency package. Implementation symbols
 ;; stay in SPROLOG so the public API and internal symbol identities are stable.
-(defpackage #:sprolog/src/wam (:use #:cl #:sprolog/src/gc))
+(defpackage #:sprolog/src/kernel/wam (:use #:cl #:sprolog/src/kernel/gc))
 (in-package #:sprolog)
 
 (defun ensure-registers (vm count)

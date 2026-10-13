@@ -1,4 +1,4 @@
-(defpackage #:sprolog/src/arithmetic (:use #:cl #:sprolog/src/runtime))
+(defpackage #:sprolog/src/adapters/arithmetic (:use #:cl #:sprolog/src/kernel/runtime))
 (in-package #:sprolog)
 
 ;;; Arithmetic: integer arithmetic stays exact; ISO floats are SBCL doubles.

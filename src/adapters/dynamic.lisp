@@ -1,4 +1,4 @@
-(defpackage #:sprolog/src/dynamic (:use #:cl #:sprolog/src/adapter))
+(defpackage #:sprolog/src/adapters/dynamic (:use #:cl #:sprolog/src/adapters/adapter))
 (in-package #:sprolog)
 
 ;;; Dynamic predicates use immutable clause/code snapshots (logical update view).

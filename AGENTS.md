@@ -1,7 +1,7 @@
 # Working on sprolog
 
 - Preserve the Lisp-native cons/rational-tree data model and the existing public API.
-- Put predicates definable from existing goals in `src/standard-library.lisp` as
+- Put predicates definable from existing goals in `src/library/standard-library.lisp` as
   ordinary clauses. Do not add a VM instruction just to accelerate a library wrapper.
 - Keep executable source forms (`let`, host callbacks, transparent control) in
   the syntax modules. Runtime Prolog terms do not capture Lisp lexical environments.
@@ -19,3 +19,8 @@
   derived definitions. Include cyclic terms, callbacks, SLG, and forced GC where relevant.
 - Document conditional retention of adapters in `docs/PRIMITIVES.md`; distinguish
   semantic necessities from optimized or compatibility-preserving implementations.
+
+- Keep source responsibilities in `src/api/`, `src/kernel/`, `src/syntax/`,
+  `src/adapters/`, and `src/library/`. Dependency package names must match
+  `sprolog/src/<layer>/<file>`. Directory layers share implementation symbols
+  and do not imply an acyclic architecture or separately loadable products.

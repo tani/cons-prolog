@@ -1,4 +1,4 @@
-(defpackage #:sprolog/src/host-syntax (:use #:cl #:sprolog/src/let-syntax))
+(defpackage #:sprolog/src/syntax/host-syntax (:use #:cl #:sprolog/src/syntax/let-syntax))
 (in-package #:sprolog)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)

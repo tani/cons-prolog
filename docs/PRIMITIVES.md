@@ -10,7 +10,7 @@ basis, nor a performance optimization or an ISO conformance claim.
 
 ## P1: protected shared library
 
-`src/standard-library.lisp` contains ordinary clauses compiled by the same compiler
+`src/library/standard-library.lisp` contains ordinary clauses compiled by the same compiler
 as user programs. `resolve-code` falls back to this shared base after looking in
 the user database. Library predicates are not copied into each database and do
 not appear in `current_predicate/1`, which continues to enumerate user definitions.
@@ -89,20 +89,20 @@ list grouping operation.
 
 ## P4: source organization and kernel boundary
 
-| Module | Responsibility |
+| Directory / module | Responsibility |
 | --- | --- |
-| `engine`, `wam`, `gc`, `slg` | Bindings, trail, choice points, execution, GC, tabling |
-| `compiler`, `wam-compiler` | Clause compilation and lowering |
-| `control-syntax` | Conjunction/disjunction/if, lexical meta-form fallback |
-| `let-syntax` | Lisp lexical cells and `let` expansion |
-| `host-syntax`, `api`, `dcg` | Host callback construction, public macros, DCGs |
-| `registry` | Runtime/syntax/library namespaces and public inventory |
-| `term-ops` | Graph inspection, copying, identity, checked unification |
-| `runtime` | Meta-call entry, continuation handling, exceptions |
-| `arithmetic`, `adapter` | Numeric evaluation, type/atom/flag boundaries |
-| `dynamic`, `collection`, `streams` | Database updates, answer collection, stream state |
-| `builtins` | Runtime dispatch and primitive/syntax registration |
-| `standard-library` | Protected ordinary Prolog clauses |
+| `kernel/engine`, `kernel/wam`, `kernel/gc`, `kernel/slg` | Bindings, trail, choice points, execution, GC, tabling |
+| `kernel/runtime` | Meta-call entry, continuation handling, exceptions |
+| `syntax/compiler`, `syntax/wam-compiler` | Clause compilation and lowering |
+| `syntax/control-syntax` | Conjunction/disjunction/if, lexical meta-form fallback |
+| `syntax/let-syntax` | Lisp lexical cells and `let` expansion |
+| `syntax/host-syntax`, `syntax/dcg` | Host callback construction and DCGs |
+| `api/package`, `api/api`, `api/registry` | Public package/macros and predicate namespaces/inventory |
+| `adapters/term-ops` | Graph inspection, copying, identity, checked unification |
+| `adapters/arithmetic`, `adapters/adapter` | Numeric evaluation, type/atom/flag boundaries |
+| `adapters/dynamic`, `adapters/collection`, `adapters/streams` | Database updates, answer collection, stream state |
+| `adapters/builtins` | Runtime dispatch and primitive/syntax registration |
+| `library/standard-library` | Protected ordinary Prolog clauses |
 
 The irreducible execution boundary consists of binding/trail operations,
 choice-point control and cut, runtime goal entry, exception snapshots, and table

@@ -1,4 +1,4 @@
-(defpackage #:sprolog/src/standard-library (:use #:cl #:sprolog/src/builtins))
+(defpackage #:sprolog/src/library/standard-library (:use #:cl #:sprolog/src/adapters/builtins))
 (in-package #:sprolog)
 
 (defun install-standard-predicate (clauses)

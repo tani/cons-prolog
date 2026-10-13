@@ -1,4 +1,4 @@
-(defpackage #:sprolog/src/runtime (:use #:cl #:sprolog/src/term-ops))
+(defpackage #:sprolog/src/kernel/runtime (:use #:cl #:sprolog/src/adapters/term-ops))
 (in-package #:sprolog)
 
 ;;; Runtime goal compilation uses existing logic variables as Y-register roots.

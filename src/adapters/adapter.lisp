@@ -1,4 +1,4 @@
-(defpackage #:sprolog/src/adapter (:use #:cl #:sprolog/src/arithmetic))
+(defpackage #:sprolog/src/adapters/adapter (:use #:cl #:sprolog/src/adapters/arithmetic))
 (in-package #:sprolog)
 
 ;;; Database-local flags and stream aliases.

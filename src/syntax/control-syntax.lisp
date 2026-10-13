@@ -1,4 +1,4 @@
-(defpackage #:sprolog/src/control-syntax (:use #:cl #:sprolog/src/dcg))
+(defpackage #:sprolog/src/syntax/control-syntax (:use #:cl #:sprolog/src/syntax/dcg))
 (in-package #:sprolog)
 
 (defun source-meta-goal-p (goal)

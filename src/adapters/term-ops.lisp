@@ -1,4 +1,4 @@
-(defpackage #:sprolog/src/term-ops (:use #:cl #:sprolog/src/registry))
+(defpackage #:sprolog/src/adapters/term-ops (:use #:cl #:sprolog/src/api/registry))
 (in-package #:sprolog)
 
 (defpackage #:sprolog/atoms (:use))

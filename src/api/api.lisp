@@ -1,6 +1,6 @@
 ;; ASDF infers load order from this dependency package. Implementation symbols
 ;; stay in SPROLOG so the public API and internal symbol identities are stable.
-(defpackage #:sprolog/src/api (:use #:cl #:sprolog/src/host-syntax))
+(defpackage #:sprolog/src/api/api (:use #:cl #:sprolog/src/syntax/host-syntax))
 (in-package #:sprolog)
 
 (defmacro --> (head &body body)

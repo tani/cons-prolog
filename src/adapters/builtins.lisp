@@ -1,4 +1,4 @@
-(defpackage #:sprolog/src/builtins (:use #:cl #:sprolog/src/streams))
+(defpackage #:sprolog/src/adapters/builtins (:use #:cl #:sprolog/src/adapters/streams))
 (in-package #:sprolog)
 
 (defun iso-enumerate (vm name args)

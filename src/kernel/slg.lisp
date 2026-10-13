@@ -1,6 +1,6 @@
 ;; ASDF infers load order from this dependency package. Implementation symbols
 ;; stay in SPROLOG so the public API and internal symbol identities are stable.
-(defpackage #:sprolog/src/slg (:use #:cl #:sprolog/src/wam-compiler))
+(defpackage #:sprolog/src/kernel/slg (:use #:cl #:sprolog/src/syntax/wam-compiler))
 (in-package #:sprolog)
 
 ;; Copying SLG: each consumer owns an isolated WAM continuation. The work queue

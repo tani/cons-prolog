@@ -1,4 +1,4 @@
-(defpackage #:sprolog/src/streams (:use #:cl #:sprolog/src/collection))
+(defpackage #:sprolog/src/adapters/streams (:use #:cl #:sprolog/src/adapters/collection))
 (in-package #:sprolog)
 
 ;;; Streams and options.

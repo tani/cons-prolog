@@ -1,4 +1,4 @@
-(defpackage #:sprolog/src/let-syntax (:use #:cl #:sprolog/src/slg))
+(defpackage #:sprolog/src/syntax/let-syntax (:use #:cl #:sprolog/src/kernel/slg))
 (in-package #:sprolog)
 
 (defstruct lexical-binding getter setter)

@@ -1,4 +1,4 @@
-(defpackage #:sprolog/src/collection (:use #:cl #:sprolog/src/dynamic))
+(defpackage #:sprolog/src/adapters/collection (:use #:cl #:sprolog/src/adapters/dynamic))
 (in-package #:sprolog)
 
 (defun iso-child-solutions (vm template goal free)

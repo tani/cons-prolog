@@ -27,7 +27,9 @@ the query/definition macros.
 
 ## Supported builtins
 
-`src/builtins.lisp` registers 101 core predicate indicators, plus seven aliases.
+The registry exposes 101 public predicate indicators, plus seven aliases.
+`src/adapters/builtins.lisp` registers primitive adapters and syntax;
+`src/library/standard-library.lisp` installs the derived predicates.
 `(sprolog:builtin-predicate-inventory)` lists the core indicators by name/arity;
 aliases are listed below. This inventory excludes user predicates and separate
 DCG/SLG APIs such as PHRASE and TNOT.

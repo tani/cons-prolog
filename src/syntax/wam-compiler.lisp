@@ -1,6 +1,6 @@
 ;; ASDF infers load order from this dependency package. Implementation symbols
 ;; stay in SPROLOG so the public API and internal symbol identities are stable.
-(defpackage #:sprolog/src/wam-compiler (:use #:cl #:sprolog/src/compiler))
+(defpackage #:sprolog/src/syntax/wam-compiler (:use #:cl #:sprolog/src/syntax/compiler))
 (in-package #:sprolog)
 
 (defun structure-fields (term)

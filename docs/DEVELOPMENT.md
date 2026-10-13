@@ -3,12 +3,12 @@
 ## ASDF
 
 `sprolog.asd` defines a `package-inferred-system`. Loading `sprolog` loads
-`sprolog/src/standard-library` and its inferred prerequisites; testing it loads
+`sprolog/src/library/standard-library` and its inferred prerequisites; testing it loads
 `sprolog/tests`, which calls the existing `run-tests` entry point.
 There is no hand-maintained component list.
 
-The public package has canonical name `sprolog/src/package` and nickname
-`sprolog`. Each source file declares a `sprolog/src/<file>` dependency package,
+The public package has canonical name `sprolog/src/api/package` and nickname
+`sprolog`. Each source file declares a `sprolog/src/<layer>/<file>` dependency package,
 then evaluates its implementation in `sprolog`. These dependency packages
 are intentionally empty: the WAM modules share structures, internal symbols,
 and mutually recursive functions. This preserves their identities without
@@ -78,3 +78,18 @@ For SBCL's explicit small-stack regression, run:
 ```sh
 sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 ```
+
+## Source layers
+
+| Directory | Responsibility |
+| --- | --- |
+| `src/api/` | Public package, Lisp query/definition API, protected predicate registry |
+| `src/kernel/` | Execution machine, WAM instructions, GC, SLG, meta-call and exceptions |
+| `src/syntax/` | Clause compiler, lowering, DCG and lexical/control source expansion |
+| `src/adapters/` | Term graphs, host types, arithmetic, dynamic database, solution collection, streams, dispatch |
+| `src/library/` | Derived predicates compiled from ordinary Prolog clauses |
+
+Directory boundaries describe responsibility; they are not independent ASDF
+systems or isolated Common Lisp namespaces. Dependency packages still express
+the inferred load order, including mutually dependent compiler/runtime hooks.
+All implementation definitions retain their existing `SPROLOG` symbol identities.

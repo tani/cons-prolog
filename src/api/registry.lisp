@@ -1,4 +1,4 @@
-(defpackage #:sprolog/src/registry (:use #:cl #:sprolog/src/api))
+(defpackage #:sprolog/src/api/registry (:use #:cl #:sprolog/src/api/api))
 (in-package #:sprolog)
 
 (defvar *iso-builtins* (make-hash-table :test 'equal))

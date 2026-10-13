@@ -1,6 +1,6 @@
 ;; ASDF infers load order from this dependency package. Implementation symbols
 ;; stay in SPROLOG so the public API and internal symbol identities are stable.
-(defpackage #:sprolog/src/engine (:use #:cl #:sprolog/src/package))
+(defpackage #:sprolog/src/kernel/engine (:use #:cl #:sprolog/src/api/package))
 (in-package #:sprolog)
 
 

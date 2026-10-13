@@ -1,4 +1,4 @@
-(defpackage #:sprolog/src/package
+(defpackage #:sprolog/src/api/package
   (:nicknames #:sprolog)
   (:use #:cl)
   (:export #:<- #:<-- #:?- #:prolog #:--> #:---> #:phrase #:dcg-expand #:query #:make-query #:next-solution

@@ -1,4 +1,4 @@
-(defpackage #:sprolog/tests/tests (:nicknames #:sprolog/tests) (:use #:cl #:sprolog #:sprolog/src/standard-library) (:export #:run-tests))
+(defpackage #:sprolog/tests/tests (:nicknames #:sprolog/tests) (:use #:cl #:sprolog #:sprolog/src/library/standard-library) (:export #:run-tests))
 (in-package #:sprolog/tests)
 (defmacro solutions (&body goals)
   `(query ,(sprolog::goals-form goals)))

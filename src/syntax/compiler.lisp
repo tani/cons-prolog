@@ -1,6 +1,6 @@
 ;; ASDF infers load order from this dependency package. Implementation symbols
 ;; stay in SPROLOG so the public API and internal symbol identities are stable.
-(defpackage #:sprolog/src/compiler (:use #:cl #:sprolog/src/control-syntax))
+(defpackage #:sprolog/src/syntax/compiler (:use #:cl #:sprolog/src/syntax/control-syntax))
 (in-package #:sprolog)
 
 (defstruct predicate (clauses nil) (code #()) adapter-context)
