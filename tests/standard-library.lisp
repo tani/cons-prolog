@@ -49,6 +49,13 @@
       (check (iso-error-p '((number_chars 1/2 ?chars)) "type_error"))
       (check (iso-error-p '((sub_atom abc -1 ?n ?after ?sub)) "domain_error"))
       (check (iso-error-p '((sub_atom abc ?before ?n ?after 42)) "type_error")))
+    (dolist (case '((0 (48)) (12 (49 50)) (-12 (45 49 50))
+                    (12345678901234567890 (49 50 51 52 53 54 55 56 57 48
+                                          49 50 51 52 53 54 55 56 57 48))))
+      (let ((*print-base* 16) (*print-radix* t) (*print-readably* t))
+        (check (equal (second case)
+                      (value-of '?codes (car (query (list (list 'number_codes (first case) '?codes))))))
+               "number output uses decimal digits without Lisp radix syntax")))
     (<-- (remove-me a) fail) (<- (remove-me b)) (<- (remove-me a))
     (check (query '((retractall (remove-me a)) (remove-me ?x) (== ?x b)))
            "retractall matches heads of both rules and facts")

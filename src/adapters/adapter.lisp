@@ -126,8 +126,11 @@
   (let* ((n (iso-integer x)) (ch (and (<= 0 n #x10ffff) (not (<= #xd800 n #xdfff)) (code-char n))))
     (unless ch (iso-error "representation_error" (iso-atom "character_code"))) ch))
 (defun iso-number-string (number)
+  ;; CLISP prints readable integers with a trailing dot (e.g. "12.").
+  ;; Prolog numeric text is decimal and must not depend on Lisp printer settings.
   (let ((*read-default-float-format* 'double-float))
-    (substitute #\e #\d (string-downcase (write-to-string number :readably t)))))
+    (substitute #\e #\d
+                (string-downcase (write-to-string number :readably nil :base 10 :radix nil)))))
 (defun iso-parse-number (text)
   (let* ((text (string-left-trim '(#\Space #\Tab #\Newline #\Return #\Page) text))
          (sign (if (and (plusp (length text)) (char= (char text 0) #\-)) -1 1))
