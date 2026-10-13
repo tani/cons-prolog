@@ -119,16 +119,16 @@ through runtime entry. Punctuation aliases keep their previous meanings.
 
 ## Validation
 
-- SBCL 2.2.9: the complete suite passes **4,320 checks**, including the existing
-  100,000-step tail-call and 10,000-token DCG checks, with a **1 MiB control stack**.
+- SBCL 2.2.9 and CLISP 2.49.93+: the complete suite passes **4,324 checks**, including the existing
+  100,000-step tail-call and 10,000-token DCG checks, with a **1 MiB control stack** on SBCL.
 - New tests cover registry separation/protection, clearing databases, repeat,
   caller cut scope, failed partial unification, cyclic copies, character conversion
   modes, substring ordering, dynamic rules/callbacks, SLG, and context restoration.
 - `tests/derived-observations.lisp` produces identical normalized observations
   against `3504d947` and this branch, including solutions, variable aliases,
   cyclic graph shape, error terms, answer order, EOF, and output effects.
-- Other Lisp implementations have not been run in this environment. The existing
-  multi-implementation Nix/CI configuration remains the verification mechanism.
+- Other Lisp implementations have not been run locally. The multi-implementation
+  Nix/CI configuration remains the verification mechanism for the full platform matrix.
 - These finite checks are regression evidence, not a universal equivalence proof.
 
 To reproduce the comparison, run the observation script once per checkout and
@@ -142,7 +142,7 @@ diff -u before.txt after.txt
 
 ## Implementation packages
 
-A clean-cache SBCL build passes 4,320 checks, including package ownership and
+A clean-cache SBCL build passes 4,324 checks, including package ownership and
 facade isolation checks; the observation comparison remains identical.
 
 The package refactoring uses `uiop:define-package` and matching `in-package`

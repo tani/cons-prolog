@@ -76,6 +76,11 @@ runs on each implementation, including one million tail calls and deep terms.
 
 ## Portability
 
+Numeric text output fixes the radix to decimal and disables Lisp readable/radix
+syntax. CLISP prints integers such as `12` as `12.` under `:readably t`; that
+notation must not enter `number_codes` or the derived `number_chars` relation.
+Regression cases cover zero, signed integers, bignums, and nondefault printer settings.
+
 The default halt hook uses `uiop:quit`. Globally special Lisp variables are
 rejected by the `let` bridge: SBCL uses its declaration introspection, and
 other implementations use an ANSI CL compiled binding probe.
