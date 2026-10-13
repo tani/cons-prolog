@@ -1,14 +1,10 @@
 ;; ASDF infers load order from this dependency package. Implementation symbols
 ;; stay in SPROLOG so the public API and internal symbol identities are stable.
-(defpackage #:sprolog/src/compiler (:use #:cl #:sprolog/src/dcg))
+(defpackage #:sprolog/src/compiler (:use #:cl #:sprolog/src/control-syntax))
 (in-package #:sprolog)
 
 (defstruct predicate (clauses nil) (code #()) adapter-context)
 (defstruct host-goal function arguments output testp)
-(defstruct lexical-binding getter setter)
-(defun lexical-binding-value (binding) (funcall (lexical-binding-getter binding)))
-(defun (setf lexical-binding-value) (value binding)
-  (funcall (lexical-binding-setter binding) value))
 (defstruct sequence-goals goals)
 (defun variable-symbol-p (x)
   (and (symbolp x)
@@ -43,6 +39,10 @@
   (let ((symbol (if (and (consp goal) (null (cdr goal))) (car goal) goal)))
     (and (symbolp symbol) (string= (symbol-name symbol) name))))
 (defun goal-instructions (goal table counter tailp)
+  (when (and (consp goal) (symbolp (car goal))
+             (member (iso-predicate-name (car goal) (length (cdr goal)))
+                     '("ONCE" "\\+") :test #'string=))
+    (validate-static-meta-goal goal))
   (flet ((template (x) (term-template x table counter)))
     (cond
       ((iso-control-form-p goal)

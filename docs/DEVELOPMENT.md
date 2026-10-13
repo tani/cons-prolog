@@ -3,7 +3,7 @@
 ## ASDF
 
 `sprolog.asd` defines a `package-inferred-system`. Loading `sprolog` loads
-`sprolog/src/builtins` and its inferred prerequisites; testing it loads
+`sprolog/src/standard-library` and its inferred prerequisites; testing it loads
 `sprolog/tests`, which calls the existing `run-tests` entry point.
 There is no hand-maintained component list.
 

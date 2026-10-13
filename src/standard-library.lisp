@@ -6,7 +6,7 @@
   (let ((key (predicate-key (caar clauses))))
     (setf (gethash (cons (string-upcase (symbol-name (car key))) (cdr key))
                    *standard-predicates*)
-          (make-predicate :clauses clauses  :code (compile-predicate clauses)
+          (make-predicate :clauses clauses :code (compile-predicate clauses)
                           :adapter-context
                           (member (string-upcase (symbol-name (car key)))
                                   '("OPEN" "CLOSE" "HALT" "NL" "FLUSH_OUTPUT"
@@ -70,7 +70,7 @@
   (dolist (clauses
            '((((copy_term ?term ?copy) (findall ?term true (?copy))))
              (((retractall ?head) (%ensure_dynamic ?head) (%retractall ?head)))
-             (((%retractall ?head) (retract (rule ?head ?body)) fail)
+             (((%retractall ?head) (%retract_head ?head) fail)
               ((%retractall ?head)))))
     (install-standard-predicate clauses)))
 

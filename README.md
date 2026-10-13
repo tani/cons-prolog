@@ -109,6 +109,7 @@ See the [documentation index](docs/README.md).
 
 - [User guide](docs/MANUAL.md): terms, queries, Lisp callbacks, DCGs, SLG, WAM, GC and limitations
 - [Builtins](docs/BUILTINS.md): supported predicates and Lisp-friendly names
+- [Implementation layers](docs/PRIMITIVES.md): primitives, syntax, and derived predicates
 - [Validation](docs/VALIDATION.md): semantic coverage and stress tests
 - [Benchmarks](docs/BENCHMARKS.md): timings, allocation profiles and bottlenecks
 - [Roadmap](docs/ROADMAP.md) and [changelog](CHANGELOG.md)

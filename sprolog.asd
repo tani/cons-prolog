@@ -9,7 +9,7 @@
 ;; The inferred module packages declare dependencies while implementation
 ;; definitions share SPROLOG. Map its public nickname to the defining module.
 (asdf:register-system-packages "sprolog/src/package" '("SPROLOG"))
-(asdf:register-system-packages "sprolog/src/builtins" '("SPROLOG/ATOMS"))
+(asdf:register-system-packages "sprolog/src/term-ops" '("SPROLOG/ATOMS"))
 (asdf:register-system-packages "sprolog/tests/tests" '("SPROLOG/TESTS"))
 
 (asdf:defsystem "sprolog/tests"

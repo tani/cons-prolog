@@ -164,7 +164,7 @@
     (fill (machine-args vm) nil)
     (maybe-collect vm)))
 (defun invoke-predicate (vm name arity tailp)
-  (when (iso-primitive-p name arity)
+  (when (or (iso-primitive-p name arity) (iso-syntax-p name arity))
     (return-from invoke-predicate (iso-invoke vm name arity tailp)))
   (setf name (iso-resolve-name (machine-database vm) name arity))
   (when (gethash (cons name arity) (database-tabled (machine-database vm)))

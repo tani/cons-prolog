@@ -124,3 +124,9 @@ expressions. It is compiled by source macros and is not a core predicate
 indicator. See [the user guide](MANUAL.md#lexical-let) for scope, declarations,
 backtracking and embedding restrictions. Allegro-style dynamic `let*` is not
 implemented.
+
+## Implementation layers
+
+The public inventory is unchanged. 31 indicators now run as ordinary protected
+Prolog clauses; see [implementation layers](PRIMITIVES.md) for the classification,
+private adapter boundary, source organization, and validation results.

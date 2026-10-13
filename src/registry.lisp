@@ -9,22 +9,36 @@
   (dolist (arity arities) (setf (gethash (cons (string-upcase name) arity) *iso-builtins*) t)))
 (defun iso-primitive-p (name arity)
   (and (symbolp name)
-       (let ((key (cons (string-upcase (symbol-name name)) arity)))
-         (or (gethash key *iso-builtins*) (gethash (cons (or (gethash key *iso-aliases*) (car key)) arity) *iso-builtins*)))))
+       (gethash (cons (iso-predicate-name name arity) arity) *iso-builtins*)))
+(defvar *syntax-predicates* (make-hash-table :test 'equal))
+(defun iso-syntax-p (name arity)
+  (and (symbolp name)
+       (gethash (cons (iso-predicate-name name arity) arity) *syntax-predicates*)))
+(defun syntax-register (name arities)
+  (dolist (arity arities)
+    (setf (gethash (cons (string-upcase name) arity) *syntax-predicates*) t)))
 (defvar *standard-predicates* (make-hash-table :test 'equal))
 (defun standard-predicate (name arity)
   (and (symbolp name)
        (gethash (cons (iso-predicate-name name arity) arity) *standard-predicates*)))
 (defun iso-builtin-p (name arity)
   "Protected public names: primitives, syntax, and derived library predicates."
-  (or (iso-primitive-p name arity) (standard-predicate name arity)))
-(defun builtin-predicate-inventory ()
-  "Return all public predicate indicators, including the derived library."
-  (sort (remove-duplicates
-         (append (loop for key being the hash-keys of *iso-builtins*
-                       unless (char= #\% (char (car key) 0)) collect (copy-tree key))
-                 (loop for key being the hash-keys of *standard-predicates*
-                       unless (char= #\% (char (car key) 0)) collect (copy-tree key)))
-         :test #'equal)
-        (lambda (a b) (or (string< (car a) (car b))
-                         (and (string= (car a) (car b)) (< (cdr a) (cdr b)))))))
+  (or (iso-primitive-p name arity) (iso-syntax-p name arity)
+      (standard-predicate name arity)))
+(defun builtin-predicate-inventory (&key (kind :all))
+  "Public indicators by implementation KIND: :ALL, :PRIMITIVE, :SYNTAX, :DERIVED."
+  (unless (member kind '(:all :primitive :syntax :derived))
+    (error "Unknown predicate implementation kind: ~S" kind))
+  (let ((registries (if (eq kind :all)
+                        (list *iso-builtins* *syntax-predicates* *standard-predicates*)
+                        (list (ecase kind
+                                (:primitive *iso-builtins*)
+                                (:syntax *syntax-predicates*)
+                                (:derived *standard-predicates*))))))
+    (sort (remove-duplicates
+           (loop for registry in registries append
+             (loop for key being the hash-keys of registry
+                   unless (char= #\% (char (car key) 0)) collect (copy-tree key)))
+           :test #'equal)
+          (lambda (a b) (or (string< (car a) (car b))
+                           (and (string= (car a) (car b)) (< (cdr a) (cdr b))))))))

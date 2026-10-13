@@ -91,4 +91,5 @@
     (run-interactive-tests)
     (run-let-tests)
     (run-standard-library-tests)
+    (run-derived-adapter-tests)
     (format t "~D checks passed.~%" *checks*) t))
