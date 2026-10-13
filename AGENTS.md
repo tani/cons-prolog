@@ -28,3 +28,7 @@
   `src/adapters/`, and `src/library/`. Dependency package names must match
   `sprolog/src/<layer>/<file>`. Implementation namespaces are distinct. Match package dependencies to the
   actual interfaces and initialization requirements; internal names are not facade API.
+
+- FUNCTOR, ARG and UNIV interpret nonempty proper lists as symbol-name plus finite
+  arguments, matching call name/arity. Reject open/improper/cyclic outer spines;
+  retain arbitrary graphs inside arguments. Zero-arity construction yields atoms.

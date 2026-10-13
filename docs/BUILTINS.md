@@ -86,20 +86,35 @@ keeps every answer in execution order.
 
 ## Cons inspection, order, and collections
 
-Every cons, including a proper list and `(f)`, has functor `cons` and arity 2.
-`arg/3` selects CAR at index 1 and CDR at index 2; index 0 or greater than 2
-fails. Non-cons Lisp values have arity 0. Constructing a positive-arity term
-requires the name `cons` and arity 2; other shapes raise `domain_error`.
-`=../2` maps a cons to `(cons car cdr)` and a non-cons value to `(value)`.
-The marker is interpreted only by these predicates: literal `(cons a b)` still
-has CAR CONS and CDR `(a b)`. Inspection and construction support rational trees.
+For a nonempty proper list `(name arg1 ... argN)`, `functor/3` returns the
+symbol NAME and arity N. `arg/3` selects ARG1 at index 1, and so on; zero or
+out-of-range indices fail. Non-cons Lisp values have arity 0 and ARG fails.
+`=../2` decomposes a list application to `(name arg1 ... argN)` and a non-cons
+value to `(value)`. There is no special CONS marker or constructor.
 
 ```lisp
-(query '((functor (f a b) cons 2) (arg 2 (f a b) ?tail))) ; ?tail = (a b)
-(query '((=.. ?pair (cons a b))))                         ; ?pair = (a . b)
-(query '((sort (3 1 2 1) ?sorted)))                      ; ?sorted = (1 2 3)
+(query '((functor (f a b) f 2) (arg 2 (f a b) ?arg))) ; ?arg = b
+(query '((=.. ?term (f a b))))                      ; ?term = (f a b)
+(query '((functor ?term f 2)))                      ; ?term = (f ?fresh1 ?fresh2)
+(query '((=.. ?term (f))))                          ; ?term = f
+(query '((sort (3 1 2 1) ?sorted)))
 (query '((keysort ((2 . b) (1 . a) (2 . c)) ?pairs)))
 ```
+
+These operations match predicate-call name, arity and argument positions.
+Lists and compounds remain indistinguishable: `(a b c)` has name A and arity 2.
+A list application's head must be an instantiated symbol. A variable head or
+open argument tail raises `instantiation_error`; a non-symbol head or improper
+tail raises `type_error`; a cyclic outer spine raises
+`representation_error(finite_arity)`. The checks traverse only the outer spine:
+arguments may be unbound, shared, improper or cyclic graphs. Bound tail variables
+are dereferenced. Validation and construction use iterative traversal.
+
+Construction at arity 0 produces the non-cons name. In particular, F and `(f)`
+both decompose to `(f)`; reconstruction canonicalizes `(f)` to the atom F.
+Unification continues to distinguish F from `(f)`. Positive-arity construction
+requires a symbol name and retains argument sharing. An empty UNIV input list
+raises `domain_error(non_empty_list)`. No tag or source-origin metadata is added.
 
 `compare/3` and `@</2`, `@=</2`, `@>/2`, `@>=/2` use the order
 variable < number < symbol < other Lisp non-cons object < cons. Cons comparison

@@ -155,7 +155,7 @@ benchmarks. See [Development](DEVELOPMENT.md) for cycle boundaries and dispatch 
 ## Cons-model operations and S-expression I/O
 
 `term-relations.lisp` owns FUNCTOR, ARG, UNIV, COMPARE, SORT and KEYSORT.
-**Retention:** graph decomposition/construction and dereferencing variable
+**Retention:** finite application decomposition/construction and dereferencing variable
 identity require the host boundary. Sorting accesses variable and opaque Lisp
 identity through the same comparator; it copies only the input list spine.
 The four order comparisons and SETOF remain ordinary clauses over COMPARE,

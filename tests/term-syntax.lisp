@@ -37,7 +37,7 @@
                          (write_canonical . 1) (write_canonical . 2) (write_term . 2) (write_term . 3)
                          (op . 3) (current_op . 3) (char_conversion . 2) (current_char_conversion . 2)))
       (check (sprolog/src/api/registry:iso-builtin-p (car indicator) (cdr indicator)) "cons-model builtin is registered"))
-    (check (query '((functor (f a) cons 2))) "cons is the only positive-arity functor")
+    (check (query '((functor (f a) f 1))) "term arity matches call arity")
     (let ((ring (cons 'f nil)))
       (setf (cdr ring) ring)
       (let ((answer (value-of '?x (car (query (list (list '= '?x ring)) :gc-threshold 1)))))

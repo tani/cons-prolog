@@ -1,5 +1,8 @@
 # Unreleased
 
+- Align FUNCTOR, ARG and UNIV with predicate-call name and finite argument count;
+  canonicalize zero-arity construction to atoms and retain arbitrary argument graphs.
+
 - Add 27 ISO-named predicate indicators with Lisp-native cons semantics:
   cons inspection/construction, term order, sorting/SETOF, S-expression term I/O,
   and database-local future-reader operator/character configuration.

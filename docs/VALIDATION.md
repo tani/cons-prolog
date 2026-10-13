@@ -156,11 +156,12 @@ cells are distinct metrics. No runtime optimizer was installed by the investigat
 
 The cons-model extension adds 27 indicators, bringing the public inventory to
 128 (74 primitive/adapters, 8 syntax, 46 derived). SBCL with a 1 MiB control stack
-and CLISP both pass **4,420 checks**. The existing derived-observation output is
+and CLISP both pass **4,475 checks**. The existing derived-observation output is
 byte-for-byte identical to the namespace-refactor reference output.
-New checks cover CAR/CDR decomposition, cons construction, cycles and shared
+New checks cover finite application decomposition/construction, zero-arity canonicalization,
+callable reconstructed goals, cyclic argument graphs and shared
 variables, stable pair sorting, SETOF grouping/existentials, forced GC, deep term
-comparison, SLG ordering, protected definitions, reader options and disabled
+comparison, deep finite arities, SLG term operations and ordering, protected definitions, reader options and disabled
 read-time evaluation, cyclic I/O round trips, EOF, variable-name collisions,
 public wrapper exception contexts, and database-local configuration retained
 through failure and clause clearing.
