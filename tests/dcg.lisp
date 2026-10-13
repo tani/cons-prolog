@@ -1,5 +1,9 @@
-(defpackage #:sprolog/tests/dcg (:use #:cl #:sprolog/tests/wam-gc))
-(in-package #:sprolog/tests)
+(uiop:define-package #:sprolog/tests/dcg
+  (:use #:cl #:sprolog)
+  (:import-from #:sprolog/tests/tests #:check #:solutions #:value-of)
+  (:import-from #:sprolog/tests/wam-gc #:normalize-solutions #:palette #:red #:blue)
+  (:export #:run-dcg-tests #:signals-error-p))
+(in-package #:sprolog/tests/dcg)
 (defun signals-error-p (thunk)
   (handler-case (progn (funcall thunk) nil) (error () t)))
 (defun run-dcg-tests ()
@@ -131,11 +135,11 @@
   (check (null (solutions (phrase (replace-grammar) ( old)))) "DCG replacement removes old rules")
   (check (equal (solutions (phrase (replace-grammar) ( new))) '(nil)))
   ;; All eighteen term operations remain exercised by actual source programs.
-  (let* ((original (symbol-function 'sprolog::execute-term-instruction))
+  (let* ((original (symbol-function 'sprolog/src/kernel/wam:execute-term-instruction))
          (seen (make-hash-table)))
     (unwind-protect
          (progn
-           (setf (symbol-function 'sprolog::execute-term-instruction)
+           (setf (symbol-function 'sprolog/src/kernel/wam:execute-term-instruction)
                  (lambda (vm op args) (setf (gethash op seen) t) (funcall original vm op args)))
            (<-- (opcode-atom a))
            (<-- (opcode-shape ( node ?x ?x a ?)))
@@ -149,7 +153,7 @@
            (solutions (opcode-list ?out))
            (solutions (opcode-produce ?out))
            (check (= 18 (hash-table-count seen)) "all 18 term instructions run from S-expression source"))
-      (setf (symbol-function 'sprolog::execute-term-instruction) original)))
+      (setf (symbol-function 'sprolog/src/kernel/wam:execute-term-instruction) original)))
   ;; Match hand-written difference-list rules independently of the DCG expander.
   (<-- (manual-choice first ( a . ( b  . ?rest)) ?rest))
   (<- (manual-choice second ( a . ( b  . ?rest)) ?rest))
@@ -173,7 +177,7 @@
   (--> (many))
   (let* ((tokens (loop repeat 10000 collect 'a))
          (vm (make-query
-              (list (sprolog::make-host-goal :function (lambda () tokens) :output '?tokens)
+              (list (sprolog/src/kernel/model:make-host-goal :function (lambda () tokens) :output '?tokens)
                     '(phrase (many) ?tokens)) :gc-threshold 64)))
     (unwind-protect
          (progn

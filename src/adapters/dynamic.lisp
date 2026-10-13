@@ -1,5 +1,30 @@
-(defpackage #:sprolog/src/adapters/dynamic (:use #:cl #:sprolog/src/adapters/adapter))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/adapters/dynamic
+  (:use #:cl)
+  (:import-from #:sprolog/src/adapters/adapter
+    #:iso-state-for)
+  (:import-from #:sprolog/src/adapters/term-ops
+    #:iso-atom #:iso-compound #:iso-error #:iso-integer #:iso-parts #:iso-required #:iso-text
+    #:iso-unifiable-p)
+  (:import-from #:sprolog/src/api/registry
+    #:iso-builtin-p)
+  (:import-from #:sprolog/src/kernel/engine
+    #:deref #:instantiate #:map-term #:predicate-key #:reify)
+  (:import-from #:sprolog/src/kernel/model
+    #:%make-var #:database-generation #:database-predicates #:database-tabled #:host-goal-p
+    #:iso-state-dynamic #:logic-var-binding #:logic-var-p #:machine-database #:make-predicate
+    #:predicate-clauses #:slot-ref-index #:slot-ref-p)
+  (:import-from #:sprolog/src/kernel/runtime
+    #:iso-goal #:iso-predicate-name #:iso-resolve-name #:iso-result #:iso-rule-functor-p)
+  (:import-from #:sprolog/src/syntax/compiler
+    #:compile-predicate #:term-template)
+  (:import-from #:sprolog/src/kernel/protocol)
+  (:import-from #:sprolog/src/api/state)
+  (:import-from #:sprolog/src/kernel/instructions)
+  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:export #:iso-body-list #:iso-body-term #:iso-check-modifiable #:iso-clause-alternatives
+    #:iso-clause-parts #:iso-indicator #:iso-modify #:iso-publish))
+(in-package #:sprolog/src/adapters/dynamic)
+
 
 ;;; Dynamic predicates use immutable clause/code snapshots (logical update view).
 (defun iso-clause-parts (term)
@@ -105,3 +130,7 @@
                                  (iso-publish db key (remove selected (predicate-clauses current) :test #'eq :count 1))))))))
                       results))))))
       (nreverse results))))
+
+(eval-when (:load-toplevel :execute)
+  (register-provider 'sprolog/src/kernel/protocol:iso-modify 'iso-modify)
+)

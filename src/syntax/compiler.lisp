@@ -1,11 +1,33 @@
-;; ASDF infers load order from this dependency package. Implementation symbols
-;; stay in SPROLOG so the public API and internal symbol identities are stable.
-(defpackage #:sprolog/src/syntax/compiler (:use #:cl #:sprolog/src/syntax/control-syntax))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/syntax/compiler
+  (:use #:cl)
+  (:import-from #:sprolog/src/kernel/engine
+    #:*database* #:close-query #:deref #:fresh-var #:map-term #:next-solution #:predicate-key
+    #:unify)
+  (:import-from #:sprolog/src/kernel/instructions
+    #:allocate #:call #:cut #:dcg-internal #:execute #:fail #:get-term #:host #:jump
+    #:or-branches #:proceed #:put-args #:retry-me-else #:scoped-body #:tnot #:true #:trust-me
+    #:try-branch #:try-me-else #:yield)
+  (:import-from #:sprolog/src/kernel/model
+    #:%make-machine #:database #:database-generation #:database-predicates #:database-tabled
+    #:disjunction-goal-branches #:disjunction-goal-p #:host-goal #:host-goal-arguments
+    #:host-goal-function #:host-goal-output #:host-goal-p #:host-goal-testp #:logic-var-p
+    #:machine-slots #:machine-variables #:make-predicate #:predicate #:predicate-clauses
+    #:predicate-code #:scoped-goals-goals #:scoped-goals-p #:sequence-goals
+    #:sequence-goals-goals #:sequence-goals-p #:slot-ref)
+  (:import-from #:sprolog/src/kernel/protocol
+    #:iso-atom #:iso-builtin-p #:iso-compound #:iso-error #:iso-goal #:iso-predicate-name
+    #:lower-wam-code #:table)
+  (:import-from #:sprolog/src/syntax/control-syntax
+    #:iso-control-form-p #:iso-control-instructions #:validate-static-meta-goal)
+  (:import-from #:sprolog/src/syntax/dcg
+    #:expand-query-goals)
+  (:import-from #:sprolog/src/api/state)
+  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:export #:add-clause #:anonymous-p #:clear-database #:compile-clause #:compile-predicate
+    #:control-goal-p #:disassemble-predicate #:goal-instructions #:make-query #:query
+    #:term-template #:variable-symbol-p #:variables-in))
+(in-package #:sprolog/src/syntax/compiler)
 
-(defstruct predicate (clauses nil) (code #()) adapter-context)
-(defstruct host-goal function arguments output testp)
-(defstruct sequence-goals goals)
 (defun variable-symbol-p (x)
   (and (symbolp x)
        (not (and (find-package :sprolog/atoms)
@@ -165,3 +187,9 @@
     (unless p (error "Unknown predicate ~S/~D" name arity))
     (loop for instruction across (predicate-code p) for pc from 0 do
       (format stream "~4D  ~S~%" pc instruction))))
+
+(eval-when (:load-toplevel :execute)
+  (register-provider 'sprolog/src/kernel/protocol:goal-instructions 'goal-instructions)
+  (register-provider 'sprolog/src/kernel/protocol:query 'query)
+  (register-provider 'sprolog/src/kernel/protocol:variable-symbol-p 'variable-symbol-p)
+)

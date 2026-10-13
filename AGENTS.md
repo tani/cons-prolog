@@ -12,8 +12,11 @@
   clears user state and must preserve the shared base library.
 - Preserve error class, argument validation order, public error context, answer
   order, variable sharing, rational trees, cut scope, and logical update view.
-- Dependency packages express ASDF inferred load order; implementation definitions
-  retain their symbols in `SPROLOG`. Update dependency packages when moving files.
+- Use `uiop:define-package`; enter that exact package with `in-package`. Each
+  module owns its definitions and explicitly imports/exports its interfaces.
+  Reserve the `sprolog` nickname and public API reexports for `src/api/package.lisp`.
+  Break execution cycles through the model, instruction vocabulary, and explicit
+  late hooks rather than defining implementation functions in another package.
 - For predicate/compiler changes, run `tests/run.lisp` with a 1 MiB control stack.
   Compare `tests/derived-observations.lisp` with the reference revision when changing
   derived definitions. Include cyclic terms, callbacks, SLG, and forced GC where relevant.
@@ -22,5 +25,5 @@
 
 - Keep source responsibilities in `src/api/`, `src/kernel/`, `src/syntax/`,
   `src/adapters/`, and `src/library/`. Dependency package names must match
-  `sprolog/src/<layer>/<file>`. Directory layers share implementation symbols
-  and do not imply an acyclic architecture or separately loadable products.
+  `sprolog/src/<layer>/<file>`. Implementation namespaces are distinct. Match package dependencies to the
+  actual interfaces and initialization requirements; internal names are not facade API.

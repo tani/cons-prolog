@@ -1,23 +1,29 @@
-(defpackage #:sprolog/src/api/registry (:use #:cl #:sprolog/src/api/api))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/api/registry
+  (:use #:cl)
+  (:import-from #:sprolog/src/api/state
+    #:*iso-aliases* #:*iso-builtins* #:*iso-context* #:*iso-halt-function*
+    #:*standard-predicates* #:*syntax-predicates*)
+  (:import-from #:sprolog/src/kernel/protocol
+    #:iso-predicate-name)
+  (:import-from #:sprolog/src/kernel/model)
+  (:import-from #:sprolog/src/kernel/instructions)
+  (:import-from #:sprolog/src/api/api)
+  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:export #:builtin-predicate-inventory #:iso-builtin-p #:iso-primitive-p #:iso-register
+    #:iso-syntax-p #:standard-predicate #:syntax-register))
+(in-package #:sprolog/src/api/registry)
 
-(defvar *iso-builtins* (make-hash-table :test 'equal))
-(defvar *iso-aliases* (make-hash-table :test 'equal))
-(defvar *iso-context* nil)
-(defvar *iso-halt-function* (lambda (status) (uiop:quit status)))
 (defun iso-register (name arities)
   (dolist (arity arities) (setf (gethash (cons (string-upcase name) arity) *iso-builtins*) t)))
 (defun iso-primitive-p (name arity)
   (and (symbolp name)
        (gethash (cons (iso-predicate-name name arity) arity) *iso-builtins*)))
-(defvar *syntax-predicates* (make-hash-table :test 'equal))
 (defun iso-syntax-p (name arity)
   (and (symbolp name)
        (gethash (cons (iso-predicate-name name arity) arity) *syntax-predicates*)))
 (defun syntax-register (name arities)
   (dolist (arity arities)
     (setf (gethash (cons (string-upcase name) arity) *syntax-predicates*) t)))
-(defvar *standard-predicates* (make-hash-table :test 'equal))
 (defun standard-predicate (name arity)
   (and (symbolp name)
        (gethash (cons (iso-predicate-name name arity) arity) *standard-predicates*)))
@@ -42,3 +48,10 @@
            :test #'equal)
           (lambda (a b) (or (string< (car a) (car b))
                            (and (string= (car a) (car b)) (< (cdr a) (cdr b))))))))
+
+(eval-when (:load-toplevel :execute)
+  (register-provider 'sprolog/src/kernel/protocol:iso-builtin-p 'iso-builtin-p)
+  (register-provider 'sprolog/src/kernel/protocol:iso-primitive-p 'iso-primitive-p)
+  (register-provider 'sprolog/src/kernel/protocol:iso-syntax-p 'iso-syntax-p)
+  (register-provider 'sprolog/src/kernel/protocol:standard-predicate 'standard-predicate)
+)

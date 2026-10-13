@@ -1,5 +1,20 @@
-(defpackage #:sprolog/src/syntax/control-syntax (:use #:cl #:sprolog/src/syntax/dcg))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/syntax/control-syntax
+  (:use #:cl)
+  (:import-from #:sprolog/src/kernel/engine
+    #:map-term)
+  (:import-from #:sprolog/src/kernel/instructions
+    #:call #:cut #:fail #:iso-if #:or-branches #:scoped-body)
+  (:import-from #:sprolog/src/kernel/model
+    #:disjunction-goal-p #:host-goal-p #:logic-var-p #:scoped-goals-p #:sequence-goals-p)
+  (:import-from #:sprolog/src/kernel/protocol
+    #:goal-instructions #:iso-atom #:iso-error #:iso-goal #:iso-predicate-name #:table
+    #:variable-symbol-p)
+  (:import-from #:sprolog/src/api/state)
+  (:import-from #:sprolog/src/syntax/dcg)
+  (:export #:iso-control-form-p #:iso-control-instructions #:source-meta-goal-p
+    #:validate-static-meta-goal))
+(in-package #:sprolog/src/syntax/control-syntax)
+
 
 (defun source-meta-goal-p (goal)
   ;; Lexical callbacks are compiler objects, not first-class runtime terms.

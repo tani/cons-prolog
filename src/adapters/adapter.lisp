@@ -1,11 +1,27 @@
-(defpackage #:sprolog/src/adapters/adapter (:use #:cl #:sprolog/src/adapters/arithmetic))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/adapters/adapter
+  (:use #:cl)
+  (:import-from #:sprolog/src/adapters/arithmetic
+    #:iso-eval)
+  (:import-from #:sprolog/src/adapters/term-ops
+    #:iso-acyclic-p #:iso-atom #:iso-atom-p #:iso-bind #:iso-checked-unify #:iso-compound
+    #:iso-error #:iso-identical-p #:iso-integer #:iso-list #:iso-required #:iso-text
+    #:iso-unifiable-p #:iso-variables)
+  (:import-from #:sprolog/src/api/state
+    #:*iso-halt-function*)
+  (:import-from #:sprolog/src/kernel/engine
+    #:deref #:unify)
+  (:import-from #:sprolog/src/kernel/model
+    #:database #:database-iso-state #:iso-exception #:iso-state #:iso-state-aliases
+    #:iso-state-flags #:logic-var-p #:machine-database #:make-iso-state)
+  (:import-from #:sprolog/src/kernel/protocol
+    #:iso-io #:iso-modify)
+  (:import-from #:sprolog/src/kernel/instructions)
+  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:export #:iso-character #:iso-code-char #:iso-deterministic #:iso-flag-value
+    #:iso-number-string #:iso-output-integer #:iso-output-list #:iso-parse-number #:iso-set-flag
+    #:iso-state-for))
+(in-package #:sprolog/src/adapters/adapter)
 
-;;; Database-local flags and stream aliases.
-(defstruct iso-state (flags (make-hash-table :test 'equal))
-  (streams (make-hash-table :test 'eq)) (aliases (make-hash-table :test 'equal))
-  (input *standard-input*) (output *standard-output*)
-  (dynamic (make-hash-table :test 'equal)))
 (defun iso-state-for (database)
   (or (database-iso-state database)
       (setf (database-iso-state database)
@@ -138,3 +154,7 @@
             (unless (and (or (integerp value) (and (floatp value) (find #\. text))) (= pos (length text)))
               (iso-error "syntax_error" (iso-atom "number"))) value))
       (iso-exception (c) (error c)) (error () (iso-error "syntax_error" (iso-atom "number"))))))
+
+(eval-when (:load-toplevel :execute)
+  (register-provider 'sprolog/src/kernel/protocol:iso-flag-value 'iso-flag-value)
+)

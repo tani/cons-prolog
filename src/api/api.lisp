@@ -1,7 +1,21 @@
-;; ASDF infers load order from this dependency package. Implementation symbols
-;; stay in SPROLOG so the public API and internal symbol identities are stable.
-(defpackage #:sprolog/src/api/api (:use #:cl #:sprolog/src/syntax/host-syntax))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/api/api
+  (:use #:cl)
+  (:import-from #:sprolog/src/kernel/engine
+    #:close-query #:next-solution)
+  (:import-from #:sprolog/src/syntax/compiler
+    #:add-clause #:make-query)
+  (:import-from #:sprolog/src/syntax/dcg
+    #:dcg-expand)
+  (:import-from #:sprolog/src/syntax/host-syntax
+    #:goals-form)
+  (:import-from #:sprolog/src/kernel/protocol)
+  (:import-from #:sprolog/src/kernel/model)
+  (:import-from #:sprolog/src/api/state)
+  (:import-from #:sprolog/src/kernel/instructions)
+  (:export #:---> #:--> #:<- #:<-- #:?- #:display-query-answer #:interactive-query #:prolog
+    #:query-more-p))
+(in-package #:sprolog/src/api/api)
+
 
 (defmacro --> (head &body body)
   (multiple-value-bind (expanded-head expanded-body) (dcg-expand head body)

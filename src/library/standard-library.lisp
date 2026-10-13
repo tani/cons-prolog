@@ -1,5 +1,20 @@
-(defpackage #:sprolog/src/library/standard-library (:use #:cl #:sprolog/src/adapters/builtins))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/library/standard-library
+  (:use #:cl)
+  (:import-from #:sprolog/src/api/state
+    #:*standard-predicates*)
+  (:import-from #:sprolog/src/kernel/engine
+    #:predicate-key)
+  (:import-from #:sprolog/src/kernel/instructions
+    #:call #:fail #:true)
+  (:import-from #:sprolog/src/kernel/model
+    #:make-predicate)
+  (:import-from #:sprolog/src/syntax/compiler
+    #:compile-predicate)
+  (:import-from #:sprolog/src/kernel/protocol)
+  (:import-from #:sprolog/src/adapters/builtins)
+  (:export #:install-standard-predicate))
+(in-package #:sprolog/src/library/standard-library)
+
 
 (defun install-standard-predicate (clauses)
   "Compile ordinary clauses into the shared, protected base library."

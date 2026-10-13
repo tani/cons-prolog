@@ -1,5 +1,41 @@
-(defpackage #:sprolog/src/kernel/runtime (:use #:cl #:sprolog/src/adapters/term-ops))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/kernel/runtime
+  (:use #:cl)
+  (:import-from #:sprolog/src/adapters/term-ops
+    #:iso-atom #:iso-atom-name #:iso-bind #:iso-compound #:iso-copy #:iso-error #:iso-required
+    #:iso-unifiable-p)
+  (:import-from #:sprolog/src/api/state
+    #:*iso-aliases*)
+  (:import-from #:sprolog/src/kernel/engine
+    #:backtrack #:fresh-var #:push-choice #:truncate-vector #:unify #:unwind-trail)
+  (:import-from #:sprolog/src/kernel/instructions
+    #:iso-answer #:iso-catch-end #:iso-catch-fail #:proceed #:try-branch)
+  (:import-from #:sprolog/src/kernel/model
+    #:choice-age #:choice-args #:choice-builtin-context #:choice-code #:choice-continuation
+    #:choice-cut #:choice-delays #:choice-heap #:choice-lineage #:choice-pc #:choice-scopes
+    #:choice-slots #:choice-trail #:continuation-depth #:database #:database-predicates
+    #:iso-exception-term #:iso-handler #:iso-handler-catcher #:iso-handler-parent
+    #:iso-handler-recovery #:iso-handler-snapshot #:iso-handler-tailp #:logic-var-p
+    #:machine-args #:machine-builtin-context #:machine-choices #:machine-code
+    #:machine-continuation #:machine-cut #:machine-database #:machine-delays #:machine-heap
+    #:machine-iso-handlers #:machine-max-depth #:machine-pc #:machine-scopes
+    #:machine-slg-lineage #:machine-slg-worker #:machine-slots #:machine-trail #:make-choice
+    #:make-continuation #:make-iso-handler)
+  (:import-from #:sprolog/src/kernel/protocol
+    #:iso-flag-value)
+  (:import-from #:sprolog/src/kernel/slg
+    #:slg-enter-cut-frame #:table)
+  (:import-from #:sprolog/src/syntax/compiler
+    #:goal-instructions)
+  (:import-from #:sprolog/src/syntax/dcg
+    #:finite-list-p)
+  (:import-from #:sprolog/src/syntax/wam-compiler
+    #:lower-wam-code)
+  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:export #:iso-alternatives #:iso-catch #:iso-enter #:iso-execute #:iso-goal
+    #:iso-handle-exception #:iso-instruction-p #:iso-predicate-name #:iso-resolve-name
+    #:iso-result #:iso-rule-functor-p #:iso-save-continuation #:iso-unknown))
+(in-package #:sprolog/src/kernel/runtime)
+
 
 ;;; Runtime goal compilation uses existing logic variables as Y-register roots.
 (defun iso-goal (term)
@@ -56,7 +92,6 @@
     (setf (machine-code vm) code (machine-pc vm) 0) t))
 (defun iso-result (args &optional action) (cons args action))
 (defun iso-instruction-p (op) (member op '(iso-answer iso-catch-end iso-catch-fail)))
-(defstruct iso-handler snapshot catcher recovery parent tailp)
 (defun iso-execute (vm op operands)
   (case op
     (iso-answer
@@ -105,3 +140,13 @@
             (return-from iso-handle-exception (iso-enter vm recovery (iso-handler-tailp handler)))))
       (setf handler (iso-handler-parent handler)))
     (error exception)))
+
+(eval-when (:load-toplevel :execute)
+  (register-provider 'sprolog/src/kernel/protocol:iso-execute 'iso-execute)
+  (register-provider 'sprolog/src/kernel/protocol:iso-goal 'iso-goal)
+  (register-provider 'sprolog/src/kernel/protocol:iso-handle-exception 'iso-handle-exception)
+  (register-provider 'sprolog/src/kernel/protocol:iso-instruction-p 'iso-instruction-p)
+  (register-provider 'sprolog/src/kernel/protocol:iso-predicate-name 'iso-predicate-name)
+  (register-provider 'sprolog/src/kernel/protocol:iso-resolve-name 'iso-resolve-name)
+  (register-provider 'sprolog/src/kernel/protocol:iso-unknown 'iso-unknown)
+)

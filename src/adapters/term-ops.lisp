@@ -1,5 +1,21 @@
-(defpackage #:sprolog/src/adapters/term-ops (:use #:cl #:sprolog/src/api/registry))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/adapters/term-ops
+  (:use #:cl)
+  (:import-from #:sprolog/src/api/state
+    #:*iso-context*)
+  (:import-from #:sprolog/src/kernel/engine
+    #:bind-var #:deref #:fresh-cons #:fresh-var #:map-term #:unify)
+  (:import-from #:sprolog/src/kernel/model
+    #:%make-machine #:%make-var #:iso-exception #:logic-var-binding #:logic-var-p)
+  (:import-from #:sprolog/src/kernel/protocol)
+  (:import-from #:sprolog/src/kernel/instructions)
+  (:import-from #:sprolog/src/api/registry)
+  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:export #:iso-acyclic-p #:iso-atom #:iso-atom-name #:iso-atom-p #:iso-atomic-equal #:iso-bind
+    #:iso-checked-unify #:iso-compound #:iso-copy #:iso-error #:iso-identical-p #:iso-integer
+    #:iso-list #:iso-occurs-p #:iso-parts #:iso-required #:iso-text #:iso-unifiable-p
+    #:iso-variables))
+(in-package #:sprolog/src/adapters/term-ops)
+
 
 (defpackage #:sprolog/atoms (:use))
 (defun iso-atom (name) (if (string-equal name "nil") nil (intern name :sprolog/atoms)))
@@ -112,3 +128,10 @@
   (let ((target (deref target)))
     (if (and (symbolp target) (symbolp value))
         (string= (iso-atom-name target) (iso-atom-name value)) (unify vm target value))))
+
+(eval-when (:load-toplevel :execute)
+  (register-provider 'sprolog/src/kernel/protocol:iso-atom 'iso-atom)
+  (register-provider 'sprolog/src/kernel/protocol:iso-atomic-equal 'iso-atomic-equal)
+  (register-provider 'sprolog/src/kernel/protocol:iso-compound 'iso-compound)
+  (register-provider 'sprolog/src/kernel/protocol:iso-error 'iso-error)
+)

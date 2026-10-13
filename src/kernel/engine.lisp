@@ -1,32 +1,41 @@
-;; ASDF infers load order from this dependency package. Implementation symbols
-;; stay in SPROLOG so the public API and internal symbol identities are stable.
-(defpackage #:sprolog/src/kernel/engine (:use #:cl #:sprolog/src/api/package))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/kernel/engine
+  (:use #:cl)
+  (:import-from #:sprolog/src/kernel/instructions
+    #:allocate #:call #:clear-x #:cut #:deallocate #:enter-cut-scope #:execute #:fail #:host
+    #:jump #:leave-cut-scope #:proceed #:retry-me-else #:table-answer #:tnot #:trust-me
+    #:try-branch #:try-me-else #:yield)
+  (:import-from #:sprolog/src/kernel/model
+    #:%make-machine #:%make-var #:choice #:choice-age #:choice-args #:choice-builtin-context
+    #:choice-code #:choice-continuation #:choice-cut #:choice-delays #:choice-handlers
+    #:choice-heap #:choice-lineage #:choice-pc #:choice-scopes #:choice-slots #:choice-trail
+    #:continuation #:continuation-builtin-context #:continuation-code #:continuation-cut
+    #:continuation-depth #:continuation-handlers #:continuation-lineage #:continuation-parent
+    #:continuation-pc #:continuation-scopes #:continuation-slots #:database
+    #:database-predicates #:database-tabled #:iso-exception #:iso-exception-term #:iso-state
+    #:logic-var #:logic-var-binding #:logic-var-id #:logic-var-p #:machine #:machine-allocations
+    #:machine-args #:machine-builtin-context #:machine-choices #:machine-closed #:machine-code
+    #:machine-continuation #:machine-cut #:machine-database #:machine-delays #:machine-gc-count
+    #:machine-gc-reclaimed #:machine-heap #:machine-iso-handlers #:machine-max-choices
+    #:machine-max-depth #:machine-max-heap #:machine-max-live #:machine-max-trail #:machine-pc
+    #:machine-ready #:machine-scan #:machine-scopes #:machine-serial #:machine-slg
+    #:machine-slg-bypass #:machine-slg-lineage #:machine-slg-paused #:machine-slg-root
+    #:machine-slg-worker #:machine-slots #:machine-steps #:machine-trail #:machine-variables
+    #:make-choice #:make-continuation #:make-database #:predicate-adapter-context
+    #:predicate-code #:slot-ref #:slot-ref-index #:slot-ref-p)
+  (:import-from #:sprolog/src/kernel/protocol
+    #:ensure-registers #:execute-term-instruction #:iso-atom #:iso-atomic-equal #:iso-compound
+    #:iso-execute #:iso-handle-exception #:iso-instruction-p #:iso-invoke #:iso-primitive-p
+    #:iso-resolve-name #:iso-syntax-p #:iso-unknown #:maybe-collect #:slg-call #:slg-check-cut
+    #:slg-check-database #:slg-close #:slg-enter-cut-frame #:slg-negative #:slg-return-answer
+    #:slg-statistics #:slg-table-goal #:standard-predicate #:table)
+  (:import-from #:sprolog/src/api/state)
+  (:export #:*database* #:backtrack #:bind-var #:close-query #:deref #:fresh-cons #:fresh-var
+    #:instantiate #:invoke-predicate #:map-term #:next-solution #:pop-clear #:predicate-key
+    #:push-choice #:query-statistics #:record-cell #:reify #:resolve-code #:restore-continuation
+    #:run-machine #:truncate-vector #:unify #:unwind-trail))
+(in-package #:sprolog/src/kernel/engine)
 
-
-(defstruct (logic-var (:constructor %make-var (id)))
-  (id 0 :type fixnum) binding)
-(defstruct (slot-ref (:constructor slot-ref (index &optional anonymous))) index anonymous)
-(define-condition iso-exception (error)
-  ((term :initarg :term :reader iso-exception-term))
-  (:report (lambda (c s) (let ((*print-circle* t) (*print-level* 8) (*print-length* 12))
-                                   (format s "Prolog exception: ~S" (iso-exception-term c))))))
-(defstruct continuation code pc slots cut parent depth scopes lineage handlers builtin-context)
-(defstruct choice code pc args continuation cut trail heap age slots scopes delays lineage handlers builtin-context)
-(defstruct database (predicates (make-hash-table :test 'equal))
-  (tabled (make-hash-table :test 'equal)) (generation 0) iso-state)
 (defvar *database* (make-database))
-(defstruct (machine (:constructor %make-machine))
-  database code iso-handlers builtin-context (pc 0) args slots continuation (cut 0) scopes
-  slg slg-worker slg-owner slg-root slg-bypass slg-paused slg-lineage delays
-  scan (mode :read) (serial 0)
-  (gc-floor 4096) (gc-limit 4096) (gc-count 0) (gc-reclaimed 0)
-  (allocations 0) (max-trail 0) (max-live 0)
-  (heap (make-array 64 :adjustable t :fill-pointer 0))
-  (trail (make-array 64 :adjustable t :fill-pointer 0))
-  (choices (make-array 16 :adjustable t :fill-pointer 0))
-  variables (ready nil) (closed nil) (steps 0) (max-depth 0)
-  (max-choices 0) (max-heap 0))
 
 (defun pop-clear (vector)
   (let* ((index (1- (fill-pointer vector))) (value (aref vector index)))

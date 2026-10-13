@@ -1,5 +1,9 @@
-(defpackage #:sprolog/tests/slg-cut (:use #:cl #:sprolog/tests/slg))
-(in-package #:sprolog/tests)
+(uiop:define-package #:sprolog/tests/slg-cut
+  (:use #:cl #:sprolog)
+  (:import-from #:sprolog/tests/slg #:slg-values)
+  (:import-from #:sprolog/tests/tests #:check)
+  (:export #:incomplete-cut-p #:run-slg-cut-tests))
+(in-package #:sprolog/tests/slg-cut)
 
 (defun incomplete-cut-p (thunk)
   (handler-case (progn (funcall thunk) nil) (slg-incomplete-cut () t)))

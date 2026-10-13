@@ -1,5 +1,32 @@
-(defpackage #:sprolog/src/adapters/builtins (:use #:cl #:sprolog/src/adapters/streams))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/adapters/builtins
+  (:use #:cl)
+  (:import-from #:sprolog/src/adapters/adapter
+    #:iso-deterministic #:iso-state-for)
+  (:import-from #:sprolog/src/adapters/collection
+    #:iso-collect)
+  (:import-from #:sprolog/src/adapters/dynamic
+    #:iso-clause-alternatives)
+  (:import-from #:sprolog/src/adapters/streams
+    #:iso-stream-properties)
+  (:import-from #:sprolog/src/adapters/term-ops
+    #:iso-atom #:iso-compound #:iso-copy #:iso-error #:iso-required #:iso-text)
+  (:import-from #:sprolog/src/api/registry
+    #:iso-register #:syntax-register)
+  (:import-from #:sprolog/src/api/state
+    #:*iso-aliases* #:*iso-builtins* #:*iso-context* #:*syntax-predicates*)
+  (:import-from #:sprolog/src/kernel/engine
+    #:backtrack #:deref #:restore-continuation)
+  (:import-from #:sprolog/src/kernel/model
+    #:database-predicates #:iso-exception #:iso-state-flags #:logic-var-p #:machine-args
+    #:machine-builtin-context #:machine-database)
+  (:import-from #:sprolog/src/kernel/runtime
+    #:iso-alternatives #:iso-catch #:iso-enter #:iso-goal #:iso-resolve-name #:iso-result)
+  (:import-from #:sprolog/src/kernel/protocol)
+  (:import-from #:sprolog/src/kernel/instructions)
+  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:export #:iso-enumerate #:iso-invoke))
+(in-package #:sprolog/src/adapters/builtins)
+
 
 (defun iso-enumerate (vm name args)
   (let ((a (first args)) (b (second args)) (c (third args)) (db (machine-database vm)) (results nil))
@@ -77,3 +104,7 @@
   (iso-register "%ensure_dynamic" '(1))
   (iso-register "%output_nonnegative" '(1))
   (iso-register "%sub_atom_arguments" '(5)))
+
+(eval-when (:load-toplevel :execute)
+  (register-provider 'sprolog/src/kernel/protocol:iso-invoke 'iso-invoke)
+)

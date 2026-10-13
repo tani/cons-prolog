@@ -1,5 +1,17 @@
-(defpackage #:sprolog/src/adapters/arithmetic (:use #:cl #:sprolog/src/kernel/runtime))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/adapters/arithmetic
+  (:use #:cl)
+  (:import-from #:sprolog/src/adapters/term-ops
+    #:iso-atom #:iso-compound #:iso-error #:iso-integer #:iso-parts #:iso-required #:iso-text)
+  (:import-from #:sprolog/src/syntax/dcg
+    #:finite-list-p)
+  (:import-from #:sprolog/src/kernel/protocol)
+  (:import-from #:sprolog/src/kernel/model)
+  (:import-from #:sprolog/src/api/state)
+  (:import-from #:sprolog/src/kernel/instructions)
+  (:import-from #:sprolog/src/kernel/runtime)
+  (:export #:iso-eval))
+(in-package #:sprolog/src/adapters/arithmetic)
+
 
 ;;; Arithmetic: integer arithmetic stays exact; ISO floats are SBCL doubles.
 (defun iso-eval (expression)

@@ -1,5 +1,21 @@
-(defpackage #:sprolog/src/syntax/host-syntax (:use #:cl #:sprolog/src/syntax/let-syntax))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/syntax/host-syntax
+  (:use #:cl)
+  (:import-from #:sprolog/src/kernel/model
+    #:disjunction-goal-branches #:disjunction-goal-p #:make-disjunction-goal #:make-host-goal
+    #:make-scoped-goals #:make-sequence-goals #:scoped-goals-goals #:scoped-goals-p)
+  (:import-from #:sprolog/src/syntax/compiler
+    #:variables-in)
+  (:import-from #:sprolog/src/syntax/dcg
+    #:expand-query-goals #:finite-list-p)
+  (:import-from #:sprolog/src/syntax/let-syntax
+    #:let-goal-form #:lexical-binding-value)
+  (:import-from #:sprolog/src/kernel/protocol)
+  (:import-from #:sprolog/src/api/state)
+  (:import-from #:sprolog/src/kernel/instructions)
+  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:export #:goal-form #:goals-form #:host-goal-form #:source-control-p #:source-sequence))
+(in-package #:sprolog/src/syntax/host-syntax)
+
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defun host-goal-form (goal &optional bindings)
@@ -58,3 +74,7 @@
               (setf bindings environment))
             (push (goal-form goal bindings) result)))
       `(list ,@(nreverse result)))))
+
+(eval-when (:load-toplevel :execute)
+  (register-provider 'sprolog/src/kernel/protocol:host-goal-form 'host-goal-form)
+)

@@ -3,22 +3,38 @@
 ## ASDF
 
 `sprolog.asd` defines a `package-inferred-system`. Loading `sprolog` loads
-`sprolog/src/library/standard-library` and its inferred prerequisites; testing it loads
-`sprolog/tests`, which calls the existing `run-tests` entry point.
-There is no hand-maintained component list.
+`sprolog/src/api/package`, the final public facade, and its inferred prerequisites.
+Testing loads `sprolog/tests/suite`, whose `run-tests` entry point runs the suite.
+There is no hand-maintained ASDF component list.
 
-The public package has canonical name `sprolog/src/api/package` and nickname
-`sprolog`. Each source file declares a `sprolog/src/<layer>/<file>` dependency package,
-then evaluates its implementation in `sprolog`. These dependency packages
-are intentionally empty: the WAM modules share structures, internal symbols,
-and mutually recursive functions. This preserves their identities without
-exporting all implementation details or moving the public API.
+Each source file uses `uiop:define-package` and enters that same package with
+`in-package`. Definitions belong to their implementation module. Cross-module
+calls use explicit `:import-from`, and modules export the interfaces used by their
+consumers. Only the final public facade has the `sprolog` nickname. It imports and
+exports the selected public API; internal interfaces are not reexported through it.
+Tests follow the same arrangement, with shared test helpers and a final runner.
+The test runner alone has the `sprolog/tests` nickname.
 
-Tests use the same arrangement: `sprolog/tests/tests` has nickname
-`sprolog/tests`, and each subsequent test module declares its prerequisites.
-`register-system-packages` maps public nicknames and `sprolog/atoms` to their
-defining systems. When adding a module, give its dependency package the
-system's path name and add its prerequisites to `:use` or `:import-from`.
+The execution pipeline contains runtime/compiler/adapter cycles. Three explicit
+boundaries make its ASDF load graph acyclic:
+
+- `kernel/model` owns record types and conditions. Modules import the constructors
+  and accessors they actually use; algorithms remain in their provider modules.
+- `kernel/instructions` owns shared WAM instruction and source-marker identities.
+- `kernel/protocol` declares late execution hooks. Providers register their own
+  function symbols after loading, and hooks resolve the current function cell.
+  This avoids importing an implementation that depends on the consumer, while
+  retaining runtime replacement and instrumentation. Hook calls add dispatch
+  overhead; the package refactoring is not claimed to improve performance.
+
+`api/state` owns the predicate registries and adapter configuration. Predicate
+library storage is still shared intentionally; implementation function namespaces
+are separate. Initialization dependencies remain explicit where a provider must
+be installed before a consumer can compile callbacks or library clauses.
+
+`register-system-packages` maps the public facade and runner nicknames, and the
+atom package, to their defining systems. When adding a module, its package name
+must match its ASDF path and its `in-package` form.
 
 ```lisp
 (require :asdf)
@@ -89,7 +105,6 @@ sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 | `src/adapters/` | Term graphs, host types, arithmetic, dynamic database, solution collection, streams, dispatch |
 | `src/library/` | Derived predicates compiled from ordinary Prolog clauses |
 
-Directory boundaries describe responsibility; they are not independent ASDF
-systems or isolated Common Lisp namespaces. Dependency packages still express
-the inferred load order, including mutually dependent compiler/runtime hooks.
-All implementation definitions retain their existing `SPROLOG` symbol identities.
+Directory boundaries describe responsibility. Every implementation file now has
+its own package and inferred subsystem; loading the complete `sprolog` system
+installs the execution providers and derived library before exposing the facade.

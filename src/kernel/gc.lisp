@@ -1,7 +1,21 @@
-;; ASDF infers load order from this dependency package. Implementation symbols
-;; stay in SPROLOG so the public API and internal symbol identities are stable.
-(defpackage #:sprolog/src/kernel/gc (:use #:cl #:sprolog/src/kernel/engine))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/kernel/gc
+  (:use #:cl)
+  (:import-from #:sprolog/src/kernel/model
+    #:choice-args #:choice-continuation #:choice-handlers #:choice-heap #:choice-slots
+    #:choice-trail #:continuation-handlers #:continuation-parent #:continuation-slots
+    #:iso-handler-catcher #:iso-handler-parent #:iso-handler-recovery #:iso-handler-snapshot
+    #:logic-var-binding #:logic-var-p #:machine-args #:machine-choices #:machine-closed
+    #:machine-continuation #:machine-gc-count #:machine-gc-floor #:machine-gc-limit
+    #:machine-gc-reclaimed #:machine-heap #:machine-iso-handlers #:machine-max-live
+    #:machine-scan #:machine-slg-root #:machine-slots #:machine-trail #:machine-variables)
+  (:import-from #:sprolog/src/kernel/protocol)
+  (:import-from #:sprolog/src/api/state)
+  (:import-from #:sprolog/src/kernel/instructions)
+  (:import-from #:sprolog/src/kernel/engine)
+  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:export #:collect-query-garbage #:maybe-collect))
+(in-package #:sprolog/src/kernel/gc)
+
 
 (defun collect-query-garbage (vm)
   "Nonmoving mark/compact of VM ownership vectors, at instruction boundaries.
@@ -74,3 +88,7 @@ Object identity and allocation age survive compaction. Lisp GC reclaims bytes."
 (defun maybe-collect (vm)
   (when (and (machine-gc-limit vm) (>= (length (machine-heap vm)) (machine-gc-limit vm)))
     (collect-query-garbage vm)))
+
+(eval-when (:load-toplevel :execute)
+  (register-provider 'sprolog/src/kernel/protocol:maybe-collect 'maybe-collect)
+)

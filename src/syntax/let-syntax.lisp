@@ -1,7 +1,20 @@
-(defpackage #:sprolog/src/syntax/let-syntax (:use #:cl #:sprolog/src/kernel/slg))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/syntax/let-syntax
+  (:use #:cl)
+  (:import-from #:sprolog/src/kernel/instructions
+    #:dcg-internal)
+  (:import-from #:sprolog/src/kernel/model
+    #:lexical-binding #:lexical-binding-getter #:lexical-binding-setter #:make-lexical-binding)
+  (:import-from #:sprolog/src/kernel/protocol
+    #:host-goal-form)
+  (:import-from #:sprolog/src/syntax/compiler
+    #:variable-symbol-p)
+  (:import-from #:sprolog/src/syntax/dcg
+    #:finite-list-p)
+  (:import-from #:sprolog/src/api/state)
+  (:import-from #:sprolog/src/kernel/slg)
+  (:export #:globally-special-p #:let-goal-form #:lexical-binding-value))
+(in-package #:sprolog/src/syntax/let-syntax)
 
-(defstruct lexical-binding getter setter)
 (defun lexical-binding-value (binding) (funcall (lexical-binding-getter binding)))
 (defun (setf lexical-binding-value) (value binding)
   (funcall (lexical-binding-setter binding) value))

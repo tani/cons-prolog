@@ -1,10 +1,20 @@
-;; ASDF infers load order from this dependency package. Implementation symbols
-;; stay in SPROLOG so the public API and internal symbol identities are stable.
-(defpackage #:sprolog/src/syntax/dcg (:use #:cl #:sprolog/src/kernel/wam))
-(in-package #:sprolog)
+(uiop:define-package #:sprolog/src/syntax/dcg
+  (:use #:cl)
+  (:import-from #:sprolog/src/kernel/engine
+    #:*database*)
+  (:import-from #:sprolog/src/kernel/instructions
+    #:dcg-internal)
+  (:import-from #:sprolog/src/kernel/model
+    #:database #:disjunction-goal #:make-disjunction-goal #:make-scoped-goals #:scoped-goals)
+  (:import-from #:sprolog/src/kernel/protocol
+    #:query #:variable-symbol-p)
+  (:import-from #:sprolog/src/api/state)
+  (:import-from #:sprolog/src/kernel/wam)
+  (:export #:dcg-body-goals #:dcg-control-p #:dcg-empty-terminals-p #:dcg-expand #:dcg-marker-p
+    #:dcg-nonterminal #:dcg-terminal-tokens #:dcg-variable #:expand-query-goals #:finite-list-p
+    #:flatten-dcg-sequence #:phrase #:phrase-goals #:validate-dcg-controls))
+(in-package #:sprolog/src/syntax/dcg)
 
-(defstruct disjunction-goal branches)
-(defstruct scoped-goals goals)
 (defun finite-list-p (value)
   (let ((seen (make-hash-table :test 'eq)))
     (loop while (consp value) do

@@ -35,8 +35,9 @@ supports the implementation. GitHub Actions tests those outputs on Linux
 (x86-64 and ARM64) and macOS (ARM64).
 
 ASDF uses `package-inferred-system`: module dependencies are declared by each
-file's `defpackage`. The implementation remains in the shared `sprolog`
-package, preserving public symbols and existing `sprolog::` references.
+file's `uiop:define-package`. Implementation modules own their definitions;
+the final API facade has the `sprolog` nickname and reexports the public interface.
+Internal `sprolog::` references should use the owning module instead.
 See [development notes](docs/DEVELOPMENT.md) for module layout and portability.
 
 ## Define and query
