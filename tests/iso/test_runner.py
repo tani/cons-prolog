@@ -5,11 +5,12 @@ import shutil
 import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import run as iso
+import fetch
 
 SBCL = os.environ.get("ISO_SBCL", "sbcl")
-SWIPL = os.environ.get("ISO_SWIPL", "swipl")
 
 
 class ReportingTests(unittest.TestCase):
@@ -44,104 +45,102 @@ class ReportingTests(unittest.TestCase):
             [{"id": "a", "status": "PASS", "observation": "(:OBSERVED PASS)"}],
             {"a": {"status": "BLOCKED", "observation": "unadapted"}}), [])
 
-    def test_fixture_dependencies_are_ordered_and_validated(self):
-        cases = [{"id": x, "source": "tests.lgt", "blocked": [], "query": x} for x in "abcd"]
-        iso.attach_fixtures(cases, {"c": ["a", "b"], "d": ["c"]})
-        self.assertEqual(cases[-1]["predecessor_ids"], ["a", "b", "c"])
-        self.assertEqual(cases[-1]["setup"], ["a", "b", "c"])
-        for fixtures in ({"missing": []}, {"b": ["missing"]}, {"b": ["a"], "a": ["b"]}):
-            with self.assertRaises(ValueError):
-                iso.attach_fixtures(cases, fixtures)
-        cases[0]["blocked"] = ["unsupported fixture"]
-        with self.assertRaises(ValueError):
-            iso.attach_fixtures(cases, {"b": ["a"]})
+
+class PinTests(unittest.TestCase):
+    def test_file_inventory_rejects_changed_missing_and_extra_files(self):
+        import hashlib
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary); directory=root/"suite";directory.mkdir()
+            file=directory/"source.pl";file.write_text("true.")
+            lock={"archives":{"suite":{"files":{"source.pl":hashlib.sha256(file.read_bytes()).hexdigest()}}}}
+            with patch.object(fetch,"LOCK",lock):
+                fetch.validate(root)
+                file.write_text("fail.")
+                with self.assertRaises(ValueError):fetch.validate(root)
+                file.unlink()
+                with self.assertRaises(ValueError):fetch.validate(root)
+                file.write_text("true.");(directory/"extra").write_text("")
+                with self.assertRaises(ValueError):fetch.validate(root)
 
 
-@unittest.skipUnless(shutil.which(SBCL) and shutil.which(SWIPL), "SBCL and SWI are required")
+@unittest.skipUnless(shutil.which(SBCL), "SBCL is required")
 class AdapterTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        subprocess.run([SBCL, "--noinform", "--control-stack-size", "1", "--script",
-                        str(iso.HERE / "worker.lisp")], check=True, capture_output=True)
+        cls.temporary=tempfile.TemporaryDirectory()
+        cls.root=Path(cls.temporary.name)
+        cls.upstream=cls.root/"upstream"
+        inria=cls.upstream/"inriasuite/inriasuite";inria.mkdir(parents=True)
+        examples=cls.upstream/"prologsuite/vanilla";examples.mkdir(parents=True)
+        (inria/"inriasuite.pl").write_text("file(cases). result(G,R) :- (call(G) -> R=success;R=failure). compare_subst_lists(A,B,E,M) :- (A=B -> E=[],M=[];E=A,M=B). reset_flags :- set_prolog_flag(unknown,error).")
+        (inria/"cases").write_text('[true,success]. [fail,failure]. [true,failure]. [set_prolog_flag(double_quotes,atom),success]. [("fred"=fred),success]. [set_prolog_flag(double_quotes,codes),success]. [("fred"=[102,114,101,100]),success].')
+        (examples/"utils_so.pl").write_text("defined(_).")
+        (examples/"db.pl").write_text(":- dynamic(p/0).")
+        (examples/"isolation.txt").write_text("clean")
+        (examples/"sec01.pl").write_text("""
+t_true :- test_true(true).
+t_false :- test_false(fail).
+t_unexpected :- test_false(true).
+t_false_throws :- test_false(throw(problem)).
+t_error :- error_test(call(42),type_error(callable,42)).
+t_wrong_error :- error_test(call(42),type_error(callable,43)).
+t_missing_error :- error_test(true,type_error(callable,42)).
+t_value :- test_val((X=2),X,2).
+t_wrong_value :- test_val((X=2),X,3).
+t_alias :- test_val((X=Y),f(X,Y),f(a,b)).
+t_setup :- assertz(p),test_true(p).
+t_isolated :- test_false(p).
+t_mutate :- test_true((open('isolation.txt',write,S),write(S,changed),close(S))).
+t_clean :- test_val((open('isolation.txt',read,S),get_char(S,C),close(S)),C,c).
+t_prefix :- test_true(assertz(p)),test_true(p).
+t_unreached :- fail,test_true(true).
+t_timeout :- test_true((repeat,fail)).
+t_spoof :- test_false((write('(:OBSERVED PASS)'),true)).
+t_close :- test_true((current_output(S),close(S))).
+test_halt1 :- test_true(halt(7)).
+""")
+        cls.output=cls.root/"output";cls.output.mkdir()
+        cls.cases=iso.build_inventory(cls.upstream,cls.output,SBCL)
+        cls.by_entry={c["entry"]:c for c in cls.cases if c["suite"]=="examples"}
 
-    def test_upstream_framework_semantics_and_data_round_trip(self):
-        source = r"""
-:- dynamic([empty_a/0,empty_b/1]).
-holds({a}).
-member(X,[X|_]).
-member(X,[_|Xs]) :- member(X,Xs).
-test(iso_true, true) :- {true}.
-test(iso_false, false) :- {fail}.
-test(iso_error, error(type_error(callable,42))) :- {call(42)}.
-test(iso_wrong_error, error(type_error(callable,43))) :- {call(42)}.
-test(iso_bad_post, true(false)) :- {true}.
-test(iso_not_false, false) :- {true}.
-test(iso_variant, variant(T,foo(_,_,_))) :- {functor(T,foo,3)}.
-test(iso_aliasing, variant(foo(X,X),foo(_,_))) :- true.
-test(iso_data, true(T == {a})) :- {holds(T)}.
-test(iso_atom, true(T == [']',','])) :- {T = [']',',']}.
-test(iso_empty, false) :- {empty_a}.
-test(iso_assertion) :- assertion(fail).
-test(iso_fixture, true(T == 123)) :- ^^set_text_input('123. '), {read(T)}.
-test(iso_continuation, true(N == 3)) :- {atom_length('a\
- b',N)}.
-test(iso_exists, exists(X == 2)) :- {member(X,[1,2])}.
-test(iso_no_exists, exists(X == 3)) :- {member(X,[1,2])}.
-test(iso_ball, ball(hello)) :- {throw(hello)}.
-test(iso_wrong_ball, ball(other)) :- {throw(hello)}.
-test(iso_subsumes, subsumes(foo(_),T)) :- {T=foo(a)}.
-test(iso_fail_alias, fail) :- fail.
-:- if(unknown_condition).
-test(iso_conditional, true) :- true.
-:- endif.
-- test(iso_disabled, true) :- true.
-test(iso_options, true, [condition(true)]) :- true.
-"""
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            (root / "tests.lgt").write_text(source)
-            inventory = root / "cases.jsonl"
-            subprocess.run([SWIPL, "-q", "-s", str(iso.HERE / "import-logtalk.pl"), "--",
-                            str(root), str(inventory)], check=True, capture_output=True)
-            cases = [json.loads(line) for line in inventory.read_text().splitlines()]
-        self.assertEqual(len(cases), 23)
-        results = {c["name"]: iso.run_case(c, SBCL, 10) for c in cases}
-        expected = {
-            "iso_true": "PASS", "iso_false": "PASS", "iso_error": "PASS",
-            "iso_wrong_error": "FAIL", "iso_bad_post": "FAIL", "iso_not_false": "FAIL",
-            "iso_variant": "PASS", "iso_aliasing": "FAIL", "iso_data": "PASS", "iso_atom": "PASS",
-            "iso_empty": "PASS", "iso_assertion": "FAIL", "iso_fixture": "PASS",
-            "iso_continuation": "PASS", "iso_conditional": "BLOCKED",
-            "iso_exists": "PASS", "iso_no_exists": "FAIL", "iso_ball": "PASS",
-            "iso_wrong_ball": "FAIL", "iso_subsumes": "PASS", "iso_fail_alias": "PASS",
-            "iso_disabled": "BLOCKED", "iso_options": "BLOCKED",
-        }
-        self.assertEqual({k: v["status"] for k, v in results.items()}, expected,
-                         {k: v["observation"] for k, v in results.items() if v["status"] != expected[k]})
+    @classmethod
+    def tearDownClass(cls):
+        cls.temporary.cleanup()
 
-    def test_case_timeout_does_not_prevent_next_case(self):
-        case = {"id": "a", "blocked": [], "program": "", "query": "repeat,fail."}
-        result = iso.run_case(case, SBCL, 0.5)
-        self.assertEqual((result["status"], result["observation"]), ("FAIL", "TIMEOUT"))
-        case["query"] = "iso_test_result(pass)."
-        self.assertEqual(iso.run_case(case, SBCL, 10)["status"], "PASS")
+    def run_entry(self,entry,timeout=10):
+        return iso.run_case(self.by_entry[entry],SBCL,timeout,self.upstream,self.output/"programs")
 
-    def test_missing_result_and_process_failure_are_not_passes(self):
-        case = {"id": "a", "blocked": [], "program": "", "query": "true."}
-        self.assertEqual(iso.run_case(case, SBCL, 10)["status"], "FAIL")
-        self.assertEqual(iso.run_case(case, "/bin/false", 10)["status"], "FAIL")
+    def test_framework_preserves_success_failure_values_errors_and_setup(self):
+        expected={"t_true":"PASS","t_false":"PASS","t_unexpected":"FAIL","t_false_throws":"FAIL",
+                  "t_error":"PASS","t_wrong_error":"FAIL","t_missing_error":"FAIL","t_value":"PASS",
+                  "t_wrong_value":"FAIL","t_alias":"FAIL","t_setup":"PASS","t_prefix":"PASS",
+                  "t_unreached":"FAIL","t_spoof":"FAIL","t_close":"PASS","test_halt1":"PASS"}
+        self.assertEqual({k:self.run_entry(k)["status"] for k in expected},expected)
+        self.assertEqual(len(self.cases),28)
+        self.assertEqual(len({c["id"] for c in self.cases}),28)
 
-    def test_fixture_replay_preserves_case_isolation_and_reports_failure(self):
-        case = {"id": "a", "blocked": [], "program": "p.",
-                "setup": ["retract(p),iso_test_result(pass)."],
-                "query": "(p -> iso_test_result(fail); iso_test_result(pass))."}
-        self.assertEqual(iso.run_case(case, SBCL, 10)["status"], "PASS")
-        case["setup"] = []
-        case["query"] = "p,iso_test_result(pass)."
-        self.assertEqual(iso.run_case(case, SBCL, 10)["status"], "PASS")
-        case["setup"] = ["iso_test_result(fail)."]
-        self.assertEqual(iso.run_case(case, SBCL, 10)["status"], "BLOCKED")
+    def test_inria_results_are_checked(self):
+        results=[iso.run_case(c,SBCL,10,self.upstream,self.output/"programs") for c in self.cases if c["suite"]=="inria"]
+        self.assertEqual([r["status"] for r in results],["PASS","PASS","FAIL","PASS","PASS","PASS","PASS"])
 
+    def test_timeout_continues_and_missing_result_is_not_a_pass(self):
+        result=self.run_entry("t_timeout",3)
+        self.assertEqual((result["status"],result["observation"]),("FAIL","TIMEOUT"))
+        self.assertEqual(self.run_entry("t_true")["status"],"PASS")
+        case=self.by_entry["t_true"]
+        self.assertEqual(iso.run_case(case,"/bin/false",10,self.upstream,self.output/"programs")["status"],"FAIL")
 
-if __name__ == "__main__":
-    unittest.main()
+    def test_case_databases_and_files_are_isolated(self):
+        self.assertEqual(self.run_entry("t_setup")["status"],"PASS")
+        self.assertEqual(self.run_entry("t_isolated")["status"],"PASS")
+        self.assertEqual(self.run_entry("t_mutate")["status"],"PASS")
+        self.assertEqual(self.run_entry("t_clean")["status"],"PASS")
+
+    def test_malformed_or_forged_success_protocol_is_a_failure(self):
+        for content in ("[]", '{"status":"PASS","observation":"not a checked result"}'):
+            def fake_run(args, **kwargs):
+                Path(args[-1]).write_text(content)
+                return subprocess.CompletedProcess(args, 0, "", "")
+            with patch.object(iso.subprocess, "run", fake_run):
+                result = self.run_entry("t_true")
+                self.assertEqual((result["status"], result["observation"]), ("FAIL", "INVALID_PROTOCOL"))

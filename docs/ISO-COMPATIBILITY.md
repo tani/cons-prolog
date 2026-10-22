@@ -1,151 +1,143 @@
 # ISO compatibility observations
 
-The goal is to execute external ISO tests to completion, identify implementation
-defects, and document deliberate differences while retaining Lisp-native cons
-graphs. This is not a separate ISO interpreter and does not claim full conformance.
+The active corpus is J. P. E. Hodgson's two plain-Prolog validation suites:
+[source descriptions](https://www.deransart.fr/prolog/suites.html).
+They replace the former Logtalk importer and baseline. Running these checks
+requires Python 3 and SBCL; no Logtalk, Ciao or SWI-Prolog is required.
+This measures finite observations while preserving native cons terms, not an
+ISO conformance certificate or a percentage of the standard.
 
-## Source and scope
+## Sources and inventory
 
-The first corpus is the definitions named `iso_*` in Logtalk's
-[`tests/prolog`](https://github.com/LogtalkDotOrg/logtalk3/tree/bba0882757af2fc10bf5d3523ad84eb93c96dc30/tests/prolog),
-pinned to commit `bba0882757af2fc10bf5d3523ad84eb93c96dc30`.
-There are **782 test definitions**, including disabled definitions and alternative
-conditional branches. This is not a count of distinct normative requirements.
-Other prefixes, including `sics_*` and `lgt_*`, are outside this initial profile.
-DCG, ISO modules, and the full ISO standard are not covered by this profile.
+| Distribution | Scope used here | Check points |
+|---|---|---:|
+| [INRIA suite](https://www.deransart.fr/prolog/inriasuite.tar.gz) | Every record in the original driver's active `file/1` inventory | 420 |
+| [Standard-example suite](https://www.deransart.fr/prolog/prologsuite.tar.gz) | Every `test_true/1`, `test_false/1`, `test_val/3` and `error_test/2` call in `sec*.pl` | 567 |
+| Total | Includes overlaps between the two suites | 987 |
 
-Logtalk updates its tests for the core standard and corrigenda and records their
-origins in [NOTES.md](https://github.com/LogtalkDotOrg/logtalk3/blob/bba0882757af2fc10bf5d3523ad84eb93c96dc30/tests/prolog/NOTES.md).
-Its source files are Apache-2.0, copyright Paulo Moura and contributors.
-The original tests are fetched separately, not copied into sprolog.
-`tests/iso/upstream.json` pins the hashes of all 192 input files and the case count;
-a changed, missing, or extra file is a fatal import error.
+These are 1999 distributions, not an exhaustive executable specification with
+all later corrigenda. INRIA's README describes its driver as vanilla ISO Prolog
+and excludes I/O testing; the standard-example suite supplies I/O/directive checks.
+INRIA's inactive auxiliary/experimental files are outside its original active
+inventory. Its documented non-runnable HALT data file is inactive; the example
+suite's HALT/1 assertion runs in its own process and verifies exit status 7.
 
-The [Ciao ISO suite](https://github.com/ciao-lang/iso_tests) was also investigated.
-It uses Ciao test assertions, pre/postconditions and helper libraries. Integrating
-that framework is separate work; its advertised 1,047 cases are not included in
-the denominator or sprolog's results.
+`tests/iso/upstream.json` pins both complete archive SHA-256 digests, every
+extracted file digest and the 987-case count. Changed, extra or missing files
+abort the run. Originals are downloaded separately and are not vendored.
+Their authorship/notices remain with Hodgson and the original contributors.
+The standard-example sources permit use with acknowledgment. This adapter
+acknowledges J. P. E. Hodgson, Saint Joseph's University, and Deransart,
+Ed-Dbali and Cervoni's formal-specification work.
 
 ## Running
 
-Requirements: Python 3, SBCL, and SWI-Prolog 9.x. SWI parses the Logtalk test DSL
-only; SBCL and sprolog execute the test goals.
-
 ```sh
-git clone https://github.com/LogtalkDotOrg/logtalk3 /tmp/logtalk3
-git -C /tmp/logtalk3 checkout bba0882757af2fc10bf5d3523ad84eb93c96dc30
-python3 -m unittest discover -s tests/iso -p 'test_*.py'
-python3 tests/iso/run.py --upstream /tmp/logtalk3 \
+python3 tests/iso/fetch.py --output /tmp/upstream-hodgson
+python3 -m unittest discover -s tests/iso -p 'test_*.py' -v
+python3 tests/iso/run.py --upstream /tmp/upstream-hodgson \
   --baseline tests/iso/baseline.json --output iso-results --jobs 2
 ```
 
-`--sbcl` and `--swipl` accept executable paths. The runner unit tests use
-`ISO_SBCL` and `ISO_SWIPL` for nonstandard installations.
-`--filter functor_3` selects a subset without changing the complete inventory.
-`--timeout` sets each process's wall-clock limit (default five seconds).
-Each test gets a fresh database, working directory and SBCL process with a 1 MiB
-control stack. A timeout, missing protocol result or process failure is a FAIL;
-remaining cases still run. A library-build or importer failure aborts the command.
-Workers select `read_syntax=prolog` and `write_syntax=prolog`; native cons terms
-are unchanged. Ordinary library use defaults both flags to `lisp`.
+Both stream syntax flags are `prolog` inside workers; ordinary library use
+defaults to `lisp`. `--sbcl` accepts an executable path; unit tests use
+`ISO_SBCL`. `--filter inria/arg` selects checks without changing the complete
+inventory. `--timeout` sets each worker's wall-clock limit (default five seconds).
+Each target gets a fresh SBCL process with a 1 MiB control stack, database,
+working directory and copy of the original fixtures. Timeouts/crashes do not
+stop subsequent targets. Source validation or inventory/compiler failure aborts.
 
-The outputs are `cases.jsonl` (generated program, goal, unchanged expectation and
-source location), `report.json` (all observations and source hashes), and
-`report.md`. No cases are silently omitted from the selected inventory.
+The native reader creates `cases.json` and generated native term files in
+`programs/`. IDs identify the INRIA file/record ordinal or example file/top-level
+term/check ordinal; `line` identifies the containing source term.
+`report.json` and `report.md` retain every result. JSON includes complete source
+hashes, adaptation notes, timings and process diagnostics.
+
+## Result meanings
 
 | Result | Meaning |
 |---|---|
-| PASS | The adapted framework checked the upstream expectation successfully |
-| XFAIL | A case-specific documented difference produced its exact recorded observation |
-| FAIL | The case executed but failed its expectation, timed out, or crashed |
-| BLOCKED | A required fixture, condition, assertion mode, source load or query parse is not supported yet |
+| PASS | An executed target satisfied its recorded expectation |
+| FAIL | A target differed, timed out, crashed, produced no result, or was not reached |
+| XFAIL | A case-specific native term-model difference matched its exact recorded failure |
+| SKIP | An explicit applicability premise is false |
+| BLOCKED | Loading or setup failed before the target could start |
 
-An expected difference that starts passing, changes its failure, or becomes blocked
-is reported as FAIL with `expectation_changed`. Missing or stale expectation IDs
-are fatal errors. There are no family-wide exclusions or changed upstream expected
-answers. Postcondition failures include the resulting terms, not just a boolean.
+PASS is a complete protocol result, not text found in test output. HALT requires
+its target-start marker and actual exit code. A changed or newly passing XFAIL
+becomes FAIL for review; stale expectation IDs are fatal. The baseline rejects
+changed nonpassing observations/regressions and allows ordinary improvements
+to PASS. **Green baseline CI does not mean all tests pass.** `--strict` fails
+if FAIL or BLOCKED remains.
 
-The baseline gate detects regressions and changes to existing failures/blockers;
-improvements to PASS are allowed. **A successful baseline CI job does not mean
-that all ISO tests pass.** Use `--strict` to return failure whenever any FAIL or
-BLOCKED remains. Baseline changes require inspecting the actual observations,
-not replacing them with XFAIL.
+The ten current SKIPs are individually explained in `adaptations.json`:
+two finite-max-arity cases, five bounded-integer overflow assertions, and three
+cases assuming character codes 1000 or 9999 are unavailable. Their premises are
+false for unbounded arity/integers and the supported Unicode scalar values.
 
-## Framework adaptation
+## Port boundary and setup
 
-The importer reads the upstream sources without executing the Logtalk compiler.
-It unwraps `{Goal}` only in goal positions and retains braces in data. It translates
-supported lgtunit input/suppression fixtures and expectations, and copies the
-file's ordinary helper clauses and predicate/operator declarations into a fresh
-database. Logtalk's list-form declarations are expanded into individual declarations.
-Helpers such as FORALL and variant/approximate assertions are supplied by the
-test driver; they are not additions to sprolog's public predicate inventory.
-Approximate assertions retain lgtunit's fallback epsilon of 1e-12 and relative
-tolerance of 1e-5. Source parsing uses SWI's ISO mode to preserve ISO continuation
-whitespace rather than SWI's default whitespace-skipping extension.
+`tests/iso/adaptations.json` records compatibility changes and limitations.
+The original goals and expected answers are retained.
 
-Conditional compilation, disabled tests, unimplemented per-case options, unsupported
-fixture/object dispatch, and deterministic-choicepoint assertions are explicit
-BLOCKED entries. This adapter is not a Logtalk backend. Its own tests exercise
-false results, wrong exception/ball patterns, variable aliasing, failed assertions,
-existential expectations, quoted delimiters, timeouts and continued execution.
+INRIA's driver still computes/compares substitutions. Private ordinary Prolog
+definitions supply its assumed APPEND, MEMBER and LENGTH helpers. Two harness-only
+UNIV guards and the formal-error comparison boundary are adapted because native
+lists do not have ISO `'.'/2` functors. Calls under test to FUNCTOR, ARG or UNIV
+are not intercepted or replaced.
 
-The upstream RETRACT tests 04 and 05 depend on deletions performed by earlier
-tests. `fixtures.json` declares those exact predecessor IDs. Each worker replays
-them in dependency order in its own fresh database and verifies their original
-expectations before running its target. A predecessor failure is BLOCKED at
-SETUP. Dependencies are recorded in `cases.jsonl` and validated for missing,
-blocked, cross-source and cyclic references. This preserves per-case isolation
-without changing upstream expectations or relying on parallel execution order.
+INRIA records are read at execution time after replaying preceding goals in that
+file. This preserves reader flags/database effects within each isolated target.
+It matters for `double_quotes`: a preceding record changes how the next quoted
+input is read. `executed_goal` records the runtime-read target; the inventory's
+initial parse can differ for those cases.
 
-## Deliberate differences and remaining work
+Each example assertion is tagged and its containing zero-arity predicate runs
+with the source's setup. Section 8.9 retains the `test_89` database-update
+sequence; omitted verification helpers receive their ASSERTA/ASSERTZ setup
+explicitly. INCLUDE/ENSURE_LOADED resolve relative to copied fixtures, and
+initialization runs after loading. A private AND/2 helper is alpha-renamed to
+avoid the protected native alias. GO7_4 is bridged to GO_74 to repair the upstream
+initialization spelling.
 
-Only confirmed, case-specific consequences of the term model are currently
-listed in `expected-differences.json`:
+The four small checking helpers retain copied goals, first-solution behavior,
+unifying value expectations and formal exception matching. Exceptions in a
+false-expectation check are failures. Logging is separate from the protocol and
+tested streams. Prose such as “Should now write” remains manual documentation:
+its accompanying explicit success/failure/exception check is automated, but the
+prose is not counted as another output assertion.
 
-- Empty-list atom conversion uses the name `nil` rather than `[]`.
-- A native list's CAR is its application name; list cells are not ISO `'.'/2` terms.
-- KEYSORT uses native dotted pairs, rather than `Key-Value` compound terms.
-- NIL's operator name is `nil`, distinct from the protected atom name `[]`.
+The native reader handles repeated right-associative operators, including long
+conjunctions, iteratively. This permits the long arithmetic test clauses without
+raising the 64-frame limit on genuinely nested syntax.
 
-Term ordering, control, arithmetic, validation errors and missing flags are not
-automatically exempted as term-model differences.
-The two remaining FAIL entries are `iso_sort_2_02` and
-`iso_term_comparison_08`: the existing native total order differs from ISO
-numeric/compound ordering. They remain FAIL pending an explicit ordering policy.
-The 115 BLOCKED entries still require framework conditions, fixtures or assertion
-modes; they are not passing tests. Output-assertion fixtures remain BLOCKED even
-though a Prolog writer is now available; output behavior has separate native tests.
-See `baseline.json` and the generated report for individual cases.
+## Observed baseline
 
-The textual reader now accepts binary/octal/hexadecimal integers, character-code
-literals, ISO control/hex/octal escapes, and quoted delimiter atoms. These fixes
-preserve the existing term model and default S-expression I/O interface.
-It also distinguishes prefix-operator layout from functional notation and accepts
-bare semicolon atoms in argument positions.
+SBCL 2.2.9, 1 MiB control stack:
 
-## Measurements
+| Suite | PASS | XFAIL | FAIL | SKIP | BLOCKED |
+|---|---:|---:|---:|---:|---:|
+| INRIA | 398 | 3 | 15 | 4 | 0 |
+| Standard examples | 528 | 3 | 30 | 6 | 0 |
+| Total | 926 | 6 | 45 | 10 | 0 |
 
-SBCL 2.2.9, 1 MiB control stack, SWI 9.2.9 as the source importer:
+Thus 977 checks execute and ten have false applicability premises.
+The six XFAILs are empty-list atom spelling `nil` versus `[]` and the native
+application/list-cell FUNCTOR interpretation, exercised in both suites.
+Term ordering and error validation are not exempted automatically.
 
-| Result | Initial baseline | After failure fixes |
-|---|---:|---:|
-| PASS | 579 | 656 |
-| XFAIL | 4 | 9 |
-| FAIL | 84 | 2 |
-| BLOCKED | 115 | 115 |
-| Total | 782 | 782 |
+The 45 FAILs remain visible. They mix implementation differences with historical
+expectations/source issues, including exact rounded floating-point values,
+old error classes/culprits, and SUB_ATOM expectation tables. No tolerance or
+replacement answer is silently introduced; inspect the report before treating
+a particular failure as an implementation defect.
 
-Of the original 84 failures, 77 now pass, five are confirmed term-model
-differences with exact observations, and two ordering failures remain.
-Fixes cover runtime control dereferencing/cut scope, variable clause bodies,
-zero-arity reflection/retraction, protected-procedure errors, powers, ARG errors,
-operator validation, `max_arity`, and Prolog stream reading. Two RETRACT failures
-were framework setup defects corrected by predecessor replay.
+The native regression suite passes **5,089 checks**. Ten adapter tests exercise
+a 28-check synthetic fixture, wrong/missing exceptions, aliasing, setup/order,
+reader-flag replay, process/file/database isolation, real HALT status,
+spoofed output, timeout continuation and source inventories. The 54 existing
+derived observations remain byte-for-byte unchanged.
 
-With the independent Lisp/Prolog syntax flags and Prolog writer added, the
-complete native test suite passes **5,086 checks**; the driver passes nine
-tests, including a 23-case framework fixture and a timeout/continuation check.
-The 54 existing serialized derived observations are unchanged from the initial
-baseline revision and remain unchanged by the I/O flag/writer additions.
-These are separate measurements. An ISO coverage percentage is not reported.
+The former Logtalk corpus included conditional and disabled definitions.
+Its 782-definition counts are not comparable to this 987-check baseline.
+Its importer, dependency, fixtures and baseline have been replaced.

@@ -1,3 +1,21 @@
+# Hodgson ISO suite port
+
+The active ISO CI corpus is now Hodgson's plain-Prolog INRIA and standard-example
+suites: **987 check points, 926 PASS, 6 XFAIL, 45 FAIL, 10 SKIP, 0 BLOCKED** on
+SBCL 2.2.9 with a 1 MiB control stack. The 977 applicable checks execute; ten
+explicit arity/integer/character-set premises are false. Logtalk/SWI import,
+fixtures and baseline are replaced. Different corpus sizes are not a coverage
+comparison. The historical measurements below refer to the former Logtalk corpus.
+
+**5,089 native checks** and **ten adapter tests** pass. The adapter tests include
+28 synthetic check points, failure/exception classification, flag/setup replay,
+process/database/file isolation, timeout continuation, real HALT exit and source
+pinning. New parser checks load a 2,000-goal conjunction, retain mixed-operator
+associativity and reject invalid equal-priority operands with the same stack
+limit. The 54 serialized derived observations match the preceding revision byte
+for byte. See [ISO compatibility](ISO-COMPATIBILITY.md) for source pins, adaptation
+boundaries, historical-suite limitations and reproduction.
+
 # Independent Lisp/Prolog stream syntax
 
 SBCL 2.2.9, Linux x86-64: **5,086 checks pass** with a 1 MiB control stack.

@@ -53,7 +53,7 @@
                      when (and p (<= p maximum)
                                (or (null left) (if (char= (char kind 0) #\x) (< left p) (<= left p))))
                      return (cons p kind)))
-             (expression (maximum)
+             (expression (maximum &optional stop)
                (incf depth)
                (when (> depth 64) (prolog-syntax-error lexer "reader_nesting_limit"))
                (unwind-protect
@@ -61,13 +61,26 @@
                       (loop for token = (peek-token lexer)
                             for text = (and (member (car token) '(:atom :punctuation)) (cdr token))
                             for op = (and text (operator text '("xfx" "xfy" "yfx" "xf" "yf") maximum priority))
-                            while op do
+                            while (and op (not (equal (cons text op) stop))) do
                               (take-token lexer)
                               (let ((p (car op)) (kind (cdr op)))
-                                (if (= (length kind) 2)
-                                    (setf value (list (atom-symbol text) value))
-                                    (setf value (list (atom-symbol text) value
-                                                      (expression (if (char= (char kind 2) #\x) (1- p) p)))))
+                                (cond
+                                  ((= (length kind) 2) (setf value (list (atom-symbol text) value)))
+                                  ((string= kind "xfy")
+                                   ;; A flat right-associative chain consumes no parser
+                                   ;; frames per operator; nested subterms retain the limit.
+                                   (let ((items (list value)) (stop (cons text op)))
+                                     (loop
+                                       (multiple-value-bind (right right-priority) (expression p stop)
+                                         (push right items)
+                                         (let* ((next (peek-token lexer))
+                                                (next-text (and (member (car next) '(:atom :punctuation)) (cdr next)))
+                                                (next-op (and next-text (operator next-text '("xfx" "xfy" "yfx" "xf" "yf") p right-priority))))
+                                           (unless (equal (cons next-text next-op) stop) (return))
+                                           (take-token lexer))))
+                                     (setf value (car items))
+                                     (dolist (left (cdr items)) (setf value (list (atom-symbol text) left value)))))
+                                  (t (setf value (list (atom-symbol text) value (expression (1- p))))))
                                 (setf priority p))
                             finally (return (values value priority))))
                  (decf depth)))

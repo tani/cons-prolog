@@ -15,18 +15,14 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
-        with:
-          repository: LogtalkDotOrg/logtalk3
-          ref: bba0882757af2fc10bf5d3523ad84eb93c96dc30
-          path: upstream-logtalk
-          persist-credentials: false
       - name: Install test runtimes
-        run: sudo apt-get update && sudo apt-get install -y sbcl swi-prolog-nox
-      - name: Test the importer, isolation and result classification
+        run: sudo apt-get update && sudo apt-get install -y sbcl
+      - name: Fetch hash-pinned Hodgson suites
+        run: python3 tests/iso/fetch.py --output upstream-hodgson
+      - name: Test isolation and result classification
         run: python3 -m unittest discover -s tests/iso -p 'test_*.py' -v
-      - name: Run every selected upstream ISO definition and compare observations
-        run: python3 tests/iso/run.py --upstream upstream-logtalk --baseline tests/iso/baseline.json --jobs 2
+      - name: Run Hodgson ISO checks and compare observations
+        run: python3 tests/iso/run.py --upstream upstream-hodgson --baseline tests/iso/baseline.json --jobs 2
       - uses: actions/upload-artifact@v4
         if: always()
         with:
