@@ -1,0 +1,18 @@
+{
+  "predicates/atom_chars_2/tests.lgt:iso_atom_chars_2_02:37": {
+    "reason": "The empty native list is NIL; atom_chars returns the name nil, not the ISO atom name [].",
+    "observation": "(:OBSERVED (POST_FAILED (== (SPROLOG/ATOMS::|n| SPROLOG/ATOMS::|i| SPROLOG/ATOMS::|l|) ([ ]))))"
+  },
+  "predicates/atom_codes_2/tests.lgt:iso_atom_codes_2_02:37": {
+    "reason": "The empty native list is NIL; atom_codes returns codes for nil, not the ISO atom name [].",
+    "observation": "(:OBSERVED (POST_FAILED (== (110 105 108) (91 93))))"
+  },
+  "predicates/functor_3/tests.lgt:iso_functor_3_10:65": {
+    "reason": "Native list applications use their CAR as name and do not implement ISO list-cell functor ./2.",
+    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| SPROLOG/ATOMS::|instantiation_error| (SPROLOG/ATOMS::/ FUNCTOR 3))))"
+  },
+  "predicates/keysort_2/tests.lgt:iso_keysort_2_02:37": {
+    "reason": "KEYSORT sorts native (key . value) pairs; ISO Key-Value compounds have a different native cons interpretation.",
+    "observation": "(:OBSERVED (POST_FAILED (== ((- 2 99) (- 1 A) (- 3 (F #1=#:?G0)) (- 1 Z) (- 1 A) (- 2 44)) ((- 1 A) (- 1 Z) (- 1 A) (- 2 99) (- 2 44) (- 3 (F #1#))))))"
+  }
+}

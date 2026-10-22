@@ -45,11 +45,15 @@ usable for text-loaded predicates while preserving variable scope.
 Each top-level term must end with a full stop followed by layout, a comment,
 or EOF. Supported syntax includes facts, rules, directives, query directives,
 compound applications, parentheses, lists (including `[a|T]`), quoted atoms,
-strings, decimal integers/floats with decimal exponents, cut, conjunction,
+strings, decimal/binary/octal/hexadecimal integers, character-code literals,
+decimal floats with decimal exponents, cut, conjunction,
 disjunction, if-then-else, negation and the supported arithmetic operators.
 Line comments use `%`; block comments use `/* ... */` without nesting.
 Quotes support doubled delimiters, escaped quote/backslash, `\n`, `\r`, `\t`,
-and escaped physical newline. Other escapes raise a syntax error.
+and escaped physical newline. ISO control escapes (`\a`, `\b`, `\f`, `\v`),
+hexadecimal `\x61\` and octal `\141\` escapes are also supported. Numeric escapes
+require their terminating backslash and a Unicode scalar value. Other escapes
+raise a syntax error. Quoted delimiter names such as `']'` remain atoms.
 
 `f(a,b)` and `[f,a,b]` both become `(f a b)`; `[a|T]` becomes `(a . ?T)`;
 `[]` becomes NIL. `f()` is accepted as `(f)`, retaining the agreed distinction
@@ -110,8 +114,8 @@ queued initialization goals do not execute if parsing/loading fails first.
 
 This is the initial textual loader, not an ISO-conformance implementation.
 Expression nesting is bounded to 64 parser frames with a controlled syntax error;
-long flat argument/list sequences are iterative. Nondecimal numeric literals,
-character-code literals, Unicode/hex/octal escapes, module syntax, Prolog output,
+long flat argument/list sequences are iterative. Fixed-width Unicode escapes
+(`\u`/`\U`), module syntax, Prolog output,
 DCG semicontext/if-then, and an ASDF `:prolog` component are not implemented.
 Parentheses after an atom are accepted even with intervening layout. ISO operator
 redefinition restrictions remain those documented for the existing OP adapter.

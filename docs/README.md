@@ -6,6 +6,7 @@
 - [Prolog textual loader](PROLOG-LOADER.md): string/file/stream APIs, operators, directives and limits.
 - [Builtin reference](BUILTINS.md): supported predicates, arithmetic and Lisp-friendly names.
 - [Validation](VALIDATION.md): test coverage, stress tests and current limitations.
+- [ISO compatibility](ISO-COMPATIBILITY.md): pinned upstream tests, deliberate differences and unresolved cases.
 - [Native compiler ablation](NATIVE-ABLATION.md): measured removal of unnecessary VM optimizations.
 - [SWI comparison](COMPETITIVE-BENCHMARKS.md): shared-source workloads, native compilation, raw samples and reproduction.
 - [Benchmarks](BENCHMARKS.md): measured performance, allocation profiles, bottlenecks and reproduction commands.
