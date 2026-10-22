@@ -108,8 +108,10 @@ its accompanying explicit success/failure/exception check is automated, but the
 prose is not counted as another output assertion.
 
 The native reader handles repeated right-associative operators, including long
-conjunctions, iteratively. This permits the long arithmetic test clauses without
-raising the 64-frame limit on genuinely nested syntax.
+conjunctions, iteratively. The compiler also walks conjunction leaves iteratively,
+preserving source order and transparent cut scope. This permits the long arithmetic
+test clauses without raising the 64-frame limit on genuinely nested syntax or
+using one host stack frame per compiled comma.
 
 ## Observed baseline
 

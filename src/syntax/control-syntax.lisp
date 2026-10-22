@@ -48,7 +48,18 @@
                                           (if (string= name "FALSE") 0 1)))
                  (iso-error "type_error" (iso-atom "callable") goal))
                (cond ((string= name "FALSE") '((fail)))
-                     ((string= name ",") (append (compile-one (first args)) (compile-one (second args))))
+                     ((string= name ",")
+                      ;; Conjunction is transparent: compile its leaves in source
+                      ;; order without one host stack frame per comma.
+                      (let ((work (list goal)) (instructions nil))
+                        (loop while work do
+                          (let* ((g (pop work)) (g (if (logic-var-p g) (deref g) g)))
+                            (if (and (consp g) (symbolp (car g))
+                                     (consp (cdr g)) (consp (cddr g)) (null (cdddr g))
+                                     (string= (iso-predicate-name (car g) 2) ","))
+                                (progn (push (third g) work) (push (second g) work))
+                                (setf instructions (nconc instructions (compile-one g))))))
+                        instructions))
                      ((string= name "->") (list (list 'iso-if (compile-one (first args))
                                                        (compile-one (second args)) '((fail)))))
                      ((string= name ";")
