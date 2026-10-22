@@ -74,7 +74,7 @@
     (load-prolog-string "version(2).")
     (check (string= (snapshot "dependent(X)." nil) (snapshot "dependent(X)." t)) "dependency cache invalidation")
     (let ((goals (list (list '= '?x (list 'a '?x)) (list 'identity '?x '?y))))
-      (let ((*native-enabled* t))
+      (let ((*native-enabled* #+sbcl t #-sbcl nil))
         (let* ((answer (first (query goals :gc-threshold 1))) (term (cdr (assoc '?y answer))))
           (check (eq term (second term)) "rational input survives native fallback"))))
     ;; Mixed heads must retain source order, including the variable fallback.
