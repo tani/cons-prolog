@@ -2,16 +2,19 @@
 
 Measured 2026-10-23 JST, starting from upstream `9e14c1e` (0.10.0).
 All six workloads beat SWI-Prolog 9.2.9 with `-O` on this host after warmup.
+After [controlled ablation](NATIVE-ABLATION.md), the VM-side indexing, scalar
+unification and graph-copy changes were removed. This table measures the selected
+native compiler with its own ground-fact relation index and unmodified VM algorithms.
 This is a throughput result for this suite, not a claim about every Prolog program.
 
-| Workload | Upstream ms | Optimized ms | SWI `-O` ms | SWI / optimized |
-| --- | ---: | ---: | ---: | ---: |
-| 8 queens, all 92 solutions | 243.975 | 1.080 | 2.564 | 2.38x |
-| Takeuchi (16, 10, 4) | 378.788 | 1.061 | 3.971 | 3.74x |
-| Naive reverse, 1,200 elements | 2202.894 | 12.974 | 22.075 | 1.70x |
-| Quicksort, 2,000 elements | 264.484 | 1.130 | 4.018 | 3.55x |
-| Binary graph: 2,046 edges, 1,024 length-10 paths | 841.005 | 0.183 | 0.354 | 1.93x |
-| Symbolic differentiation, depth 8; 12,799 result nodes | 78.147 | 0.392 | 0.924 | 2.36x |
+| Workload | Native only ms | SWI `-O` ms | SWI / native only |
+| --- | ---: | ---: | ---: |
+| 8 queens, all 92 solutions | 1.119 | 2.431 | 2.17x |
+| Takeuchi (16, 10, 4) | 1.067 | 3.472 | 3.25x |
+| Naive reverse, 1200 elements | 12.595 | 18.740 | 1.49x |
+| Quicksort, 2000 elements | 1.075 | 3.571 | 3.32x |
+| Binary graph: 2046 edges, 1024 length-10 paths | 0.165 | 0.278 | 1.68x |
+| Symbolic differentiation, depth 8; 12799 result nodes | 0.389 | 0.812 | 2.09x |
 
 ## Method
 
@@ -22,8 +25,7 @@ This is a throughput result for this suite, not a claim about every Prolog progr
 - Query creation, execution, scalar result export and cursor teardown are inside the sprolog timed loop. Both engines check the result of every query. Expected results are independently fixed in `compare.py`: 92, 5, 1200, 2000, 1024 and 12799.
 - Full host GC is requested before each sample, outside timing. GC during the workload remains included. Engines run serially. No terminal I/O occurs inside the timed loop.
 - Process launch, source loading, database construction and initial native compilation are excluded. The raw `cold_seconds` field records first-query time; the first benchmark compiles a closed group containing all six `bench/2` clauses, so later first-query values are not independent cold-compiler measurements.
-- Upstream uses the same source and runner, five single-query samples after a warmup (`BENCH_BATCH=1`). Its column provides historical context; the parity comparison uses the identical batched protocol for the optimized engine and SWI.
-- Raw CPU samples, allocation counts, batches, versions and executed commands are in [competitive-results.json](../benchmarks/competitive-results.json). Allocation bytes are cumulative SBCL allocations per query, not live bytes or RSS. SWI allocation fields are placeholders (zero), not allocation measurements.
+- Raw CPU samples, allocation counts, batches, versions and executed commands are in [native-only-results.json](../benchmarks/native-only-results.json). The former full-optimization measurements and upstream context are archived in [competitive-results.json](../benchmarks/competitive-results.json). Allocation bytes are cumulative SBCL allocations per query, not live bytes or RSS. SWI allocation fields are placeholders (zero), not allocation measurements.
 
 ## Reproduction
 
@@ -46,9 +48,9 @@ BENCH_CASE=QUEENS BENCH_BATCH=1 swipl -O -q -s benchmarks/competitive-swi.pl
 
 ## Implementation and limits
 
-First-argument indexing skips impossible scalar/cons heads while merging variable heads in source order. Choice points retain immutable code snapshots. Predicates with more than 32 wildcard heads use linear dispatch to avoid quadratic index replication.
-
-Scalar unification avoids graph machinery. Graph unification retains rational-tree pair tracking. Graph copying uses an explicit task vector and retains the original preorder, sharing and cycles.
+The VM's clause selection, unification and graph-copying algorithms are unchanged
+from upstream. The [ablation report](NATIVE-ABLATION.md) explains why their proposed
+optimizations were removed; they were unnecessary for this throughput target.
 
 On SBCL, `src/syntax/native.lisp` specializes pure user predicates by their ground input positions. Disjoint input heads or source cuts justify deterministic/semideterministic execution. Native Common Lisp labels perform integer arithmetic, matching and calls directly. A pure statically known `findall/3` goal uses continuation-based enumeration; ground fact relations use indexes on available scalar inputs. These optimizations depend on program structure and call modes, not benchmark names.
 

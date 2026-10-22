@@ -15,6 +15,8 @@ logical-update tests remain in the complete suite.
 
 The native compiler is enabled by default only on SBCL. Other Lisp implementations
 retain the portable WAM path; their CI matrix is not a local validation result.
+After [ablation](NATIVE-ABLATION.md), the VM clause, unification and copying algorithms
+are restored to upstream; the same 4,625 / 4,618 checks and 54 observations pass.
 The previous release's validation record follows.
 
 # Validation — 0.10.0, 2026-10-13

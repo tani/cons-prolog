@@ -2,10 +2,10 @@
   (:use #:cl)
   (:import-from #:sprolog/src/kernel/engine
     #:*database* #:close-query #:deref #:fresh-var #:map-term #:next-solution #:predicate-key
-    #:unify #:index-key)
+    #:unify)
   (:import-from #:sprolog/src/kernel/instructions
     #:allocate #:call #:cut #:dcg-internal #:execute #:fail #:get-term #:host #:jump
-    #:index-first #:jump-clause #:or-branches #:proceed #:put-args #:retry-me-else #:scoped-body #:tnot #:true #:trust-me
+    #:or-branches #:proceed #:put-args #:retry-me-else #:scoped-body #:tnot #:true #:trust-me
     #:try-branch #:try-me-else #:yield)
   (:import-from #:sprolog/src/kernel/model
     #:database-native-cache #:database-iso-state #:iso-state-loaded-files #:%make-machine #:database #:database-generation #:database-predicates #:database-tabled
@@ -117,14 +117,11 @@
       (setf instructions (nconc instructions (list '(proceed)))))
     (append (list (list 'allocate (car counter))) heads instructions)))
 (defun compile-predicate (clauses)
-  (let ((code (make-array 16 :adjustable t :fill-pointer 0))
-        (entries nil) (indexable (and (cdr clauses) (cdaar clauses))))
-    (when indexable (vector-push-extend nil code))
+  (let ((code (make-array 16 :adjustable t :fill-pointer 0)))
     (loop for rest on clauses for index from 0 do
       (let* ((clause (car rest)) (position (fill-pointer code))
              (branch (if (cdr rest) (list (if (zerop index) 'try-me-else 'retry-me-else) nil)
                          (list 'trust-me))))
-        (when indexable (push (cons (second (car clause)) (1+ position)) entries))
         (vector-push-extend branch code)
         (let ((origin (fill-pointer code)))
         (dolist (instruction (let ((ir (compile-clause (car clause) (cdr clause))))
@@ -133,30 +130,7 @@
            (if (member (car instruction) '(try-branch jump))
                (list (car instruction) (+ origin (second instruction))) instruction) code)))
         (when (cdr rest) (setf (second (aref code position)) (fill-pointer code)))))
-    (let ((result (coerce code 'simple-vector)))
-      (when indexable
-        (let ((groups (make-hash-table :test 'equal)) (wild nil))
-          (dolist (entry (reverse entries))
-            (let ((head (car entry)))
-              (if (or (variable-symbol-p head) (logic-var-p head))
-                  (push (cdr entry) wild)
-                  (push (cdr entry) (gethash (index-key head) groups)))))
-          (when (> (length wild) 32)
-            ;; Avoid quadratic replication when most heads are unconstrained.
-            (setf (aref result 0) '(trust-me))
-            (return-from compile-predicate result))
-          (labels ((selection (positions)
-                     (let* ((positions (sort (copy-list positions) #'<))
-                            (selected (make-array (max 0 (1- (* 2 (length positions)))))))
-                       (loop for rest on positions for pc from 0 by 2 do
-                         (when (cdr rest) (setf (aref selected pc) (list 'try-me-else (+ pc 2))))
-                         (setf (aref selected (if (cdr rest) (1+ pc) pc))
-                               (list 'jump-clause result (car rest))))
-                       selected)))
-            (maphash (lambda (key positions)
-                       (setf (gethash key groups) (selection (append positions wild)))) groups)
-            (setf (aref result 0) (list 'index-first groups (selection wild))))))
-      result)))
+    (coerce code 'simple-vector)))
 (defun add-clause (head body replacep &optional (database *database*))
   ;; Publish a fresh code vector. In-flight calls retain their old alternatives.
   (let ((key (predicate-key head)))

@@ -26,11 +26,9 @@ See [the user guide](MANUAL.md), [builtin specification](BUILTINS.md) and
 
 ## Implemented after 0.10.0
 
-- Scalar unification without graph allocation and allocation-reduced graph copying
-  that preserves visitor order, cycles and sharing.
-- First-argument clause indexing with ordered variable fallback and immutable snapshots.
-- Guarded SBCL compilation of pure ground modes, including native integer arithmetic
-  and finite pure collectors. See [measurements](COMPETITIVE-BENCHMARKS.md).
+- Guarded SBCL compilation of pure ground modes, including native integer arithmetic,
+  indexed ground facts and finite pure collectors. VM algorithms are unchanged after
+  [ablation](NATIVE-ABLATION.md). See [measurements](COMPETITIVE-BENCHMARKS.md).
 
 ## Scope
 
@@ -50,11 +48,12 @@ negation/conditionals remain unsupported.
 
 ## Future performance work
 
-The [historical profiles](BENCHMARKS.md) motivated scalar fast paths and indexing.
-The current [SWI comparison](COMPETITIVE-BENCHMARKS.md) measures the resulting native
-path; unsupported/open/effectful calls still use the explicit VM.
+The [historical profiles](BENCHMARKS.md) identify interpreter bottlenecks.
+[Ablation](NATIVE-ABLATION.md) showed that VM indexing and scalar/graph allocation
+changes were unnecessary for the current [SWI comparison](COMPETITIVE-BENCHMARKS.md).
+Revisit them when interpreter/SLG workloads require them.
 
-- Deeper/multi-argument VM indexing, X-register reuse and variable lifetime analysis.
+- VM indexing, scalar/graph allocation changes, X-register reuse and variable lifetime analysis.
 - Direct acyclic term construction, compact instruction encodings and native dispatch.
 - Shared frozen stacks, answer tries and explicit table-space accounting.
 - Incremental SCC maintenance, immediate completion of ground successes,

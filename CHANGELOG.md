@@ -3,8 +3,8 @@
 - Add guarded SBCL compilation for pure ground modes and pure finite collectors,
   with native integer arithmetic and indexed ground relations. Preserve the WAM
   fallback for open/cyclic/effectful/tabled calls and exhausted native budgets.
-- Add ordered first-argument clause indexing, scalar unification fast paths and
-  allocation-reduced graph copying with the original traversal order.
+- Keep upstream VM clause selection, unification and graph copying unchanged after
+  ablation: native compilation with its ground-fact index suffices for all six workloads.
 - Add native/interpreter differential regressions and six reproducible shared-source
   benchmarks against optimized SWI-Prolog, including raw timing/allocation samples.
 

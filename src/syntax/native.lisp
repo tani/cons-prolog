@@ -3,7 +3,7 @@
   (:use #:cl)
   (:import-from #:sprolog/src/kernel/model)
   (:import-from #:sprolog/src/kernel/engine
-    #:index-key #:deref #:unify #:map-term #:restore-continuation #:backtrack)
+    #:deref #:unify #:map-term #:restore-continuation #:backtrack)
   (:import-from #:sprolog/src/kernel/protocol
     #:register-provider #:iso-atomic-equal #:iso-primitive-p #:iso-syntax-p)
   (:import-from #:sprolog/src/kernel/runtime #:iso-resolve-name)
@@ -18,6 +18,16 @@
 (defvar *term-executor* (symbol-function 'sprolog/src/kernel/wam:execute-term-instruction))
 (defconstant +depth-limit+ 2048)
 (defvar *compiling-modes* nil)
+
+(defvar *index-symbol-keys* #+sbcl (make-hash-table :test 'eq :weakness :key) #-sbcl nil)
+(defun index-key (term)
+  (cond ((consp term) :cons)
+        ((symbolp term)
+         (or (and *index-symbol-keys* (gethash term *index-symbol-keys*))
+             (let ((key (if (eq (symbol-package term) (find-package :sprolog/atoms))
+                       (symbol-name term) (string-downcase (symbol-name term)))))
+               (when *index-symbol-keys* (setf (gethash term *index-symbol-keys*) key)) key)))
+        (t term)))
 
 (defun native-integer (value)
   (unless (integerp value) (throw 'native-deopt nil)) value)

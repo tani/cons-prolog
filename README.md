@@ -105,8 +105,10 @@ sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 Validated on SBCL 2.2.9 / Linux x86-64: 4,625 checks pass, including one million tail calls with a 1 MiB Lisp control stack.
 
 On SBCL, eligible pure ground modes compile to native Common Lisp automatically.
-The six shared-source workloads in the [SWI comparison](docs/COMPETITIVE-BENCHMARKS.md)
-beat SWI-Prolog 9.2.9 with `-O` after warmup on the measured host. Run
+After [ablation](docs/NATIVE-ABLATION.md), VM-side indexing and allocation changes
+were removed: the native compiler alone, including its ground-fact index, wins
+all six shared-source workloads against SWI-Prolog 9.2.9 with `-O` after warmup
+on the measured host. See the [comparison](docs/COMPETITIVE-BENCHMARKS.md). Run
 `python3 benchmarks/compare.py --require-parity` to reproduce the comparison.
 
 ## Documentation
