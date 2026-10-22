@@ -1,6 +1,6 @@
 ;;; Forward execution hooks. Providers own their definitions in their own packages.
 (uiop:define-package #:sprolog/src/kernel/protocol (:use #:cl)
-  (:export #:register-provider #:ensure-registers #:execute-term-instruction #:goal-instructions
+  (:export #:native-call #:register-provider #:ensure-registers #:execute-term-instruction #:goal-instructions
     #:host-goal-form #:iso-atom #:iso-atomic-equal #:iso-builtin-p #:iso-compound #:iso-error
     #:iso-execute #:iso-flag-value #:iso-goal #:iso-handle-exception #:iso-instruction-p
     #:iso-invoke #:iso-io #:iso-modify #:iso-predicate-name #:iso-primitive-p #:iso-resolve-name
@@ -160,3 +160,7 @@
   (let ((provider (gethash 'variable-symbol-p *providers*)))
     (unless provider (error "Uninstalled execution interface: ~S" 'variable-symbol-p))
     (apply (symbol-function provider) arguments)))
+
+(defun native-call (&rest arguments)
+  (let ((provider (gethash 'native-call *providers*)))
+    (and provider (apply (symbol-function provider) arguments))))

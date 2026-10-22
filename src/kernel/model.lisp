@@ -1,5 +1,5 @@
 (uiop:define-package #:sprolog/src/kernel/model (:use #:cl)
-  (:export #:%make-machine #:%make-var #:choice #:choice-age #:choice-args
+  (:export #:database-native-cache #:machine-native-disabled #:machine-native-calls #:machine-native-deopts #:%make-machine #:%make-var #:choice #:choice-age #:choice-args
     #:choice-builtin-context #:choice-code #:choice-continuation #:choice-cut #:choice-delays
     #:choice-handlers #:choice-heap #:choice-lineage #:choice-p #:choice-pc #:choice-scopes
     #:choice-slots #:choice-trail #:continuation #:continuation-builtin-context
@@ -112,8 +112,9 @@
 (defstruct continuation code pc slots cut parent depth scopes lineage handlers builtin-context)
 (defstruct choice code pc args continuation cut trail heap age slots scopes delays lineage handlers builtin-context)
 (defstruct database (predicates (make-hash-table :test 'equal))
-  (tabled (make-hash-table :test 'equal)) (generation 0) iso-state)
+  (tabled (make-hash-table :test 'equal)) (generation 0) iso-state native-cache)
 (defstruct (machine (:constructor %make-machine))
+  native-disabled (native-calls 0) (native-deopts 0)
   database code iso-handlers builtin-context (pc 0) args slots continuation (cut 0) scopes
   slg slg-worker slg-owner slg-root slg-bypass slg-paused slg-lineage delays
   scan (mode :read) (serial 0)

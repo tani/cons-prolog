@@ -1,3 +1,22 @@
+# Native optimizer validation — 2026-10-23
+
+SBCL 2.2.9, Linux x86-64: **4,625 checks pass** with a 1 MiB control stack.
+With `SPROLOG_DISABLE_NATIVE=1`, **4,618 checks pass**; seven checks specifically
+asserting native execution/deoptimization are skipped. The existing 54 serialized
+derived observations match upstream `9e14c1e` exactly.
+
+`tests/native.lisp` compares native execution with the interpreter for arithmetic,
+bignums, floats and errors, cut/failure interactions, 49 combinations of guards
+and cuts, output aliasing and constrained outputs, open and rational terms,
+recursive collectors, and dependency invalidation. Pure tail and non-tail calls
+that exceed the native depth budget resume on the explicit VM. Both paths run
+with forced VM GC. Existing callback, SLG, rational-tree, instrumentation and
+logical-update tests remain in the complete suite.
+
+The native compiler is enabled by default only on SBCL. Other Lisp implementations
+retain the portable WAM path; their CI matrix is not a local validation result.
+The previous release's validation record follows.
+
 # Validation — 0.10.0, 2026-10-13
 
 SBCL 2.2.9.debian and CLISP 2.49.93+, Linux x86-64. No external Lisp libraries.
@@ -8,7 +27,7 @@ sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 
 4,540 checks pass on SBCL with a 1 MiB Lisp control-stack limit and on CLISP.
 The Prolog-loader PR passed all 17 CI jobs before merging.
-The sole execution backend is granular WAM. The earlier reference backend and
+The portable execution backend is granular WAM. The earlier reference backend and
 its selectable API are removed. The suite includes WAM-only GC comparisons and
 the builtin, term-model and DCG syntax regressions.
 

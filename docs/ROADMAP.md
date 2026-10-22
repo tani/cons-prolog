@@ -24,6 +24,14 @@
 See [the user guide](MANUAL.md), [builtin specification](BUILTINS.md) and
 [validation results](VALIDATION.md) for behavior and current restrictions.
 
+## Implemented after 0.10.0
+
+- Scalar unification without graph allocation and allocation-reduced graph copying
+  that preserves visitor order, cycles and sharing.
+- First-argument clause indexing with ordered variable fallback and immutable snapshots.
+- Guarded SBCL compilation of pure ground modes, including native integer arithmetic
+  and finite pure collectors. See [measurements](COMPETITIVE-BENCHMARKS.md).
+
 ## Scope
 
 Lisp-native terms and embedding take priority over ISO Prolog compatibility.
@@ -42,10 +50,11 @@ negation/conditionals remain unsupported.
 
 ## Future performance work
 
-[Measured bottlenecks](BENCHMARKS.md) prioritize scalar graph fast paths and
-first-argument indexing before larger VM/SLG representation changes.
+The [historical profiles](BENCHMARKS.md) motivated scalar fast paths and indexing.
+The current [SWI comparison](COMPETITIVE-BENCHMARKS.md) measures the resulting native
+path; unsupported/open/effectful calls still use the explicit VM.
 
-- First-argument indexing, X-register reuse and variable lifetime analysis.
+- Deeper/multi-argument VM indexing, X-register reuse and variable lifetime analysis.
 - Direct acyclic term construction, compact instruction encodings and native dispatch.
 - Shared frozen stacks, answer tries and explicit table-space accounting.
 - Incremental SCC maintenance, immediate completion of ground successes,

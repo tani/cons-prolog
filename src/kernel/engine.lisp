@@ -2,7 +2,7 @@
   (:use #:cl)
   (:import-from #:sprolog/src/kernel/instructions
     #:allocate #:call #:clear-x #:cut #:deallocate #:enter-cut-scope #:execute #:fail #:host
-    #:jump #:leave-cut-scope #:proceed #:retry-me-else #:table-answer #:tnot #:trust-me
+    #:index-first #:jump-clause #:jump #:leave-cut-scope #:proceed #:retry-me-else #:table-answer #:tnot #:trust-me
     #:try-branch #:try-me-else #:yield)
   (:import-from #:sprolog/src/kernel/model
     #:%make-machine #:%make-var #:choice #:choice-age #:choice-args #:choice-builtin-context
@@ -13,7 +13,7 @@
     #:continuation-pc #:continuation-scopes #:continuation-slots #:database
     #:database-predicates #:database-tabled #:iso-exception #:iso-exception-term #:iso-state
     #:logic-var #:logic-var-binding #:logic-var-id #:logic-var-p #:machine #:machine-allocations
-    #:machine-args #:machine-builtin-context #:machine-choices #:machine-closed #:machine-code
+    #:machine-native-calls #:machine-native-deopts #:machine-args #:machine-builtin-context #:machine-choices #:machine-closed #:machine-code
     #:machine-continuation #:machine-cut #:machine-database #:machine-delays #:machine-gc-count
     #:machine-gc-reclaimed #:machine-heap #:machine-iso-handlers #:machine-max-choices
     #:machine-max-depth #:machine-max-heap #:machine-max-live #:machine-max-trail #:machine-pc
@@ -25,14 +25,14 @@
   (:import-from #:sprolog/src/kernel/protocol
     #:ensure-registers #:execute-term-instruction #:iso-atom #:iso-atomic-equal #:iso-compound
     #:iso-execute #:iso-handle-exception #:iso-instruction-p #:iso-invoke #:iso-primitive-p
-    #:iso-resolve-name #:iso-syntax-p #:iso-unknown #:maybe-collect #:slg-call #:slg-check-cut
+    #:native-call #:iso-resolve-name #:iso-syntax-p #:iso-unknown #:maybe-collect #:slg-call #:slg-check-cut
     #:slg-check-database #:slg-close #:slg-enter-cut-frame #:slg-negative #:slg-return-answer
     #:slg-statistics #:slg-table-goal #:standard-predicate #:table)
   (:import-from #:sprolog/src/api/state)
   (:export #:*database* #:backtrack #:bind-var #:close-query #:deref #:fresh-cons #:fresh-var
     #:instantiate #:invoke-predicate #:map-term #:next-solution #:pop-clear #:predicate-key
     #:push-choice #:query-statistics #:record-cell #:reify #:resolve-code #:restore-continuation
-    #:run-machine #:truncate-vector #:unify #:unwind-trail))
+    #:run-machine #:index-key #:truncate-vector #:unify #:unwind-trail))
 (in-package #:sprolog/src/kernel/engine)
 
 (defvar *database* (make-database))
@@ -75,41 +75,69 @@
       (setf (logic-var-binding v) v))))
 
 (defun unify (vm left right)
-  "Iterative rational-tree unification; failure is rolled back by the VM."
-  (let ((work (list (cons left right))) (seen (make-hash-table :test 'eq)))
-    (loop while work do
-      (let* ((pair (pop work)) (a (deref (car pair))) (b (deref (cdr pair))))
-        (cond ((eq a b))
-              ((logic-var-p a)
-               (if (and (logic-var-p b) (< (logic-var-id a) (logic-var-id b)))
-                   (bind-var vm b a) (bind-var vm a b)))
-              ((logic-var-p b) (bind-var vm b a))
-              ((and (consp a) (consp b))
-               (let ((partners (or (gethash a seen)
-                                   (setf (gethash a seen) (make-hash-table :test 'eq)))))
-                 (unless (gethash b partners)
-                   (setf (gethash b partners) t)
-                   (push (cons (cdr a) (cdr b)) work)
-                   (push (cons (car a) (car b)) work))))
-              ((not (iso-atomic-equal a b)) (return-from unify nil)))))
-    t))
+  "Iterative rational-tree unification; allocate graph state only for cons pairs."
+  (let ((a (deref left)) (b (deref right)))
+    (cond ((eq a b) t)
+          ((logic-var-p a)
+           (if (and (logic-var-p b) (< (logic-var-id a) (logic-var-id b)))
+               (bind-var vm b a) (bind-var vm a b)) t)
+          ((logic-var-p b) (bind-var vm b a) t)
+          ((not (and (consp a) (consp b))) (iso-atomic-equal a b))
+          (t
+           (let ((work (list a b)) (seen (make-hash-table :test 'eq)))
+             (loop while work do
+               (let ((a (deref (pop work))) (b (deref (pop work))))
+                 (cond ((eq a b))
+                       ((logic-var-p a)
+                        (if (and (logic-var-p b) (< (logic-var-id a) (logic-var-id b)))
+                            (bind-var vm b a) (bind-var vm a b)))
+                       ((logic-var-p b) (bind-var vm b a))
+                       ((and (consp a) (consp b))
+                        (unless (member b (gethash a seen) :test #'eq)
+                          (push b (gethash a seen))
+                          (push (cdr b) work) (push (cdr a) work)
+                          (push (car b) work) (push (car a) work)))
+                       ((not (iso-atomic-equal a b)) (return-from unify nil)))))
+             t)))))
 
 (defun map-term (root atom-function &optional allocator)
-  "Copy a cons graph without Lisp recursion, preserving sharing and cycles."
-  (let* ((box (list nil)) (work (list (list root box :car)))
-         (seen (make-hash-table :test 'eq)))
-    (loop while work do
-      (destructuring-bind (source target side) (pop work)
-        (let* ((value (funcall atom-function source))
-               (mapped (if (consp value)
-                           (or (gethash value seen)
-                               (let ((cell (if allocator (funcall allocator) (cons nil nil))))
-                                 (setf (gethash value seen) cell)
-                                 (push (list (cdr value) cell :cdr) work)
-                                 (push (list (car value) cell :car) work)
-                                 cell)) value)))
-          (if (eq side :car) (setf (car target) mapped) (setf (cdr target) mapped)))))
-    (car box)))
+  "Copy a cons graph iteratively, preserving graph identity and visit order."
+  (let ((root (funcall atom-function root)))
+    (unless (consp root) (return-from map-term root))
+    (let ((seen (make-hash-table :test 'eq))
+          (work (make-array 96 :adjustable t :fill-pointer 0)))
+      (labels ((task (source target side)
+                 (vector-push-extend source work)
+                 (vector-push-extend target work)
+                 (vector-push-extend side work))
+               (copy-node (value)
+                 (if (consp value)
+                     (or (gethash value seen)
+                         (let ((cell (if allocator (funcall allocator) (cons nil nil))))
+                           (setf (gethash value seen) cell)
+                           (task (cdr value) cell :cdr)
+                           (task (car value) cell :car) cell))
+                     value)))
+        (let ((result (copy-node root)))
+          (loop while (plusp (fill-pointer work)) do
+            (let* ((side (vector-pop work)) (target (vector-pop work))
+                   (source (vector-pop work))
+                   (value (copy-node (funcall atom-function source))))
+              (if (eq side :car) (setf (car target) value) (setf (cdr target) value))))
+          result)))))
+
+;; A generated atom can unify with a Lisp symbol of the same spelling. Index
+;; keys may admit extra candidates, but must never discard such a match.
+(defvar *index-symbol-keys* #+sbcl (make-hash-table :test 'eq :weakness :key) #-sbcl nil)
+(defun index-key (term)
+  (cond ((consp term) :cons)
+        ((symbolp term)
+         (or (and *index-symbol-keys* (gethash term *index-symbol-keys*))
+             (let ((key (if (eq (symbol-package term) (find-package :sprolog/atoms))
+                       (symbol-name term) (string-downcase (symbol-name term)))))
+               (when *index-symbol-keys* (setf (gethash term *index-symbol-keys*) key)) key)))
+        (t term)))
+
 (defun instantiate (template slots &optional vm)
   (map-term template (lambda (x) (if (slot-ref-p x) (aref slots (slot-ref-index x)) x))
             (and vm (lambda () (fresh-cons vm nil nil)))))
@@ -179,6 +207,7 @@
   (when (gethash (cons name arity) (database-tabled (machine-database vm)))
     (if (machine-slg-bypass vm) (setf (machine-slg-bypass vm) nil)
         (return-from invoke-predicate (slg-call vm name arity tailp))))
+  (when (native-call vm name arity tailp) (return-from invoke-predicate t))
   (let ((code (resolve-code vm name arity)))
     (unless code
       (return-from invoke-predicate
@@ -222,6 +251,14 @@
       (incf (machine-pc vm)) (incf (machine-steps vm))
       (handler-case
        (case op
+        (index-first
+         (let ((arg (deref (aref (machine-args vm) 0))))
+           (unless (logic-var-p arg)
+             (let ((code (gethash (index-key arg) (first operands) (second operands))))
+               (if (zerop (length code)) (backtrack vm)
+                   (setf (machine-code vm) code (machine-pc vm) 0))))))
+        (jump-clause (setf (machine-code vm) (first operands)
+                           (machine-pc vm) (second operands)))
         ((try-me-else retry-me-else) (push-choice vm (first operands)))
         (try-branch (push-choice vm (first operands) t))
         (jump (setf (machine-pc vm) (first operands)))
@@ -308,7 +345,8 @@
                           (machine-delays vm)))))))
   (values nil nil))
 (defun query-statistics (vm)
-  (list :instructions (machine-steps vm) :max-continuation-depth (machine-max-depth vm)
+  (list :native-calls (machine-native-calls vm) :native-deoptimizations (machine-native-deopts vm)
+        :instructions (machine-steps vm) :max-continuation-depth (machine-max-depth vm)
         :max-choice-points (machine-max-choices vm)
         :allocated-cells (machine-allocations vm) :heap-cells (fill-pointer (machine-heap vm))
         :max-heap-cells (machine-max-heap vm) :trail-cells (fill-pointer (machine-trail vm))
