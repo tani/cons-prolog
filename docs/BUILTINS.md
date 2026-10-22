@@ -152,11 +152,19 @@ sorts/deduplicates each group, supports existential `^`, and fails with no answe
 `read/1,2`, `read_term/2,3`, `write/1,2`, `writeq/1,2`,
 `write_canonical/1,2`, and `write_term/2,3` operate on text streams in S-expression
 format by default. Current-stream and default-option forms are ordinary library clauses.
-The database-local extension flag `read_syntax` accepts `sexp` (default) or
-`prolog`. Setting `set_prolog_flag(read_syntax, prolog)` makes READ and READ_TERM
-use the existing [Prolog textual reader](PROLOG-LOADER.md), including its operator
-and character-conversion configuration. WRITE predicates continue to emit
-S-expressions. The flag can switch between complete term reads.
+The independent database-local extension flags `read_syntax` and `write_syntax`
+accept `lisp` (default) or `prolog`; `sexp` is not a flag value.
+READ/READ_TERM follow `read_syntax` and all WRITE predicates follow `write_syntax`.
+The Prolog paths use the [textual reader and writer](PROLOG-LOADER.md), including
+the database's operator configuration. Flags can change between complete reads
+or writes, survive backtracking and clause clearing, and are isolated by database.
+
+```prolog
+set_prolog_flag(read_syntax, prolog).
+set_prolog_flag(write_syntax, prolog).
+set_prolog_flag(read_syntax, lisp).
+set_prolog_flag(write_syntax, lisp).
+```
 
 Reading uses a fresh standard Lisp readtable with case preservation, the generated
 atom package, and `*read-eval*` disabled. `?Name` becomes a fresh logic variable
@@ -174,7 +182,7 @@ case is preserved. The same options are accepted, but `variable_names` and
 `singletons` return `=(Name, Variable)` terms. EOF and stream validation remain
 the same. The native cons mapping and textual reader's limits still apply.
 
-Writing dereferences terms, preserves sharing/cycles with Lisp circle notation,
+In Lisp mode, writing dereferences terms, preserves sharing/cycles with Lisp circle notation,
 and names unbound variables `?G0`, `?G1`, etc. `writeq` and `write_canonical`
 enable quoted Lisp output; both have the same S-expression representation.
 `write_term` supports `quoted` and `variable_names` (native pairs with names
@@ -187,6 +195,35 @@ special numbered-variable term. Decimal output and unlimited print depth/length
 do not depend on ambient printer settings. Non-readable host objects retain
 Common Lisp's printed representation; the Lisp reader/printer's own depth limits
 apply to I/O, unlike iterative VM term operations.
+
+With `write_syntax=prolog`, the writer emits integers, floats, atoms, variables
+and native cons terms without a final full stop. A finite symbol-headed proper
+list is written as `f(a,b)`, including `f()` for a singleton list.
+Other cons spines use `[...|Tail]` and NIL uses `[]`. There is no origin tag
+to distinguish an atom list from an application: `[a,b]` and `a(b)` are the
+same native term and normally print as `a(b)`. The distinct atom named `[]`
+is quoted by WRITEQ. Package identity is not encoded by Prolog syntax; symbols
+use the existing atom-name bridge.
+
+WRITE permits unquoted atom text; WRITEQ quotes atoms and escapes control
+characters as needed. WRITE_TERM supports `quoted`, `ignore_ops`,
+`numbervars` and `variable_names`. Operator notation respects all seven fixities,
+precedence and associativity. WRITE_CANONICAL enables quoting and ignores
+operators, using functional notation for native applications. It does not
+translate native lists into ISO `'.'/2` cells.
+Prolog variable names default to `_G0`, `_G1`, etc., preserving aliases.
+The `variable_names` option uses `=(Name, Variable)` terms with valid named
+Prolog variables (not anonymous `_`). Conflicting names for distinct variables
+are rejected; generated names avoid explicit names. Bound values are ignored.
+With `numbervars(true)`, `'$VAR'(0)` through `'$VAR'(25)` print as A through Z,
+then A1, B1, etc.; WRITEQ enables this convention and WRITE_CANONICAL disables it.
+
+The Prolog writer traverses iteratively. Cycles raise
+`representation_error(acyclic_term)`; opaque Lisp values such as host strings,
+vectors, ratios and complex numbers raise `type_error(prolog_term, Value)`.
+These graphs and objects remain available through Lisp output. Repeated acyclic
+cons structure is expanded, while variable sharing is preserved. Validation
+errors do not leave partial term text in the output stream.
 
 `op/3` stores priority 1..1200 and `fx/fy/xf/yf/xfx/xfy/yfx` by atom name and
 specifier; priority 0 removes the entry. Atom lists are accepted for names.

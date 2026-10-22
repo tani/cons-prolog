@@ -67,7 +67,7 @@
              (load-prolog-string
               "iso_test_error_member(error(F,_),[F|_]). iso_test_error_member(E,[_|Fs]) :- iso_test_error_member(E,Fs).
                iso_test_assertion(G) :- (call(G) -> true ; throw(iso_test_assertion_failed)).")
-             (query '((set_prolog_flag read_syntax prolog)))
+             (query '((set_prolog_flag read_syntax prolog) (set_prolog_flag write_syntax prolog)))
              (load-prolog-string (getf job :program))
              (setf stage :setup)
              (dolist (setup (getf job :setup))

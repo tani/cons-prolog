@@ -105,7 +105,7 @@ sbcl --script examples/let.lisp
 sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 ```
 
-Validated on SBCL 2.2.9 / Linux x86-64: 4,625 checks pass, including one million tail calls with a 1 MiB Lisp control stack.
+Validated on SBCL 2.2.9 / Linux x86-64: 5,086 checks pass, including one million tail calls with a 1 MiB Lisp control stack.
 
 On SBCL, eligible pure ground modes compile to native Common Lisp automatically.
 After [ablation](docs/NATIVE-ABLATION.md), VM-side indexing and allocation changes
@@ -127,3 +127,12 @@ See the [documentation index](docs/README.md).
 
 Prolog text can also be loaded with `load-prolog-string`, `load-prolog-file`, or
 `load-prolog` from a stream. See [the textual interface](docs/PROLOG-LOADER.md).
+READ and WRITE predicates independently select Lisp or Prolog syntax:
+
+```lisp
+(query '((set_prolog_flag read_syntax prolog)
+         (set_prolog_flag write_syntax prolog)))
+```
+
+Both flags default to `lisp`. See [term I/O](docs/BUILTINS.md#term-io-and-reader-configuration)
+for writer options and the native cons mapping.

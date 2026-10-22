@@ -1,3 +1,20 @@
+# Independent Lisp/Prolog stream syntax
+
+SBCL 2.2.9, Linux x86-64: **5,086 checks pass** with a 1 MiB control stack.
+The driver passes nine tests; all 782 ISO observations still match the existing
+baseline (656 PASS, 9 XFAIL, 2 FAIL, 115 BLOCKED) with both stream syntax flags
+set to Prolog. The 54 serialized derived observations match the previous
+ISO-fixes revision byte for byte with default Lisp I/O.
+
+`read_syntax` and `write_syntax` independently accept `lisp` (default) or
+`prolog`. Tests cover database isolation, persistence after backtracking/clause
+clearing, syntax switching, atom quoting/escapes, variable aliases and name
+collisions, numbered variables, canonical output, all seven operator fixities
+and precedence/associativity, list/application mapping, explicit cycle/opaque
+object errors and public wrapper contexts. Round trips run with GC disabled and
+thresholds 1, 8 and 4096. Iterative output handles a 10,000-level compound term
+and a 20,000-element list under the same stack limit.
+
 # ISO compatibility failure fixes
 
 SBCL 2.2.9, Linux x86-64: **4,764 native checks pass** with a 1 MiB control stack.

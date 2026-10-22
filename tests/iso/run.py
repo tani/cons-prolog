@@ -162,13 +162,13 @@ def main():
         regressions = check_baseline(results, baseline)
     counts = dict(collections.Counter(r["status"] for r in results))
     report = {"upstream": "LogtalkDotOrg/logtalk3", "revision": REVISION,
-              "profile": {"term_model": "native_cons", "read_syntax": "prolog"},
+              "profile": {"term_model": "native_cons", "read_syntax": "prolog", "write_syntax": "prolog"},
               "inventory": len(cases), "selected": len(selected), "counts": counts,
               "source_sha256": hashes, "regressions": regressions, "results": results}
     (args.output / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     rows = ["# ISO compatibility observations", "", f"Upstream: Logtalk `{REVISION}`.", "",
             f"Inventory: {len(cases)}; selected: {len(selected)}; {counts}.", "",
-            "Profile: native cons terms; READ/READ_TERM use Prolog syntax.", "",
+            "Profile: native cons terms; READ/READ_TERM and WRITE predicates use Prolog syntax.", "",
             "These are finite test observations, not an ISO conformance percentage.", "",
             "| Case | Status | Observation |", "|---|---|---|"]
     for result in results:

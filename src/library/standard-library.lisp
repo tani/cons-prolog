@@ -127,4 +127,6 @@
   (dolist (name '(write writeq write_canonical))
     (install-standard-predicate (list (list (list name '?term) '(current_output ?stream) (list name '?stream '?term))))
     (install-standard-predicate (list (list (list name '?stream '?term)
-      (list 'write_term '?stream '?term (if (eq name 'write) nil '((quoted true)))))))))
+      (list 'write_term '?stream '?term
+            (case name (write nil) (writeq '((quoted true) (numbervars true)))
+                       (write_canonical '((quoted true) (ignore_ops true))))))))))

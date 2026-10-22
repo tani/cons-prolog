@@ -165,11 +165,13 @@ BAGOF and SORT. SETOF deliberately preserves BAGOF group encounter order.
 operator/conversion tables. **Retention:** these operations access host streams,
 reader/printer state and persistent database configuration. All read/write
 convenience forms use ordinary clauses, with public exception contexts preserved.
-READ_TERM dispatches on the database-local `read_syntax` flag: the default
-S-expression path is retained for compatibility, while the Prolog path reuses
-`src/prolog/reader.lisp`. The adapter owns conversion to fresh managed VM variables,
-atom-name bridging, stream/EOF state and option unification. These stateful
-boundaries require an adapter; no separate parser or execution engine is added.
+READ_TERM and WRITE_TERM dispatch independently on the database-local
+`read_syntax` and `write_syntax` flags (each `lisp` by default, or `prolog`).
+The Prolog paths use `src/prolog/reader.lisp` and `src/prolog/writer.lisp`.
+The adapter owns conversion to fresh managed VM variables, atom-name bridging,
+stream/EOF state and option validation/unification. The iterative writer owns
+Prolog quoting, operator precedence and variable spelling. These stream and
+configuration boundaries require an adapter; no new execution engine is added.
 The accepted format and its limits are specified in [BUILTINS.md](BUILTINS.md).
 No new VM instruction, term tag, or public Lisp export is introduced.
 
@@ -180,8 +182,9 @@ The five Lisp text APIs are owned by `src/prolog/reader.lisp` and
 source syntax into existing cons terms and compiler input. Load-time declarations
 remain at this boundary; the VM has no new instruction or compound-term tag.
 The OP and character-conversion adapters supply database-local reader state.
-READ/READ_TERM can opt into the textual parser through the term-I/O adapter;
-WRITE predicates retain S-expression output.
+READ/READ_TERM and WRITE predicates can select Prolog syntax through the term-I/O
+adapter; both default to Lisp syntax. The writer preserves the native cons mapping
+and reports cycles or unrepresentable Lisp objects explicitly.
 
 ## Conditional native lowering on SBCL
 

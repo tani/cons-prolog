@@ -35,6 +35,11 @@ The stream predicates READ and READ_TERM can use this parser through the
 `read_syntax=prolog` extension flag; their default remains S-expression input.
 Their VM-variable conversion, options and EOF behavior are described in
 [BUILTINS.md](BUILTINS.md#term-io-and-reader-configuration).
+WRITE predicates independently select Prolog output with `write_syntax=prolog`.
+Both flags default to `lisp`. The writer in `src/prolog/writer.lisp` uses
+the same native cons mapping and operator table, with quoting, variable names
+and iterative traversal; its options and representation limits are documented
+alongside the reader options.
 `read-prolog-term` additionally returns transient syntax marks used internally
 for DCG terminal syntax; these are not term tags or database metadata.
 
@@ -119,7 +124,7 @@ queued initialization goals do not execute if parsing/loading fails first.
 This is the initial textual loader, not an ISO-conformance implementation.
 Expression nesting is bounded to 64 parser frames with a controlled syntax error;
 long flat argument/list sequences are iterative. Fixed-width Unicode escapes
-(`\u`/`\U`), module syntax, Prolog output,
+(`\u`/`\U`), module syntax,
 DCG semicontext/if-then, and an ASDF `:prolog` component are not implemented.
 Parentheses after an ordinary atom are accepted even with intervening layout.
 For an unquoted prefix operator, intervening layout selects prefix application:

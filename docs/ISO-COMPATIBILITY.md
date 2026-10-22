@@ -46,8 +46,8 @@ python3 tests/iso/run.py --upstream /tmp/logtalk3 \
 Each test gets a fresh database, working directory and SBCL process with a 1 MiB
 control stack. A timeout, missing protocol result or process failure is a FAIL;
 remaining cases still run. A library-build or importer failure aborts the command.
-Workers select `read_syntax=prolog` for READ/READ_TERM; native cons terms are
-unchanged. Ordinary library use retains the default S-expression input.
+Workers select `read_syntax=prolog` and `write_syntax=prolog`; native cons terms
+are unchanged. Ordinary library use defaults both flags to `lisp`.
 
 The outputs are `cases.jsonl` (generated program, goal, unchanged expectation and
 source location), `report.json` (all observations and source hashes), and
@@ -114,7 +114,8 @@ The two remaining FAIL entries are `iso_sort_2_02` and
 `iso_term_comparison_08`: the existing native total order differs from ISO
 numeric/compound ordering. They remain FAIL pending an explicit ordering policy.
 The 115 BLOCKED entries still require framework conditions, fixtures or assertion
-modes; they are not passing tests. Prolog output is also still unimplemented.
+modes; they are not passing tests. Output-assertion fixtures remain BLOCKED even
+though a Prolog writer is now available; output behavior has separate native tests.
 See `baseline.json` and the generated report for individual cases.
 
 The textual reader now accepts binary/octal/hexadecimal integers, character-code
@@ -142,8 +143,9 @@ zero-arity reflection/retraction, protected-procedure errors, powers, ARG errors
 operator validation, `max_arity`, and Prolog stream reading. Two RETRACT failures
 were framework setup defects corrected by predecessor replay.
 
-The complete native test suite passes **4,764 checks**; the driver passes nine
+With the independent Lisp/Prolog syntax flags and Prolog writer added, the
+complete native test suite passes **5,086 checks**; the driver passes nine
 tests, including a 23-case framework fixture and a timeout/continuation check.
 The 54 existing serialized derived observations are unchanged from the initial
-baseline revision.
+baseline revision and remain unchanged by the I/O flag/writer additions.
 These are separate measurements. An ISO coverage percentage is not reported.
