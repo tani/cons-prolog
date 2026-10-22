@@ -31,6 +31,10 @@ All accept `:database` (default `*database*`) and `:package` (default
 includes; the stream loader and term reader accept a `:source` diagnostic label.
 A read of `[].` returns NIL with a true presence flag, distinct from EOF.
 Read results contain source variable symbols usable by the existing compiler.
+The stream predicates READ and READ_TERM can use this parser through the
+`read_syntax=prolog` extension flag; their default remains S-expression input.
+Their VM-variable conversion, options and EOF behavior are described in
+[BUILTINS.md](BUILTINS.md#term-io-and-reader-configuration).
 `read-prolog-term` additionally returns transient syntax marks used internally
 for DCG terminal syntax; these are not term tags or database metadata.
 
@@ -117,6 +121,8 @@ Expression nesting is bounded to 64 parser frames with a controlled syntax error
 long flat argument/list sequences are iterative. Fixed-width Unicode escapes
 (`\u`/`\U`), module syntax, Prolog output,
 DCG semicontext/if-then, and an ASDF `:prolog` component are not implemented.
-Parentheses after an atom are accepted even with intervening layout. ISO operator
-redefinition restrictions remain those documented for the existing OP adapter.
+Parentheses after an ordinary atom are accepted even with intervening layout.
+For an unquoted prefix operator, intervening layout selects prefix application:
+`- (1,2)` is unary minus of a conjunction, while `-(1,2)` has two arguments.
+ISO operator redefinition restrictions are documented for the OP adapter.
 EOF is indicated by the presence flag, never by a magic atom.

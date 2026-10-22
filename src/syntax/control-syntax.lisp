@@ -1,7 +1,7 @@
 (uiop:define-package #:sprolog/src/syntax/control-syntax
   (:use #:cl)
   (:import-from #:sprolog/src/kernel/engine
-    #:map-term)
+    #:deref #:map-term)
   (:import-from #:sprolog/src/kernel/instructions
     #:call #:cut #:fail #:iso-if #:or-branches #:scoped-body)
   (:import-from #:sprolog/src/kernel/model
@@ -33,11 +33,12 @@
                       (source-meta-goal-p goal)))))))
 (defun iso-control-instructions (goal table counter tailp)
   (declare (ignore tailp))
-  (labels ((compile-one (g) (goal-instructions
+  (labels ((compile-one (g) (let ((g (if (logic-var-p g) (deref g) g)))
+                             (goal-instructions
                                 (if (or (logic-var-p g) (variable-symbol-p g)
                                         (host-goal-p g) (sequence-goals-p g)
                                         (scoped-goals-p g) (disjunction-goal-p g)) g (iso-goal g))
-                                table counter nil))
+                                table counter nil)))
            (scope (instructions) (list (list 'scoped-body instructions)))
            (cut-ir () '((cut))))
     (cond ((or (logic-var-p goal) (variable-symbol-p goal))
@@ -51,7 +52,7 @@
                      ((string= name "->") (list (list 'iso-if (compile-one (first args))
                                                        (compile-one (second args)) '((fail)))))
                      ((string= name ";")
-                      (let ((left (first args)))
+                      (let ((left (if (logic-var-p (first args)) (deref (first args)) (first args))))
                         (if (and (consp left) (symbolp (car left)) (string= (iso-predicate-name (car left) (length (cdr left))) "->"))
                             (list (list 'iso-if (compile-one (second left)) (compile-one (third left))
                                         (compile-one (second args))))

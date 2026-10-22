@@ -1,6 +1,7 @@
 (uiop:define-package #:sprolog/src/prolog/reader
   (:use #:cl)
-  (:import-from #:sprolog/src/prolog/lexer #:flush-lookahead #:lexer-conversions #:make-lexer #:peek-token #:take-token #:expect-token #:prolog-syntax-error)
+  (:import-from #:sprolog/src/prolog/lexer #:flush-lookahead #:lexer-conversions #:make-lexer #:peek-token #:take-token #:expect-token #:prolog-syntax-error
+    #:lexer-line #:lexer-column #:lexer-token-line #:lexer-token-column)
   (:import-from #:sprolog/src/kernel/engine #:*database*)
   (:import-from #:sprolog/src/kernel/model #:iso-state-operators #:iso-state-reader-initialized #:iso-state-conversions #:iso-state-flags)
   (:import-from #:sprolog/src/adapters/adapter #:iso-state-for)
@@ -81,7 +82,8 @@
                      (dolist (item items) (setf tail (cons item tail)))
                      (setf (gethash tail marks) :terminals) tail)))
              (primary (maximum)
-               (let* ((token (take-token lexer)) (kind (car token)) (text (cdr token)))
+               (let* ((token (take-token lexer)) (kind (car token)) (text (cdr token))
+                      (end-line (lexer-line lexer)) (end-column (lexer-column lexer)))
                  (cond
                    ((eq kind :number) (values text 0))
                    ((eq kind :variable)
@@ -99,10 +101,15 @@
                    ((and (eq kind :punctuation) (string= text "{"))
                     (let ((value (expression 1200))) (expect-token lexer "}")
                       (values (list (atom-symbol "{}") value) 0)))
-                   ((or (member kind '(:atom :quoted)) (and (eq kind :punctuation) (string= text "!")))
+                   ((or (member kind '(:atom :quoted))
+                        (and (eq kind :punctuation) (member text '("!" ";") :test #'string=)))
                     (let ((name (atom-symbol text (eq kind :quoted))))
                       (cond
-                        ((token-is "(")
+                        ((and (token-is "(")
+                              (or (eq kind :quoted)
+                                  (and (= end-line (lexer-token-line lexer))
+                                       (= end-column (lexer-token-column lexer)))
+                                  (null (operator text '("fx" "fy") maximum nil))))
                          (take-token lexer)
                          (let ((arguments nil))
                            (unless (token-is ")")

@@ -1,3 +1,22 @@
+# ISO compatibility failure fixes
+
+SBCL 2.2.9, Linux x86-64: **4,764 native checks pass** with a 1 MiB control stack.
+The ISO driver passes **nine tests**. The pinned Logtalk inventory completes with
+**656 PASS, 9 XFAIL, 2 FAIL and 115 BLOCKED** out of 782 definitions, with no
+baseline regressions. The remaining FAIL entries concern native term ordering;
+the XFAIL entries record exact cons/NIL/pair-model differences. BLOCKED entries
+are reported framework limitations, not successful executions.
+See [ISO-COMPATIBILITY.md](ISO-COMPATIBILITY.md) for scope and reproduction.
+
+New regression checks cover runtime conjunction/disjunction/if and cut opacity,
+implicit variable calls in dynamic clauses, atom-headed zero-arity clauses,
+cyclic argument sharing, protected-procedure errors, arithmetic powers, ARG and
+operator validation, flags, and opt-in Prolog stream reading. Variable sharing,
+option terms, quoted atom case, EOF and syntax switching are checked with GC
+disabled and thresholds 1, 8 and 4096. Existing callback, SLG, logical-update and
+stress tests remain in the full suite. The 54 serialized derived observations
+match the initial ISO-baseline revision byte for byte.
+
 # Native optimizer validation — 2026-10-23
 
 SBCL 2.2.9, Linux x86-64: **4,625 checks pass** with a 1 MiB control stack.

@@ -44,6 +44,18 @@ class ReportingTests(unittest.TestCase):
             [{"id": "a", "status": "PASS", "observation": "(:OBSERVED PASS)"}],
             {"a": {"status": "BLOCKED", "observation": "unadapted"}}), [])
 
+    def test_fixture_dependencies_are_ordered_and_validated(self):
+        cases = [{"id": x, "source": "tests.lgt", "blocked": [], "query": x} for x in "abcd"]
+        iso.attach_fixtures(cases, {"c": ["a", "b"], "d": ["c"]})
+        self.assertEqual(cases[-1]["predecessor_ids"], ["a", "b", "c"])
+        self.assertEqual(cases[-1]["setup"], ["a", "b", "c"])
+        for fixtures in ({"missing": []}, {"b": ["missing"]}, {"b": ["a"], "a": ["b"]}):
+            with self.assertRaises(ValueError):
+                iso.attach_fixtures(cases, fixtures)
+        cases[0]["blocked"] = ["unsupported fixture"]
+        with self.assertRaises(ValueError):
+            iso.attach_fixtures(cases, {"b": ["a"]})
+
 
 @unittest.skipUnless(shutil.which(SBCL) and shutil.which(SWIPL), "SBCL and SWI are required")
 class AdapterTests(unittest.TestCase):
@@ -70,7 +82,7 @@ test(iso_data, true(T == {a})) :- {holds(T)}.
 test(iso_atom, true(T == [']',','])) :- {T = [']',',']}.
 test(iso_empty, false) :- {empty_a}.
 test(iso_assertion) :- assertion(fail).
-test(iso_fixture, true(T == 123)) :- ^^set_text_input('123'), {read(T)}.
+test(iso_fixture, true(T == 123)) :- ^^set_text_input('123. '), {read(T)}.
 test(iso_continuation, true(N == 3)) :- {atom_length('a\
  b',N)}.
 test(iso_exists, exists(X == 2)) :- {member(X,[1,2])}.
@@ -118,6 +130,17 @@ test(iso_options, true, [condition(true)]) :- true.
         case = {"id": "a", "blocked": [], "program": "", "query": "true."}
         self.assertEqual(iso.run_case(case, SBCL, 10)["status"], "FAIL")
         self.assertEqual(iso.run_case(case, "/bin/false", 10)["status"], "FAIL")
+
+    def test_fixture_replay_preserves_case_isolation_and_reports_failure(self):
+        case = {"id": "a", "blocked": [], "program": "p.",
+                "setup": ["retract(p),iso_test_result(pass)."],
+                "query": "(p -> iso_test_result(fail); iso_test_result(pass))."}
+        self.assertEqual(iso.run_case(case, SBCL, 10)["status"], "PASS")
+        case["setup"] = []
+        case["query"] = "p,iso_test_result(pass)."
+        self.assertEqual(iso.run_case(case, SBCL, 10)["status"], "PASS")
+        case["setup"] = ["iso_test_result(fail)."]
+        self.assertEqual(iso.run_case(case, SBCL, 10)["status"], "BLOCKED")
 
 
 if __name__ == "__main__":

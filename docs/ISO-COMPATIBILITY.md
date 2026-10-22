@@ -46,6 +46,8 @@ python3 tests/iso/run.py --upstream /tmp/logtalk3 \
 Each test gets a fresh database, working directory and SBCL process with a 1 MiB
 control stack. A timeout, missing protocol result or process failure is a FAIL;
 remaining cases still run. A library-build or importer failure aborts the command.
+Workers select `read_syntax=prolog` for READ/READ_TERM; native cons terms are
+unchanged. Ordinary library use retains the default S-expression input.
 
 The outputs are `cases.jsonl` (generated program, goal, unchanged expectation and
 source location), `report.json` (all observations and source hashes), and
@@ -88,6 +90,14 @@ BLOCKED entries. This adapter is not a Logtalk backend. Its own tests exercise
 false results, wrong exception/ball patterns, variable aliasing, failed assertions,
 existential expectations, quoted delimiters, timeouts and continued execution.
 
+The upstream RETRACT tests 04 and 05 depend on deletions performed by earlier
+tests. `fixtures.json` declares those exact predecessor IDs. Each worker replays
+them in dependency order in its own fresh database and verifies their original
+expectations before running its target. A predecessor failure is BLOCKED at
+SETUP. Dependencies are recorded in `cases.jsonl` and validated for missing,
+blocked, cross-source and cyclic references. This preserves per-case isolation
+without changing upstream expectations or relying on parallel execution order.
+
 ## Deliberate differences and remaining work
 
 Only confirmed, case-specific consequences of the term model are currently
@@ -96,30 +106,44 @@ listed in `expected-differences.json`:
 - Empty-list atom conversion uses the name `nil` rather than `[]`.
 - A native list's CAR is its application name; list cells are not ISO `'.'/2` terms.
 - KEYSORT uses native dotted pairs, rather than `Key-Value` compound terms.
+- NIL's operator name is `nil`, distinct from the protected atom name `[]`.
 
 Term ordering, control, arithmetic, validation errors and missing flags are not
 automatically exempted as term-model differences.
-READ/WRITE still use S-expressions; the host textual-reader APIs are separate.
-Their failing ISO cases remain visible. Supporting a Prolog I/O profile, additional
-lgtunit fixtures and conditions, and the observed control/database errors are
-subsequent work. See `baseline.json` and the generated report for individual cases.
+The two remaining FAIL entries are `iso_sort_2_02` and
+`iso_term_comparison_08`: the existing native total order differs from ISO
+numeric/compound ordering. They remain FAIL pending an explicit ordering policy.
+The 115 BLOCKED entries still require framework conditions, fixtures or assertion
+modes; they are not passing tests. Prolog output is also still unimplemented.
+See `baseline.json` and the generated report for individual cases.
 
 The textual reader now accepts binary/octal/hexadecimal integers, character-code
 literals, ISO control/hex/octal escapes, and quoted delimiter atoms. These fixes
-preserve the existing term model and S-expression I/O interface.
+preserve the existing term model and default S-expression I/O interface.
+It also distinguishes prefix-operator layout from functional notation and accepts
+bare semicolon atoms in argument positions.
 
-## Initial measurement (2026-10-23)
+## Measurements
 
 SBCL 2.2.9, 1 MiB control stack, SWI 9.2.9 as the source importer:
 
-| Result | Definitions |
-|---|---:|
-| PASS | 579 |
-| XFAIL | 4 |
-| FAIL | 84 |
-| BLOCKED | 115 |
-| Total | 782 |
+| Result | Initial baseline | After failure fixes |
+|---|---:|---:|
+| PASS | 579 | 656 |
+| XFAIL | 4 | 9 |
+| FAIL | 84 | 2 |
+| BLOCKED | 115 | 115 |
+| Total | 782 | 782 |
 
-The complete native test suite passes **4,642 checks**; the driver passes seven
+Of the original 84 failures, 77 now pass, five are confirmed term-model
+differences with exact observations, and two ordering failures remain.
+Fixes cover runtime control dereferencing/cut scope, variable clause bodies,
+zero-arity reflection/retraction, protected-procedure errors, powers, ARG errors,
+operator validation, `max_arity`, and Prolog stream reading. Two RETRACT failures
+were framework setup defects corrected by predecessor replay.
+
+The complete native test suite passes **4,764 checks**; the driver passes nine
 tests, including a 23-case framework fixture and a timeout/continuation check.
+The 54 existing serialized derived observations are unchanged from the initial
+baseline revision.
 These are separate measurements. An ISO coverage percentage is not reported.

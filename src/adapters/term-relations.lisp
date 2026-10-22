@@ -95,6 +95,7 @@
                  (and (unify vm b x) (unify vm c 0))))))
       ((string= name "ARG")
        (let ((n (iso-integer a t)) (x (iso-required b)))
+         (unless (consp x) (iso-error "type_error" (iso-atom "compound") x))
          (when (consp x)
            (multiple-value-bind (f arguments) (application-parts x)
              (declare (ignore f))

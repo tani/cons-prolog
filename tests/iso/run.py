@@ -28,6 +28,7 @@ def run_case(case, sbcl, timeout):
         root = Path(temp)
         job, output = root / "job.sexp", root / "result.sexp"
         job.write_text("(:program " + lisp_string(case["program"]) +
+                       " :setup (" + " ".join(lisp_string(q) for q in case.get("setup", [])) + ")" +
                        " :query " + lisp_string(case["query"]) + ")", encoding="utf-8")
         start = time.monotonic()
         try:
@@ -39,11 +40,39 @@ def run_case(case, sbcl, timeout):
         observation = output.read_text(encoding="utf-8") if output.exists() else "NO_RESULT"
         # PASS is a complete, exact protocol result, not a substring in an error.
         status = "PASS" if observation == "(:OBSERVED PASS)" and proc.returncode == 0 else "FAIL"
-        if observation.startswith("(:LOAD ") or observation.startswith("(:PARSE "):
+        if observation.startswith(("(:LOAD ", "(:PARSE ", "(:SETUP ")):
             status = "BLOCKED"
         return dict(result, status=status, observation=observation,
                     seconds=round(time.monotonic() - start, 3), exit_code=proc.returncode,
                     diagnostics=(proc.stdout + proc.stderr)[-4000:] if proc.returncode else "")
+
+
+def attach_fixtures(cases, fixtures):
+    """Replay declared predecessors in each fresh process, retaining isolation."""
+    by_id = {c["id"]: c for c in cases}
+    if set(fixtures) - set(by_id):
+        raise ValueError("Unknown fixture case ID")
+
+    def predecessors(case_id, active, seen, ordered):
+        if case_id in active:
+            raise ValueError("Cyclic fixture dependency: " + case_id)
+        active.add(case_id)
+        for previous in fixtures.get(case_id, []):
+            if previous not in by_id or by_id[previous]["blocked"]:
+                raise ValueError("Missing or blocked fixture predecessor: " + previous)
+            if by_id[previous]["source"] != by_id[case_id]["source"]:
+                raise ValueError("Fixture predecessor must use the same source program")
+            if previous not in seen:
+                predecessors(previous, active, seen, ordered)
+                seen.add(previous)
+                ordered.append(previous)
+        active.remove(case_id)
+
+    for case_id in fixtures:
+        ordered = []
+        predecessors(case_id, set(), set(), ordered)
+        by_id[case_id]["predecessor_ids"] = ordered
+        by_id[case_id]["setup"] = [by_id[previous]["query"] for previous in ordered]
 
 
 def apply_expectations(results, expectations):
@@ -111,6 +140,8 @@ def main():
         raise ValueError("Empty or duplicate upstream case inventory")
     if len(cases) != LOCK["iso_cases"]:
         raise ValueError("Imported case count differs from the pinned inventory")
+    attach_fixtures(cases, json.loads((HERE / "fixtures.json").read_text()))
+    inventory.write_text("".join(json.dumps(c, ensure_ascii=False) + "\n" for c in cases))
     selected = [c for c in cases if args.filter in c["id"]]
     if not selected:
         raise ValueError("Filter selected no cases")
@@ -131,11 +162,13 @@ def main():
         regressions = check_baseline(results, baseline)
     counts = dict(collections.Counter(r["status"] for r in results))
     report = {"upstream": "LogtalkDotOrg/logtalk3", "revision": REVISION,
+              "profile": {"term_model": "native_cons", "read_syntax": "prolog"},
               "inventory": len(cases), "selected": len(selected), "counts": counts,
               "source_sha256": hashes, "regressions": regressions, "results": results}
     (args.output / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     rows = ["# ISO compatibility observations", "", f"Upstream: Logtalk `{REVISION}`.", "",
             f"Inventory: {len(cases)}; selected: {len(selected)}; {counts}.", "",
+            "Profile: native cons terms; READ/READ_TERM use Prolog syntax.", "",
             "These are finite test observations, not an ISO conformance percentage.", "",
             "| Case | Status | Observation |", "|---|---|---|"]
     for result in results:

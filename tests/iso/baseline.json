@@ -108,8 +108,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "control/cut_0/tests.lgt:iso_cut_0_02:46": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED FAIL)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "control/cut_0/tests.lgt:iso_cut_0_03:49": {
     "status": "PASS",
@@ -156,8 +156,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "control/disjunction_2/tests.lgt:iso_disjunction_2_02:41": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED FAIL)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "control/disjunction_2/tests.lgt:iso_disjunction_2_03:44": {
     "status": "PASS",
@@ -512,16 +512,16 @@
     "observation": "(:OBSERVED PASS)"
   },
   "functions/integer_power_2/tests.lgt:iso_integer_power_2_06:56": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "functions/integer_power_2/tests.lgt:iso_integer_power_2_07:59": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
   "functions/integer_power_2/tests.lgt:iso_integer_power_2_08:62": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== 1.0d0 1)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "functions/integer_power_2/tests.lgt:iso_integer_power_2_09:65": {
     "status": "PASS",
@@ -640,8 +640,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "functions/power_2/tests.lgt:iso_power_2_07:63": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|evaluation_error| SPROLOG/ATOMS::|undefined|) (SPROLOG/ATOMS::/ IS 2))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "functions/power_2/tests.lgt:iso_power_2_09:71": {
     "status": "PASS",
@@ -812,12 +812,12 @@
     "observation": "(:OBSERVED PASS)"
   },
   "predicates/arg_3/tests.lgt:iso_arg_3_10:63": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/arg_3/tests.lgt:iso_arg_3_11:67": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/arg_3/tests.lgt:iso_arg_3_12:77": {
     "status": "BLOCKED",
@@ -836,8 +836,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "predicates/asserta_1/tests.lgt:iso_asserta_1_03:50": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| SPROLOG/ATOMS::|instantiation_error| (SPROLOG/ATOMS::/ ASSERTA 1))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/asserta_1/tests.lgt:iso_asserta_1_04:53": {
     "status": "PASS",
@@ -1084,8 +1084,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "predicates/call_N/tests.lgt:iso_call_N_05:56": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED FAIL)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/call_N/tests.lgt:iso_call_N_06:59": {
     "status": "PASS",
@@ -1128,20 +1128,20 @@
     "observation": "(:OBSERVED PASS)"
   },
   "predicates/clause_2/tests.lgt:iso_clause_2_01:62": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED FAIL)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/clause_2/tests.lgt:iso_clause_2_02:65": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED FAIL)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/clause_2/tests.lgt:iso_clause_2_03:68": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
   "predicates/clause_2/tests.lgt:iso_clause_2_04:71": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== (|,| #1=#:?G0 (CALL #1#)) (|,| (CALL #1#) (CALL #1#)))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/clause_2/tests.lgt:iso_clause_2_05:74": {
     "status": "PASS",
@@ -1164,8 +1164,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "predicates/clause_2/tests.lgt:iso_clause_2_10:97": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|permission_error| SPROLOG/ATOMS::|access| SPROLOG/ATOMS::|private_procedure| (ATOM #:?G0)) (SPROLOG/ATOMS::/ CLAUSE 2))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/clause_2/tests.lgt:iso_clause_2_11:107": {
     "status": "BLOCKED",
@@ -1448,8 +1448,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "predicates/current_prolog_flag_2/tests.lgt:iso_current_prolog_flag_2_08:71": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|domain_error| SPROLOG/ATOMS::|prolog_flag| MAX_ARITY) (SPROLOG/ATOMS::/ CURRENT_PROLOG_FLAG 2))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/current_prolog_flag_2/tests.lgt:iso_current_prolog_flag_2_09:78": {
     "status": "PASS",
@@ -2024,8 +2024,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_04:52": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|domain_error| SPROLOG/ATOMS::|not_less_than_zero| -30) (SPROLOG/ATOMS::/ OP 3))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_05:55": {
     "status": "PASS",
@@ -2040,8 +2040,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_08:64": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|atom| 0) (SPROLOG/ATOMS::/ OP 3))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_09:67": {
     "status": "PASS",
@@ -2056,40 +2056,40 @@
     "observation": "upstream conditional compilation requires adaptation"
   },
   "predicates/op_3/tests.lgt:iso_op_3_11:85": {
-    "status": "FAIL",
+    "status": "XFAIL",
     "observation": "(:OBSERVED MISSING_ERROR)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_12:88": {
-    "status": "FAIL",
+    "status": "XFAIL",
     "observation": "(:OBSERVED MISSING_ERROR)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_13:91": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_14:94": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_15:97": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_16:100": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_17:103": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_18:108": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_19:112": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_20:127": {
     "status": "BLOCKED",
@@ -2232,12 +2232,12 @@
     "observation": "(:OBSERVED PASS)"
   },
   "predicates/retract_1/tests.lgt:iso_retract_1_04:63": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (VARIANT ((- (- #1=#:?G0 4) (ANIMAL #1#)) (- (- OCTOPUS 8) SPROLOG/ATOMS::|true|) (- (- #2=#:?G1 6) (INSECT #2#)) (- (- SPIDER 8) SPROLOG/ATOMS::|true|) (- (- #3=#:?G2 2) (BIRD #3#))) ((- (- #4=#:?G3 4) (ANIMAL #4#)) (- (- #5=#:?G4 6) (INSECT #5#)) (- (- SPIDER 8) TRUE)))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/retract_1/tests.lgt:iso_retract_1_05:66": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED FAIL)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/retract_1/tests.lgt:iso_retract_1_06:69": {
     "status": "PASS",
@@ -2264,8 +2264,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "predicates/retract_1/tests.lgt:iso_retract_1_11:100": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|permission_error| SPROLOG/ATOMS::|access| SPROLOG/ATOMS::|private_procedure| (|:-| (ATOM #1=#:?G0) (== #1# []))) (SPROLOG/ATOMS::/ RETRACT 1))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/retractall_1/tests.lgt:iso_retractall_1_01:65": {
     "status": "PASS",
@@ -2856,128 +2856,128 @@
     "observation": "(:OBSERVED PASS)"
   },
   "syntax/atoms/tests.lgt:iso_atom_02:38": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (ATOM (QUOTE SPROLOG/ATOMS::A))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/atoms/tests.lgt:iso_atom_03:44": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (ATOM (QUOTE SPROLOG/ATOMS::|a|))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/atoms/tests.lgt:iso_atom_04:48": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (ATOM (QUOTE SPROLOG/ATOMS::|a'b|))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/atoms/tests.lgt:iso_atom_05:52": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (ATOM (QUOTE SPROLOG/ATOMS::|a\"b|))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/atoms/tests.lgt:iso_atom_06:56": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (ATOM (QUOTE SPROLOG/ATOMS::|a\\\\b|))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/atoms/tests.lgt:iso_atom_07:60": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== (QUOTE SPROLOG/ATOMS::|a123b|) SPROLOG/ATOMS::|aSb|)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/atoms/tests.lgt:iso_atom_08:64": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== (QUOTE SPROLOG/ATOMS::|ax53b|) SPROLOG/ATOMS::|aSb|)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/comments/tests.lgt:iso_line_comment_01:34": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::% END_OF_FILE)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/comments/tests.lgt:iso_line_comment_02:38": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== (- SPROLOG/ATOMS::% SPROLOG/ATOMS::|abc|) (- A END_OF_FILE))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/comments/tests.lgt:iso_block_comment_01:42": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::/* END_OF_FILE)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/comments/tests.lgt:iso_block_comment_02:46": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== (- SPROLOG/ATOMS::/* SPROLOG/ATOMS::|abc|) (- A END_OF_FILE))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/comments/tests.lgt:iso_block_comment_03:50": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== (- SPROLOG/ATOMS::/* SPROLOG/ATOMS::/*) (- A END_OF_FILE))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/comments/tests.lgt:iso_block_comment_04:54": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/comments/tests.lgt:iso_block_comment_05:58": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/curly_terms/tests.lgt:iso_curly_bracketed_term_01:34": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::|{a}.| ({} A))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/curly_terms/tests.lgt:iso_curly_bracketed_term_02:38": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::|{a| ({} (|,| A B)))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_01:34": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|syntax_error| SPROLOG/ATOMS::|s_expression|) (SPROLOG/ATOMS::/ READ 1))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_02:40": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|syntax_error| SPROLOG/ATOMS::|s_expression|) (SPROLOG/ATOMS::/ READ 1))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_03:46": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|syntax_error| SPROLOG/ATOMS::|s_expression|) (SPROLOG/ATOMS::/ READ 1))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_04:52": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|syntax_error| SPROLOG/ATOMS::|s_expression|) (SPROLOG/ATOMS::/ READ 1))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_05:58": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|syntax_error| SPROLOG/ATOMS::|s_expression|) (SPROLOG/ATOMS::/ READ 1))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_06:64": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|syntax_error| SPROLOG/ATOMS::|s_expression|) (SPROLOG/ATOMS::/ READ 1))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_07:70": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|list| \"jim\") (SPROLOG/ATOMS::/ ATOM_CHARS 2))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_08:75": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|list| \"jim\") (SPROLOG/ATOMS::/ ATOM_CODES 2))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_09:80": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== \"jim\" JIM)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_10:85": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== \"\" NIL)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_11:90": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== \"\" NIL)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_12:95": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== \"\" ||)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/lists/tests.lgt:iso_list_01:34": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::|[a].| (|.| A NIL))))"
+    "status": "XFAIL",
+    "observation": "(:OBSERVED (POST_FAILED (== (SPROLOG/ATOMS::|a|) (|.| A NIL))))"
   },
   "syntax/lists/tests.lgt:iso_list_02:38": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::|[a| (|.| A (|.| B NIL)))))"
+    "status": "XFAIL",
+    "observation": "(:OBSERVED (POST_FAILED (== (SPROLOG/ATOMS::|a| SPROLOG/ATOMS::|b|) (|.| A (|.| B NIL)))))"
   },
   "syntax/lists/tests.lgt:iso_list_03:42": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|syntax_error| SPROLOG/ATOMS::|s_expression|) (SPROLOG/ATOMS::/ READ 1))))"
+    "status": "XFAIL",
+    "observation": "(:OBSERVED (POST_FAILED (== (SPROLOG/ATOMS::|a| . SPROLOG/ATOMS::|b|) (|.| A B))))"
   },
   "syntax/numbers/tests.lgt:iso_number_01:37": {
     "status": "PASS",
@@ -2988,72 +2988,72 @@
     "observation": "(:OBSERVED PASS)"
   },
   "syntax/numbers/tests.lgt:iso_number_03:45": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::|123.45.| 123.45d0)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/numbers/tests.lgt:iso_number_04:49": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::|-123.45.| -123.45d0)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/numbers/tests.lgt:iso_number_05:55": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
   "syntax/numbers/tests.lgt:iso_number_06:59": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (CHAR_CODE SPROLOG/ATOMS::S 0)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/numbers/tests.lgt:iso_number_07:63": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::|0b1010011.| 83)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/numbers/tests.lgt:iso_number_08:67": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::|0o123.| 83)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/numbers/tests.lgt:iso_number_09:71": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::|0x53.| 83)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/numbers/tests.lgt:iso_number_10:77": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::|123.45.| 123.45d0)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/numbers/tests.lgt:iso_number_11:81": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::|123.45e+1.| 1234.5d0)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/numbers/tests.lgt:iso_number_12:85": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::|123.45E+1.| 1234.5d0)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/numbers/tests.lgt:iso_number_13:89": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::|123.45e-1.| 12.345d0)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/numbers/tests.lgt:iso_number_14:93": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::|123.45E-1.| 12.345d0)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/operators/tests.lgt:iso_operators_01:52": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/operators/tests.lgt:iso_operators_02:56": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
   "syntax/operators/tests.lgt:iso_operators_03:60": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/operators/tests.lgt:iso_operators_04:64": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
   "syntax/operators/tests.lgt:iso_operators_05:68": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/operators/tests.lgt:iso_operators_06:72": {
     "status": "PASS",
@@ -3068,32 +3068,32 @@
     "observation": "(:OBSERVED PASS)"
   },
   "syntax/operators/tests.lgt:iso_operators_09:84": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== 1 SPROLOG/ATOMS::|xfy|)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/operators/tests.lgt:iso_operators_10:88": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== 1 SPROLOG/ATOMS::|xfy|)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/operators/tests.lgt:iso_operators_11:92": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::|fy| 2)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/operators/tests.lgt:iso_operators_12:96": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== 1 SPROLOG/ATOMS::|yf|)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/operators/tests.lgt:iso_operators_13:100": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== 1 SPROLOG/ATOMS::|yfx|)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/operators/tests.lgt:iso_operators_14:106": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== SPROLOG/ATOMS::- (- 1 2))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/operators/tests.lgt:iso_operators_15:110": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION ISO_TEST_ASSERTION_FAILED))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/terms/tests.lgt:iso_term_01:34": {
     "status": "PASS",
@@ -3104,16 +3104,16 @@
     "observation": "(:OBSERVED PASS)"
   },
   "syntax/terms/tests.lgt:iso_term_03:42": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/terms/tests.lgt:iso_term_04:46": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/terms/tests.lgt:iso_term_05:50": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "syntax/terms/tests.lgt:iso_term_06:54": {
     "status": "PASS",

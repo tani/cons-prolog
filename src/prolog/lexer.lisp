@@ -3,9 +3,11 @@
   (:import-from #:sprolog/src/adapters/term-ops #:iso-atom #:iso-error)
   (:import-from #:sprolog/src/api/state #:*iso-context*)
   (:export #:make-lexer #:lexer-stream #:lexer-line #:lexer-column #:lexer-source
+           #:lexer-token-line #:lexer-token-column
            #:flush-lookahead #:lexer-conversions #:lexer-look #:peek-token #:take-token #:expect-token #:prolog-syntax-error))
 (in-package #:sprolog/src/prolog/lexer)
 (defstruct lexer stream (line 1) (column 0) (source "<stream>") look conversions buffer
+  (token-line 1) (token-column 0)
   last-raw (last-line 1) (last-column 0))
 (defun prolog-syntax-error (lexer message)
   (let ((*iso-context* (list (iso-atom "read_prolog_term") (lexer-source lexer)
@@ -118,6 +120,7 @@
                     (error () (prolog-syntax-error lexer "number"))))))
 (defun next-token (lexer)
   (skip-layout lexer)
+  (setf (lexer-token-line lexer) (lexer-line lexer) (lexer-token-column lexer) (lexer-column lexer))
   (let ((c (rc lexer)))
     (cond ((null c) (cons :eof nil))
           ((digit-char-p c) (numeric-token lexer c))

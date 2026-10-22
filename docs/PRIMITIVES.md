@@ -152,7 +152,7 @@ package with the `sprolog` nickname. Internal functions are owned by their modul
 old `sprolog::` internal references have been updated in tests, examples, and
 benchmarks. See [Development](DEVELOPMENT.md) for cycle boundaries and dispatch costs.
 
-## Cons-model operations and S-expression I/O
+## Cons-model operations and term I/O
 
 `term-relations.lisp` owns FUNCTOR, ARG, UNIV, COMPARE, SORT and KEYSORT.
 **Retention:** finite application decomposition/construction and dereferencing variable
@@ -165,6 +165,11 @@ BAGOF and SORT. SETOF deliberately preserves BAGOF group encounter order.
 operator/conversion tables. **Retention:** these operations access host streams,
 reader/printer state and persistent database configuration. All read/write
 convenience forms use ordinary clauses, with public exception contexts preserved.
+READ_TERM dispatches on the database-local `read_syntax` flag: the default
+S-expression path is retained for compatibility, while the Prolog path reuses
+`src/prolog/reader.lisp`. The adapter owns conversion to fresh managed VM variables,
+atom-name bridging, stream/EOF state and option unification. These stateful
+boundaries require an adapter; no separate parser or execution engine is added.
 The accepted format and its limits are specified in [BUILTINS.md](BUILTINS.md).
 No new VM instruction, term tag, or public Lisp export is introduced.
 
@@ -174,8 +179,9 @@ The five Lisp text APIs are owned by `src/prolog/reader.lisp` and
 `src/prolog/loader.lisp`, with lexing in `src/prolog/lexer.lisp`. They translate
 source syntax into existing cons terms and compiler input. Load-time declarations
 remain at this boundary; the VM has no new instruction or compound-term tag.
-The OP and character-conversion adapters supply database-local reader state;
-read/write predicates continue to use the S-expression stream adapter.
+The OP and character-conversion adapters supply database-local reader state.
+READ/READ_TERM can opt into the textual parser through the term-I/O adapter;
+WRITE predicates retain S-expression output.
 
 ## Conditional native lowering on SBCL
 
