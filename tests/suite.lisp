@@ -1,6 +1,7 @@
 (uiop:define-package #:sprolog/tests/suite
   (:use #:cl #:sprolog)
   (:nicknames #:sprolog/tests)
+  (:import-from #:sprolog/tests/native #:run-native-tests)
   (:import-from #:sprolog/tests/prolog-loader #:run-prolog-loader-tests)
   (:import-from #:sprolog/tests/cons-operations #:run-cons-operation-tests)
   (:import-from #:sprolog/tests/builtins #:run-builtin-tests)
@@ -37,6 +38,7 @@
 (defun run-tests ()
   (let ((*database* (make-database)) (*checks* 0))
     (run-package-tests)
+  (run-native-tests)
     (<-- (parent alice bob)) (<- (parent bob charlie))
     (<-- (ancestor ?x ?y) (parent ?x ?y))
     (<- (ancestor ?x ?y) (parent ?x ?z) (ancestor ?z ?y))

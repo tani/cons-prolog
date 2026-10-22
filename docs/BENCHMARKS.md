@@ -1,5 +1,7 @@
 # Benchmarks and bottlenecks
 
+For the current optimizer and SWI-Prolog comparison, see [Competitive benchmarks](COMPETITIVE-BENCHMARKS.md). The investigation below describes the historical unoptimized revision.
+
 Measured production revision: `be479795e11bcbd6f84ca2020e53c8dd17a9e992` (0.9.1).
 Date: 2026-10-12 JST. Runtime code is unchanged by this investigation.
 

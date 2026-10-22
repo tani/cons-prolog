@@ -1,6 +1,7 @@
 ;;; Selected public interface, without internal implementation exports.
 (uiop:define-package #:sprolog/src/api/public
   (:use #:cl)
+  (:import-from #:sprolog/src/syntax/native)
   (:import-from #:sprolog/src/library/standard-library)
   (:import-from #:sprolog/src/prolog/loader #:load-prolog #:load-prolog-string #:load-prolog-file)
   (:import-from #:sprolog/src/prolog/reader #:read-prolog-term #:parse-prolog-string)

@@ -176,3 +176,22 @@ source syntax into existing cons terms and compiler input. Load-time declaration
 remain at this boundary; the VM has no new instruction or compound-term tag.
 The OP and character-conversion adapters supply database-local reader state;
 read/write predicates continue to use the S-expression stream adapter.
+
+## Conditional native lowering on SBCL
+
+`src/syntax/native.lisp` compiles eligible user-predicate ground modes, conjunctions,
+cuts, integer arithmetic and a statically known pure `findall/3` goal to Common Lisp.
+The collector uses native continuations to enumerate the same clause/search order;
+ground fact relations are indexed by their available scalar inputs. This lowering
+adds no public predicate or library-wrapper VM instruction.
+
+**Conditional retention:** general `findall/3` remains an adapter because arbitrary
+runtime goals, free template variables, effects, exceptions and tabling require the
+existing machinery. Native execution is speculative and has no externally visible
+bindings or effects until it finishes. Unsupported modes and exhausted budgets
+return to the VM. Definitions and adapters retain their existing error context,
+validation order, update and cut semantics. Library definitions are unchanged.
+
+Native counters in `query-statistics` count completed native call boundaries and
+deoptimizations. WAM instruction/depth/ownership-cell counters describe the VM path;
+native temporary conses are managed by Lisp GC and appear in host allocation data.

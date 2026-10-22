@@ -8,7 +8,7 @@
     #:or-branches #:proceed #:put-args #:retry-me-else #:scoped-body #:tnot #:true #:trust-me
     #:try-branch #:try-me-else #:yield)
   (:import-from #:sprolog/src/kernel/model
-    #:database-iso-state #:iso-state-loaded-files #:%make-machine #:database #:database-generation #:database-predicates #:database-tabled
+    #:database-native-cache #:database-iso-state #:iso-state-loaded-files #:%make-machine #:database #:database-generation #:database-predicates #:database-tabled
     #:disjunction-goal-branches #:disjunction-goal-p #:host-goal #:host-goal-arguments
     #:host-goal-function #:host-goal-output #:host-goal-p #:host-goal-testp #:logic-var-p
     #:machine-slots #:machine-variables #:make-predicate #:predicate #:predicate-clauses
@@ -147,6 +147,7 @@
     (values (car key) (cdr key))))
 (defun clear-database (&optional (database *database*))
   (incf (database-generation database))
+  (setf (database-native-cache database) nil)
   (clrhash (database-tabled database))
   (clrhash (database-predicates database))
   (when (database-iso-state database)

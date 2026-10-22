@@ -6,6 +6,8 @@
 - [Prolog textual loader](PROLOG-LOADER.md): string/file/stream APIs, operators, directives and limits.
 - [Builtin reference](BUILTINS.md): supported predicates, arithmetic and Lisp-friendly names.
 - [Validation](VALIDATION.md): test coverage, stress tests and current limitations.
+- [Native compiler ablation](NATIVE-ABLATION.md): measured removal of unnecessary VM optimizations.
+- [SWI comparison](COMPETITIVE-BENCHMARKS.md): shared-source workloads, native compilation, raw samples and reproduction.
 - [Benchmarks](BENCHMARKS.md): measured performance, allocation profiles, bottlenecks and reproduction commands.
 - [Type declaration experiment](TYPE-DECLARATIONS.md): SBCL measurements without algorithm changes.
 - [Roadmap](ROADMAP.md): implementation status and planned improvements.

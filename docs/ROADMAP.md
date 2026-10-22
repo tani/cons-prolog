@@ -24,6 +24,12 @@
 See [the user guide](MANUAL.md), [builtin specification](BUILTINS.md) and
 [validation results](VALIDATION.md) for behavior and current restrictions.
 
+## Implemented after 0.10.0
+
+- Guarded SBCL compilation of pure ground modes, including native integer arithmetic,
+  indexed ground facts and finite pure collectors. VM algorithms are unchanged after
+  [ablation](NATIVE-ABLATION.md). See [measurements](COMPETITIVE-BENCHMARKS.md).
+
 ## Scope
 
 Lisp-native terms and embedding take priority over ISO Prolog compatibility.
@@ -42,10 +48,12 @@ negation/conditionals remain unsupported.
 
 ## Future performance work
 
-[Measured bottlenecks](BENCHMARKS.md) prioritize scalar graph fast paths and
-first-argument indexing before larger VM/SLG representation changes.
+The [historical profiles](BENCHMARKS.md) identify interpreter bottlenecks.
+[Ablation](NATIVE-ABLATION.md) showed that VM indexing and scalar/graph allocation
+changes were unnecessary for the current [SWI comparison](COMPETITIVE-BENCHMARKS.md).
+Revisit them when interpreter/SLG workloads require them.
 
-- First-argument indexing, X-register reuse and variable lifetime analysis.
+- VM indexing, scalar/graph allocation changes, X-register reuse and variable lifetime analysis.
 - Direct acyclic term construction, compact instruction encodings and native dispatch.
 - Shared frozen stacks, answer tries and explicit table-space accounting.
 - Incremental SCC maintenance, immediate completion of ground successes,

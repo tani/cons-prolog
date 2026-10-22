@@ -13,7 +13,7 @@
     #:continuation-pc #:continuation-scopes #:continuation-slots #:database
     #:database-predicates #:database-tabled #:iso-exception #:iso-exception-term #:iso-state
     #:logic-var #:logic-var-binding #:logic-var-id #:logic-var-p #:machine #:machine-allocations
-    #:machine-args #:machine-builtin-context #:machine-choices #:machine-closed #:machine-code
+    #:machine-native-calls #:machine-native-deopts #:machine-args #:machine-builtin-context #:machine-choices #:machine-closed #:machine-code
     #:machine-continuation #:machine-cut #:machine-database #:machine-delays #:machine-gc-count
     #:machine-gc-reclaimed #:machine-heap #:machine-iso-handlers #:machine-max-choices
     #:machine-max-depth #:machine-max-heap #:machine-max-live #:machine-max-trail #:machine-pc
@@ -25,7 +25,7 @@
   (:import-from #:sprolog/src/kernel/protocol
     #:ensure-registers #:execute-term-instruction #:iso-atom #:iso-atomic-equal #:iso-compound
     #:iso-execute #:iso-handle-exception #:iso-instruction-p #:iso-invoke #:iso-primitive-p
-    #:iso-resolve-name #:iso-syntax-p #:iso-unknown #:maybe-collect #:slg-call #:slg-check-cut
+    #:native-call #:iso-resolve-name #:iso-syntax-p #:iso-unknown #:maybe-collect #:slg-call #:slg-check-cut
     #:slg-check-database #:slg-close #:slg-enter-cut-frame #:slg-negative #:slg-return-answer
     #:slg-statistics #:slg-table-goal #:standard-predicate #:table)
   (:import-from #:sprolog/src/api/state)
@@ -179,6 +179,7 @@
   (when (gethash (cons name arity) (database-tabled (machine-database vm)))
     (if (machine-slg-bypass vm) (setf (machine-slg-bypass vm) nil)
         (return-from invoke-predicate (slg-call vm name arity tailp))))
+  (when (native-call vm name arity tailp) (return-from invoke-predicate t))
   (let ((code (resolve-code vm name arity)))
     (unless code
       (return-from invoke-predicate
@@ -308,7 +309,8 @@
                           (machine-delays vm)))))))
   (values nil nil))
 (defun query-statistics (vm)
-  (list :instructions (machine-steps vm) :max-continuation-depth (machine-max-depth vm)
+  (list :native-calls (machine-native-calls vm) :native-deoptimizations (machine-native-deopts vm)
+        :instructions (machine-steps vm) :max-continuation-depth (machine-max-depth vm)
         :max-choice-points (machine-max-choices vm)
         :allocated-cells (machine-allocations vm) :heap-cells (fill-pointer (machine-heap vm))
         :max-heap-cells (machine-max-heap vm) :trail-cells (fill-pointer (machine-trail vm))
