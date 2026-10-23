@@ -3,9 +3,10 @@
 S-expression Prolog for Common Lisp, with native Lisp cons terms, an explicit WAM execution model, DCGs, SLG variant tabling and VM garbage collection.
 
 An independent implementation inspired by the PAIP / Allegro Prolog APIs. ISO
-compatibility is tracked against [upstream tests](docs/ISO-COMPATIBILITY.md) while
+compatibility is tracked against [bundled ISO tests](docs/ISO-COMPATIBILITY.md) while
 preserving Lisp-native terms. Full ISO conformance and full Allegro compatibility
-are outside its scope. [MIT licensed](LICENSE).
+are outside its scope. [MIT licensed](LICENSE); bundled Logtalk-derived test cases
+retain Apache-2.0 and their original notices.
 
 ## Load
 

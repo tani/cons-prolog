@@ -1,3949 +1,3129 @@
 {
-  "inria/fail:1": {
+  "control/call_1/tests.lgt:iso_call_1_01:55": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/fail:2": {
+  "control/call_1/tests.lgt:iso_call_1_02:58": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/fail:3": {
+  "control/call_1/tests.lgt:iso_call_1_03:61": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/fail:4": {
+  "control/call_1/tests.lgt:iso_call_1_04:64": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/abolish:1": {
+  "control/call_1/tests.lgt:iso_call_1_05:69": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/abolish:2": {
+  "control/call_1/tests.lgt:iso_call_1_06:73": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/abolish:3": {
+  "control/call_1/tests.lgt:iso_call_1_07:78": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/abolish:4": {
+  "control/call_1/tests.lgt:iso_call_1_08:81": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/call_1/tests.lgt:iso_call_1_09:84": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/call_1/tests.lgt:iso_call_1_10:88": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/call_1/tests.lgt:iso_call_1_11:94": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/call_1/tests.lgt:iso_call_1_12:97": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/call_1/tests.lgt:iso_call_1_13:102": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/call_1/tests.lgt:iso_call_1_14:108": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/call_1/tests.lgt:iso_call_1_15:115": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/catch_3/tests.lgt:iso_catch_3_01:63": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/catch_3/tests.lgt:iso_catch_3_02:66": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/catch_3/tests.lgt:iso_catch_3_03:72": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/catch_3/tests.lgt:iso_catch_3_04:75": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/catch_3/tests.lgt:iso_catch_3_05:79": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/catch_3/tests.lgt:iso_catch_3_06:82": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/catch_3/tests.lgt:iso_catch_3_07:85": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/catch_3/tests.lgt:iso_catch_3_08:89": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/conjunction_2/tests.lgt:iso_conjunction_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/conjunction_2/tests.lgt:iso_conjunction_2_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/conjunction_2/tests.lgt:iso_conjunction_2_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/cut_0/tests.lgt:iso_cut_0_01:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/cut_0/tests.lgt:iso_cut_0_02:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/cut_0/tests.lgt:iso_cut_0_03:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/cut_0/tests.lgt:iso_cut_0_04:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/cut_0/tests.lgt:iso_cut_0_05:57": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/cut_0/tests.lgt:iso_cut_0_06:62": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/cut_0/tests.lgt:iso_cut_0_07:67": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/cut_0/tests.lgt:iso_cut_0_08:72": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/cut_0/tests.lgt:iso_cut_0_09:77": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/cut_0/tests.lgt:iso_cut_0_10:82": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/cut_0/tests.lgt:iso_cut_0_11:87": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/cut_0/tests.lgt:iso_cut_0_12:92": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/disjunction_2/tests.lgt:iso_disjunction_2_01:38": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/disjunction_2/tests.lgt:iso_disjunction_2_02:41": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/disjunction_2/tests.lgt:iso_disjunction_2_03:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/disjunction_2/tests.lgt:iso_disjunction_2_04:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/disjunction_2/tests.lgt:iso_disjunction_2_05:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/if_then_2/tests.lgt:iso_if_then_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/if_then_2/tests.lgt:iso_if_then_2_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/if_then_2/tests.lgt:iso_if_then_2_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/if_then_2/tests.lgt:iso_if_then_2_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/if_then_2/tests.lgt:iso_if_then_2_05:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/if_then_2/tests.lgt:iso_if_then_2_06:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/if_then_else_3/tests.lgt:iso_if_then_else_3_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/if_then_else_3/tests.lgt:iso_if_then_else_3_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/if_then_else_3/tests.lgt:iso_if_then_else_3_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/if_then_else_3/tests.lgt:iso_if_then_else_3_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/if_then_else_3/tests.lgt:iso_if_then_else_3_05:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/if_then_else_3/tests.lgt:iso_if_then_else_3_06:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/if_then_else_3/tests.lgt:iso_if_then_else_3_07:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/if_then_else_3/tests.lgt:iso_if_then_else_3_08:55": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "control/if_then_else_3/tests.lgt:iso_if_then_else_3_09:58": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/abs_1/tests.lgt:iso_abs_1_01:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/abs_1/tests.lgt:iso_abs_1_02:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/abs_1/tests.lgt:iso_abs_1_03:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/abs_1/tests.lgt:iso_abs_1_04:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/abs_1/tests.lgt:iso_abs_1_05:51": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/acos_1/tests.lgt:iso_acos_1_01:38": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/acos_1/tests.lgt:iso_acos_1_02:41": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/acos_1/tests.lgt:iso_acos_1_03:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/asin_1/tests.lgt:iso_asin_1_01:38": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/asin_1/tests.lgt:iso_asin_1_02:41": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/asin_1/tests.lgt:iso_asin_1_03:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/atan2_2/tests.lgt:iso_atan2_2_01:38": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/atan2_2/tests.lgt:iso_atan2_2_02:41": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/atan2_2/tests.lgt:iso_atan2_2_03:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/atan_1/tests.lgt:iso_atan_1_01:41": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/atan_1/tests.lgt:iso_atan_1_02:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/atan_1/tests.lgt:iso_atan_1_03:47": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/atan_1/tests.lgt:iso_atan_1_04:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/atan_1/tests.lgt:iso_atan_1_05:55": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/bitwise_and_2/tests.lgt:iso_bitwise_and_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/bitwise_and_2/tests.lgt:iso_bitwise_and_2_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/bitwise_and_2/tests.lgt:iso_bitwise_and_2_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/bitwise_and_2/tests.lgt:iso_bitwise_and_2_04:43": {
     "status": "SKIP",
-    "observation": "Requires a finite max_arity; this implementation has unbounded arity"
+    "observation": "Disabled upstream: implementation-dependent or unspecified result"
   },
-  "inria/abolish:5": {
+  "functions/bitwise_and_2/tests.lgt:iso_bitwise_and_2_05:47": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/and:1": {
+  "functions/bitwise_and_2/tests.lgt:iso_bitwise_and_2_06:52": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/and:2": {
+  "functions/bitwise_complement_1/tests.lgt:iso_bitwise_complement_1_01:34": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/and:3": {
+  "functions/bitwise_complement_1/tests.lgt:iso_bitwise_complement_1_02:37": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/and:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/and:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arg:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arg:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arg:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arg:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arg:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arg:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arg:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arg:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arg:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arg:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arg:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arg:12": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arg:13": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arg:14": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_diff:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_diff:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_diff:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_diff:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_diff:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_eq:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_eq:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_eq:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_eq:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_eq:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_eq:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_gt:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_gt:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_gt:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_gt:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_gt:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_gt=:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_gt=:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_gt=:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_gt=:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_gt=:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_lt:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_lt:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_lt:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_lt:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_lt:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_lt=:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_lt=:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_lt=:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_lt=:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/arith_lt=:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/asserta:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/asserta:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/asserta:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/asserta:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/asserta:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/assertz:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/assertz:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/assertz:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/assertz:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/assertz:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_chars:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_chars:2": {
-    "status": "XFAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS (((<-- #1=#:?G0 ([ ])))) (((<-- #1# (SPROLOG/ATOMS::|n| SPROLOG/ATOMS::|i| SPROLOG/ATOMS::|l|)))) (((<-- #1# (SPROLOG/ATOMS::|n| SPROLOG/ATOMS::|i| SPROLOG/ATOMS::|l|)))) (((<-- #1# ([ ]))))))"
-  },
-  "inria/atom_chars:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_chars:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_chars:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_chars:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_chars:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_chars:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_chars:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_chars:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_chars:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_chars:12": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_chars:13": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_chars:14": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_codes:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_codes:2": {
-    "status": "XFAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS (((<-- #1=#:?G0 (91 93)))) (((<-- #1# (110 105 108)))) (((<-- #1# (110 105 108)))) (((<-- #1# (91 93))))))"
-  },
-  "inria/atom_codes:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_codes:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_codes:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_codes:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_codes:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_codes:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_codes:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_codes:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_codes:11": {
+  "functions/bitwise_complement_1/tests.lgt:iso_bitwise_complement_1_03:40": {
     "status": "SKIP",
-    "observation": "Assumes character code 1000 is unavailable; sprolog supports Unicode scalar values"
+    "observation": "Disabled upstream: implementation-dependent or unspecified result"
   },
-  "inria/atom_concat:1": {
+  "functions/bitwise_complement_1/tests.lgt:iso_bitwise_complement_1_04:44": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/atom_concat:2": {
+  "functions/bitwise_left_shift_2/tests.lgt:iso_bitwise_left_shift_2_01:34": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/atom_concat:3": {
+  "functions/bitwise_left_shift_2/tests.lgt:iso_bitwise_left_shift_2_02:37": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/atom_concat:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_concat:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_concat:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_concat:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_concat:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_concat:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_length:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_length:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_length:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_length:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_length:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atom_length:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atomic:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atomic:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atomic:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atomic:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atomic:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/atomic:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/bagof:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/bagof:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/bagof:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/bagof:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/bagof:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/bagof:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/bagof:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/bagof:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/bagof:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/bagof:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/bagof:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/bagof:12": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/bagof:13": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/call:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/call:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/call:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/call:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/call:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/call:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/call:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/call:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/call:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/call:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/call:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/catch-and-throw:1": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS SYSTEM_ERROR (UNEXPECTED_BALL BLABLA) (UNEXPECTED_BALL BLABLA) SYSTEM_ERROR))"
-  },
-  "inria/catch-and-throw:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/char_code:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/char_code:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/char_code:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/char_code:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/char_code:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/char_code:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/char_code:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/char_code:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/char_code:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/char_code:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/clause:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/clause:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/clause:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/clause:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/clause:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/compound:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/compound:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/compound:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/compound:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/compound:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/compound:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/compound:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/copy_term:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/copy_term:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/copy_term:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/copy_term:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/copy_term:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/copy_term:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/copy_term:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/copy_term:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/copy_term:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/copy_term:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/current_input:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/current_output:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/current_predicate:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/current_predicate:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/current_predicate:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/current_predicate:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/current_predicate:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/current_prolog_flag:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/current_prolog_flag:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/current_prolog_flag:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/current_prolog_flag:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/current_prolog_flag:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/current_prolog_flag:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/cut:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/cut:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/cut:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/findall:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/findall:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/findall:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/findall:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/findall:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/findall:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/findall:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/findall:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/findall:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/float:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/float:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/float:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/float:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/float:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:10": {
-    "status": "XFAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS SUCCESS SPROLOG/ATOMS::|instantiation_error| SPROLOG/ATOMS::|instantiation_error| SUCCESS))"
-  },
-  "inria/functor:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:12": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:13": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:14": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:15": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:16": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/functor:17": {
+  "functions/bitwise_left_shift_2/tests.lgt:iso_bitwise_left_shift_2_03:40": {
     "status": "SKIP",
-    "observation": "Requires a finite max_arity; this implementation has unbounded arity"
+    "observation": "Disabled upstream: implementation-dependent or unspecified result"
   },
-  "inria/functor:18": {
+  "functions/bitwise_left_shift_2/tests.lgt:iso_bitwise_left_shift_1_04:44": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/if-then:1": {
+  "functions/bitwise_left_shift_2/tests.lgt:iso_bitwise_left_shift_2_05:49": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/if-then:2": {
+  "functions/bitwise_left_shift_2/tests.lgt:iso_bitwise_left_shift_2_06:55": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/if-then:3": {
+  "functions/bitwise_or_2/tests.lgt:iso_bitwise_or_2_01:34": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/if-then:4": {
+  "functions/bitwise_or_2/tests.lgt:iso_bitwise_or_2_02:37": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/if-then:5": {
+  "functions/bitwise_or_2/tests.lgt:iso_bitwise_or_2_03:40": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/if-then:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/if-then-else:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/if-then-else:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/if-then-else:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/if-then-else:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/if-then-else:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/if-then-else:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/if-then-else:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/if-then-else:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/integer:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/integer:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/integer:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/integer:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/integer:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/is:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/is:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/is:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/is:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/is:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/is:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/nonvar:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/nonvar:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/nonvar:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/nonvar:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/nonvar:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/nonvar:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_provable:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_provable:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_provable:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_provable:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_provable:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_provable:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_provable:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_unify:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_unify:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_unify:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_unify:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_unify:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_unify:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_unify:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_unify:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_unify:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/not_unify:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:12": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:13": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:14": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:15": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_chars:16": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_codes:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_codes:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_codes:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_codes:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_codes:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_codes:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_codes:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_codes:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_codes:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_codes:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_codes:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_codes:12": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_codes:13": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/number_codes:14": {
+  "functions/bitwise_or_2/tests.lgt:iso_bitwise_or_2_04:43": {
     "status": "SKIP",
-    "observation": "Assumes character code 1000 is unavailable; sprolog supports Unicode scalar values"
+    "observation": "Disabled upstream: implementation-dependent or unspecified result"
   },
-  "inria/once:1": {
+  "functions/bitwise_or_2/tests.lgt:iso_bitwise_or_2_05:47": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/once:2": {
+  "functions/bitwise_or_2/tests.lgt:iso_bitwise_or_2_06:52": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/once:3": {
+  "functions/bitwise_right_shift_2/tests.lgt:iso_bitwise_right_shift_2_01:34": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/once:4": {
+  "functions/bitwise_right_shift_2/tests.lgt:iso_bitwise_right_shift_2_02:37": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "inria/once:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/once:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/or:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/or:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/or:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/or:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/or:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/repeat:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/retract:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/retract:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/set_prolog_flag:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/set_prolog_flag:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/set_prolog_flag:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/set_prolog_flag:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/set_prolog_flag:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/set_prolog_flag:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/set_prolog_flag:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/set_prolog_flag:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/set_prolog_flag:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/set_prolog_flag:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/set_prolog_flag:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/set_prolog_flag:12": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/setof:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/setof:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/setof:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/setof:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/setof:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/setof:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/setof:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/setof:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/setof:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/setof:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/setof:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/setof:12": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/setof:13": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/setof:14": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/sub_atom:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/sub_atom:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/sub_atom:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/sub_atom:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/sub_atom:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/sub_atom:6": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS (((<-- #1=#:?G2 CHA)) ((<-- #1# HAR)) ((<-- #1# ARI)) ((<-- #1# RIT)) ((<-- #1# ITY))) (((<-- #2=#:?G0 0) (<-- #3=#:?G1 4) (<-- #1# SPROLOG/ATOMS::|cha|)) ((<-- #2# 1) (<-- #3# 3) (<-- #1# SPROLOG/ATOMS::|har|)) ((<-- #2# 2) (<-- #3# 2) (<-- #1# SPROLOG/ATOMS::|ari|)) ((<-- #2# 3) (<-- #3# 1) (<-- #1# SPROLOG/ATOMS::|rit|)) ((<-- #2# 4) (<-- #3# 0) (<-- #1# SPROLOG/ATOMS::|ity|))) (((<-- #2# 0) (<-- #3# 4) (<-- #1# SPROLOG/ATOMS::|cha|)) ((<-- #2# 1) (<-- #3# 3) (<-- #1# SPROLOG/ATOMS::|har|)) ((<-- #2# 2) (<-- #3# 2) (<-- #1# SPROLOG/ATOMS::|ari|)) ((<-- #2# 3) (<-- #3# 1) (<-- #1# SPROLOG/ATOMS::|rit|)) ((<-- #2# 4) (<-- #3# 0) (<-- #1# SPROLOG/ATOMS::|ity|))) NIL))"
-  },
-  "inria/sub_atom:7": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS (((<-- #1=#:?G0 1) (<-- #2=#:?G1 0) (<-- #3=#:?G3 ||)) ((<-- #1# 1) (<-- #2# 1) (<-- #3# A)) ((<-- #1# 1) (<-- #2# 2) (<-- #3# AB)) ((<-- #1# 2) (<-- #2# 0) (<-- #3# ||)) ((<-- #1# 2) (<-- #2# 1) (<-- #3# B)) ((<-- #1# 3) (<-- #2# 0) (<-- #3# ||))) (((<-- #1# 0) (<-- #2# 0) (<-- #4=#:?G2 2) (<-- #3# SPROLOG/ATOMS::||)) ((<-- #1# 0) (<-- #2# 1) (<-- #4# 1) (<-- #3# SPROLOG/ATOMS::|a|)) ((<-- #1# 0) (<-- #2# 2) (<-- #4# 0) (<-- #3# SPROLOG/ATOMS::|ab|)) ((<-- #1# 1) (<-- #2# 0) (<-- #4# 1) (<-- #3# SPROLOG/ATOMS::||)) ((<-- #1# 1) (<-- #2# 1) (<-- #4# 0) (<-- #3# SPROLOG/ATOMS::|b|)) ((<-- #1# 2) (<-- #2# 0) (<-- #4# 0) (<-- #3# SPROLOG/ATOMS::||))) (((<-- #1# 0) (<-- #2# 0) (<-- #4# 2) (<-- #3# SPROLOG/ATOMS::||)) ((<-- #1# 0) (<-- #2# 1) (<-- #4# 1) (<-- #3# SPROLOG/ATOMS::|a|)) ((<-- #1# 0) (<-- #2# 2) (<-- #4# 0) (<-- #3# SPROLOG/ATOMS::|ab|)) ((<-- #1# 1) (<-- #2# 0) (<-- #4# 1) (<-- #3# SPROLOG/ATOMS::||)) ((<-- #1# 1) (<-- #2# 1) (<-- #4# 0) (<-- #3# SPROLOG/ATOMS::|b|)) ((<-- #1# 2) (<-- #2# 0) (<-- #4# 0) (<-- #3# SPROLOG/ATOMS::||))) (((<-- #1# 1) (<-- #2# 1) (<-- #3# A)) ((<-- #1# 1) (<-- #2# 2) (<-- #3# AB)) ((<-- #1# 2) (<-- #2# 1) (<-- #3# B)) ((<-- #1# 3) (<-- #2# 0) (<-- #3# ||)))))"
-  },
-  "inria/sub_atom:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/sub_atom:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/sub_atom:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/sub_atom:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/sub_atom:12": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/sub_atom:13": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_diff:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_diff:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_diff:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_diff:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_diff:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_diff:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_diff:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_diff:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_eq:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_eq:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_eq:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_eq:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_eq:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_eq:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_eq:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_eq:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_gt:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_gt:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_gt:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_gt:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_gt:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_gt:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_gt:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_gt=:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_gt=:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_gt=:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_gt=:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_gt=:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_gt=:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_gt=:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_lt:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_lt:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_lt:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_lt:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_lt:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_lt:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_lt:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_lt=:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_lt=:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_lt=:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_lt=:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_lt=:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_lt=:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/term_lt=:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/true:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/unify:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/unify:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/unify:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/unify:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/unify:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/unify:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/unify:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/unify:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/unify:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/unify:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "inria/unify:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec74.pl:18:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec74.pl:19:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec74.pl:20:1": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_VALUE (DIS1 DIS2) (D1 D2)))"
-  },
-  "examples/sec74.pl:20:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec74.pl:21:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec74.pl:22:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec74.pl:23:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:8:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:8:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:9:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:9:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:9:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:9:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:9:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:9:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:9:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:9:8": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (TYPE_ERROR CALLABLE 1) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|callable| (|,| (WRITE 3) 1)) (SPROLOG/ATOMS::/ CALL 1))))"
-  },
-  "examples/sec78.pl:9:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:9:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:9:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:9:12": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:11:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:11:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:11:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:11:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:11:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:11:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:11:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:11:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:11:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:11:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:11:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:11:12": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:11:13": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:11:14": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:29:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:29:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:29:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:29:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:29:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:29:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:29:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec78.pl:29:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:1:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:1:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:1:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:1:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:1:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:1:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:1:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:1:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:1:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:3:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:3:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:3:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:3:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:3:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:3:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:3:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:3:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:3:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:3:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:3:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:3:12": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:3:13": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:12": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:13": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:14": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:15": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:16": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:17": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec810.pl:5:18": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:1:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:1:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:1:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:1:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:1:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:2:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:3:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:3:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:3:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:3:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:3:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:4:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:5:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:5:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:5:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:6:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:6:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:6:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:6:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:6:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:7:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:7:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:8:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:8:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:8:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:8:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:9:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:9:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:10:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:10:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:11:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:11:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:12:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:12:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:13:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:14:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:15:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:15:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:16:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:16:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec811.pl:16:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:4:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:4:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:4:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:5:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:5:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:5:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:5:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:5:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:11:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:11:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:11:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:12:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:12:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:12:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:12:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:12:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:17:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:17:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:17:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:18:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:18:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:18:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:18:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:22:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:22:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:22:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:23:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:23:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:23:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec812.pl:23:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec813.pl:4:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec813.pl:4:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec813.pl:4:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec813.pl:5:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec813.pl:5:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec813.pl:5:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec813.pl:5:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec813.pl:5:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec813.pl:10:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec813.pl:10:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec813.pl:10:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec813.pl:11:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec813.pl:11:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec813.pl:11:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec813.pl:11:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:9:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:9:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:9:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:9:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:10:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:10:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:10:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:10:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:10:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:12:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:12:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:12:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:13:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:13:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:15:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec814.pl:16:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec815.pl:1:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec815.pl:1:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec815.pl:1:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec815.pl:2:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec815.pl:3:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec815.pl:3:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec815.pl:3:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec815.pl:4:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec815.pl:4:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec815.pl:11:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec815.pl:11:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:1:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:1:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:1:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:1:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:2:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:2:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:2:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:4:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:4:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:4:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:4:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:5:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:7:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:7:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:7:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:7:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:8:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:8:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:10:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:10:2": {
-    "status": "XFAIL",
-    "observation": "(:OBSERVED (WRONG_VALUE ([ ]) (SPROLOG/ATOMS::|n| SPROLOG/ATOMS::|i| SPROLOG/ATOMS::|l|)))"
-  },
-  "examples/sec816.pl:10:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:10:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:11:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:13:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:13:2": {
-    "status": "XFAIL",
-    "observation": "(:OBSERVED (WRONG_VALUE (91 93) (110 105 108)))"
-  },
-  "examples/sec816.pl:13:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:13:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:13:5": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|character| 115) (SPROLOG/ATOMS::/ ATOM_CHARS 2))))"
-  },
-  "examples/sec816.pl:14:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:16:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:16:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:17:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:17:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec816.pl:17:3": {
+  "functions/bitwise_right_shift_2/tests.lgt:iso_bitwise_right_shift_2_03:40": {
     "status": "SKIP",
-    "observation": "Assumes character code 9999 is unavailable; sprolog supports Unicode scalar values"
+    "observation": "Disabled upstream: implementation-dependent or unspecified result"
   },
-  "examples/sec816.pl:19:1": {
+  "functions/bitwise_right_shift_2/tests.lgt:iso_bitwise_right_shift_1_04:44": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec816.pl:19:2": {
+  "functions/bitwise_right_shift_2/tests.lgt:iso_bitwise_right_shift_2_05:49": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec816.pl:19:3": {
+  "functions/ceiling_1/tests.lgt:iso_ceiling_1_01:34": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec816.pl:19:4": {
+  "functions/cos_1/tests.lgt:iso_cos_1_01:41": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec816.pl:20:1": {
+  "functions/cos_1/tests.lgt:iso_cos_1_02:44": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec816.pl:20:2": {
+  "functions/cos_1/tests.lgt:iso_cos_1_03:49": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec816.pl:20:3": {
+  "functions/cos_1/tests.lgt:iso_cos_1_04:52": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec816.pl:22:1": {
+  "functions/cos_1/tests.lgt:iso_cos_1_05:57": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec816.pl:22:2": {
+  "functions/exp_1/tests.lgt:iso_exp_1_01:41": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec816.pl:22:3": {
+  "functions/exp_1/tests.lgt:iso_exp_1_02:44": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec816.pl:22:4": {
+  "functions/exp_1/tests.lgt:iso_exp_1_03:47": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec816.pl:23:1": {
+  "functions/exp_1/tests.lgt:iso_exp_1_04:52": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec816.pl:23:2": {
+  "functions/exp_1/tests.lgt:iso_exp_1_05:55": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec816.pl:23:3": {
+  "functions/float_1/tests.lgt:iso_float_1_function_01:37": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec817.pl:4:1": {
+  "functions/float_1/tests.lgt:iso_float_1_function_02:40": {
     "status": "PASS",
-    "observation": "HALT_EXIT_7"
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/float_1/tests.lgt:iso_float_1_function_03:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/float_1/tests.lgt:iso_float_1_function_04:47": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/float_1/tests.lgt:iso_float_1_function_05:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/float_1/tests.lgt:iso_float_1_function_06:59": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/floor_1/tests.lgt:iso_floor_1_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/floor_1/tests.lgt:iso_floor_1_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/integer_power_2/tests.lgt:iso_integer_power_2_01:41": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/integer_power_2/tests.lgt:iso_integer_power_2_02:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/integer_power_2/tests.lgt:iso_integer_power_2_03:47": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/integer_power_2/tests.lgt:iso_integer_power_2_04:50": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/integer_power_2/tests.lgt:iso_integer_power_2_05:53": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/integer_power_2/tests.lgt:iso_integer_power_2_06:56": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/integer_power_2/tests.lgt:iso_integer_power_2_07:59": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/integer_power_2/tests.lgt:iso_integer_power_2_08:62": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/integer_power_2/tests.lgt:iso_integer_power_2_09:65": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/log_1/tests.lgt:iso_log_1_01:41": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/log_1/tests.lgt:iso_log_1_02:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/log_1/tests.lgt:iso_log_1_03:48": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/log_1/tests.lgt:iso_log_1_04:57": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/log_1/tests.lgt:iso_log_1_05:60": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/log_1/tests.lgt:iso_log_1_06:69": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/max_2/tests.lgt:iso_max_2_01:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/max_2/tests.lgt:iso_max_2_02:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/max_2/tests.lgt:iso_max_2_03:47": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/max_2/tests.lgt:iso_max_2_04:54": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/min_2/tests.lgt:iso_min_2_01:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/min_2/tests.lgt:iso_min_2_02:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/min_2/tests.lgt:iso_min_2_03:47": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/min_2/tests.lgt:iso_min_2_04:54": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/mod_2/tests.lgt:iso_mod_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/mod_2/tests.lgt:iso_mod_2_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/mod_2/tests.lgt:iso_mod_2_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/mod_2/tests.lgt:iso_mod_2_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/mod_2/tests.lgt:iso_mod_2_05:48": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/mod_2/tests.lgt:iso_mod_2_06:53": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/mod_2/tests.lgt:iso_mod_2_07:57": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/pi_0/tests.lgt:iso_pi_0_01:38": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/power_2/tests.lgt:iso_power_2_01:41": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/power_2/tests.lgt:iso_power_2_02:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/power_2/tests.lgt:iso_power_2_03:47": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/power_2/tests.lgt:iso_power_2_04:50": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/power_2/tests.lgt:iso_power_2_05:55": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/power_2/tests.lgt:iso_power_2_06:60": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/power_2/tests.lgt:iso_power_2_07:63": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/power_2/tests.lgt:iso_power_2_09:71": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/power_2/tests.lgt:iso_power_2_10:76": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/power_2/tests.lgt:iso_power_2_11:81": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/power_2/tests.lgt:iso_power_2_12:86": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/power_2/tests.lgt:iso_power_2_13:91": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/round_1/tests.lgt:iso_round_1_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/round_1/tests.lgt:iso_round_1_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/round_1/tests.lgt:iso_round_1_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/round_1/tests.lgt:iso_round_1_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/sin_1/tests.lgt:iso_sin_1_01:41": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/sin_1/tests.lgt:iso_sin_1_02:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/sin_1/tests.lgt:iso_sin_1_03:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/sin_1/tests.lgt:iso_sin_1_04:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/sin_1/tests.lgt:iso_sin_1_05:57": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/sqrt_1/tests.lgt:iso_sqrt_1_01:41": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/sqrt_1/tests.lgt:iso_sqrt_1_02:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/sqrt_1/tests.lgt:iso_sqrt_1_03:47": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/sqrt_1/tests.lgt:iso_sqrt_1_04:50": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/sqrt_1/tests.lgt:iso_sqrt_1_05:55": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/sqrt_1/tests.lgt:iso_sqrt_1_06:58": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/tan_1/tests.lgt:iso_tan_1_01:38": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/truncate_1/tests.lgt:iso_truncate_1_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/truncate_1/tests.lgt:iso_truncate_1_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/xor_2/tests.lgt:iso_xor_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/xor_2/tests.lgt:iso_xor_2_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "functions/xor_2/tests.lgt:iso_xor_2_03:40": {
+    "status": "SKIP",
+    "observation": "Disabled upstream: implementation-dependent or unspecified result"
+  },
+  "predicates/abolish_1/tests.lgt:iso_abolish_1_01:47": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/abolish_1/tests.lgt:iso_abolish_1_02:50": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:1:1": {
+  "predicates/abolish_1/tests.lgt:iso_abolish_1_03:53": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:1:2": {
+  "predicates/abolish_1/tests.lgt:iso_abolish_1_04:57": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:1:3": {
+  "predicates/abolish_1/tests.lgt:iso_abolish_1_05:61": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:1:4": {
+  "predicates/acyclic_term_1/tests.lgt:iso_acyclic_term_1_02:43": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/acyclic_term_1/tests.lgt:iso_acyclic_term_1_02:51": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/arg_3/tests.lgt:iso_arg_3_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/arg_3/tests.lgt:iso_arg_3_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/arg_3/tests.lgt:iso_arg_3_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/arg_3/tests.lgt:iso_arg_3_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/arg_3/tests.lgt:iso_arg_3_05:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/arg_3/tests.lgt:iso_arg_3_06:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/arg_3/tests.lgt:iso_arg_3_07:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/arg_3/tests.lgt:iso_arg_3_08:55": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/arg_3/tests.lgt:iso_arg_3_09:59": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/arg_3/tests.lgt:iso_arg_3_10:63": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/arg_3/tests.lgt:iso_arg_3_11:67": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/arg_3/tests.lgt:iso_arg_3_12:77": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/arg_3/tests.lgt:iso_arg_3_12:82": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/asserta_1/tests.lgt:iso_asserta_1_01:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/asserta_1/tests.lgt:iso_asserta_1_02:47": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/asserta_1/tests.lgt:iso_asserta_1_03:50": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/asserta_1/tests.lgt:iso_asserta_1_04:53": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/asserta_1/tests.lgt:iso_asserta_1_05:56": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/asserta_1/tests.lgt:iso_asserta_1_06:61": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/asserta_1/tests.lgt:iso_asserta_1_07:66": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/assertz_1/tests.lgt:iso_assertz_1_01:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/assertz_1/tests.lgt:iso_assertz_1_02:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/assertz_1/tests.lgt:iso_assertz_1_03:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/assertz_1/tests.lgt:iso_assertz_1_04:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/assertz_1/tests.lgt:iso_assertz_1_05:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/assertz_1/tests.lgt:iso_assertz_1_06:57": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/assertz_1/tests.lgt:iso_assertz_1_07:62": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_chars_2/tests.lgt:iso_atom_chars_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_chars_2/tests.lgt:iso_atom_chars_2_02:37": {
+    "status": "XFAIL",
+    "observation": "(:OBSERVED (POST_FAILED (== (SPROLOG/ATOMS::|n| SPROLOG/ATOMS::|i| SPROLOG/ATOMS::|l|) ([ ]))))"
+  },
+  "predicates/atom_chars_2/tests.lgt:iso_atom_chars_2_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_chars_2/tests.lgt:iso_atom_chars_2_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_chars_2/tests.lgt:iso_atom_chars_2_05:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_chars_2/tests.lgt:iso_atom_chars_2_06:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_chars_2/tests.lgt:iso_atom_chars_2_07:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_chars_2/tests.lgt:iso_atom_chars_2_08:55": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_codes_2/tests.lgt:iso_atom_codes_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_codes_2/tests.lgt:iso_atom_codes_2_02:37": {
+    "status": "XFAIL",
+    "observation": "(:OBSERVED (POST_FAILED (== (110 105 108) (91 93))))"
+  },
+  "predicates/atom_codes_2/tests.lgt:iso_atom_codes_2_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_codes_2/tests.lgt:iso_atom_codes_2_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_codes_2/tests.lgt:iso_atom_codes_2_05:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_codes_2/tests.lgt:iso_atom_codes_2_06:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_codes_2/tests.lgt:iso_atom_codes_2_07:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_codes_2/tests.lgt:iso_atom_codes_2_08:55": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_concat_3/tests.lgt:iso_atom_concat_3_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_concat_3/tests.lgt:iso_atom_concat_3_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_concat_3/tests.lgt:iso_atom_concat_3_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_concat_3/tests.lgt:iso_atom_concat_3_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_concat_3/tests.lgt:iso_atom_concat_3_05:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_length_2/tests.lgt:iso_atom_length_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_length_2/tests.lgt:iso_atom_length_2_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_length_2/tests.lgt:iso_atom_length_2_03:41": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_length_2/tests.lgt:iso_atom_length_2_04:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_length_2/tests.lgt:iso_atom_length_2_05:47": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_length_2/tests.lgt:iso_atom_length_2_06:50": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/atom_length_2/tests.lgt:iso_atom_length_2_07:53": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_01:99": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_02:102": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_03:105": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_04:108": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_05:111": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_06:114": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_07:117": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_08:120": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_09:125": {
+    "status": "SKIP",
+    "observation": "Runtime applicability condition is false"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_09:130": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_10:137": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_11:140": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_12:144": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_13:147": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_14:150": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_15:158": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_16:161": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/bagof_3/tests.lgt:iso_bagof_3_17:164": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:1:5": {
+  "predicates/call_N/tests.lgt:iso_call_N_01:44": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:1:6": {
+  "predicates/call_N/tests.lgt:iso_call_N_02:47": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:1:7": {
+  "predicates/call_N/tests.lgt:iso_call_N_03:50": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:1:8": {
+  "predicates/call_N/tests.lgt:iso_call_N_04:53": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:1:9": {
+  "predicates/call_N/tests.lgt:iso_call_N_05:56": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:1:10": {
+  "predicates/call_N/tests.lgt:iso_call_N_06:59": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:1:11": {
+  "predicates/call_N/tests.lgt:iso_call_N_07:62": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:1": {
+  "predicates/call_N/tests.lgt:iso_call_N_08:65": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:2": {
+  "predicates/char_code_2/tests.lgt:iso_char_code_2_01:38": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:3": {
+  "predicates/char_code_2/tests.lgt:iso_char_code_2_02:41": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:4": {
+  "predicates/char_code_2/tests.lgt:iso_char_code_2_03:44": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:5": {
+  "predicates/char_code_2/tests.lgt:iso_char_code_2_04:47": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:6": {
+  "predicates/char_code_2/tests.lgt:iso_char_code_2_05:55": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:7": {
+  "predicates/char_code_2/tests.lgt:iso_char_code_2_06:58": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:8": {
+  "predicates/char_code_2/tests.lgt:iso_char_code_2_07:61": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:9": {
+  "predicates/clause_2/tests.lgt:iso_clause_2_01:62": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:10": {
+  "predicates/clause_2/tests.lgt:iso_clause_2_02:65": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:11": {
+  "predicates/clause_2/tests.lgt:iso_clause_2_03:68": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:12": {
+  "predicates/clause_2/tests.lgt:iso_clause_2_04:71": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:13": {
+  "predicates/clause_2/tests.lgt:iso_clause_2_05:74": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:14": {
+  "predicates/clause_2/tests.lgt:iso_clause_2_06:77": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:15": {
+  "predicates/clause_2/tests.lgt:iso_clause_2_07:80": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:16": {
+  "predicates/clause_2/tests.lgt:iso_clause_2_08:83": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:3:17": {
+  "predicates/clause_2/tests.lgt:iso_clause_2_09:86": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:5:1": {
+  "predicates/clause_2/tests.lgt:iso_clause_2_10:97": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:5:2": {
+  "predicates/clause_2/tests.lgt:iso_clause_2_11:107": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/clause_2/tests.lgt:iso_clause_2_11:112": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/compare_3/tests.lgt:iso_compare_3_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/compare_3/tests.lgt:iso_compare_3_02:37": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:5:3": {
+  "predicates/compare_3/tests.lgt:iso_compare_3_03:40": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:5:4": {
+  "predicates/compare_3/tests.lgt:iso_compare_3_04:43": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:5:5": {
+  "predicates/compare_3/tests.lgt:iso_compare_3_05:46": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:5:6": {
+  "predicates/compare_3/tests.lgt:iso_compare_3_06:49": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:5:7": {
+  "predicates/copy_term_2/tests.lgt:iso_copy_term_2_01:34": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:5:8": {
+  "predicates/copy_term_2/tests.lgt:iso_copy_term_2_02:37": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:5:9": {
+  "predicates/copy_term_2/tests.lgt:iso_copy_term_2_03:40": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec82.pl:5:10": {
+  "predicates/copy_term_2/tests.lgt:iso_copy_term_2_04:43": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:1": {
+  "predicates/copy_term_2/tests.lgt:iso_copy_term_2_05:46": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:2": {
+  "predicates/copy_term_2/tests.lgt:iso_copy_term_2_06:49": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:3": {
+  "predicates/copy_term_2/tests.lgt:iso_copy_term_2_07:52": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:4": {
+  "predicates/copy_term_2/tests.lgt:iso_copy_term_2_08:55": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/copy_term_2/tests.lgt:iso_copy_term_2_09:64": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/copy_term_2/tests.lgt:iso_copy_term_2_09:69": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
   },
-  "examples/sec83.pl:1:5": {
+  "predicates/copy_term_2/tests.lgt:iso_copy_term_2_10:77": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:6": {
+  "predicates/copy_term_2/tests.lgt:iso_copy_term_2_11:83": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:7": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_01:38": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:8": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_02:41": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:9": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_03:44": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:10": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_04:47": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:11": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_05:50": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:12": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_06:53": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:13": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_07:56": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:14": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_08:59": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:15": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_09:62": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:16": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_10:65": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:17": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_11:68": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:18": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_12:71": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:19": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_13:74": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:20": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_14:77": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:21": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_15:80": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:22": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_16:83": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:23": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_17:86": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:24": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_18:89": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:25": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_19:92": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:26": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_20:95": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:27": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_21:98": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:28": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_22:101": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:29": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_23:104": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:30": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_24:107": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:31": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_25:110": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:32": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_26:113": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:33": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_27:116": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:34": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_28:119": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:35": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_29:122": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:36": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_30:125": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:37": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_31:128": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:38": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_32:131": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:39": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_33:134": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:40": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_34:137": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:41": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_35:140": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec83.pl:1:42": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_36:143": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec84.pl:1:1": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_37:146": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec84.pl:1:2": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_38:149": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec84.pl:1:3": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_39:152": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec84.pl:1:4": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_40:157": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec84.pl:1:5": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_45:187": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec84.pl:1:6": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_46:193": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec84.pl:1:7": {
+  "predicates/current_op_3/tests.lgt:iso_current_op_3_47:196": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec84.pl:1:8": {
+  "predicates/current_prolog_flag_2/tests.lgt:iso_current_prolog_flag_2_01:42": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec84.pl:1:9": {
+  "predicates/current_prolog_flag_2/tests.lgt:iso_current_prolog_flag_2_02:45": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec84.pl:1:10": {
+  "predicates/current_prolog_flag_2/tests.lgt:iso_current_prolog_flag_2_03:48": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec84.pl:1:11": {
+  "predicates/current_prolog_flag_2/tests.lgt:iso_current_prolog_flag_2_04:55": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec84.pl:1:12": {
+  "predicates/current_prolog_flag_2/tests.lgt:iso_current_prolog_flag_2_05:62": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec84.pl:1:13": {
+  "predicates/current_prolog_flag_2/tests.lgt:iso_current_prolog_flag_2_06:65": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec84.pl:1:14": {
+  "predicates/current_prolog_flag_2/tests.lgt:iso_current_prolog_flag_2_07:68": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec84.pl:1:15": {
+  "predicates/current_prolog_flag_2/tests.lgt:iso_current_prolog_flag_2_08:71": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:1": {
+  "predicates/current_prolog_flag_2/tests.lgt:iso_current_prolog_flag_2_09:78": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:2": {
+  "predicates/current_prolog_flag_2/tests.lgt:iso_current_prolog_flag_2_10:81": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:3": {
+  "predicates/current_prolog_flag_2/tests.lgt:iso_current_prolog_flag_2_11:84": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:4": {
+  "predicates/findall_3/tests.lgt:iso_findall_3_01:40": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:5": {
+  "predicates/findall_3/tests.lgt:iso_findall_3_02:43": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:6": {
+  "predicates/findall_3/tests.lgt:iso_findall_3_03:46": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:7": {
+  "predicates/findall_3/tests.lgt:iso_findall_3_04:49": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:8": {
+  "predicates/findall_3/tests.lgt:iso_findall_3_05:52": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:9": {
+  "predicates/findall_3/tests.lgt:iso_findall_3_06:55": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:10": {
+  "predicates/findall_3/tests.lgt:iso_findall_3_07:58": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:11": {
+  "predicates/findall_3/tests.lgt:iso_findall_3_08:61": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:12": {
+  "predicates/float_1/tests.lgt:iso_float_1_predicate_01:34": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:13": {
+  "predicates/float_1/tests.lgt:iso_float_1_predicate_02:37": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:14": {
+  "predicates/float_1/tests.lgt:iso_float_1_predicate_03:40": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:15": {
+  "predicates/float_1/tests.lgt:iso_float_1_predicate_04:43": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:16": {
+  "predicates/float_1/tests.lgt:iso_float_1_predicate_05:46": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:29:17": {
+  "predicates/float_1/tests.lgt:iso_float_1_predicate_06:51": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:30:1": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_01:38": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:30:2": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_02:41": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:30:3": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_03:44": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:30:4": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_04:47": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:30:5": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_05:50": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:30:6": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_06:53": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:30:7": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_07:56": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:30:8": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_08:59": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:30:9": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_09:62": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:30:10": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_10:65": {
     "status": "XFAIL",
     "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| SPROLOG/ATOMS::|instantiation_error| (SPROLOG/ATOMS::/ FUNCTOR 3))))"
   },
-  "examples/sec85.pl:30:11": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_11:68": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:31:1": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_12:73": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:31:2": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_13:76": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:31:3": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_14:79": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:31:4": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_15:82": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:31:5": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_16:85": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec85.pl:31:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec85.pl:31:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec85.pl:32:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec85.pl:32:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec85.pl:32:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec85.pl:32:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec85.pl:32:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec85.pl:32:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec85.pl:33:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec85.pl:33:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec85.pl:33:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec85.pl:33:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec85.pl:33:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec85.pl:33:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec85.pl:33:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec85.pl:33:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec86.pl:1:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec86.pl:1:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec86.pl:1:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec86.pl:1:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec86.pl:1:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec86.pl:1:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec86.pl:1:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:12": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:13": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:14": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:15": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:16": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:1:17": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:2:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:2:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:2:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:2:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:2:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec87.pl:2:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:1:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:1:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:1:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:1:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:1:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:1:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:2:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:2:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:2:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:2:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:4:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:4:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:4:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:4:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:4:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec88.pl:4:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:1:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:1:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:1:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:1:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:3:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:3:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:3:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:5:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:5:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:5:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:5:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:7:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:7:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:7:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:7:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:9:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:9:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:9:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:11:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:11:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:11:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:11:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:13:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:13:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:13:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:13:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:13:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:13:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:15:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:15:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:15:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:17:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:19:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:19:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:19:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec89.pl:19:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:1": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:2": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:3": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:4": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:5": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:6": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:7": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:9": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:10": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:11": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:12": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:13": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:14": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:15": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:16": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:17": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:18": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_VALUE 21.3d0 21.299999999999997d0))"
-  },
-  "examples/sec91.pl:1:19": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:20": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:21": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:22": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:23": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:24": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_VALUE 1.42d0 1.4200000000000002d0))"
-  },
-  "examples/sec91.pl:1:25": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_VALUE -2.3333d0 -2.3333333333333335d0))"
-  },
-  "examples/sec91.pl:1:26": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_VALUE -2.3333d0 -2.3333333333333335d0))"
-  },
-  "examples/sec91.pl:1:27": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:28": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:29": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:30": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:31": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:32": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:33": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:34": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:35": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:36": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:37": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:38": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:39": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:40": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:41": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:42": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:43": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:44": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:45": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:46": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:47": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:48": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_VALUE 1.6666666666666665d0 1.6666666666666667d0))"
-  },
-  "examples/sec91.pl:1:49": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:50": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:51": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:52": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:53": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:54": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec91.pl:1:55": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
-  },
-  "examples/sec92.pl:1:1": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_17:88": {
     "status": "SKIP",
-    "observation": "Requires bounded integers; this implementation has unbounded integers"
+    "observation": "Runtime applicability condition is false"
   },
-  "examples/sec92.pl:1:2": {
+  "predicates/functor_3/tests.lgt:iso_functor_3_18:91": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/ground_1/tests.lgt:iso_ground_1_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/ground_1/tests.lgt:iso_ground_1_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/halt_1/tests.lgt:iso_halt_1_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_01:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_02:47": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_03:50": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_04:53": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_05:58": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_06:63": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_07:66": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_08:69": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_09:72": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_10:77": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_11:82": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_12:85": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_13:88": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_14:91": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_15:96": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_16:101": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_17:104": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_18:107": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_19:110": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_20:115": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_21:120": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_22:124": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_23:127": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_24:131": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_25:135": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_26:138": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_27:141": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_28:146": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_29:151": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_30:156": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/is_2/tests.lgt:iso_is_2_31:160": {
     "status": "SKIP",
-    "observation": "Requires bounded integers; this implementation has unbounded integers"
+    "observation": "Runtime applicability condition is false"
   },
-  "examples/sec92.pl:1:3": {
+  "predicates/is_2/tests.lgt:iso_is_2_32:163": {
     "status": "SKIP",
-    "observation": "Requires bounded integers; this implementation has unbounded integers"
+    "observation": "Runtime applicability condition is false"
   },
-  "examples/sec92.pl:1:4": {
+  "predicates/is_2/tests.lgt:iso_is_2_33:166": {
     "status": "SKIP",
-    "observation": "Requires bounded integers; this implementation has unbounded integers"
+    "observation": "Runtime applicability condition is false"
   },
-  "examples/sec92.pl:1:5": {
+  "predicates/is_2/tests.lgt:iso_is_2_34:170": {
     "status": "SKIP",
-    "observation": "Requires bounded integers; this implementation has unbounded integers"
+    "observation": "Runtime applicability condition is false"
   },
-  "examples/sec93.pl:1:1": {
+  "predicates/is_2/tests.lgt:iso_is_2_35:173": {
+    "status": "SKIP",
+    "observation": "Runtime applicability condition is false"
+  },
+  "predicates/keysort_2/tests.lgt:iso_keysort_2_01:34": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec93.pl:1:2": {
+  "predicates/keysort_2/tests.lgt:iso_keysort_2_02:37": {
+    "status": "XFAIL",
+    "observation": "(:OBSERVED (POST_FAILED (== ((- 2 99) (- 1 A) (- 3 (F #1=#:?G0)) (- 1 Z) (- 1 A) (- 2 44)) ((- 1 A) (- 1 Z) (- 1 A) (- 2 99) (- 2 44) (- 3 (F #1#))))))"
+  },
+  "predicates/keysort_2/tests.lgt:iso_keysort_2_03:40": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec93.pl:1:3": {
+  "predicates/keysort_2/tests.lgt:iso_keysort_2_04:43": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/keysort_2/tests.lgt:iso_keysort_2_05:53": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/keysort_2/tests.lgt:iso_keysort_2_05:58": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/nl_1/tests.lgt:iso_nl_1_01:34": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec93.pl:3:1": {
+  "predicates/nl_1/tests.lgt:iso_nl_1_03:37": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec93.pl:3:2": {
+  "predicates/not_1/tests.lgt:iso_not_1_01:34": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec93.pl:3:3": {
+  "predicates/not_1/tests.lgt:iso_not_1_02:37": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec93.pl:4:1": {
+  "predicates/not_1/tests.lgt:iso_not_1_03:40": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec93.pl:4:2": {
+  "predicates/not_1/tests.lgt:iso_not_1_04:43": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec93.pl:4:3": {
+  "predicates/not_1/tests.lgt:iso_not_1_05:46": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:1:1": {
+  "predicates/not_1/tests.lgt:iso_not_1_06:49": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:1:2": {
+  "predicates/not_1/tests.lgt:iso_not_1_07:54": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:1:3": {
+  "predicates/not_1/tests.lgt:iso_not_1_08:64": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/not_1/tests.lgt:iso_not_1_08:69": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_01:34": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:1:4": {
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_02:37": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:1:5": {
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_03:40": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:3:1": {
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_04:43": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:3:2": {
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_05:46": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:3:3": {
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_06:49": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:3:4": {
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_07:52": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:3:5": {
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_08:55": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:5:1": {
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_09:58": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:5:2": {
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_10:61": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:5:3": {
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_11:70": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_12:73": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_13:76": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_14:79": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_15:82": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_11:87": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_12:91": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_13:95": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_14:99": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/not_unifiable_2/tests.lgt:iso_not_unifiable_2_15:103": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/number_chars_2/tests.lgt:iso_number_chars_2_01:37": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:5:4": {
+  "predicates/number_chars_2/tests.lgt:iso_number_chars_2_02:40": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:5:5": {
+  "predicates/number_chars_2/tests.lgt:iso_number_chars_2_03:43": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:7:1": {
+  "predicates/number_chars_2/tests.lgt:iso_number_chars_2_04:46": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:7:2": {
+  "predicates/number_chars_2/tests.lgt:iso_number_chars_2_05:49": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:7:3": {
+  "predicates/number_chars_2/tests.lgt:iso_number_chars_2_06:52": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:7:4": {
+  "predicates/number_chars_2/tests.lgt:iso_number_chars_2_07:55": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:7:5": {
+  "predicates/number_chars_2/tests.lgt:iso_number_chars_2_08:58": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:7:6": {
+  "predicates/number_chars_2/tests.lgt:iso_number_chars_2_09:61": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:7:7": {
+  "predicates/number_chars_2/tests.lgt:iso_number_chars_2_10:64": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:7:8": {
+  "predicates/number_chars_2/tests.lgt:iso_number_chars_2_11:67": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:7:9": {
+  "predicates/number_chars_2/tests.lgt:iso_number_chars_2_12:70": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:7:10": {
+  "predicates/number_chars_2/tests.lgt:iso_number_chars_2_13:75": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:7:11": {
+  "predicates/number_codes_2/tests.lgt:iso_number_codes_2_01:37": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   },
-  "examples/sec94.pl:7:12": {
+  "predicates/number_codes_2/tests.lgt:iso_number_codes_2_02:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/number_codes_2/tests.lgt:iso_number_codes_2_03:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/number_codes_2/tests.lgt:iso_number_codes_2_04:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/number_codes_2/tests.lgt:iso_number_codes_2_05:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/number_codes_2/tests.lgt:iso_number_codes_2_06:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/number_codes_2/tests.lgt:iso_number_codes_2_07:55": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/number_codes_2/tests.lgt:iso_number_codes_2_08:58": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/number_codes_2/tests.lgt:iso_number_codes_2_09:61": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/number_codes_2/tests.lgt:iso_number_codes_2_10:64": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/number_codes_2/tests.lgt:iso_number_codes_2_11:69": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/once_1/tests.lgt:iso_once_1_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/once_1/tests.lgt:iso_once_1_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/once_1/tests.lgt:iso_once_1_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/once_1/tests.lgt:iso_once_1_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/once_1/tests.lgt:iso_once_1_05:52": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/once_1/tests.lgt:iso_once_1_05:57": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_01:41": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_02:45": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_03:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_04:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_05:55": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_06:58": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_07:61": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_08:64": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_09:67": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_10:76": {
+    "status": "SKIP",
+    "observation": "Runtime applicability condition is false"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_10:79": {
+    "status": "FAIL",
+    "observation": "(:OBSERVED MISSING_ERROR)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_11:85": {
+    "status": "FAIL",
+    "observation": "(:OBSERVED MISSING_ERROR)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_12:88": {
+    "status": "FAIL",
+    "observation": "(:OBSERVED MISSING_ERROR)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_13:91": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_14:94": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_15:97": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_16:100": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_17:103": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_18:108": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_19:112": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_20:127": {
+    "status": "SKIP",
+    "observation": "Runtime applicability condition is false"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_20:140": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_21:157": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_21:165": {
+    "status": "SKIP",
+    "observation": "Runtime applicability condition is false"
+  },
+  "predicates/op_3/tests.lgt:iso_op_3_22:175": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/open_4/tests.lgt:iso_open_4_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/open_4/tests.lgt:iso_open_4_02:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/open_4/tests.lgt:iso_open_4_03:45": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_byte_2/tests.lgt:iso_put_byte_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_byte_2/tests.lgt:iso_put_byte_2_02:39": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_byte_2/tests.lgt:iso_put_byte_2_03:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_byte_2/tests.lgt:iso_put_byte_2_04:48": {
+    "status": "FAIL",
+    "observation": "(:OBSERVED (WRONG_ERROR (TYPE_ERROR BYTE TY) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|integer| TY) (SPROLOG/ATOMS::/ PUT_BYTE 2))))"
+  },
+  "predicates/put_char_2/tests.lgt:iso_put_char_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_char_2/tests.lgt:iso_put_char_2_02:39": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_char_2/tests.lgt:iso_put_char_2_03:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_char_2/tests.lgt:iso_put_char_2_04:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_char_2/tests.lgt:iso_put_char_2_05:54": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_char_2/tests.lgt:iso_put_char_2_06:58": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_code_2/tests.lgt:iso_put_code_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_code_2/tests.lgt:iso_put_code_2_02:39": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_code_2/tests.lgt:iso_put_code_2_03:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_code_2/tests.lgt:iso_put_code_2_04:51": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_code_2/tests.lgt:iso_put_code_2_07:62": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_code_2/tests.lgt:iso_put_code_2_08:66": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_code_2/tests.lgt:iso_put_code_2_09:70": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/put_code_2/tests.lgt:iso_put_code_2_10:74": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/read_term_3/tests.lgt:iso_read_term_3_01:38": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/read_term_3/tests.lgt:iso_read_term_3_02:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/read_term_3/tests.lgt:iso_read_term_3_03:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/read_term_3/tests.lgt:iso_read_term_3_04:60": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/read_term_3/tests.lgt:iso_read_term_3_05:65": {
+    "status": "FAIL",
+    "observation": "(:OBSERVED (POST_FAILED (== (116 101 114 109 50 46 32 46 46 46) (32 116 101 114 109 50 46 32 46 46 46))))"
+  },
+  "predicates/read_term_3/tests.lgt:iso_read_term_3_06:70": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retract_1/tests.lgt:iso_retract_1_01:54": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retract_1/tests.lgt:iso_retract_1_02:57": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retract_1/tests.lgt:iso_retract_1_03:60": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retract_1/tests.lgt:iso_retract_1_04:63": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retract_1/tests.lgt:iso_retract_1_05:66": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retract_1/tests.lgt:iso_retract_1_06:69": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retract_1/tests.lgt:iso_retract_1_07:80": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/retract_1/tests.lgt:iso_retract_1_07:85": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/retract_1/tests.lgt:iso_retract_1_08:91": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retract_1/tests.lgt:iso_retract_1_09:94": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retract_1/tests.lgt:iso_retract_1_10:97": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retract_1/tests.lgt:iso_retract_1_11:100": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retractall_1/tests.lgt:iso_retractall_1_01:65": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retractall_1/tests.lgt:iso_retractall_1_02:70": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retractall_1/tests.lgt:iso_retractall_1_03:73": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retractall_1/tests.lgt:iso_retractall_1_04:76": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retractall_1/tests.lgt:iso_retractall_1_05:79": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/retractall_1/tests.lgt:iso_retractall_1_06:84": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/set_prolog_flag_2/tests.lgt:iso_set_prolog_flag_2_01:38": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/set_prolog_flag_2/tests.lgt:iso_set_prolog_flag_2_02:42": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/set_prolog_flag_2/tests.lgt:iso_set_prolog_flag_2_03:45": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/set_prolog_flag_2/tests.lgt:iso_set_prolog_flag_2_04:48": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/set_prolog_flag_2/tests.lgt:iso_set_prolog_flag_2_05:51": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_01:125": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_02:128": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_03:131": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_04:134": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_05:137": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_06:140": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_07:143": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_08:146": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_09:149": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_10:152": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_11:157": {
+    "status": "SKIP",
+    "observation": "Runtime applicability condition is false"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_11:162": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_12:169": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_13:176": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_14:180": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_15:187": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_16:193": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_17:196": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_18:202": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_19:209": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_20:212": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_21:216": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_22:219": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_23:222": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/setof_3/tests.lgt:iso_setof_3_24:227": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/sort_2/tests.lgt:iso_sort_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/sort_2/tests.lgt:iso_sort_2_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/sort_2/tests.lgt:iso_sort_2_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/sort_2/tests.lgt:iso_sort_2_04:49": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/sort_2/tests.lgt:iso_sort_2_04:54": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/sort_2/tests.lgt:iso_sort_2_05:60": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/stream_property_2/tests.lgt:iso_stream_property_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/stream_property_2/tests.lgt:iso_stream_property_2_02:42": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/sub_atom_5/tests.lgt:iso_sub_atom_5_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/sub_atom_5/tests.lgt:iso_sub_atom_5_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/sub_atom_5/tests.lgt:iso_sub_atom_5_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/sub_atom_5/tests.lgt:iso_sub_atom_5_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/sub_atom_5/tests.lgt:iso_sub_atom_5_05:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/sub_atom_5/tests.lgt:iso_sub_atom_5_06:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/sub_atom_5/tests.lgt:iso_sub_atom_5_07:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/subsumes_term_2/tests.lgt:iso_subsumes_term_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/subsumes_term_2/tests.lgt:iso_subsumes_term_2_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/subsumes_term_2/tests.lgt:iso_subsumes_term_2_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/subsumes_term_2/tests.lgt:iso_subsumes_term_2_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/subsumes_term_2/tests.lgt:iso_subsumes_term_2_05:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/subsumes_term_2/tests.lgt:iso_subsumes_term_2_06:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_05:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_06:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_07:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_08:55": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_09:58": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_10:61": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_11:64": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_12:70": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_13:73": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_14:76": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_15:82": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_16:85": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_17:88": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_18:91": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_comparison/tests.lgt:iso_term_comparison_19:97": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_variables_2/tests.lgt:iso_term_variables_2_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_variables_2/tests.lgt:iso_term_variables_2_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_variables_2/tests.lgt:iso_term_variables_2_05:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_variables_2/tests.lgt:iso_term_variables_2_06:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_variables_2/tests.lgt:iso_term_variables_2_07:55": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_variables_2/tests.lgt:iso_term_variables_2_08:61": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/term_variables_2/tests.lgt:iso_term_variables_2_09:72": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/term_variables_2/tests.lgt:iso_term_variables_2_09:77": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_05:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_06:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_07:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_08:55": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_09:58": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_10:61": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_11:64": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_12:73": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_13:76": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_14:79": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_15:82": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_16:85": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_17:88": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_12:93": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_13:97": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_14:101": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_15:105": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_16:109": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/unify_2/tests.lgt:iso_unify_2_17:113": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_05:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_06:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_07:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_08:55": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_09:58": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_10:61": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_11:64": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_12:67": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_13:70": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_14:73": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_15:76": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/unify_with_occurs_check_2/tests.lgt:iso_unify_with_occurs_check_2_16:79": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_02:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_03:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_04:43": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_05:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_06:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_07:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_08:55": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_09:58": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_10:61": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_11:64": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_12:67": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_13:70": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_14:73": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_15:82": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/univ_2/tests.lgt:iso_univ_2_15:87": {
+    "status": "SKIP",
+    "observation": "ISO leaves STO/cyclic-term behavior undefined"
+  },
+  "predicates/write_term_3/tests.lgt:iso_write_term_3_001:48": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/write_term_3/tests.lgt:iso_write_term_3_002:53": {
+    "status": "XFAIL",
+    "observation": "(:OBSERVED (POST_FAILED (== (91 49 44 50 44 51 93) (39 46 39 40 49 44 39 46 39 40 50 44 39 46 39 40 51 44 91 93 41 41 41))))"
+  },
+  "predicates/write_term_3/tests.lgt:iso_write_term_3_003:58": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/write_term_3/tests.lgt:iso_write_term_3_004:63": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/write_term_3/tests.lgt:iso_write_term_3_005:68": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/write_term_3/tests.lgt:iso_write_term_3_006:73": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "predicates/write_term_3/tests.lgt:iso_write_term_3_007:78": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/atoms/tests.lgt:iso_atom_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/atoms/tests.lgt:iso_atom_02:38": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/atoms/tests.lgt:iso_atom_03:44": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/atoms/tests.lgt:iso_atom_04:48": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/atoms/tests.lgt:iso_atom_05:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/atoms/tests.lgt:iso_atom_06:56": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/atoms/tests.lgt:iso_atom_07:60": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/atoms/tests.lgt:iso_atom_08:64": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/comments/tests.lgt:iso_line_comment_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/comments/tests.lgt:iso_line_comment_02:38": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/comments/tests.lgt:iso_block_comment_01:42": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/comments/tests.lgt:iso_block_comment_02:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/comments/tests.lgt:iso_block_comment_03:50": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/comments/tests.lgt:iso_block_comment_04:54": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/comments/tests.lgt:iso_block_comment_05:58": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/curly_terms/tests.lgt:iso_curly_bracketed_term_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/curly_terms/tests.lgt:iso_curly_bracketed_term_02:38": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_02:40": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_03:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_04:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_05:58": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_06:64": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_07:70": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_08:75": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_09:80": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_10:85": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_11:90": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/double_quoted_terms/tests.lgt:iso_double_quoted_term_12:95": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/lists/tests.lgt:iso_list_01:34": {
+    "status": "XFAIL",
+    "observation": "(:OBSERVED (POST_FAILED (== (SPROLOG/ATOMS::|a|) (|.| A NIL))))"
+  },
+  "syntax/lists/tests.lgt:iso_list_02:38": {
+    "status": "XFAIL",
+    "observation": "(:OBSERVED (POST_FAILED (== (SPROLOG/ATOMS::|a| SPROLOG/ATOMS::|b|) (|.| A (|.| B NIL)))))"
+  },
+  "syntax/lists/tests.lgt:iso_list_03:42": {
+    "status": "XFAIL",
+    "observation": "(:OBSERVED (POST_FAILED (== (SPROLOG/ATOMS::|a| . SPROLOG/ATOMS::|b|) (|.| A B))))"
+  },
+  "syntax/numbers/tests.lgt:iso_number_01:37": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/numbers/tests.lgt:iso_number_02:41": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/numbers/tests.lgt:iso_number_03:45": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/numbers/tests.lgt:iso_number_04:49": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/numbers/tests.lgt:iso_number_05:55": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/numbers/tests.lgt:iso_number_06:59": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/numbers/tests.lgt:iso_number_07:63": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/numbers/tests.lgt:iso_number_08:67": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/numbers/tests.lgt:iso_number_09:71": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/numbers/tests.lgt:iso_number_10:77": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/numbers/tests.lgt:iso_number_11:81": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/numbers/tests.lgt:iso_number_12:85": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/numbers/tests.lgt:iso_number_13:89": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/numbers/tests.lgt:iso_number_14:93": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/operators/tests.lgt:iso_operators_01:52": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/operators/tests.lgt:iso_operators_02:56": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/operators/tests.lgt:iso_operators_03:60": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/operators/tests.lgt:iso_operators_04:64": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/operators/tests.lgt:iso_operators_05:68": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/operators/tests.lgt:iso_operators_06:72": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/operators/tests.lgt:iso_operators_07:76": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/operators/tests.lgt:iso_operators_08:80": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/operators/tests.lgt:iso_operators_09:84": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/operators/tests.lgt:iso_operators_10:88": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/operators/tests.lgt:iso_operators_11:92": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/operators/tests.lgt:iso_operators_12:96": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/operators/tests.lgt:iso_operators_13:100": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/operators/tests.lgt:iso_operators_14:106": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/operators/tests.lgt:iso_operators_15:110": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/terms/tests.lgt:iso_term_01:34": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/terms/tests.lgt:iso_term_02:38": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/terms/tests.lgt:iso_term_03:42": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/terms/tests.lgt:iso_term_04:46": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/terms/tests.lgt:iso_term_05:50": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/terms/tests.lgt:iso_term_06:54": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/terms/tests.lgt:iso_term_07:58": {
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
+  },
+  "syntax/terms/tests.lgt:iso_term_08:62": {
     "status": "PASS",
     "observation": "(:OBSERVED PASS)"
   }

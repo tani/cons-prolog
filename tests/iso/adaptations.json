@@ -1,35 +1,18 @@
 {
-  "scope": {
-    "inria": "All 420 records in the files selected by the original driver's file/1 facts. Inactive auxiliary/experimental files, including the documented non-runnable halt file, are not added to that inventory.",
-    "examples": "All 567 calls to test_true/1, test_false/1, test_val/3 and error_test/2 in sec*.pl. IDs identify file, top-level term ordinal and check ordinal; line identifies the containing clause. Prose/manual output expectations are not counted as additional assertions."
-  },
-  "inria": [
-    "Retain the original result/substitution machinery and expected records. Supply append/3, member/2 and length/2 as private ordinary Prolog clauses; the distribution assumes these helpers but does not define them.",
-    "Replace the two harness-only UNIV error-recognition guards with formal-error-name recognition, and prepend formal-error comparison before list-of-substitution comparison. Native cons applications do not have ISO list-cell functors. Calls under test are unchanged.",
-    "Replay all previous goals in the same input file before the target and read each record at execution time. This retains double_quotes and database effects inside each isolated worker. Predecessor comparisons are not rerun: they have no intended external effects.",
-    "Record the runtime-read target as executed_goal; inventory goal text was parsed using the initial flags and can differ for later double-quoted records."
+  "license": "Bundled originals and ported cases retain Apache-2.0; the new harness/driver use the project MIT license.",
+  "selection": "All 782 iso_ definitions across 93 source files, including disabled definitions and alternate branches. Other upstream test prefixes are outside this inventory.",
+  "port": [
+    "Strip Logtalk object wrappers and lower lgtunit calls only in goal positions. Preserve data braces, lists, sharing and helpers.",
+    "Run file and stream fixtures as ordinary ISO Prolog clauses in per-case temporary directories.",
+    "Use an explicit standard exception alternative rather than permissive legacy/module variants. Both expectations are recorded per case.",
+    "Replay the two declared retract/1 predecessor chains within each fresh worker.",
+    "Correct iso_setof_3_17 to accept either implementation-dependent relative variable order; preserve both order patterns."
   ],
-  "examples": [
-    "Load utilities, database and each section through native term forms. Resolve include/ensure_loaded relative to fixtures with optional .pl extension; queue initialization until loading completes.",
-    "Alpha-rename the sec74.pl private AND/2 helper and its operator spelling to HODGSON_AND/2 to avoid sprolog's protected AND/2 alias. Add GO7_4 -> GO_74 to repair the upstream initialization spelling.",
-    "Instrument each assertion call with an ID and stop after its result. Preserve copying, first-solution and unifying test_val expectations, and formal exception matching. Report exceptions in test_false as failures; the original logger could let an exception appear successful.",
-    "Run the containing zero-arity predicate for each target; sec89.pl uses test_89 to preserve database-update order. Verification helpers omitted by that entry point receive their corresponding asserta/assertz setup explicitly.",
-    "Route LOG/1 and LOG_NL/0 away from the tested stream; manual prose/output assertions are not automatically checked. Success/failure/exception checks in those goals still run.",
-    "Run test_halt1 in a separate process; require the target-start marker and actual exit status 7."
-  ],
-  "applicability": {
-    "inria/abolish:4": "Requires finite max_arity; skip when max_arity=unbounded.",
-    "inria/functor:17": "Requires finite max_arity; skip when max_arity=unbounded.",
-    "examples/sec92.pl": "Five integer-overflow assertions require bounded=true.",
-    "inria/atom_codes:11": "Assumes character code 1000 is unsupported; skip when char_code/2 accepts it.",
-    "inria/number_codes:14": "Assumes character code 1000 is unsupported; skip when char_code/2 accepts it.",
-    "examples/sec816.pl:17:3": "Assumes character code 9999 is unsupported; skip when char_code/2 accepts it."
-  },
-  "known_upstream_limitations": [
-    "These are 1999 distributions, not an updated executable specification of all corrigenda.",
-    "Several floating-point expected values are rounded or require exact historical representations; no tolerance is silently introduced.",
-    "Some error classes/culprits and substitution expectations differ from current interpretations. Non-model discrepancies remain FAIL pending review.",
-    "Examples contain historical code/expectation mistakes, such as set_ionput in write_read_term2, a section-7.4 lookup of d7_4 against dis7_4 values, and a manually specified sub_atom result table. They are not silently rewritten.",
-    "sec78.pl:9:8 expects type_error(callable,1) for call((write(3),1)), while INRIA call:10 expects the whole conjunction for the same goal. Whole-body conversion now preserves the ISO culprit; the contradictory example remains FAIL."
+  "limits": [
+    "ISO-undefined STO cases, including the corresponding active branches, are SKIP and do not prescribe extension behavior.",
+    "Other upstream-disabled examples remain SKIP; conditions are evaluated at runtime.",
+    "The one deterministic expectation checks exactly one answer; ISO cannot portably inspect residual choice points.",
+    "Only explicit =~= expectations use approximation. Other numeric equality checks remain exact.",
+    "The corpus is not a complete ISO specification; names, counts and passing results are not conformance certification."
   ]
 }

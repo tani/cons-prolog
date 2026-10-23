@@ -1,3 +1,24 @@
+# Bundled Apache-2.0 ISO port
+
+All **782 ISO-labelled definitions from 93 Logtalk source files** are bundled
+with their originals, source pins, LICENSE/NOTICE and an executable plain Prolog
+port. SBCL 2.2.9, 1 MiB stack: **707 PASS, 8 XFAIL, 5 FAIL, 62 SKIP, 0 BLOCKED**.
+The driver passes **11 tests**, including real text/binary I/O, variable sharing,
+subsumption/variants, setup/cleanup, applicability, isolated databases/files,
+timeout continuation, malformed protocols and complete source inventories.
+
+Normal execution requires Python and SBCL only, with no source downloads,
+Logtalk import or SWI runtime. SWI is an optional development-only converter.
+The prior importer limitations are resolved; five remaining observations are
+visible failures. The eight native-model exceptions and 62 inapplicable or
+undefined definitions are explicit, not passes. Strict exception patterns and
+the SETOF variable-order correction are recorded alongside original expectations.
+See [ISO compatibility](ISO-COMPATIBILITY.md) for limitations and reproduction.
+No processor source was changed in this port. The earlier 5,290 native-check
+result below belongs to the preceding implementation revision.
+
+The remaining sections are historical measurements of previous corpora.
+
 # ISO specification precedence
 
 SBCL 2.2.9, 1 MiB control stack: **5,290 native checks pass**. The 987-check
@@ -32,7 +53,7 @@ See [ISO compatibility](ISO-COMPATIBILITY.md) for remaining failure categories.
 
 # Hodgson ISO suite port (historical baseline)
 
-The active ISO CI corpus is now Hodgson's plain-Prolog INRIA and standard-example
+At this historical revision, the ISO CI corpus was Hodgson's plain-Prolog INRIA and standard-example
 suites: **987 check points, 926 PASS, 6 XFAIL, 45 FAIL, 10 SKIP, 0 BLOCKED** on
 SBCL 2.2.9 with a 1 MiB control stack. The 977 applicable checks execute; ten
 explicit arity/integer/character-set premises are false. Logtalk/SWI import,

@@ -1,3 +1,6 @@
+import hashlib
+import collections
+import re
 import json
 import os
 from pathlib import Path
@@ -8,139 +11,145 @@ import unittest
 from unittest.mock import patch
 
 import run as iso
-import fetch
 
-SBCL = os.environ.get("ISO_SBCL", "sbcl")
+SBCL = os.environ.get('ISO_SBCL', 'sbcl')
 
 
 class ReportingTests(unittest.TestCase):
     def test_expected_difference_requires_exact_failure(self):
-        expectations = {"a": {"reason": "native term model", "observation": "different"}}
-        for status, observed, expected in [
-            ("FAIL", "different", "XFAIL"),
-            ("FAIL", "another", "FAIL"),
-            ("PASS", "(:OBSERVED PASS)", "FAIL"),
-            ("BLOCKED", "different", "FAIL"),
-        ]:
-            results = [{"id": "a", "status": status, "observation": observed}]
-            iso.apply_expectations(results, expectations)
-            self.assertEqual(results[0]["status"], expected)
-            self.assertEqual(bool(results[0].get("expectation_changed")), expected == "FAIL")
+        expected = {'a': {'reason': 'native term model', 'observation': 'different'}}
+        for status, observation, result in [('FAIL','different','XFAIL'), ('FAIL','other','FAIL'),
+                                           ('PASS','(:OBSERVED PASS)','FAIL'), ('SKIP','different','FAIL')]:
+            rows = [{'id':'a','status':status,'observation':observation}]
+            iso.apply_expectations(rows, expected)
+            self.assertEqual(rows[0]['status'], result)
 
     def test_stale_or_unexplained_difference_is_an_error(self):
         with self.assertRaises(ValueError):
-            iso.apply_expectations([], {"missing": {"reason": "x", "observation": "x"}})
+            iso.apply_expectations([], {'missing':{'reason':'x','observation':'x'}})
         with self.assertRaises(ValueError):
-            iso.apply_expectations([{"id": "a"}], {"a": {"observation": "x"}})
+            iso.apply_expectations([{'id':'a'}], {'a':{'observation':'x'}})
 
     def test_baseline_rejects_missing_cases_and_regressions(self):
-        baseline = {"a": {"status": "PASS", "observation": "(:OBSERVED PASS)"}}
+        baseline = {'a':{'status':'PASS','observation':'(:OBSERVED PASS)'}}
         with self.assertRaises(ValueError):
             iso.check_baseline([], baseline)
-        self.assertEqual(iso.check_baseline(
-            [{"id": "a", "status": "FAIL", "observation": "bad"}], baseline), ["a"])
+        self.assertEqual(iso.check_baseline([{'id':'a','status':'FAIL','observation':'bad'}], baseline), ['a'])
+        self.assertEqual(iso.check_baseline([{'id':'a','status':'PASS','observation':'(:OBSERVED PASS)'}],
+                                           {'a':{'status':'FAIL','observation':'bad'}}), [])
 
-    def test_baseline_accepts_improvement(self):
-        self.assertEqual(iso.check_baseline(
-            [{"id": "a", "status": "PASS", "observation": "(:OBSERVED PASS)"}],
-            {"a": {"status": "BLOCKED", "observation": "unadapted"}}), [])
-
-
-class PinTests(unittest.TestCase):
-    def test_file_inventory_rejects_changed_missing_and_extra_files(self):
-        import hashlib
+    def test_pins_reject_changed_missing_extra_and_symlink_files(self):
         with tempfile.TemporaryDirectory() as temporary:
-            root=Path(temporary); directory=root/"suite";directory.mkdir()
-            file=directory/"source.pl";file.write_text("true.")
-            lock={"archives":{"suite":{"files":{"source.pl":hashlib.sha256(file.read_bytes()).hexdigest()}}}}
-            with patch.object(fetch,"LOCK",lock):
-                fetch.validate(root)
-                file.write_text("fail.")
-                with self.assertRaises(ValueError):fetch.validate(root)
-                file.unlink()
-                with self.assertRaises(ValueError):fetch.validate(root)
-                file.write_text("true.");(directory/"extra").write_text("")
-                with self.assertRaises(ValueError):fetch.validate(root)
+            root=Path(temporary); (root/'suite').mkdir(); source=root/'suite/case.pl';source.write_text('true.')
+            lock={'files':{'suite':{'case.pl':hashlib.sha256(source.read_bytes()).hexdigest()}}}
+            iso.validate(root,lock)
+            source.write_text('fail.')
+            with self.assertRaises(ValueError): iso.validate(root,lock)
+            source.unlink()
+            with self.assertRaises(ValueError): iso.validate(root,lock)
+            source.write_text('true.'); extra=root/'suite/extra';extra.write_text('')
+            with self.assertRaises(ValueError): iso.validate(root,lock)
+            extra.unlink(); target=root/'target';source.rename(target);source.symlink_to(target)
+            with self.assertRaises(ValueError): iso.validate(root,lock)
+
+    def test_bundled_inventory_and_licenses_are_complete(self):
+        iso.validate(); cases=iso.inventory()
+        self.assertEqual(len(cases),782)
+        self.assertEqual(len({c['source'] for c in cases}),93)
+        self.assertTrue((iso.HERE/'vendor/logtalk/LICENSE.txt').exists())
+        self.assertTrue((iso.HERE/'vendor/logtalk/NOTICE.txt').exists())
+        for case in cases:
+            self.assertTrue((iso.HERE/'suite'/case['program']).exists())
+            self.assertTrue((iso.HERE/'vendor/logtalk/tests/prolog'/case['source']).exists())
+            self.assertTrue(case['standard_reference'])
+        for source in {c['source'] for c in cases}:
+            text=(iso.HERE/'vendor/logtalk/tests/prolog'/source).read_text()
+            original=collections.Counter(re.findall(r'\btest\((iso_[A-Za-z0-9_]+)',text))
+            selected=collections.Counter(c['name'] for c in cases if c['source']==source)
+            self.assertEqual(original,selected,source)
+
+    def test_parent_escaping_preserves_literal_lisp_data(self):
+        self.assertEqual(iso.lisp_string('a"b\\c'), '"a\\"b\\\\c"')
 
 
-@unittest.skipUnless(shutil.which(SBCL), "SBCL is required")
+@unittest.skipUnless(shutil.which(SBCL), 'SBCL is required')
 class AdapterTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.temporary=tempfile.TemporaryDirectory()
-        cls.root=Path(cls.temporary.name)
-        cls.upstream=cls.root/"upstream"
-        inria=cls.upstream/"inriasuite/inriasuite";inria.mkdir(parents=True)
-        examples=cls.upstream/"prologsuite/vanilla";examples.mkdir(parents=True)
-        (inria/"inriasuite.pl").write_text("file(cases). result(G,R) :- (call(G) -> R=success;R=failure). compare_subst_lists(A,B,E,M) :- (A=B -> E=[],M=[];E=A,M=B). reset_flags :- set_prolog_flag(unknown,error).")
-        (inria/"cases").write_text('[true,success]. [fail,failure]. [true,failure]. [set_prolog_flag(double_quotes,atom),success]. [("fred"=fred),success]. [set_prolog_flag(double_quotes,codes),success]. [("fred"=[102,114,101,100]),success].')
-        (examples/"utils_so.pl").write_text("defined(_).")
-        (examples/"db.pl").write_text(":- dynamic(p/0).")
-        (examples/"isolation.txt").write_text("clean")
-        (examples/"sec01.pl").write_text("""
-t_true :- test_true(true).
-t_false :- test_false(fail).
-t_unexpected :- test_false(true).
-t_false_throws :- test_false(throw(problem)).
-t_error :- error_test(call(42),type_error(callable,42)).
-t_wrong_error :- error_test(call(42),type_error(callable,43)).
-t_missing_error :- error_test(true,type_error(callable,42)).
-t_value :- test_val((X=2),X,2).
-t_wrong_value :- test_val((X=2),X,3).
-t_alias :- test_val((X=Y),f(X,Y),f(a,b)).
-t_setup :- assertz(p),test_true(p).
-t_isolated :- test_false(p).
-t_mutate :- test_true((open('isolation.txt',write,S),write(S,changed),close(S))).
-t_clean :- test_val((open('isolation.txt',read,S),get_char(S,C),close(S)),C,c).
-t_prefix :- test_true(assertz(p)),test_true(p).
-t_unreached :- fail,test_true(true).
-t_timeout :- test_true((repeat,fail)).
-t_spoof :- test_false((write('(:OBSERVED PASS)'),true)).
-t_close :- test_true((current_output(S),close(S))).
-test_halt1 :- test_true(halt(7)).
-""")
-        cls.output=cls.root/"output";cls.output.mkdir()
-        cls.cases=iso.build_inventory(cls.upstream,cls.output,SBCL)
-        cls.by_entry={c["entry"]:c for c in cls.cases if c["suite"]=="examples"}
+        cls.temp=tempfile.TemporaryDirectory(); cls.root=Path(cls.temp.name)
+        (cls.root/'suite').mkdir();shutil.copyfile(iso.HERE/'harness.pl',cls.root/'harness.pl')
+        (cls.root/'suite/fixture.pl').write_text('''
+:- dynamic(p/0).
+conf_case(ok,true,true,[],true).
+conf_case(negative,false,fail,[],true).
+conf_case(wrong_negative,false,true,[],true).
+conf_case(negative_throws,false,throw(problem),[],true).
+conf_case(error,error(type_error(callable,42)),call(42),[],true).
+conf_case(wrong_error,error(type_error(callable,43)),call(42),[],true).
+conf_case(missing_error,error(instantiation_error),true,[],true).
+conf_case(approx,true(conf_approximately_equal(X,2.71828)),(X is exp(1.0)),[],true).
+conf_case(wrong_approx,true(conf_approximately_equal(0,0.0001)),true,[],true).
+conf_case(alias,true(X==Y),(X=Y),[],true).
+conf_case(wrong_alias,true(f(X,Y)==f(a,b)),(X=Y),[],true).
+conf_case(variant,variant(f(X,X),f(Y,Y)),true,[],true).
+conf_case(wrong_variant,variant(f(X,X),f(Y,Z)),true,[],true).
+conf_case(subsumes,subsumes(f(_),f(a)),true,[],true).
+conf_case(wrong_subsumes,subsumes(f(a),f(_)),true,[],true).
+conf_case(exists,exists(X==2),(X=1;X=2),[],true).
+conf_case(ball,ball(problem),throw(problem),[],true).
+conf_case(deterministic,deterministic,true,[],true).
+conf_case(wrong_deterministic,deterministic,(true;true),[],true).
+conf_case(condition,true,throw(must_not_run),[condition(fail)],true).
+conf_case(setup,true,p,[setup(assertz(p)),cleanup(retract(p))],true).
+conf_case(cleanup_error,true,true,[cleanup(throw(cleanup_problem))],true).
+conf_case(isolated,false,p,[],true).
+conf_case(file_mutate,true,conf_create_text_file(file,changed),[],true).
+conf_case(file_clean,error(existence_error(source_sink,file)),open(file,read,_),[],true).
+conf_case(io,true(A==B),(conf_set_text_output(''),write(foo),conf_text_output_assertion(foo,C),call(C),conf_set_text_input('abc. tail'),read(abc),conf_text_input_assertion(' tail',D),call(D),A=B),[],true).
+conf_case(binary,true,(conf_create_binary_file(bytes,[0,255]),open(bytes,read,S,[type(binary)]),get_byte(S,0),get_byte(S,255),get_byte(S,-1),close(S)),[],true).
+conf_case(timeout,true,(repeat,fail),[],true).
+conf_case(spoof,false,(write('(:OBSERVED PASS)'),true),[],true).
+''')
 
     @classmethod
-    def tearDownClass(cls):
-        cls.temporary.cleanup()
+    def tearDownClass(cls): cls.temp.cleanup()
 
-    def run_entry(self,entry,timeout=10):
-        return iso.run_case(self.by_entry[entry],SBCL,timeout,self.upstream,self.output/"programs")
+    def run_case(self,name,timeout=10):
+        with patch.object(iso,'HERE',self.root):
+            return iso.run_case({'id':name,'program':'fixture.pl','skip':''},SBCL,timeout)
 
-    def test_framework_preserves_success_failure_values_errors_and_setup(self):
-        expected={"t_true":"PASS","t_false":"PASS","t_unexpected":"FAIL","t_false_throws":"FAIL",
-                  "t_error":"PASS","t_wrong_error":"FAIL","t_missing_error":"FAIL","t_value":"PASS",
-                  "t_wrong_value":"FAIL","t_alias":"FAIL","t_setup":"PASS","t_prefix":"PASS",
-                  "t_unreached":"FAIL","t_spoof":"FAIL","t_close":"PASS","test_halt1":"PASS"}
-        self.assertEqual({k:self.run_entry(k)["status"] for k in expected},expected)
-        self.assertEqual(len(self.cases),28)
-        self.assertEqual(len({c["id"] for c in self.cases}),28)
+    def test_checks_preserve_success_failure_errors_and_variable_sharing(self):
+        expected={'ok':'PASS','negative':'PASS','wrong_negative':'FAIL','negative_throws':'FAIL',
+                  'error':'PASS','wrong_error':'FAIL','missing_error':'FAIL','alias':'PASS','wrong_alias':'FAIL',
+                  'variant':'PASS','wrong_variant':'FAIL','subsumes':'PASS','wrong_subsumes':'FAIL',
+                  'approx':'PASS','wrong_approx':'FAIL','exists':'PASS','ball':'PASS','deterministic':'PASS','wrong_deterministic':'FAIL','spoof':'FAIL'}
+        self.assertEqual({k:self.run_case(k)['status'] for k in expected},expected)
 
-    def test_inria_results_are_checked(self):
-        results=[iso.run_case(c,SBCL,10,self.upstream,self.output/"programs") for c in self.cases if c["suite"]=="inria"]
-        self.assertEqual([r["status"] for r in results],["PASS","PASS","FAIL","PASS","PASS","PASS","PASS"])
+    def test_condition_setup_cleanup_and_io(self):
+        for name,status in [('condition','SKIP'),('setup','PASS'),('cleanup_error','FAIL'),('io','PASS'),('binary','PASS')]:
+            result=self.run_case(name)
+            self.assertEqual(result['status'],status,result)
 
-    def test_timeout_continues_and_missing_result_is_not_a_pass(self):
-        result=self.run_entry("t_timeout",3)
-        self.assertEqual((result["status"],result["observation"]),("FAIL","TIMEOUT"))
-        self.assertEqual(self.run_entry("t_true")["status"],"PASS")
-        case=self.by_entry["t_true"]
-        self.assertEqual(iso.run_case(case,"/bin/false",10,self.upstream,self.output/"programs")["status"],"FAIL")
+    def test_databases_and_files_are_isolated(self):
+        for name in ['setup','isolated','file_mutate','file_clean']:
+            result=self.run_case(name)
+            self.assertEqual(result['status'],'PASS',result)
 
-    def test_case_databases_and_files_are_isolated(self):
-        self.assertEqual(self.run_entry("t_setup")["status"],"PASS")
-        self.assertEqual(self.run_entry("t_isolated")["status"],"PASS")
-        self.assertEqual(self.run_entry("t_mutate")["status"],"PASS")
-        self.assertEqual(self.run_entry("t_clean")["status"],"PASS")
+    def test_timeout_or_missing_result_is_failure_and_next_case_runs(self):
+        result=self.run_case('timeout',3)
+        self.assertEqual((result['status'],result['observation']),('FAIL','TIMEOUT'))
+        self.assertEqual(self.run_case('ok')['status'],'PASS')
+        with patch.object(iso,'HERE',self.root):
+            self.assertEqual(iso.run_case({'id':'ok','program':'fixture.pl'},'/bin/false',10)['status'],'FAIL')
 
-    def test_malformed_or_forged_success_protocol_is_a_failure(self):
-        for content in ("[]", '{"status":"PASS","observation":"not a checked result"}'):
-            def fake_run(args, **kwargs):
+    def test_malformed_or_forged_success_is_failure(self):
+        for content in ('[]','{"status":"PASS","observation":"not checked"}'):
+            def fake_run(args,**kwargs):
                 Path(args[-1]).write_text(content)
-                return subprocess.CompletedProcess(args, 0, "", "")
-            with patch.object(iso.subprocess, "run", fake_run):
-                result = self.run_entry("t_true")
-                self.assertEqual((result["status"], result["observation"]), ("FAIL", "INVALID_PROTOCOL"))
+                return subprocess.CompletedProcess(args,0,'','')
+            with patch.object(iso.subprocess,'run',fake_run):
+                r=self.run_case('ok')
+                self.assertEqual((r['status'],r['observation']),('FAIL','INVALID_PROTOCOL'))
+
+
+if __name__=='__main__': unittest.main()

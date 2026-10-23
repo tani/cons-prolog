@@ -17,12 +17,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install test runtimes
         run: sudo apt-get update && sudo apt-get install -y sbcl
-      - name: Fetch hash-pinned Hodgson suites
-        run: python3 tests/iso/fetch.py --output upstream-hodgson
       - name: Test isolation and result classification
         run: python3 -m unittest discover -s tests/iso -p 'test_*.py' -v
-      - name: Run Hodgson ISO checks and compare observations
-        run: python3 tests/iso/run.py --upstream upstream-hodgson --baseline tests/iso/baseline.json --jobs 2
+      - name: Run bundled ISO checks offline and compare observations
+        run: python3 tests/iso/run.py --baseline tests/iso/baseline.json --jobs 2
       - uses: actions/upload-artifact@v4
         if: always()
         with:
