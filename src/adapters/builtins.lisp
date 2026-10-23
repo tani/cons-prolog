@@ -56,7 +56,19 @@
                           (let ((name (deref (second indicator))) (arity (deref (third indicator))))
                             (and (or (logic-var-p name) (symbolp name))
                                  (or (logic-var-p arity) (and (integerp arity) (not (minusp arity))))))))
-           (iso-error "type_error" (iso-atom "predicate_indicator") indicator)))
+           (iso-error "type_error" (iso-atom "predicate_indicator") indicator))
+         (when (and (consp indicator) (symbolp (deref (second indicator)))
+                    (integerp (deref (third indicator))))
+           (let* ((name (deref (second indicator))) (arity (deref (third indicator)))
+                  (atoms (find-package :sprolog/atoms))
+                  (atom (find-symbol (iso-text name) atoms)))
+             ;; Generated atoms bridge Lisp symbols by spelling, possibly matching
+             ;; several definitions. Keep enumeration for those cases.
+             (unless (or (eq (symbol-package name) atoms)
+                         (and atom (gethash (cons atom arity) (database-predicates db))))
+               (return-from iso-enumerate
+                 (when (gethash (cons name arity) (database-predicates db))
+                   (list (iso-result (list (iso-compound (iso-atom "/") name arity))))))))))
        (maphash (lambda (key p) (declare (ignore p))
                   (push (iso-result (list (iso-compound (iso-atom "/") (car key) (cdr key)))) results))
                 (database-predicates db)))

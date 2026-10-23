@@ -2,14 +2,61 @@
   (:use #:cl #:sprolog)
   (:import-from #:sprolog/tests/support/assertions #:check #:value-of)
   (:import-from #:sprolog/tests/adapters/builtins #:iso-error-p)
+  (:import-from #:sprolog/src/syntax/compiler #:add-clause)
+  (:import-from #:sprolog/src/adapters/term-ops #:iso-atom)
   (:export #:run-iso-compatibility-tests))
 (in-package #:sprolog/tests/adapters/iso-compatibility)
 
 (defun textual-query (text &optional (gc 1))
   (query (list (first (parse-prolog-string text))) :gc-threshold gc))
 
+(defun run-current-predicate-tests ()
+  (dolist (model '(:native :iso))
+    (dolist (gc '(nil 1 8 4096))
+      (let ((*database* (make-database :term-model model)))
+        (load-prolog-string
+         ":- dynamic(empty/0). :- dynamic(item/1).
+          item(a). item(b). item(a,b). 'Case'(a). case(a).")
+        (dolist (text '("current_predicate(empty/0)."
+                        "findall(1,current_predicate(item/1),[1])."
+                        "N=item,A=1,current_predicate(N/A)."
+                        "\\+current_predicate(missing/0)."
+                        "\\+current_predicate(item/0)."
+                        "\\+current_predicate(atom/1)."
+                        "current_predicate('Case'/1),current_predicate(case/1),\\+current_predicate('CASE'/1)."
+                        "findall(A,current_predicate(item/A),[1,2])."
+                        "findall(N,current_predicate(N/1),[item,'Case',case])."
+                        "current_predicate(I),I==item/2."
+                        "catch((current_predicate(item / -1),fail),error(type_error(predicate_indicator,item / -1),current_predicate/1),true)."
+                        "catch((current_predicate(item/bad),fail),error(type_error(predicate_indicator,item/bad),current_predicate/1),true)."
+                        "\\+current_predicate(later/0),assertz(later),current_predicate(later/0)."
+                        "retractall(item(_)),current_predicate(item/1)."
+                        "abolish(item/1),\\+current_predicate(item/1),current_predicate(item/2)."
+                        "abolish(later/0),\\+current_predicate(later/0)."))
+          (check (textual-query text gc) text))
+        (clear-database)
+        (check (null (textual-query "current_predicate(empty/0)." gc))
+               "ground predicate lookup observes database clearing")
+        ;; Lisp symbol identities are distinct, while generated atoms bridge by
+        ;; spelling. Ground lookup must preserve both rules and answer counts.
+        (let ((left (make-symbol "LOOKUP-BRIDGE"))
+              (right (make-symbol "LOOKUP-BRIDGE"))
+              (other (make-symbol "LOOKUP-BRIDGE"))
+              (atom (iso-atom "lookup-bridge")))
+          (add-clause (list left) nil nil)
+          (add-clause (list right) nil nil)
+          (flet ((lookup (name)
+                   (query (list (list 'current_predicate (list '/ name 0))) :gc-threshold gc)))
+            (check (= 1 (length (lookup left))) "ground lookup retains Lisp symbol identity")
+            (check (null (lookup other)) "same spelling alone does not equate Lisp symbols")
+            (check (= 2 (length (lookup atom))) "generated atom lookup retains all matching symbols")
+            (add-clause (list atom) nil nil)
+            (check (= 2 (length (lookup left))) "Lisp lookup also finds a generated atom definition")
+            (check (= 3 (length (lookup atom))) "exact generated atom hit retains bridged alternatives")))))))
+
 (defun run-iso-compatibility-tests ()
  (let ((*package* (find-package :sprolog/tests/adapters/iso-compatibility)))
+  (run-current-predicate-tests)
   (dolist (gc '(nil 1 8 4096))
     (let ((*database* (make-database)))
       (load-prolog-string ":- discontiguous(empty/1). :- multifile(shared/1). fixed(a). :- dynamic(changing/1). changing(a). :- dynamic('Case'/1). 'Case'(a). case(a).")

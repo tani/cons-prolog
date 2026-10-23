@@ -15,6 +15,13 @@ not appear in `current_predicate/1`, which continues to enumerate user definitio
 `clear-database` leaves the base library intact. Modification and clause-access
 checks protect the entire public namespace, including aliases and private helpers.
 
+`current_predicate/1` remains a database adapter. After argument validation, a
+bound name and arity use the existing predicate hash table directly. Partial
+indicators still enumerate in database order. Generated atoms that bridge Lisp
+symbols by spelling retain enumeration to preserve all matches and their order.
+The lookup reads current database state without a cache, including declaration-only
+procedures and later assertion or abolition.
+
 The P1 definitions are `nonvar/1`, `number/1`, `callable/1`, `ground/1`,
 `once/1`, `repeat/0`, `\+/1`, `\=/2`, and `\==/2`. There is no special repeat VM
 instruction. Calls to derived aliases go through normal predicate resolution.
