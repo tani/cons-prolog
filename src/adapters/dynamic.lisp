@@ -11,7 +11,7 @@
     #:deref #:instantiate #:map-term #:predicate-key #:reify)
   (:import-from #:sprolog/src/kernel/model
     #:%make-var #:database-generation #:database-predicates #:database-tabled #:host-goal-p
-    #:iso-state-dynamic #:logic-var-binding #:logic-var-p #:machine-database #:make-predicate
+    #:iso-state-dynamic #:iso-state-declarations #:logic-var-binding #:logic-var-p #:machine-database #:make-predicate
     #:predicate-clauses #:slot-ref-index #:slot-ref-p)
   (:import-from #:sprolog/src/kernel/runtime
     #:iso-goal #:iso-predicate-name #:iso-resolve-name #:iso-result #:iso-rule-functor-p)
@@ -82,11 +82,16 @@
         (iso-error "type_error" (iso-atom "predicate_indicator") term))
       (iso-text (first args)) (cons (first args) (iso-integer (second args) t)))))
 (defun iso-check-modifiable (db key)
-  (when (iso-builtin-p (car key) (cdr key))
+  (when (or (iso-builtin-p (car key) (cdr key)) (source-static-p db key))
     (iso-error "permission_error" (iso-atom "modify") (iso-atom "static_procedure")
                (iso-compound (iso-atom "/") (car key) (cdr key))))
   ;; Lisp-defined predicates remain writable, consistent with <- / <--.
   (setf (gethash key (iso-state-dynamic (iso-state-for db))) t))
+(defun source-static-p (db key)
+  (let ((declarations (gethash (cons (iso-text (car key)) (cdr key))
+                               (iso-state-declarations (iso-state-for db)))))
+    (and (member "static" declarations :test #'string=)
+         (not (member "dynamic" declarations :test #'string=)))))
 (defun iso-modify (vm name term)
   (let ((db (machine-database vm)))
     (cond
@@ -120,7 +125,7 @@
       (iso-goal body))
     (let* ((key (predicate-key head)) (key (cons (iso-resolve-name db (car key) (cdr key)) (cdr key)))
            (p (gethash key (database-predicates db))) (results nil))
-      (when (iso-builtin-p (car key) (cdr key))
+      (when (or (iso-builtin-p (car key) (cdr key)) (source-static-p db key))
         (iso-error "permission_error"
                    (iso-atom (if (string= name "CLAUSE") "access" "modify"))
                    (iso-atom (if (string= name "CLAUSE") "private_procedure" "static_procedure"))

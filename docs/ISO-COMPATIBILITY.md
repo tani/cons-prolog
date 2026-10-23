@@ -113,6 +113,37 @@ preserving source order and transparent cut scope. This permits the long arithme
 test clauses without raising the 64-frame limit on genuinely nested syntax or
 using one host stack frame per compiled comma.
 
+## Specification precedence
+
+Defined ISO behavior takes precedence over the former implementation. Behavior
+left implementation defined, implementation dependent, or undefined is retained
+where compatible with the defined ISO behavior; these categories are not treated
+as interchangeable claims that the standard prescribes nothing.
+
+The [ISO/IEC 13211-1:1995 text](https://previewnorm.com/iso/ISO%20IEC%2013211-1-1995%20PDF.pdf)
+specifies four cases previously described here as policy differences/questions:
+
+- 7.2: floats precede integers, and compound terms compare by arity, functor name,
+  then arguments. COMPARE, SORT and the derived order relations share this order.
+- 7.4.3: a DYNAMIC, MULTIFILE or DISCONTIGUOUS declaration creates a procedure
+  even when it has no clauses. Calling such an empty procedure fails.
+- 7.5.2: procedures defined by Prolog text are static by default; runtime updates
+  require DYNAMIC. Asserting a new procedure creates a dynamic procedure.
+- 7.5.3: static procedures are private by default; dynamic procedures are public.
+  CLAUSE refuses access to private source procedures.
+
+These four observations now pass. Textual-loader metadata also applies when the
+suite compiles its parsed source forms. Lisp-native definitions remain an extension
+with their existing default mutability/accessibility; clearing user definitions
+also clears source declaration metadata. Predicate-name case is significant.
+
+The cons representation is unchanged. Proper finite applications use ISO compound
+order. Other cons graphs retain structural ordering within a separate extension
+class; Lisp-only numbers retain their existing comparison within their class and
+follow ISO floats/integers. Disjoint extension classes preserve transitivity when
+mixed with ISO terms. Cyclic-order rejection and opaque-object identity behavior
+are unchanged. Floating-point arithmetic is not rounded to match old test tables.
+
 ## Observed baseline
 
 SBCL 2.2.9, 1 MiB control stack:
@@ -120,8 +151,8 @@ SBCL 2.2.9, 1 MiB control stack:
 | Suite | PASS | XFAIL | FAIL | SKIP | BLOCKED |
 |---|---:|---:|---:|---:|---:|
 | INRIA | 410 | 3 | 3 | 4 | 0 |
-| Standard examples | 546 | 3 | 12 | 6 | 0 |
-| Total | 956 | 6 | 15 | 10 | 0 |
+| Standard examples | 550 | 3 | 8 | 6 | 0 |
+| Total | 960 | 6 | 11 | 10 | 0 |
 
 Thus 977 checks execute and ten have false applicability premises.
 The six XFAILs are empty-list atom spelling `nil` versus `[]` and the native
@@ -136,16 +167,14 @@ no VM instruction or tagged term model is added. Explicit ONCE and negation call
 retain their own argument as culprit; whole-body validation visits only transparent
 conjunction/disjunction/if-then positions before executing side effects.
 
-The 15 FAILs remain visible: five exact floating-point expectations, two predicate
+The 11 FAILs remain visible: five exact floating-point expectations, two predicate
 name mistakes, two SUB_ATOM comparator/expectation issues, one uncaught-throw test
-whose own harness catches the ball, one contradictory CALL culprit expectation,
-three native ordering/static/public-policy differences, and one declaration-only
-procedure-existence question. In particular, `sec78.pl:9:8` expects culprit `1` for
+whose own harness catches the ball, one contradictory CALL culprit expectation. In particular, `sec78.pl:9:8` expects culprit `1` for
 `call((write(3),1))`, while INRIA `call:10` expects the whole conjunction for the
 same goal. The latter now passes and the contradictory example remains FAIL.
 No expected answer, tolerance or broad XFAIL exemption is introduced.
 
-The native regression suite passes **5,217 checks** with a 1 MiB control stack.
+The native regression suite passes **5,290 checks** with a 1 MiB control stack.
 Ten adapter tests exercise a 28-check synthetic fixture, wrong/missing exceptions,
 aliasing, setup/order, reader-flag replay, process/file/database isolation, real
 HALT status, spoofed output, timeout continuation and source inventories.

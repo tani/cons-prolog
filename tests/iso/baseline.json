@@ -1680,8 +1680,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec74.pl:18:1": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec74.pl:19:1": {
     "status": "PASS",
@@ -1692,8 +1692,8 @@
     "observation": "(:OBSERVED (WRONG_VALUE (DIS1 DIS2) (D1 D2)))"
   },
   "examples/sec74.pl:20:2": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|existence_error| SPROLOG/ATOMS::|procedure| (SPROLOG/ATOMS::/ NOCLAUSES 1)) SPROLOG/ATOMS::|sprolog|)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec74.pl:21:1": {
     "status": "PASS",
@@ -3008,8 +3008,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec84.pl:1:8": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED UNEXPECTED_SUCCESS)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec84.pl:1:9": {
     "status": "PASS",
@@ -3388,8 +3388,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec88.pl:2:3": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec88.pl:2:4": {
     "status": "PASS",

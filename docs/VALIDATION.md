@@ -1,3 +1,19 @@
+# ISO specification precedence
+
+SBCL 2.2.9, 1 MiB control stack: **5,290 native checks pass**. The 987-check
+Hodgson corpus records **960 PASS, 6 XFAIL, 11 FAIL, 10 SKIP, 0 BLOCKED**.
+Four previous failures now pass under ISO 7.2, 7.4.3, 7.5.2 and 7.5.3:
+compound-term ordering, empty declared procedures, static update protection and
+private source-procedure access. Source metadata distinguishes quoted predicate
+case and is cleared with user definitions. Native Lisp definitions retain their
+extension behavior. Tests cover float/integer and compound order, mixed-extension
+transitivity, all update operations, dynamic reflection and empty declarations.
+
+The adapter's ten tests pass. All 54 derived observations match the immediately
+preceding correction commit. No upstream goal or expected answer changed. The
+remaining failures are historical-suite expectation/harness issues, detailed in
+[ISO compatibility](ISO-COMPATIBILITY.md).
+
 # ISO validation and number conversion corrections
 
 SBCL 2.2.9, 1 MiB control stack: **5,217 native checks pass**. All **987**

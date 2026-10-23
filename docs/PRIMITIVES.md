@@ -169,6 +169,9 @@ identity require the host boundary. Sorting accesses variable and opaque Lisp
 identity through the same comparator; it copies only the input list spine.
 The four order comparisons and SETOF remain ordinary clauses over COMPARE,
 BAGOF and SORT. SETOF deliberately preserves BAGOF group encounter order.
+ISO floats precede integers; finite native applications compare by arity, functor
+name, then argument terms. Non-ISO Lisp values occupy disjoint extension classes
+so mixed comparisons remain transitive. Comparison and traversal remain iterative.
 
 `term-io.lisp` owns explicit-stream READ_TERM/WRITE_TERM and database-local
 operator/conversion tables. **Retention:** these operations access host streams,
@@ -213,3 +216,12 @@ validation order, update and cut semantics. Library definitions are unchanged.
 Native counters in `query-statistics` count completed native call boundaries and
 deoptimizations. WAM instruction/depth/ownership-cell counters describe the VM path;
 native temporary conses are managed by Lisp GC and appear in host allocation data.
+
+## Prolog source procedure properties
+
+The textual loader records ISO static/private defaults separately from Lisp-native
+clause definitions. The dynamic adapter enforces source protection for assertion,
+retraction, abolition and reflection. DYNAMIC declarations permit updates and
+inspection. DYNAMIC, MULTIFILE and DISCONTIGUOUS declarations create empty
+procedures immediately; source compilation and the isolated ISO runner use the
+same property marker. These are database metadata operations, not VM instructions.

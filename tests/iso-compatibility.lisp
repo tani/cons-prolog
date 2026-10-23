@@ -12,7 +12,32 @@
  (let ((*package* (find-package :sprolog/tests/iso-compatibility)))
   (dolist (gc '(nil 1 8 4096))
     (let ((*database* (make-database)))
-      (load-prolog-string "pick(a). pick(b). cat. dog :- true. implicit(X) :- X, call(X).")
+      (load-prolog-string ":- discontiguous(empty/1). :- multifile(shared/1). fixed(a). :- dynamic(changing/1). changing(a). :- dynamic('Case'/1). 'Case'(a). case(a).")
+      (check (textual-query "current_predicate(empty/1),current_predicate(shared/1)." gc)
+             "declaration-only procedures exist")
+      (check (null (textual-query "empty(X);shared(X)." gc)) "empty declared procedures fail without existence errors")
+      (dolist (goal '("asserta(fixed(b))" "assertz(fixed(b))" "retract(fixed(a))"
+                      "retractall(fixed(X))" "abolish(fixed/1)"))
+        (check (textual-query (format nil "catch((~A,fail),error(permission_error(modify,static_procedure,fixed/1),_),true)." goal) gc)
+               "Prolog text procedures are static by default"))
+      (check (textual-query "catch((clause(fixed(X),B),fail),error(permission_error(access,private_procedure,fixed/1),_),true)." gc)
+             "static Prolog text procedures are private by default")
+      (check (textual-query "assertz(changing(b)),clause(changing(b),true),retract(changing(a))." gc)
+             "dynamic source procedures remain public and writable")
+      (check (textual-query "catch((assertz(case(b)),fail),error(permission_error(modify,static_procedure,case/1),_),true),assertz('Case'(b))." gc)
+             "quoted predicate case distinguishes declaration properties")
+      (dolist (text '("north(a) @< foo(a,b)." "a(z,z) @< z(a,a,a)."
+                      "f(a,z) @< f(b,a)." "100.0 @< -100." "z @< f(a)."
+                      "sort(['a','A'],['A','a'])."))
+        (check (textual-query text gc) "ISO order uses type, arity, functor and arguments"))
+      (check (textual-query "sort([f(a,b),north(a),3,-1,9.0], [9.0,-1,3,north(a),f(a,b)])." gc)
+             "SORT shares ISO term order")
+      (clear-database)
+      (<-- (fixed a))
+      (check (query '((assertz (fixed b)) (clause (fixed b) true)) :gc-threshold gc)
+             "clearing source metadata preserves native Lisp definition behavior"))
+    (let ((*database* (make-database)))
+      (load-prolog-string ":-dynamic(cat/0). :-dynamic(dog/0). :-dynamic(implicit/1). pick(a). pick(b). cat. dog :- true. implicit(X) :- X, call(X).")
       (dolist (text '("number_chars(15,['0',x,f])."
                       "number_codes(15,[48,120,102])."
                       "number_chars(3.3,['3','.','3','E','+','0'])."
@@ -83,6 +108,15 @@
              "rejected OP lists do not partially change the operator table")
       (check (textual-query "op(1100,xfy,'|'),current_op(1100,xfy,'|'),op(0,xfy,'|')." gc))))
   (let ((*database* (make-database)))
+    (let ((vm (make-query nil))
+          (terms (list 100.0d0 -100 1/2 #C(1 2) 'a "opaque" '(1 . a) '(1 2) '(f a) '(a a b))))
+      (unwind-protect
+           (let ((ordered (stable-sort terms (lambda (a b) (< (sprolog/src/adapters/term-relations:iso-term-compare vm a b) 0)))))
+             (check (loop for tail on ordered always
+                      (loop for b in (cdr tail) always
+                        (minusp (sprolog/src/adapters/term-relations:iso-term-compare vm (car tail) b))))
+                    "ISO and Lisp extension classes form a transitive mixed order"))
+        (close-query vm)))
     (check (equal '((- 1 2) (- (|,| 1 2)) (f |:-| |;| (|:-| |:-| . |:-|)))
                   (parse-prolog-string "-(1,2). - (1,2). f(:-, ;, [:-, :-|:-])."))
            "layout distinguishes prefix application from functional notation"))
