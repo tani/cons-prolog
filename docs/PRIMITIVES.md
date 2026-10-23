@@ -60,7 +60,9 @@ into failure or permit modes the previous implementation rejected.
 
 Explicit-stream I/O, EOF state, nonseekable lookahead, atom interning, numeric
 parsing/printing, and arithmetic evaluation remain host adapters. Code/byte I/O
-is retained separately to preserve EOF and stream-type validation.
+is retained separately to preserve EOF and stream-type validation. PUT_BYTE
+requires an integer in 0..255 and reports `type_error(byte, Culprit)` for all
+other nonvariable values, retaining instantiation errors and public context.
 
 An adapter wrapper marks its public error context. This context is saved/restored
 with continuations, choice points, and exception snapshots, so private checks do
@@ -194,6 +196,12 @@ The five Lisp text APIs are owned by `src/prolog/reader.lisp` and
 source syntax into existing cons terms and compiler input. Load-time declarations
 remain at this boundary; the VM has no new instruction or compound-term tag.
 The OP and character-conversion adapters supply database-local reader state.
+OP validates the entire name list before changing state: native NIL (the textual
+empty-list atom), `[]`, `{}`, and comma restrictions apply at this boundary.
+Positive-priority infix and postfix definitions cannot coexist. Redefinition and
+priority-zero removal operate on the prefix/infix/postfix group, preserving the
+independent prefix definition when an infix definition changes. These checks
+remain in the stateful adapter; no VM instruction or term-model change is needed.
 READ/READ_TERM and WRITE predicates can select Prolog syntax through the term-I/O
 adapter; both default to Lisp syntax. The writer preserves the native cons mapping
 and reports cycles or unrepresentable Lisp objects explicitly.

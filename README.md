@@ -106,7 +106,7 @@ sbcl --script examples/let.lisp
 sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 ```
 
-Validated on SBCL 2.2.9 / Linux x86-64: 5,290 checks pass, including one million tail calls with a 1 MiB Lisp control stack.
+Validated on SBCL 2.2.9 / Linux x86-64: 5,350 checks pass, including one million tail calls with a 1 MiB Lisp control stack.
 
 On SBCL, eligible pure ground modes compile to native Common Lisp automatically.
 After [ablation](docs/NATIVE-ABLATION.md), VM-side indexing and allocation changes

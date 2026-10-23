@@ -44,14 +44,14 @@ port_file(Root, Output, File, Cases) :-
              maplist(lower_goal,Conditions,LoweredConditions), conjunction(LoweredConditions,Condition),
              lower_options(Options0,Options),
              format(atom(ID),'~w:~w:~d',[Relative,Name,Line]),
-             (memberchk(Name,Undefined)->Skip='ISO leaves STO/cyclic-term behavior undefined';Disabled==true->Skip='Disabled upstream: implementation-dependent or unspecified result';Skip=''),
+             (memberchk(Name,Undefined)->Skip='ISO leaves STO/cyclic-term behavior undefined';Disabled==true,\+ implementation_defined_case(Name)->Skip='Disabled upstream: implementation-dependent or unspecified result';Skip=''),
              write_clause(Out,conf_case(ID,Expected,Goal,Options,Condition)),
              term_text(Goal,GoalText),term_text(Expected0,Original),term_text(Expected,Strict),
              term_text(Options,OptionText),term_text(Condition,CondText),
              atomic_list_concat([Directory,'/tests.pl'],Program),
              Case=_{id:ID,name:Name,suite:logtalk,source:Relative,line:Line,program:Program,
                     goal:GoalText,upstream_expected:Original,expected:Strict,options:OptionText,
-                    condition:CondText,skip:Skip}), Cases)), close(Out)).
+                    condition:CondText,skip:Skip,upstream_disabled:Disabled}), Cases)), close(Out)).
 
 read_rows(In, Stack, Rows) :-
     read_term(In, Term, [syntax_errors(error),double_quotes(codes),term_position(Position)]),
@@ -126,8 +126,20 @@ lower_goal(G,G).
 
 % Both relative orders of distinct variables are implementation dependent.
 % Upstream places the alternative after a committed IF and never reaches it.
+% ISO 8.14.1.1 NOTE 2 leaves input consumed on an error undefined.
+% Require the syntax error itself, without prescribing the remaining stream.
+standard_body(iso_read_term_3_05,(Setup,(_,^^text_input_assertion(_,Assertion))),
+              (Setup,catch((read(_),fail),error(syntax_error(_),_),Assertion=true))) :- !.
 standard_body(iso_setof_3_17,(A->B;C),(A,(B;C))) :- !.
 standard_body(_,Body,Body).
+
+% Documented sprolog choices, not portable ISO-mandated numerical values.
+implementation_defined_case(iso_bitwise_and_2_04).
+implementation_defined_case(iso_bitwise_complement_1_03).
+implementation_defined_case(iso_bitwise_left_shift_2_03).
+implementation_defined_case(iso_bitwise_or_2_04).
+implementation_defined_case(iso_bitwise_right_shift_2_03).
+implementation_defined_case(iso_xor_2_03).
 
 write_clause(S,Clause) :- term_text(Clause,Text),format(S,'~w~n',[Text]).
 term_text(Term, Text) :-

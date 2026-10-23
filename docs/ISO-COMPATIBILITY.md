@@ -36,7 +36,7 @@ historical records in `docs/VALIDATION.md` and git history.
 
 ```sh
 python3 -m unittest discover -s tests/iso -p 'test_*.py' -v
-python3 tests/iso/run.py --baseline tests/iso/baseline.json --jobs 2
+python3 tests/iso/run.py --baseline tests/iso/baseline.json --strict --jobs 2
 python3 tests/iso/run.py --filter predicates/read_term_3 --strict
 ```
 
@@ -78,10 +78,17 @@ The names alone do not establish that an example prescribes defined ISO behavior
 - `iso_setof_3_17` is corrected to test both allowed relative variable orders
   inside the success branch. Upstream placed one order in an unreachable else
   branch after successful SETOF. The original source remains unchanged.
+- `iso_read_term_3_05` requires a real `syntax_error` and accepts no success or
+  other exception. Its unread-tail assertion is removed because ISO 8.14.1.1
+  NOTE 2 leaves the number of input characters undefined on error. Reader
+  behavior is unchanged; the original expectation remains recorded.
+- Six upstream-disabled bitwise examples now execute against sprolog's documented
+  implementation-defined choices (table below), with their upstream-disabled
+  status and chosen values retained in the inventory.
 - STO/cyclic-term examples are SKIP, including their nominally enabled branches:
   undefined ISO behavior does not impose new requirements on native extensions.
-  Other upstream-disabled cases and false runtime applicability conditions are
-  also SKIP, with the reason retained. They are not counted as passes.
+  False runtime applicability conditions are also SKIP, with the reason
+  retained. They are not counted as passes.
 - The one `deterministic` expectation checks exactly one answer. A portable ISO
   driver cannot inspect residual choice points; this is explicitly a weaker
   observation. Approximation is confined to explicit upstream `=~=` checks;
@@ -93,27 +100,49 @@ Defined ISO requirements take precedence. Implementation-defined,
 implementation-dependent and undefined behavior are distinguished; existing
 extensions are retained where compatible with defined ISO requirements.
 
-The current SBCL observation is **707 PASS, 8 XFAIL, 5 FAIL, 62 SKIP, 0 BLOCKED**.
-The 62 skips comprise 45 STO definitions, six other disabled definitions, and
-11 false applicability/alternate-branch conditions. Counts include both source
-branches and must not be presented as 782 independent executed obligations.
+The current SBCL observation is **718 PASS, 8 XFAIL, 0 FAIL, 56 SKIP, 0 BLOCKED**.
+The 56 skips comprise 45 STO definitions (23 example names, with alternate
+branches), one finite-arity and five bounded-integer premises, and five inactive
+conditional branches. The selected counterparts of those five branches execute.
+Counts include source alternatives and must not be presented as 782 independent
+executed obligations. Six PASS results are checks of implementation-defined
+choices, not six additional ISO-mandated numerical answers. CI uses `--strict`.
 
 The eight XFAILs retain native NIL spelling (two), list-cell FUNCTOR (one),
 native-pair KEYSORT (one), canonical list output (one), and explicit `'.'/2`
 versus native-list syntax (three).
 
-Five failures remain visible for analysis; they are not suppressed by the port:
+The five former FAILs are resolved as follows:
 
-| Cases | Observation requiring review |
+| Cases | Resolution |
 |---|---|
-| `iso_op_3_10` (active branch) | Expected operator permission error was not raised |
-| `iso_op_3_11`, `iso_op_3_12` | Defining an operator named `[]` did not raise the expected permission error |
-| `iso_put_byte_2_04` | Reports `type_error(integer,ty)` where the example expects `type_error(byte,ty)` |
-| `iso_read_term_3_05` | Syntax-error recovery consumed a leading space expected by the unread-tail assertion |
+| `iso_op_3_10` (active branch) | Enforce the infix/postfix conflict required by ISO 8.14.3.3 l |
+| `iso_op_3_11`, `iso_op_3_12` | Reject the native empty-list atom, including inside an operator-name list, as required by Cor.2 |
+| `iso_put_byte_2_04` | Validate the byte type directly instead of first raising an integer type error (ISO 8.13.3.3 c) |
+| `iso_read_term_3_05` | Require the syntax error without prescribing undefined consumed input (ISO 8.14.1.1 NOTE 2) |
 
-These are observed differences, not a claim that every remaining example is an
-unambiguous processor defect. In particular, error recovery and implementation
-extensions need review against the normative text before changing behavior.
+### Implementation-defined bitwise results
+
+Bit operations use Common Lisp's unbounded two's-complement interpretation.
+Complement inverts the infinite signed bit sequence; left shift multiplies by a
+power of two and right shift is arithmetic (sign-extending). These choices are
+retained and documented, not changed to invent a single portable ISO answer.
+
+| Enabled example | Expression | sprolog result |
+|---|---|---:|
+| `iso_bitwise_and_2_04` | `-10 /\ 12` | 4 |
+| `iso_bitwise_complement_1_03` | `\(10)` | -11 |
+| `iso_bitwise_left_shift_2_03` | `-16 << 2` | -64 |
+| `iso_bitwise_or_2_04` | `-10 \/ 12` | -2 |
+| `iso_bitwise_right_shift_2_03` | `-16 >> 2` | -4 |
+| `iso_xor_2_03` | `xor(-10,12)` | -6 |
+
+Normative references checked during analysis:
+[ISO 1995 text](https://previewnorm.com/iso/ISO%20IEC%2013211-1-1995%20PDF.pdf),
+[Cor.2 working text](https://www.complang.tuwien.ac.at/ulrich/iso-prolog/dtc2)
+(the final ISO publication is linked there), and
+[Cor.1 working text](https://www.complang.tuwien.ac.at/ulrich/iso-prolog/dtc1)
+which also records the undefined stream state after a read error.
 
 ## Regeneration
 

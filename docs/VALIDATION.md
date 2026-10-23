@@ -1,3 +1,20 @@
+# ISO failure and applicability corrections
+
+SBCL 2.2.9, 1 MiB stack: **5,350 native checks pass**. The bundled corpus completes
+with **718 PASS, 8 XFAIL, 0 FAIL, 56 SKIP, 0 BLOCKED** against the preceding
+baseline, including `--strict`. All five former failures are resolved; six
+previously disabled bitwise checks execute against documented implementation
+choices. The original vendored files and native term representation are unchanged.
+
+OP rejects infix/postfix conflicts and the native empty-list atom atomically;
+redefinition/removal replaces a fixity group. PUT_BYTE validates byte type/range,
+retaining instantiation errors and writing boundary bytes. The READ error example
+now requires the syntax error without prescribing undefined input consumption.
+**Twelve driver tests pass**, including rejection of missing/wrong syntax errors.
+All **54 derived observations** match the preceding processor revision byte for
+byte. See [ISO compatibility](ISO-COMPATIBILITY.md) for scope, exact exceptions,
+remaining skips and implementation-defined values.
+
 # Bundled Apache-2.0 ISO port
 
 All **782 ISO-labelled definitions from 93 Logtalk source files** are bundled

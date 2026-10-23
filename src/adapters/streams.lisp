@@ -167,8 +167,9 @@
       ((member name '("PUT_CHAR" "PUT_CODE" "PUT_BYTE") :test #'string=)
        (let* ((bytep (string= name "PUT_BYTE")) (target b)
               (s (iso-stream-for vm a :output (if bytep "binary" "text"))))
-         (if bytep (let ((v (iso-integer target)))
-                     (unless (<= 0 v 255) (iso-error "type_error" (iso-atom "byte") target)) (write-byte v s))
+         (if bytep (let ((v (iso-required target)))
+                     (unless (and (integerp v) (<= 0 v 255))
+                       (iso-error "type_error" (iso-atom "byte") target)) (write-byte v s))
              (write-char (if (string= name "PUT_CHAR") (iso-character target) (iso-code-char target)) s)) t))
 
       (t (error "Missing builtin implementation: ~A/~D" name n)))))

@@ -320,8 +320,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "functions/bitwise_and_2/tests.lgt:iso_bitwise_and_2_04:43": {
-    "status": "SKIP",
-    "observation": "Disabled upstream: implementation-dependent or unspecified result"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "functions/bitwise_and_2/tests.lgt:iso_bitwise_and_2_05:47": {
     "status": "PASS",
@@ -340,8 +340,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "functions/bitwise_complement_1/tests.lgt:iso_bitwise_complement_1_03:40": {
-    "status": "SKIP",
-    "observation": "Disabled upstream: implementation-dependent or unspecified result"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "functions/bitwise_complement_1/tests.lgt:iso_bitwise_complement_1_04:44": {
     "status": "PASS",
@@ -356,8 +356,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "functions/bitwise_left_shift_2/tests.lgt:iso_bitwise_left_shift_2_03:40": {
-    "status": "SKIP",
-    "observation": "Disabled upstream: implementation-dependent or unspecified result"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "functions/bitwise_left_shift_2/tests.lgt:iso_bitwise_left_shift_1_04:44": {
     "status": "PASS",
@@ -384,8 +384,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "functions/bitwise_or_2/tests.lgt:iso_bitwise_or_2_04:43": {
-    "status": "SKIP",
-    "observation": "Disabled upstream: implementation-dependent or unspecified result"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "functions/bitwise_or_2/tests.lgt:iso_bitwise_or_2_05:47": {
     "status": "PASS",
@@ -404,8 +404,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "functions/bitwise_right_shift_2/tests.lgt:iso_bitwise_right_shift_2_03:40": {
-    "status": "SKIP",
-    "observation": "Disabled upstream: implementation-dependent or unspecified result"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "functions/bitwise_right_shift_2/tests.lgt:iso_bitwise_right_shift_1_04:44": {
     "status": "PASS",
@@ -744,8 +744,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "functions/xor_2/tests.lgt:iso_xor_2_03:40": {
-    "status": "SKIP",
-    "observation": "Disabled upstream: implementation-dependent or unspecified result"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/abolish_1/tests.lgt:iso_abolish_1_01:47": {
     "status": "PASS",
@@ -2052,16 +2052,16 @@
     "observation": "Runtime applicability condition is false"
   },
   "predicates/op_3/tests.lgt:iso_op_3_10:79": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_11:85": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_12:88": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/op_3/tests.lgt:iso_op_3_13:91": {
     "status": "PASS",
@@ -2136,8 +2136,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "predicates/put_byte_2/tests.lgt:iso_put_byte_2_04:48": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (TYPE_ERROR BYTE TY) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|integer| TY) (SPROLOG/ATOMS::/ PUT_BYTE 2))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/put_char_2/tests.lgt:iso_put_char_2_01:34": {
     "status": "PASS",
@@ -2212,8 +2212,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "predicates/read_term_3/tests.lgt:iso_read_term_3_05:65": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== (116 101 114 109 50 46 32 46 46 46) (32 116 101 114 109 50 46 32 46 46 46))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "predicates/read_term_3/tests.lgt:iso_read_term_3_06:70": {
     "status": "PASS",

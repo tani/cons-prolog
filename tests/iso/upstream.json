@@ -107,7 +107,7 @@
     "suite": {
       "LICENSE.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
       "NOTICE.txt": "efb0ce55a0a9b2c70d091cd6c331e4365d20f7303b1974d5e668c4dd0c8b49e8",
-      "cases.json": "4387ad5c01053841b0651623f5ad0d70436baf7ede75b0577bdbae2cecb2e018",
+      "cases.json": "369544eb988d4bddff7423d2ac8efdc9f05d2e51efb8dc26f3c98780299b150e",
       "control/call_1/tests.pl": "1e8b790b0917e70f08f8130e01ce2b5354cec37d8755fcd83e6b5f41f02bfb68",
       "control/catch_3/tests.pl": "3e301572720e4f701431c865982908f3661d3fef6f6f17377d2a41c4c492ad5a",
       "control/conjunction_2/tests.pl": "60d20ba730e91981ad0f18cdd624f4bf8d2b2cf05aa6823950c85d23e00b3a05",
@@ -178,7 +178,7 @@
       "predicates/put_byte_2/tests.pl": "23f6877ede32284bbf069f72f8031285db1314ef9b2d8631d751295ac6a8d7a5",
       "predicates/put_char_2/tests.pl": "d7081a3e343472b91c414c3ba725ab569f2036b77684bcec1721a5ba5f5c41db",
       "predicates/put_code_2/tests.pl": "ebc7fc7bd55802183aa40ed4088ab30136805cae42b7ef69319301b7acf0e6d9",
-      "predicates/read_term_3/tests.pl": "936a6dfbdb346c5c6b8b537b50682776f73d1d0150cacb733a341963b6873df2",
+      "predicates/read_term_3/tests.pl": "65f20669ccc1d6baecafb2237f97307b9150055a8c87f54820b18ca9333d67ab",
       "predicates/retract_1/tests.pl": "6f5ce48922b096e314b2c2243aa667781f0ccb4fbe09742158eec9fc67f25b0a",
       "predicates/retractall_1/tests.pl": "7e5eed1a630bc82a228e73b8ffae794175bd5db111e355bdf4448bb1e07b9131",
       "predicates/set_prolog_flag_2/tests.pl": "873a072cefac9d3604090b7ab74920162247dc33b3e2ce82d49643abeca9031a",

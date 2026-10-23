@@ -48,6 +48,15 @@ def main():
                                   'upstream_disabled' if case['skip'] else 'standard_example')
         if case['expected'] != case['upstream_expected']:
             case['adaptation'] = 'Select the standard first exception alternative; discard compatibility alternatives'
+    choices = {'iso_bitwise_and_2_04': 4, 'iso_bitwise_complement_1_03': -11,
+               'iso_bitwise_left_shift_2_03': -64, 'iso_bitwise_or_2_04': -2,
+               'iso_bitwise_right_shift_2_03': -4, 'iso_xor_2_03': -6}
+    for name, value in choices.items():
+        case = by_name[name]
+        case['classification'] = 'implementation_defined'
+        case['implementation_defined_value'] = value
+        case['adaptation'] = 'Enable the upstream-disabled example for sprolog: unbounded two-complement bitwise operations and arithmetic shifts'
+    by_name['iso_read_term_3_05']['adaptation'] = ('ISO 8.14.1.1 NOTE 2 leaves consumed input undefined on error: require syntax_error without asserting unread text')
     by_name['iso_setof_3_17']['adaptation'] = ('ISO 7.2 permits either relative variable order: move the alternative inside the success branch instead of an unreachable else')
     if len(cases) != 782 or len({c['source'] for c in cases}) != 93:
         raise ValueError('Unexpected source inventory')

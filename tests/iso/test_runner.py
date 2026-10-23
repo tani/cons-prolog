@@ -107,6 +107,9 @@ conf_case(file_mutate,true,conf_create_text_file(file,changed),[],true).
 conf_case(file_clean,error(existence_error(source_sink,file)),open(file,read,_),[],true).
 conf_case(io,true(A==B),(conf_set_text_output(''),write(foo),conf_text_output_assertion(foo,C),call(C),conf_set_text_input('abc. tail'),read(abc),conf_text_input_assertion(' tail',D),call(D),A=B),[],true).
 conf_case(binary,true,(conf_create_binary_file(bytes,[0,255]),open(bytes,read,S,[type(binary)]),get_byte(S,0),get_byte(S,255),get_byte(S,-1),close(S)),[],true).
+conf_case(syntax_error,true(A),(conf_set_text_input('foo 123. tail'),catch((read(_),fail),error(syntax_error(_),_),A=true)),[],true).
+conf_case(missing_syntax_error,true(A),catch((true,fail),error(syntax_error(_),_),A=true),[],true).
+conf_case(wrong_syntax_error,true(A),catch((throw(other),fail),error(syntax_error(_),_),A=true),[],true).
 conf_case(timeout,true,(repeat,fail),[],true).
 conf_case(spoof,false,(write('(:OBSERVED PASS)'),true),[],true).
 ''')
@@ -129,6 +132,11 @@ conf_case(spoof,false,(write('(:OBSERVED PASS)'),true),[],true).
         for name,status in [('condition','SKIP'),('setup','PASS'),('cleanup_error','FAIL'),('io','PASS'),('binary','PASS')]:
             result=self.run_case(name)
             self.assertEqual(result['status'],status,result)
+
+    def test_read_error_check_requires_the_error_without_prescribing_the_tail(self):
+        self.assertEqual(self.run_case('syntax_error')['status'],'PASS')
+        self.assertEqual(self.run_case('missing_syntax_error')['status'],'FAIL')
+        self.assertEqual(self.run_case('wrong_syntax_error')['status'],'FAIL')
 
     def test_databases_and_files_are_isolated(self):
         for name in ['setup','isolated','file_mutate','file_clean']:

@@ -106,7 +106,30 @@
         (check (textual-query text gc) "ISO validation errors retain class and culprit"))
       (check (textual-query "catch(op(300,xfy,[new_op,'{}']),_,true),\\+ current_op(_,_,new_op)." gc)
              "rejected OP lists do not partially change the operator table")
+      (dolist (text '("op(300,xfy,conf_op),catch((op(400,yf,conf_op),fail),error(permission_error(create,operator,conf_op),_),true),current_op(300,xfy,conf_op),\\+current_op(_,yf,conf_op)."
+                      "op(0,yfx,conf_op),op(300,xf,conf_op),catch((op(400,yfx,conf_op),fail),error(permission_error(create,operator,conf_op),_),true),current_op(300,xf,conf_op)."
+                      "op(0,yf,conf_op),op(300,xfy,conf_op),op(400,xfx,conf_op),current_op(400,xfx,conf_op),\\+current_op(_,xfy,conf_op)."
+                      "op(0,xfy,conf_op),\\+current_op(_,xfx,conf_op),op(300,fx,conf_op),op(400,fy,conf_op),\\+current_op(_,fx,conf_op),current_op(400,fy,conf_op)."
+                      "op(300,xfy,conf_op),current_op(400,fy,conf_op),current_op(300,xfy,conf_op),op(0,fx,conf_op),current_op(300,xfy,conf_op)."
+                      "catch((op(300,xfy,[]),fail),error(permission_error(create,operator,[]),_),true)."
+                      "catch((op(300,xfy,[[]]),fail),error(permission_error(create,operator,[]),_),true)."
+                      "catch(op(300,xfy,[conf_new,[]]),_,true),\\+current_op(_,_,conf_new)."
+                      "op(0,yfx,conf_op),op(300,yf,conf_op),catch(op(400,xfy,[conf_new,conf_op]),_,true),\\+current_op(_,_,conf_new),current_op(300,yf,conf_op)."))
+        (check (textual-query text gc) "OP validates conflicts atomically and replaces/removes a fixity group"))
       (check (textual-query "op(1100,xfy,'|'),current_op(1100,xfy,'|'),op(0,xfy,'|')." gc))))
+  (dolist (gc '(nil 1 8 4096))
+    (uiop:with-temporary-file (:pathname path :stream stream :direction :output
+                              :element-type '(unsigned-byte 8))
+      (close stream)
+      (let ((*database* (make-database)))
+        (query '((set_prolog_flag read_syntax prolog)))
+        (dolist (byte '("ty" "1.5" "-1" "256" "f(a)"))
+          (check (textual-query
+                  (format nil "open('~A',write,S,[type(binary)]),catch((put_byte(S,~A),fail),error(type_error(byte,~A),_),true),close(S)." path byte byte) gc)
+                 "PUT_BYTE rejects every non-byte with the byte type and original culprit"))
+        (check (textual-query
+                (format nil "open('~A',write,S,[type(binary)]),catch((put_byte(S,_),fail),error(instantiation_error,_),true),put_byte(S,0),put_byte(S,255),close(S),open('~A',read,T,[type(binary)]),get_byte(T,0),get_byte(T,255),get_byte(T,-1),close(T)." path path) gc)
+               "PUT_BYTE preserves instantiation errors and writes boundary bytes"))))
   (let ((*database* (make-database)))
     (let ((vm (make-query nil))
           (terms (list 100.0d0 -100 1/2 #C(1 2) 'a "opaque" '(1 . a) '(1 2) '(f a) '(a a b))))
