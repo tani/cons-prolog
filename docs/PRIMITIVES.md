@@ -213,6 +213,9 @@ cuts, integer arithmetic and a statically known pure `findall/3` goal to Common 
 The collector uses native continuations to enumerate the same clause/search order;
 ground fact relations are indexed by their available scalar inputs. This lowering
 adds no public predicate or library-wrapper VM instruction.
+The generated collector follows the database's immutable term model: ISO results
+use `$cons`/`$nil`, including empty and nested collections. Native-mode results
+retain ordinary Lisp lists without an additional conversion.
 
 **Conditional retention:** general `findall/3` remains an adapter because arbitrary
 runtime goals, free template variables, effects, exceptions and tabling require the

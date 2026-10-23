@@ -10,7 +10,50 @@
     (handler-case
         (write-to-string (query (parse-prolog-string text) :gc-threshold 1 :limit 100))
       (iso-exception (c) (write-to-string (iso-exception-term c))))))
+(defun run-native-findall-tests ()
+  (let ((*package* (find-package :sprolog/tests/syntax/native)))
+    (dolist (model '(:native :iso))
+      (let ((*database* (make-database :term-model model)))
+        (load-prolog-string
+         "item(2). item(1). item(2).
+          absent(_) :- fail.
+          collected(L) :- findall(X,item(X),L).
+          empty(L) :- findall(X,absent(X),L).
+          nested(L) :- findall(X,collected(X),L).
+          compounds(L) :- findall(pair(X,[X]),item(X),L).
+          count([],0).
+          count([_|Xs],N) :- count(Xs,M), N is M+1.
+          counted(N) :- collected(L), count(L,N).")
+        (dolist (gc '(nil 1))
+          (dolist (enabled '(nil t))
+            (let ((*native-enabled* (and enabled #+sbcl t #-sbcl nil)))
+              (dolist (case '(("collected(L), L==[2,1,2]." t)
+                              ("collected([2,1,2])." t)
+                              ("collected([1,2,2])." nil)
+                              ("empty(L), L==[]." t)
+                              ("empty([])." t)
+                              ("nested(L), L==[[2,1,2]]." t)
+                              ("compounds(L), L==[pair(2,[2]),pair(1,[1]),pair(2,[2])]." t)
+                              ("collected([_|T]), T==[1,2]." t)
+                              ("counted(3)." t)))
+                (check (eql (not (null (query (parse-prolog-string (first case)) :gc-threshold gc)))
+                            (second case))
+                       (format nil "FINDALL ~A native=~A GC=~A: ~A" model enabled gc (first case)))))))
+        #+sbcl
+        (unless (uiop:getenv "SPROLOG_DISABLE_NATIVE")
+          (let ((*native-enabled* t))
+            (dolist (text '("collected(L)." "empty(L)." "nested(L)." "counted(N)."))
+              (let ((vm (make-query (parse-prolog-string text) :gc-threshold 1)))
+                (unwind-protect
+                     (progn
+                       (check (nth-value 1 (next-solution vm)) text)
+                       (check (plusp (getf (query-statistics vm) :native-calls))
+                              "FINDALL exercises generated code in both term models")
+                       (check (zerop (getf (query-statistics vm) :native-deoptimizations))
+                              "compiled FINDALL succeeds without VM fallback"))
+                  (close-query vm))))))))))
 (defun run-native-tests ()
+  (run-native-findall-tests)
   (let ((*database* (make-database)))
     (load-prolog-string
      "q(1). q(2). q(3).

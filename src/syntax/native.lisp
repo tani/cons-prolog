@@ -1,14 +1,14 @@
 ;;; Ground functional modes of pure predicates, with guarded VM fallback.
 (uiop:define-package #:sprolog/src/syntax/native
   (:use #:cl)
-  (:import-from #:sprolog/src/kernel/model)
+  (:import-from #:sprolog/src/kernel/model #:database-term-model)
   (:import-from #:sprolog/src/kernel/engine
     #:deref #:unify #:map-term #:restore-continuation #:backtrack)
   (:import-from #:sprolog/src/kernel/protocol
     #:register-provider #:iso-atomic-equal #:iso-primitive-p #:iso-syntax-p)
   (:import-from #:sprolog/src/kernel/runtime #:iso-resolve-name)
   (:import-from #:sprolog/src/kernel/wam)
-  (:import-from #:sprolog/src/adapters/term-ops #:iso-acyclic-p)
+  (:import-from #:sprolog/src/adapters/term-ops #:iso-acyclic-p #:iso-list-from-host)
   (:import-from #:sprolog/src/syntax/dcg)
   (:import-from #:sprolog/src/syntax/compiler #:variable-symbol-p #:anonymous-p)
   (:export #:native-call #:*native-enabled*))
@@ -249,7 +249,10 @@ No VM bindings, effects or table operations occur inside this group."
                                                                (lambda () `(progn
                                                                               (when (> (incf ,count) 65536) (throw 'native-deopt nil))
                                                                               (push ,(value-form (first args) nested-env) ,collection))) nil)))
-                                                        (setf ,collection (nreverse ,collection))
+                                                        (setf ,collection
+                                                              ,(if (eq (database-term-model database) :iso)
+                                                                   `(iso-list-from-host (nreverse ,collection))
+                                                                   `(nreverse ,collection)))
                                                         ,(match-form (third args) collection env (lambda () (goals-form (cdr goals))) failure)))))
                                                 ((and (string= name "IS") (= (length args) 2))
                                                  (let ((value (gensym "NUMBER")))
