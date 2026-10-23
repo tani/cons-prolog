@@ -25,7 +25,7 @@ This is a throughput result for this suite, not a claim about every Prolog progr
 - Query creation, execution, scalar result export and cursor teardown are inside the sprolog timed loop. Both engines check the result of every query. Expected results are independently fixed in `compare.py`: 92, 5, 1200, 2000, 1024 and 12799.
 - Full host GC is requested before each sample, outside timing. GC during the workload remains included. Engines run serially. No terminal I/O occurs inside the timed loop.
 - Process launch, source loading, database construction and initial native compilation are excluded. The raw `cold_seconds` field records first-query time; the first benchmark compiles a closed group containing all six `bench/2` clauses, so later first-query values are not independent cold-compiler measurements.
-- Raw CPU samples, allocation counts, batches, versions and executed commands are in [native-only-results.json](../benchmarks/native-only-results.json). The former full-optimization measurements and upstream context are archived in [competitive-results.json](../benchmarks/competitive-results.json). Allocation bytes are cumulative SBCL allocations per query, not live bytes or RSS. SWI allocation fields are placeholders (zero), not allocation measurements.
+- Raw CPU samples, allocation counts, batches, versions and executed commands are in [native-only-results.json](../benchmarks/results/native-only-results.json). The former full-optimization measurements and upstream context are archived in [competitive-results.json](../benchmarks/results/competitive-results.json). Allocation bytes are cumulative SBCL allocations per query, not live bytes or RSS. SWI allocation fields are placeholders (zero), not allocation measurements.
 
 ## Reproduction
 

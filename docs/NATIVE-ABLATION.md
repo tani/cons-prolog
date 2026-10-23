@@ -34,7 +34,7 @@ Removing the native fact index loses the graph case: approximately 0.778 ms vers
 - Retain only the native-call hook and native statistics in the engine, and native-cache teardown in the compiler.
 - Move the native relation-key helper into the native compiler; the VM does not depend on it.
 
-The selected source hashes exactly match the measured `native_only` variant in [results.json](../benchmarks/ablations/results.json). Source fingerprints, all CPU/allocation samples, cold timings, execution order and runtime versions are retained there. The former full result is archived in [competitive-results.json](../benchmarks/competitive-results.json).
+The selected source hashes exactly match the measured `native_only` variant in [results.json](../benchmarks/ablations/results.json). Source fingerprints, all CPU/allocation samples, cold timings, execution order and runtime versions are retained there. The former full result is archived in [competitive-results.json](../benchmarks/results/competitive-results.json).
 
 ## Reproduction
 
@@ -59,7 +59,7 @@ The default settings are two rounds, three samples per round and batch size 20. 
 
 After selecting `native_only`, rerun `compare.py --require-parity` with its original
 per-case batch sizes and five samples. All six cases pass again, by 1.49–3.32x.
-Those independent measurements are in [native-only-results.json](../benchmarks/native-only-results.json)
+Those independent measurements are in [native-only-results.json](../benchmarks/results/native-only-results.json)
 and summarized in [the current benchmark report](COMPETITIVE-BENCHMARKS.md).
 The different batch sizes and separate run explain why these medians differ from
 the controlled ablation table; do not mix their samples into one comparison.

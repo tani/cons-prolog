@@ -41,7 +41,7 @@
         (if (equal variant "numeric-index") #'indexed-resolve *original-resolve*)))
 (unwind-protect
      (let ((*print-pretty* nil))
-       (with-open-file (stream "benchmarks/diagnostics.sexp" :direction :output :if-exists :supersede)
+       (with-open-file (stream "benchmarks/results/diagnostics.sexp" :direction :output :if-exists :supersede)
          (dolist (variant '("baseline" "scalar-unify" "scalar-map" "both" "numeric-index"))
            (select-substitutions variant)
            (dolist (name (if (equal variant "numeric-index") '("fact-last-1000x1000" "slg-path-1000")

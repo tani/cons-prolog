@@ -8,7 +8,8 @@
     #:or-branches #:proceed #:put-args #:retry-me-else #:scoped-body #:tnot #:true #:trust-me
     #:try-branch #:try-me-else #:yield)
   (:import-from #:sprolog/src/kernel/model
-    #:database-native-cache #:database-iso-state #:iso-state-loaded-files #:%make-machine #:database #:database-generation #:database-predicates #:database-tabled
+    #:*term-model* #:database-term-model
+    #:database-native-cache #:database-iso-state #:iso-state-loaded-files #:iso-state-declarations #:iso-state-dynamic #:%make-machine #:database #:database-generation #:database-predicates #:database-tabled
     #:disjunction-goal-branches #:disjunction-goal-p #:host-goal #:host-goal-arguments
     #:host-goal-function #:host-goal-output #:host-goal-p #:host-goal-testp #:logic-var-p
     #:machine-slots #:machine-variables #:make-predicate #:predicate #:predicate-clauses
@@ -132,6 +133,7 @@
         (when (cdr rest) (setf (second (aref code position)) (fill-pointer code)))))
     (coerce code 'simple-vector)))
 (defun add-clause (head body replacep &optional (database *database*))
+  (let ((*database* database) (*term-model* (database-term-model database)))
   ;; Publish a fresh code vector. In-flight calls retain their old alternatives.
   (let ((key (predicate-key head)))
     (when (iso-builtin-p (car key) (cdr key))
@@ -144,15 +146,18 @@
          (new (make-predicate :clauses clauses :code (compile-predicate clauses))))
     (incf (database-generation database))
     (setf (gethash key (database-predicates database)) new)
-    (values (car key) (cdr key))))
+    (values (car key) (cdr key)))))
 (defun clear-database (&optional (database *database*))
   (incf (database-generation database))
   (setf (database-native-cache database) nil)
   (clrhash (database-tabled database))
   (clrhash (database-predicates database))
   (when (database-iso-state database)
-    (clrhash (iso-state-loaded-files (database-iso-state database)))) nil)
+    (clrhash (iso-state-loaded-files (database-iso-state database)))
+    (clrhash (iso-state-declarations (database-iso-state database)))
+    (clrhash (iso-state-dynamic (database-iso-state database)))) nil)
 (defun make-query (goals &key (database *database*) (gc-threshold 4096))
+  (let ((*database* database) (*term-model* (database-term-model database)))
   (unless (or (null gc-threshold) (and (integerp gc-threshold) (plusp gc-threshold)))
     (error "GC-THRESHOLD must be NIL or a positive integer"))
   (let* ((table (make-hash-table :test 'eq)) (counter (list 0))
@@ -169,7 +174,7 @@
           (sort (loop for name being the hash-keys of table using (hash-value index)
                       when (and (symbolp name) (not (get name 'dcg-internal))) collect (cons name (aref slots index)))
                 #'< :key (lambda (entry) (gethash (car entry) table))))
-    vm))
+    vm)))
 (defun query (goals &key truth-values limit (database *database*) (gc-threshold 4096))
   "Collect solutions. Use MAKE-QUERY/NEXT-SOLUTION for streaming or large searches."
   (when (and limit (not (and (integerp limit) (>= limit 0))))

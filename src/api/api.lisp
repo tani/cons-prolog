@@ -1,7 +1,7 @@
 (uiop:define-package #:sprolog/src/api/api
   (:use #:cl)
   (:import-from #:sprolog/src/kernel/engine
-    #:close-query #:next-solution)
+    #:*database* #:close-query #:next-solution)
   (:import-from #:sprolog/src/syntax/compiler
     #:add-clause #:make-query)
   (:import-from #:sprolog/src/syntax/dcg
@@ -9,7 +9,7 @@
   (:import-from #:sprolog/src/syntax/host-syntax
     #:goals-form)
   (:import-from #:sprolog/src/kernel/protocol)
-  (:import-from #:sprolog/src/kernel/model)
+  (:import-from #:sprolog/src/kernel/model #:database-term-model)
   (:import-from #:sprolog/src/api/state)
   (:import-from #:sprolog/src/kernel/instructions)
   (:export #:---> #:--> #:<- #:<-- #:?- #:display-query-answer #:interactive-query #:prolog
@@ -17,12 +17,15 @@
 (in-package #:sprolog/src/api/api)
 
 
-(defmacro --> (head &body body)
-  (multiple-value-bind (expanded-head expanded-body) (dcg-expand head body)
-    `(add-clause ',expanded-head ,(goals-form expanded-body) nil)))
-(defmacro ---> (head &body body)
-  (multiple-value-bind (expanded-head expanded-body) (dcg-expand head body)
-    `(add-clause ',expanded-head ,(goals-form expanded-body) t)))
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defun grammar-definition-form (head body replacep)
+    `(ecase (database-term-model *database*)
+       ,@(loop for model in '(:native :iso) collect
+           (multiple-value-bind (expanded-head expanded-body)
+               (dcg-expand head body :term-model model)
+             `(,model (add-clause ',expanded-head ,(goals-form expanded-body) ,replacep)))))))
+(defmacro --> (head &body body) (grammar-definition-form head body nil))
+(defmacro ---> (head &body body) (grammar-definition-form head body t))
 
 (defmacro <- (head &body body)
   `(add-clause ',head ,(goals-form body) nil))

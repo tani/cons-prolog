@@ -26,6 +26,8 @@
     #:slg-enter-cut-frame #:table)
   (:import-from #:sprolog/src/syntax/compiler
     #:goal-instructions)
+  (:import-from #:sprolog/src/syntax/control-syntax
+    #:validate-call-body)
   (:import-from #:sprolog/src/syntax/dcg
     #:finite-list-p)
   (:import-from #:sprolog/src/syntax/wam-compiler
@@ -57,6 +59,7 @@
                             :builtin-context (machine-builtin-context vm) :handlers (machine-iso-handlers vm) :parent (machine-continuation vm) :depth depth)
           (machine-max-depth vm) (max depth (machine-max-depth vm)))))
 (defun iso-enter (vm goal &optional tailp suffix)
+  (validate-call-body goal)
   (let* ((table (make-hash-table :test 'eq)) (counter (list 0))
          (ir (goal-instructions (iso-goal goal) table counter (null suffix)))
          (code (lower-wam-code ir (car counter) t))

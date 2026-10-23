@@ -1,3 +1,127 @@
+# ISO failure and applicability corrections
+
+SBCL 2.2.9, 1 MiB stack: **5,350 native checks pass**. The bundled corpus completes
+with **718 PASS, 8 XFAIL, 0 FAIL, 56 SKIP, 0 BLOCKED** against the preceding
+baseline, including `--strict`. All five former failures are resolved; six
+previously disabled bitwise checks execute against documented implementation
+choices. The original vendored files and native term representation are unchanged.
+
+OP rejects infix/postfix conflicts and the native empty-list atom atomically;
+redefinition/removal replaces a fixity group. PUT_BYTE validates byte type/range,
+retaining instantiation errors and writing boundary bytes. The READ error example
+now requires the syntax error without prescribing undefined input consumption.
+**Twelve driver tests pass**, including rejection of missing/wrong syntax errors.
+All **54 derived observations** match the preceding processor revision byte for
+byte. See [ISO compatibility](ISO-COMPATIBILITY.md) for scope, exact exceptions,
+remaining skips and implementation-defined values.
+
+# Bundled Apache-2.0 ISO port
+
+All **782 ISO-labelled definitions from 93 Logtalk source files** are bundled
+with their originals, source pins, LICENSE/NOTICE and an executable plain Prolog
+port. SBCL 2.2.9, 1 MiB stack: **707 PASS, 8 XFAIL, 5 FAIL, 62 SKIP, 0 BLOCKED**.
+The driver passes **11 tests**, including real text/binary I/O, variable sharing,
+subsumption/variants, setup/cleanup, applicability, isolated databases/files,
+timeout continuation, malformed protocols and complete source inventories.
+
+Normal execution requires Python and SBCL only, with no source downloads,
+Logtalk import or SWI runtime. SWI is an optional development-only converter.
+The prior importer limitations are resolved; five remaining observations are
+visible failures. The eight native-model exceptions and 62 inapplicable or
+undefined definitions are explicit, not passes. Strict exception patterns and
+the SETOF variable-order correction are recorded alongside original expectations.
+See [ISO compatibility](ISO-COMPATIBILITY.md) for limitations and reproduction.
+No processor source was changed in this port. The earlier 5,290 native-check
+result below belongs to the preceding implementation revision.
+
+The remaining sections are historical measurements of previous corpora.
+
+# ISO specification precedence
+
+SBCL 2.2.9, 1 MiB control stack: **5,290 native checks pass**. The 987-check
+Hodgson corpus records **960 PASS, 6 XFAIL, 11 FAIL, 10 SKIP, 0 BLOCKED**.
+Four previous failures now pass under ISO 7.2, 7.4.3, 7.5.2 and 7.5.3:
+compound-term ordering, empty declared procedures, static update protection and
+private source-procedure access. Source metadata distinguishes quoted predicate
+case and is cleared with user definitions. Native Lisp definitions retain their
+extension behavior. Tests cover float/integer and compound order, mixed-extension
+transitivity, all update operations, dynamic reflection and empty declarations.
+
+The adapter's ten tests pass. All 54 derived observations match the immediately
+preceding correction commit. No upstream goal or expected answer changed. The
+remaining failures are historical-suite expectation/harness issues, detailed in
+[ISO compatibility](ISO-COMPATIBILITY.md).
+
+# ISO validation and number conversion corrections
+
+SBCL 2.2.9, 1 MiB control stack: **5,217 native checks pass**. All **987**
+Hodgson check points complete: **956 PASS, 6 XFAIL, 15 FAIL, 10 SKIP, 0 BLOCKED**.
+Thirty-one previous FAILs now pass. One previous PASS exposes a contradictory
+upstream CALL expectation, and one existing FAIL now observes the corrected
+character error class. These two changed observations are explicitly retained in
+the baseline; the upstream goals and expectations are unchanged.
+
+Tests cover concrete and partial numeric representations, malformed predicate
+indicators, body validation independent of clause lookup, exact character and
+stream errors, whole-body callable culprits, explicit meta-call boundaries and
+rejection before side effects. The driver still passes ten tests. The 54 existing
+derived observations differ only for the corrected CLOSE stream-domain error.
+See [ISO compatibility](ISO-COMPATIBILITY.md) for remaining failure categories.
+
+# Hodgson ISO suite port (historical baseline)
+
+At this historical revision, the ISO CI corpus was Hodgson's plain-Prolog INRIA and standard-example
+suites: **987 check points, 926 PASS, 6 XFAIL, 45 FAIL, 10 SKIP, 0 BLOCKED** on
+SBCL 2.2.9 with a 1 MiB control stack. The 977 applicable checks execute; ten
+explicit arity/integer/character-set premises are false. Logtalk/SWI import,
+fixtures and baseline are replaced. Different corpus sizes are not a coverage
+comparison. The historical measurements below refer to the former Logtalk corpus.
+
+**5,089 native checks** and **ten adapter tests** pass. The adapter tests include
+28 synthetic check points, failure/exception classification, flag/setup replay,
+process/database/file isolation, timeout continuation, real HALT exit and source
+pinning. New parser checks load a 2,000-goal conjunction, retain mixed-operator
+associativity and reject invalid equal-priority operands with the same stack
+limit. The 54 serialized derived observations match the preceding revision byte
+for byte. See [ISO compatibility](ISO-COMPATIBILITY.md) for source pins, adaptation
+boundaries, historical-suite limitations and reproduction.
+
+# Independent Lisp/Prolog stream syntax
+
+SBCL 2.2.9, Linux x86-64: **5,086 checks pass** with a 1 MiB control stack.
+The driver passes nine tests; all 782 ISO observations still match the existing
+baseline (656 PASS, 9 XFAIL, 2 FAIL, 115 BLOCKED) with both stream syntax flags
+set to Prolog. The 54 serialized derived observations match the previous
+ISO-fixes revision byte for byte with default Lisp I/O.
+
+`read_syntax` and `write_syntax` independently accept `lisp` (default) or
+`prolog`. Tests cover database isolation, persistence after backtracking/clause
+clearing, syntax switching, atom quoting/escapes, variable aliases and name
+collisions, numbered variables, canonical output, all seven operator fixities
+and precedence/associativity, list/application mapping, explicit cycle/opaque
+object errors and public wrapper contexts. Round trips run with GC disabled and
+thresholds 1, 8 and 4096. Iterative output handles a 10,000-level compound term
+and a 20,000-element list under the same stack limit.
+
+# ISO compatibility failure fixes
+
+SBCL 2.2.9, Linux x86-64: **4,764 native checks pass** with a 1 MiB control stack.
+The ISO driver passes **nine tests**. The pinned Logtalk inventory completes with
+**656 PASS, 9 XFAIL, 2 FAIL and 115 BLOCKED** out of 782 definitions, with no
+baseline regressions. The remaining FAIL entries concern native term ordering;
+the XFAIL entries record exact cons/NIL/pair-model differences. BLOCKED entries
+are reported framework limitations, not successful executions.
+See [ISO-COMPATIBILITY.md](ISO-COMPATIBILITY.md) for scope and reproduction.
+
+New regression checks cover runtime conjunction/disjunction/if and cut opacity,
+implicit variable calls in dynamic clauses, atom-headed zero-arity clauses,
+cyclic argument sharing, protected-procedure errors, arithmetic powers, ARG and
+operator validation, flags, and opt-in Prolog stream reading. Variable sharing,
+option terms, quoted atom case, EOF and syntax switching are checked with GC
+disabled and thresholds 1, 8 and 4096. Existing callback, SLG, logical-update and
+stress tests remain in the full suite. The 54 serialized derived observations
+match the initial ISO-baseline revision byte for byte.
+
 # Native optimizer validation — 2026-10-23
 
 SBCL 2.2.9, Linux x86-64: **4,625 checks pass** with a 1 MiB control stack.
@@ -5,7 +129,7 @@ With `SPROLOG_DISABLE_NATIVE=1`, **4,618 checks pass**; seven checks specificall
 asserting native execution/deoptimization are skipped. The existing 54 serialized
 derived observations match upstream `9e14c1e` exactly.
 
-`tests/native.lisp` compares native execution with the interpreter for arithmetic,
+`tests/syntax/native.lisp` compares native execution with the interpreter for arithmetic,
 bignums, floats and errors, cut/failure interactions, 49 combinations of guards
 and cuts, output aliasing and constrained outputs, open and rational terms,
 recursive collectors, and dependency invalidation. Pure tail and non-tail calls
@@ -129,13 +253,13 @@ SBCL 2.2.9, Linux x86-64, 2 GiB dynamic-space ceiling, 1 MiB control stack:
 indicators**, plus seven aliases. ISO conformance and Prolog text conversion are
 outside the specification.
 
-`tests/builtins.lisp` covers arithmetic, cons graph operations, control/cut scopes,
+`tests/adapters/builtins.lisp` covers arithmetic, cons graph operations, control/cut scopes,
 meta-calls, exception rollback, dynamic updates, findall/bagof, atom/number
 conversions and character/byte streams. Forced-GC checks use thresholds 1, 8 and
 4096, as well as disabled collection. Stress cases retain 100,000 arithmetic tail
 calls, 10,000 meta-calls and a 10,000-level arithmetic expression.
 
-`tests/term-syntax.lisp` verifies native cons terms and dotted tails, cyclic inputs,
+`tests/syntax/term-syntax.lisp` verifies native cons terms and dotted tails, cyclic inputs,
 ordinary LIST/CONS data symbols, meta-calls, exceptions, dynamic definitions,
 first-appearance BAGOF grouping, and all 27 removed predicate indicators.
 Existing 100,000-element list, WAM instruction-family, DCG, SLG and independent
@@ -153,7 +277,7 @@ sequences are rejected; legacy keyword syntax remains covered for compatibility.
 
 ## Interactive queries (0.9.0)
 
-`tests/interactive.lisp` checks demand-driven alternatives (including infinite
+`tests/api/interactive.lisp` checks demand-driven alternatives (including infinite
 REPEAT), EOF and explicit stop commands, invalid-command retries, ground success,
 failure, cyclic answer printing, lexical callbacks, undefined SLG answers and
 cursor teardown after stop, errors and nonlocal exits. Batch regressions use a
@@ -161,7 +285,7 @@ private collecting macro; the public `?-` interface is exercised separately.
 
 ## Lexical LET (0.9.1)
 
-`tests/let.lisp` covers logic-variable and lexical initializers, shadowing, optional
+`tests/syntax/let.lisp` covers logic-variable and lexical initializers, shadowing, optional
 declarations, mutation, escaping closures, branch scope, initialization counts,
 DCG DO, independent cursors, compiled hidden variables, ordinary callers of
 tabled predicates and forced GC. A 10,000-call tail-recursive predicate using
@@ -198,3 +322,21 @@ reader flags, stream lookahead/EOF, load replacement, multifile and empty dynami
 declarations, initialization, relative includes, ensure-loaded cache invalidation,
 recursive includes, DCG expansion, long flat terms and controlled nesting errors.
 The preexisting derived-observation output remains byte-for-byte unchanged.
+
+## Optional strict ISO terms
+
+SBCL with a 1 MiB control stack passes **5,476 checks**. The 126 additional
+strict-mode checks exercise list/compound and atom distinctions, internal-name
+collisions, FUNCTOR/ARG/UNIV agreement, character/code relations, copying and
+variable sharing, collectors, sorting, dynamic clauses, rational trees, textual
+and Lisp DCGs with lexical callbacks, SLG cursor resumption and forced GC. Four
+GC thresholds include collection at every safe point. Native-mode behavior and
+all 54 derived observations remain unchanged.
+
+The same bundled 782-definition corpus completes in both modes: native reports
+718 PASS / 8 XFAIL / 56 SKIP, while ISO reports **726 PASS / 0 XFAIL / 56 SKIP**.
+Neither has FAIL or BLOCKED. Strict mode has no expected-difference entries;
+undefined STO and applicability skips are unchanged. Thirteen driver tests cover
+isolation, error/result checking, timeouts, source integrity and strict-mode
+selection. See [ISO compatibility](ISO-COMPATIBILITY.md) for reproduction and
+license/provenance details.

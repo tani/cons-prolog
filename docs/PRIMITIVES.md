@@ -46,7 +46,10 @@ The following predicates now use library clauses:
 
 Character conversion uses `char_code/2` and a shared Prolog list relation. The
 input/output direction is selected before traversing the list, preserving output
-variables and open output tails. `sub_atom/5` uses two `atom_concat/3` calls and
+variables and open output tails. For `number_chars/2`, a ground character list
+selects parsing even when the number is already instantiated; partial lists
+retain generation behavior. `number_codes/2` uses the existing list-validation
+boundary to make the same distinction. `sub_atom/5` uses two `atom_concat/3` calls and
 length relations, preserving before-then-length enumeration order.
 
 Private checks `%output_nonnegative/1`, `%chars_arguments/3`, and
@@ -57,11 +60,19 @@ into failure or permit modes the previous implementation rejected.
 
 Explicit-stream I/O, EOF state, nonseekable lookahead, atom interning, numeric
 parsing/printing, and arithmetic evaluation remain host adapters. Code/byte I/O
-is retained separately to preserve EOF and stream-type validation.
+is retained separately to preserve EOF and stream-type validation. PUT_BYTE
+requires an integer in 0..255 and reports `type_error(byte, Culprit)` for all
+other nonvariable values, retaining instantiation errors and public context.
 
 An adapter wrapper marks its public error context. This context is saved/restored
 with continuations, choice points, and exception snapshots, so private checks do
 not expose helper names and later unrelated goals get their own contexts.
+Invalid current-stream arguments and invalid stream/alias values produce domain
+errors; `stream_property/2` requires a stream rather than accepting aliases.
+OPEN reports invalid option names in the `stream_option` domain. Predicate
+indicator and CLAUSE body checks run before enumeration, including empty lookup
+results. Runtime goal conversion reports the whole converted goal as the culprit
+of a callable type error, before any goal side effects can run.
 
 ## P3: copies, updates, and collection
 
@@ -122,7 +133,7 @@ through runtime entry. Punctuation aliases keep their previous meanings.
 - New tests cover registry separation/protection, clearing databases, repeat,
   caller cut scope, failed partial unification, cyclic copies, character conversion
   modes, substring ordering, dynamic rules/callbacks, SLG, and context restoration.
-- `tests/derived-observations.lisp` produces identical normalized observations
+- `tests/support/derived-observations.lisp` produces identical normalized observations
   against `3504d947` and this branch, including solutions, variable aliases,
   cyclic graph shape, error terms, answer order, EOF, and output effects.
 - Other Lisp implementations have not been run locally. The multi-implementation
@@ -133,8 +144,8 @@ To reproduce the comparison, run the observation script once per checkout and
 compare its stdout. Loading/compilation messages are suppressed by the script:
 
 ```sh
-SPROLOG_ROOT=/path/to/reference sbcl --script tests/derived-observations.lisp > before.txt
-SPROLOG_ROOT=/path/to/current sbcl --script tests/derived-observations.lisp > after.txt
+SPROLOG_ROOT=/path/to/reference sbcl --script tests/support/derived-observations.lisp > before.txt
+SPROLOG_ROOT=/path/to/current sbcl --script tests/support/derived-observations.lisp > after.txt
 diff -u before.txt after.txt
 ```
 
@@ -152,7 +163,7 @@ package with the `sprolog` nickname. Internal functions are owned by their modul
 old `sprolog::` internal references have been updated in tests, examples, and
 benchmarks. See [Development](DEVELOPMENT.md) for cycle boundaries and dispatch costs.
 
-## Cons-model operations and S-expression I/O
+## Cons-model operations and term I/O
 
 `term-relations.lisp` owns FUNCTOR, ARG, UNIV, COMPARE, SORT and KEYSORT.
 **Retention:** finite application decomposition/construction and dereferencing variable
@@ -160,11 +171,21 @@ identity require the host boundary. Sorting accesses variable and opaque Lisp
 identity through the same comparator; it copies only the input list spine.
 The four order comparisons and SETOF remain ordinary clauses over COMPARE,
 BAGOF and SORT. SETOF deliberately preserves BAGOF group encounter order.
+ISO floats precede integers; finite native applications compare by arity, functor
+name, then argument terms. Non-ISO Lisp values occupy disjoint extension classes
+so mixed comparisons remain transitive. Comparison and traversal remain iterative.
 
 `term-io.lisp` owns explicit-stream READ_TERM/WRITE_TERM and database-local
 operator/conversion tables. **Retention:** these operations access host streams,
 reader/printer state and persistent database configuration. All read/write
 convenience forms use ordinary clauses, with public exception contexts preserved.
+READ_TERM and WRITE_TERM dispatch independently on the database-local
+`read_syntax` and `write_syntax` flags (each `lisp` by default, or `prolog`).
+The Prolog paths use `src/prolog/reader.lisp` and `src/prolog/writer.lisp`.
+The adapter owns conversion to fresh managed VM variables, atom-name bridging,
+stream/EOF state and option validation/unification. The iterative writer owns
+Prolog quoting, operator precedence and variable spelling. These stream and
+configuration boundaries require an adapter; no new execution engine is added.
 The accepted format and its limits are specified in [BUILTINS.md](BUILTINS.md).
 No new VM instruction, term tag, or public Lisp export is introduced.
 
@@ -174,8 +195,16 @@ The five Lisp text APIs are owned by `src/prolog/reader.lisp` and
 `src/prolog/loader.lisp`, with lexing in `src/prolog/lexer.lisp`. They translate
 source syntax into existing cons terms and compiler input. Load-time declarations
 remain at this boundary; the VM has no new instruction or compound-term tag.
-The OP and character-conversion adapters supply database-local reader state;
-read/write predicates continue to use the S-expression stream adapter.
+The OP and character-conversion adapters supply database-local reader state.
+OP validates the entire name list before changing state: native NIL (the textual
+empty-list atom), `[]`, `{}`, and comma restrictions apply at this boundary.
+Positive-priority infix and postfix definitions cannot coexist. Redefinition and
+priority-zero removal operate on the prefix/infix/postfix group, preserving the
+independent prefix definition when an infix definition changes. These checks
+remain in the stateful adapter; no VM instruction or term-model change is needed.
+READ/READ_TERM and WRITE predicates can select Prolog syntax through the term-I/O
+adapter; both default to Lisp syntax. The writer preserves the native cons mapping
+and reports cycles or unrepresentable Lisp objects explicitly.
 
 ## Conditional native lowering on SBCL
 
@@ -195,3 +224,30 @@ validation order, update and cut semantics. Library definitions are unchanged.
 Native counters in `query-statistics` count completed native call boundaries and
 deoptimizations. WAM instruction/depth/ownership-cell counters describe the VM path;
 native temporary conses are managed by Lisp GC and appear in host allocation data.
+
+## Prolog source procedure properties
+
+The textual loader records ISO static/private defaults separately from Lisp-native
+clause definitions. The dynamic adapter enforces source protection for assertion,
+retraction, abolition and reflection. DYNAMIC declarations permit updates and
+inspection. DYNAMIC, MULTIFILE and DISCONTIGUOUS declarations create empty
+procedures immediately; source compilation and the isolated ISO runner use the
+same property marker. These are database metadata operations, not VM instructions.
+
+## Term model boundary
+
+Databases fix `:term-model :native` (default) or `:iso` at construction. Both
+share the cons graph VM, unification and GC. Strict lists use explicit
+`($cons Head Tail)` applications and `$nil`; their public Prolog names remain
+`'.'/2` and `[]`. Dedicated symbols prevent collision with user atoms of the
+same Lisp spelling. List adapters are semantically necessary to distinguish
+list spines from application argument spines; their construction/validation
+functions select the database's model. They are not additional VM opcodes.
+
+The protected standard library has one clause source with explicit list literals
+and two shared compilations. Query construction and cursor resumption bind the
+correct database/model, including callbacks, collectors and SLG children. Native
+mode retains its original list/pair behavior and observations. Strict KEYSORT
+validates `Key-Value` compounds and sorts by the key. DCG and host syntax select
+model-specific list lowering while preserving lexical callback objects in
+executable syntax only.

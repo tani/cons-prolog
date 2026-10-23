@@ -5,7 +5,8 @@
   (:import-from #:sprolog/src/kernel/engine
     #:bind-var #:deref #:fresh-cons #:fresh-var #:map-term #:unify)
   (:import-from #:sprolog/src/kernel/model
-    #:%make-machine #:%make-var #:iso-exception #:logic-var-binding #:logic-var-p)
+    #:%make-machine #:%make-var #:iso-exception #:logic-var-binding #:logic-var-p
+    #:*term-model* #:$cons #:$nil)
   (:import-from #:sprolog/src/kernel/protocol)
   (:import-from #:sprolog/src/kernel/instructions)
   (:import-from #:sprolog/src/api/registry)
@@ -13,14 +14,21 @@
   (:export #:iso-acyclic-p #:iso-atom #:iso-atom-name #:iso-atom-p #:iso-atomic-equal #:iso-bind
     #:iso-checked-unify #:iso-compound #:iso-copy #:iso-error #:iso-identical-p #:iso-integer
     #:iso-list #:iso-occurs-p #:iso-parts #:iso-required #:iso-text #:iso-unifiable-p
-    #:iso-variables))
+    #:iso-variables #:iso-empty-list #:iso-null-p #:iso-list-cell-p #:iso-list-head
+    #:iso-list-tail #:iso-list-cons #:iso-list-from-host))
 (in-package #:sprolog/src/adapters/term-ops)
 
 
 (defpackage #:sprolog/atoms (:use))
-(defun iso-atom (name) (if (string-equal name "nil") nil (intern name :sprolog/atoms)))
+(defun iso-atom (name)
+  (cond ((and (eq *term-model* :iso) (string= name "[]")) '$nil)
+        ((and (eq *term-model* :iso) (string= name ".")) '$cons)
+        ((and (not (eq *term-model* :iso)) (string-equal name "nil")) nil)
+        (t (intern name :sprolog/atoms))))
 (defun iso-atom-name (x)
-  (cond ((symbolp x) (if (eq (symbol-package x) (find-package :sprolog/atoms))
+  (cond ((and (eq *term-model* :iso) (eq x '$nil)) "[]")
+        ((and (eq *term-model* :iso) (eq x '$cons)) ".")
+        ((symbolp x) (if (eq (symbol-package x) (find-package :sprolog/atoms))
                          (symbol-name x) (string-downcase (symbol-name x))))
         (t (iso-error "type_error" (iso-atom "atom") x))))
 (defun iso-atomic-equal (a b)
@@ -31,7 +39,24 @@
                (eq (symbol-package b) (find-package :sprolog/atoms)))
            (string= (iso-atom-name a) (iso-atom-name b)))))
 (defun iso-atom-p (x) (symbolp (deref x)))
-(defun iso-compound (name &rest args) (if args (cons name args) name))
+(defun iso-compound (name &rest args)
+  (if args (cons (if (and (eq *term-model* :iso) (symbolp name)
+                         (string= (iso-atom-name name) ".")) '$cons name) args) name))
+(defun iso-empty-list () (if (eq *term-model* :iso) '$nil nil))
+(defun iso-null-p (x) (eq (deref x) (iso-empty-list)))
+(defun iso-list-cell-p (x)
+  (let ((x (deref x)))
+    (if (eq *term-model* :iso)
+        (and (consp x) (eq (car x) '$cons) (consp (cdr x))
+             (consp (cddr x)) (null (cdddr x)))
+        (consp x))))
+(defun iso-list-head (x) (if (eq *term-model* :iso) (second x) (car x)))
+(defun iso-list-tail (x) (if (eq *term-model* :iso) (third x) (cdr x)))
+(defun iso-list-cons (head tail)
+  (if (eq *term-model* :iso) (list '$cons head tail) (cons head tail)))
+(defun iso-list-from-host (items &optional (tail (iso-empty-list)))
+  "Encode a host list of items; never reinterpret compound argument spines."
+  (dolist (item (reverse items) tail) (setf tail (iso-list-cons item tail))))
 (defun iso-parts (term)
   (let ((term (deref term)))
     (if (consp term) (values (car term) (cdr term)) (values term nil))))
@@ -49,13 +74,15 @@
     (when (and nonnegative (minusp x)) (iso-error "domain_error" (iso-atom "not_less_than_zero") x)) x))
 (defun iso-text (x) (iso-atom-name (iso-required x)))
 (defun iso-list (root)
-  (let ((root (deref root)) (seen (make-hash-table :test 'eq)) (result nil))
-    (loop while (consp root) do
+  (let ((original root) (root (deref root)) (seen (make-hash-table :test 'eq)) (result nil))
+    (loop while (iso-list-cell-p root) do
       (when (gethash root seen)
         (iso-error "type_error" (iso-atom "list") root))
-      (setf (gethash root seen) t) (push (car root) result) (setf root (deref (cdr root))))
+      (setf (gethash root seen) t) (push (iso-list-head root) result)
+      (setf root (deref (iso-list-tail root))))
     (when (logic-var-p root) (iso-error "instantiation_error"))
-    (when root (iso-error "type_error" (iso-atom "list") root))
+    (unless (iso-null-p root)
+      (iso-error "type_error" (iso-atom "list") (if (eq *term-model* :iso) original root)))
     (nreverse result)))
 (defun iso-variables (root)
   (let ((seen (make-hash-table :test 'eq)) (vars nil) (work (list root)))
@@ -130,6 +157,8 @@
         (string= (iso-atom-name target) (iso-atom-name value)) (unify vm target value))))
 
 (eval-when (:load-toplevel :execute)
+  (register-provider 'sprolog/src/kernel/protocol:iso-list-cons 'iso-list-cons)
+  (register-provider 'sprolog/src/kernel/protocol:iso-empty-list 'iso-empty-list)
   (register-provider 'sprolog/src/kernel/protocol:iso-atom 'iso-atom)
   (register-provider 'sprolog/src/kernel/protocol:iso-atomic-equal 'iso-atomic-equal)
   (register-provider 'sprolog/src/kernel/protocol:iso-compound 'iso-compound)

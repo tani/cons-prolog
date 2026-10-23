@@ -7,7 +7,7 @@
     #:iso-syntax-p #:iso-unknown #:lower-wam-code #:maybe-collect #:query #:slg-call
     #:slg-check-cut #:slg-check-database #:slg-close #:slg-enter-cut-frame #:slg-negative
     #:slg-return-answer #:slg-statistics #:slg-table-goal #:standard-predicate #:table
-    #:variable-symbol-p))
+    #:variable-symbol-p #:iso-list-cons #:iso-empty-list))
 (in-package #:sprolog/src/kernel/protocol)
 (defvar *providers* (make-hash-table :test 'eq))
 (defun register-provider (interface provider)
@@ -164,3 +164,13 @@
 (defun native-call (&rest arguments)
   (let ((provider (gethash 'native-call *providers*)))
     (and provider (apply (symbol-function provider) arguments))))
+
+(defun iso-list-cons (&rest arguments)
+  (let ((provider (gethash 'iso-list-cons *providers*)))
+    (unless provider (error "Uninstalled term interface: ~S" 'iso-list-cons))
+    (apply (symbol-function provider) arguments)))
+
+(defun iso-empty-list (&rest arguments)
+  (let ((provider (gethash 'iso-empty-list *providers*)))
+    (unless provider (error "Uninstalled term interface: ~S" 'iso-empty-list))
+    (apply (symbol-function provider) arguments)))

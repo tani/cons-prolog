@@ -2,10 +2,10 @@
   (:use #:cl)
   (:import-from #:sprolog/src/api/state
     #:*iso-aliases* #:*iso-builtins* #:*iso-context* #:*iso-halt-function*
-    #:*standard-predicates* #:*syntax-predicates*)
+    #:*standard-predicates* #:*iso-standard-predicates* #:*syntax-predicates*)
   (:import-from #:sprolog/src/kernel/protocol
     #:iso-predicate-name)
-  (:import-from #:sprolog/src/kernel/model)
+  (:import-from #:sprolog/src/kernel/model #:*term-model*)
   (:import-from #:sprolog/src/kernel/instructions)
   (:import-from #:sprolog/src/api/api)
   (:import-from #:sprolog/src/kernel/protocol #:register-provider)
@@ -26,7 +26,8 @@
     (setf (gethash (cons (string-upcase name) arity) *syntax-predicates*) t)))
 (defun standard-predicate (name arity)
   (and (symbolp name)
-       (gethash (cons (iso-predicate-name name arity) arity) *standard-predicates*)))
+       (gethash (cons (iso-predicate-name name arity) arity)
+                (if (eq *term-model* :iso) *iso-standard-predicates* *standard-predicates*))))
 (defun iso-builtin-p (name arity)
   "Protected public names: primitives, syntax, and derived library predicates."
   (or (iso-primitive-p name arity) (iso-syntax-p name arity)

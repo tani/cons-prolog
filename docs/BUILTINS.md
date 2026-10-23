@@ -71,6 +71,11 @@ identity, not host EQ identity of cons cells. `===/2` and `=/=/2` evaluate arith
 expressions. Bitwise expressions use `logand`, `logior`, `lognot`; their punctuation
 spellings remain supported. Integers are unbounded; computed floating results use
 SBCL double precision. ROUND retains ties away from zero.
+`**/2` always returns a float; a zero exponent gives 1.0, including 0**0.
+For `^/2`, integer arguments with a nonnegative exponent give an integer.
+Negative integer exponents give an integer for bases 1 and -1; base 0 raises
+`evaluation_error(undefined)` and other integer bases raise `type_error(float, Base)`.
+Other supported powers use floating arithmetic.
 
 `->/2` commits to the first condition solution. `(or (-> condition then) else)`
 selects ELSE only if CONDITION fails, not if THEN fails. AND/OR are cut-transparent;
@@ -80,6 +85,11 @@ and `--->` for replacement.
 Assertions publish immutable clause/code snapshots; active calls retain their
 entry definitions. Builtins cannot be overwritten. `(rule head body)` is accepted
 by assertion/retraction operations; elsewhere RULE is an ordinary data symbol.
+Variable goals in asserted or reflected clause bodies are represented as
+`call(Variable)`, including inside transparent control forms. Zero-arity heads
+accept both atom and singleton-list call spellings. Accessing a protected clause
+raises `permission_error(access, private_procedure, Name/Arity)`; retracting one
+raises `permission_error(modify, static_procedure, Name/Arity)`.
 BAGOF groups variant free-variable bindings in first-appearance order and retains
 answer order inside each group; no standard term ordering is imposed. FINDALL
 keeps every answer in execution order.
@@ -88,7 +98,8 @@ keeps every answer in execution order.
 
 For a nonempty proper list `(name arg1 ... argN)`, `functor/3` returns the
 symbol NAME and arity N. `arg/3` selects ARG1 at index 1, and so on; zero or
-out-of-range indices fail. Non-cons Lisp values have arity 0 and ARG fails.
+out-of-range indices fail. Non-cons Lisp values have arity 0;
+ARG raises `type_error(compound, Value)` for them, including at index 0.
 `=../2` decomposes a list application to `(name arg1 ... argN)` and a non-cons
 value to `(value)`. There is no special CONS marker or constructor.
 
@@ -100,6 +111,12 @@ value to `(value)`. There is no special CONS marker or constructor.
 (query '((sort (3 1 2 1) ?sorted)))
 (query '((keysort ((2 . b) (1 . a) (2 . c)) ?pairs)))
 ```
+
+The following description applies to the default `:native` term model. In
+`:term-model :iso` databases, list cells use `($cons Head Tail)` and `$nil`;
+FUNCTOR/ARG/UNIV expose `'.'/2` and `[]`, KEYSORT uses `Key-Value` compounds, and
+canonical output expands lists into `'.'/2`. Input/output syntax selection is
+independent of this choice. See [strict term mode](ISO-COMPATIBILITY.md#strict-term-mode).
 
 These operations match predicate-call name, arity and argument positions.
 Lists and compounds remain indistinguishable: `(a b c)` has name A and arity 2.
@@ -136,13 +153,24 @@ Neither mutates the input spine nor copies its elements. `setof/3` is the ordina
 clause BAGOF followed by SORT. It preserves BAGOF's first-appearance group order,
 sorts/deduplicates each group, supports existential `^`, and fails with no answers.
 
-## S-expression term I/O and reader configuration
+## Term I/O and reader configuration
 
 `read/1,2`, `read_term/2,3`, `write/1,2`, `writeq/1,2`,
 `write_canonical/1,2`, and `write_term/2,3` operate on text streams in S-expression
-format. Current-stream and default-option forms are ordinary library clauses.
-The separate [textual loader](PROLOG-LOADER.md) reads `.pl` syntax; these stream
-predicates continue to read/write S-expressions.
+format by default. Current-stream and default-option forms are ordinary library clauses.
+The independent database-local extension flags `read_syntax` and `write_syntax`
+accept `lisp` (default) or `prolog`; `sexp` is not a flag value.
+READ/READ_TERM follow `read_syntax` and all WRITE predicates follow `write_syntax`.
+The Prolog paths use the [textual reader and writer](PROLOG-LOADER.md), including
+the database's operator configuration. Flags can change between complete reads
+or writes, survive backtracking and clause clearing, and are isolated by database.
+
+```prolog
+set_prolog_flag(read_syntax, prolog).
+set_prolog_flag(write_syntax, prolog).
+set_prolog_flag(read_syntax, lisp).
+set_prolog_flag(write_syntax, lisp).
+```
 
 Reading uses a fresh standard Lisp readtable with case preservation, the generated
 atom package, and `*read-eval*` disabled. `?Name` becomes a fresh logic variable
@@ -153,7 +181,14 @@ are checked. `read_term` options are `variables`, `variable_names`, and `singlet
 The first returns all variables in encounter order (including anonymous ones);
 the other two return native `(name . variable)` pairs and omit anonymous variables.
 
-Writing dereferences terms, preserves sharing/cycles with Lisp circle notation,
+In Prolog mode, terms require a terminating full stop. Source variables become
+fresh VM variables per read, preserving repeated names and anonymous occurrences.
+Atoms use the generated-atom namespace and its existing name bridge; quoted atom
+case is preserved. The same options are accepted, but `variable_names` and
+`singletons` return `=(Name, Variable)` terms. EOF and stream validation remain
+the same. The native cons mapping and textual reader's limits still apply.
+
+In Lisp mode, writing dereferences terms, preserves sharing/cycles with Lisp circle notation,
 and names unbound variables `?G0`, `?G1`, etc. `writeq` and `write_canonical`
 enable quoted Lisp output; both have the same S-expression representation.
 `write_term` supports `quoted` and `variable_names` (native pairs with names
@@ -167,8 +202,42 @@ do not depend on ambient printer settings. Non-readable host objects retain
 Common Lisp's printed representation; the Lisp reader/printer's own depth limits
 apply to I/O, unlike iterative VM term operations.
 
+With `write_syntax=prolog`, the writer emits integers, floats, atoms, variables
+and native cons terms without a final full stop. A finite symbol-headed proper
+list is written as `f(a,b)`, including `f()` for a singleton list.
+Other cons spines use `[...|Tail]` and NIL uses `[]`. There is no origin tag
+to distinguish an atom list from an application: `[a,b]` and `a(b)` are the
+same native term and normally print as `a(b)`. The distinct atom named `[]`
+is quoted by WRITEQ. Package identity is not encoded by Prolog syntax; symbols
+use the existing atom-name bridge.
+
+WRITE permits unquoted atom text; WRITEQ quotes atoms and escapes control
+characters as needed. WRITE_TERM supports `quoted`, `ignore_ops`,
+`numbervars` and `variable_names`. Operator notation respects all seven fixities,
+precedence and associativity. WRITE_CANONICAL enables quoting and ignores
+operators, using functional notation for native applications. It does not
+translate native lists into ISO `'.'/2` cells.
+Prolog variable names default to `_G0`, `_G1`, etc., preserving aliases.
+The `variable_names` option uses `=(Name, Variable)` terms with valid named
+Prolog variables (not anonymous `_`). Conflicting names for distinct variables
+are rejected; generated names avoid explicit names. Bound values are ignored.
+With `numbervars(true)`, `'$VAR'(0)` through `'$VAR'(25)` print as A through Z,
+then A1, B1, etc.; WRITEQ enables this convention and WRITE_CANONICAL disables it.
+
+The Prolog writer traverses iteratively. Cycles raise
+`representation_error(acyclic_term)`; opaque Lisp values such as host strings,
+vectors, ratios and complex numbers raise `type_error(prolog_term, Value)`.
+These graphs and objects remain available through Lisp output. Repeated acyclic
+cons structure is expanded, while variable sharing is preserved. Validation
+errors do not leave partial term text in the output stream.
+
 `op/3` stores priority 1..1200 and `fx/fy/xf/yf/xfx/xfy/yfx` by atom name and
 specifier; priority 0 removes the entry. Atom lists are accepted for names.
+Priorities outside 0..1200 raise `domain_error(operator_priority, Priority)`.
+Comma cannot be modified; atom names `[]` and `{}` cannot be declared as operators.
+The bar `|` requires infix fixity and priority greater than 1000, or priority 0
+for removal. Every name is checked before changes are published. Native NIL
+retains the distinct atom name `nil` and can be an operator name.
 `current_op/3` enumerates this initially empty table. The first textual-reader call initializes
 default operators. `char_conversion/2` stores
 one-character atom mappings. With bound input, `current_char_conversion/2`
@@ -192,6 +261,8 @@ handlers survive VM GC and rollback. The existing Lisp exception API
 their historical names; exception payloads are plain S-expressions. HALT exits SBCL
 by default. Unknown predicates raise an existence error by default; the unknown
 flag can select failure instead. These conventions are sprolog's own specification.
+The read-only `max_arity` flag is `unbounded`, matching finite native application
+arities without a fixed implementation limit.
 
 ## Source LET control
 

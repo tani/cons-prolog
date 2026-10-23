@@ -1,7 +1,7 @@
 (uiop:define-package #:sprolog/src/syntax/host-syntax
   (:use #:cl)
   (:import-from #:sprolog/src/kernel/model
-    #:disjunction-goal-branches #:disjunction-goal-p #:make-disjunction-goal #:make-host-goal
+    #:*term-model* #:database-term-model #:disjunction-goal-branches #:disjunction-goal-p #:make-disjunction-goal #:make-host-goal
     #:make-scoped-goals #:make-sequence-goals #:scoped-goals-goals #:scoped-goals-p)
   (:import-from #:sprolog/src/syntax/compiler
     #:variables-in)
@@ -9,6 +9,7 @@
     #:expand-query-goals #:finite-list-p)
   (:import-from #:sprolog/src/syntax/let-syntax
     #:let-goal-form #:lexical-binding-value)
+  (:import-from #:sprolog/src/kernel/engine #:*database*)
   (:import-from #:sprolog/src/kernel/protocol)
   (:import-from #:sprolog/src/api/state)
   (:import-from #:sprolog/src/kernel/instructions)
@@ -65,7 +66,14 @@
       ((source-control-p goal '("OR" ";" "->" "ONCE" "/+" "\\+"))
        `(list ',(car goal) ,@(mapcar (lambda (child) (goal-form child bindings)) (cdr goal))))
       (t `',goal)))
+  (defvar *specializing-goals* nil)
   (defun goals-form (goals &optional bindings)
+    (unless *specializing-goals*
+      (return-from goals-form
+        `(ecase (database-term-model *database*)
+           ,@(loop for model in '(:native :iso) collect
+               (let ((*specializing-goals* t) (*term-model* model))
+                 `(,model ,(goals-form goals bindings)))))))
     (let ((result nil))
       (dolist (goal (source-sequence (expand-query-goals goals)))
         (if (source-control-p goal '("LET"))

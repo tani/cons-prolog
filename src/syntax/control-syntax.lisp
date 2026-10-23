@@ -1,7 +1,7 @@
 (uiop:define-package #:sprolog/src/syntax/control-syntax
   (:use #:cl)
   (:import-from #:sprolog/src/kernel/engine
-    #:map-term)
+    #:deref #:map-term)
   (:import-from #:sprolog/src/kernel/instructions
     #:call #:cut #:fail #:iso-if #:or-branches #:scoped-body)
   (:import-from #:sprolog/src/kernel/model
@@ -10,10 +10,29 @@
     #:goal-instructions #:iso-atom #:iso-error #:iso-goal #:iso-predicate-name #:table
     #:variable-symbol-p)
   (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/syntax/dcg)
+  (:import-from #:sprolog/src/syntax/dcg #:finite-list-p)
   (:export #:iso-control-form-p #:iso-control-instructions #:source-meta-goal-p
-    #:validate-static-meta-goal))
+    #:validate-call-body #:validate-static-meta-goal))
 (in-package #:sprolog/src/syntax/control-syntax)
+
+(defun validate-call-body (goal)
+  "Validate transparent control positions, retaining explicit meta-call boundaries."
+  (let ((work (list goal)) (seen (make-hash-table :test 'eq)))
+    (loop while work do
+      (let* ((g (deref (pop work))))
+        (unless (or (logic-var-p g) (variable-symbol-p g)
+                    (host-goal-p g) (sequence-goals-p g)
+                    (scoped-goals-p g) (disjunction-goal-p g))
+          (unless (or (symbolp g)
+                      (and (consp g) (finite-list-p g) (symbolp (car g))))
+            (iso-error "type_error" (iso-atom "callable") goal))
+          (when (and (consp g) (not (gethash g seen))
+                     (member (iso-predicate-name (car g) (length (cdr g)))
+                             '("," ";" "->") :test #'string=))
+            (unless (= (length (cdr g)) 2)
+              (iso-error "type_error" (iso-atom "callable") goal))
+            (setf (gethash g seen) t)
+            (push (third g) work) (push (second g) work)))))))
 
 
 (defun source-meta-goal-p (goal)
@@ -33,11 +52,12 @@
                       (source-meta-goal-p goal)))))))
 (defun iso-control-instructions (goal table counter tailp)
   (declare (ignore tailp))
-  (labels ((compile-one (g) (goal-instructions
+  (labels ((compile-one (g) (let ((g (if (logic-var-p g) (deref g) g)))
+                             (goal-instructions
                                 (if (or (logic-var-p g) (variable-symbol-p g)
                                         (host-goal-p g) (sequence-goals-p g)
                                         (scoped-goals-p g) (disjunction-goal-p g)) g (iso-goal g))
-                                table counter nil))
+                                table counter nil)))
            (scope (instructions) (list (list 'scoped-body instructions)))
            (cut-ir () '((cut))))
     (cond ((or (logic-var-p goal) (variable-symbol-p goal))
@@ -47,11 +67,22 @@
                                           (if (string= name "FALSE") 0 1)))
                  (iso-error "type_error" (iso-atom "callable") goal))
                (cond ((string= name "FALSE") '((fail)))
-                     ((string= name ",") (append (compile-one (first args)) (compile-one (second args))))
+                     ((string= name ",")
+                      ;; Conjunction is transparent: compile its leaves in source
+                      ;; order without one host stack frame per comma.
+                      (let ((work (list goal)) (instructions nil))
+                        (loop while work do
+                          (let* ((g (pop work)) (g (if (logic-var-p g) (deref g) g)))
+                            (if (and (consp g) (symbolp (car g))
+                                     (consp (cdr g)) (consp (cddr g)) (null (cdddr g))
+                                     (string= (iso-predicate-name (car g) 2) ","))
+                                (progn (push (third g) work) (push (second g) work))
+                                (setf instructions (nconc instructions (compile-one g))))))
+                        instructions))
                      ((string= name "->") (list (list 'iso-if (compile-one (first args))
                                                        (compile-one (second args)) '((fail)))))
                      ((string= name ";")
-                      (let ((left (first args)))
+                      (let ((left (if (logic-var-p (first args)) (deref (first args)) (first args))))
                         (if (and (consp left) (symbolp (car left)) (string= (iso-predicate-name (car left) (length (cdr left))) "->"))
                             (list (list 'iso-if (compile-one (second left)) (compile-one (third left))
                                         (compile-one (second args))))

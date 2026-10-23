@@ -1,26 +1,35 @@
 (uiop:define-package #:sprolog/src/library/standard-library
   (:use #:cl)
   (:import-from #:sprolog/src/api/state
-    #:*standard-predicates*)
+    #:*standard-predicates* #:*iso-standard-predicates*)
   (:import-from #:sprolog/src/kernel/engine
     #:predicate-key)
   (:import-from #:sprolog/src/kernel/instructions
     #:call #:fail #:true)
   (:import-from #:sprolog/src/kernel/model
-    #:make-predicate)
+    #:*term-model* #:$cons #:$nil #:make-predicate)
   (:import-from #:sprolog/src/syntax/compiler
     #:compile-predicate)
   (:import-from #:sprolog/src/kernel/protocol)
   (:import-from #:sprolog/src/adapters/builtins)
+  (:import-from #:sprolog/src/adapters/term-ops #:iso-empty-list #:iso-list-cons)
   (:export #:install-standard-predicate))
 (in-package #:sprolog/src/library/standard-library)
 
 
-(defun install-standard-predicate (clauses)
+(defun library-term (term)
+  ;; Only explicit list literals change representation. Instruction/application
+  ;; spines remain ordinary host lists in both compilations.
+  (cond ((eq term '$nil) (iso-empty-list))
+        ((and (consp term) (eq (car term) '$cons))
+         (iso-list-cons (library-term (second term)) (library-term (third term))))
+        ((consp term) (mapcar #'library-term term))
+        (t term)))
+(defun install-standard-predicate-for-model (clauses)
   "Compile ordinary clauses into the shared, protected base library."
   (let ((key (predicate-key (caar clauses))))
     (setf (gethash (cons (string-upcase (symbol-name (car key))) (cdr key))
-                   *standard-predicates*)
+                   (if (eq *term-model* :iso) *iso-standard-predicates* *standard-predicates*))
           (make-predicate :clauses clauses :code (compile-predicate clauses)
                           :adapter-context
                           (member (string-upcase (symbol-name (car key)))
@@ -33,8 +42,13 @@
                                     "WRITE" "WRITEQ" "WRITE_CANONICAL" "WRITE_TERM")
                                   :test #'string=)))))
 
+(defun install-standard-predicate (clauses)
+  (dolist (*term-model* '(:native :iso))
+    (install-standard-predicate-for-model (library-term clauses))))
+
 (eval-when (:load-toplevel :execute)
   (clrhash *standard-predicates*)
+  (clrhash *iso-standard-predicates*)
   (dolist (clauses
            '((((|\\+| ?goal) (call ?goal) ! fail)
               ((|\\+| ?goal)))
@@ -43,7 +57,7 @@
              (((nonvar ?x) (|\\+| (var ?x))))
              (((number ?x) (integer ?x)) ((number ?x) (float ?x)))
              (((callable ?x) (atom ?x)) ((callable ?x) (compound ?x)))
-             (((ground ?x) (term_variables ?x ())))
+             (((ground ?x) (term_variables ?x $nil)))
              (((|\\=| ?x ?y) (|\\+| (= ?x ?y))))
              (((|\\==| ?x ?y) (|\\+| (== ?x ?y))))))
     (install-standard-predicate clauses)))
@@ -52,8 +66,8 @@
 ;;; and argument validation require the host boundary.
 (eval-when (:load-toplevel :execute)
   (dolist (clauses
-           '((((open ?file ?mode ?stream) (open ?file ?mode ?stream ())))
-             (((close ?stream) (close ?stream ())))
+           '((((open ?file ?mode ?stream) (open ?file ?mode ?stream $nil)))
+             (((close ?stream) (close ?stream $nil)))
              (((halt) (halt 0)))
              (((nl) (current_output ?stream) (nl ?stream)))
              (((nl ?stream) (put_code ?stream 10)))
@@ -62,8 +76,8 @@
              (((atom_length ?atom ?length)
                (%output_nonnegative ?length) (atom_codes ?atom ?codes)
                (%list_length ?codes 0 ?length)))
-             (((%list_length () ?n ?n))
-              ((%list_length (?head . ?tail) ?n ?length)
+             (((%list_length $nil ?n ?n))
+              ((%list_length ($cons ?head ?tail) ?n ?length)
                (is ?next (+ ?n 1)) (%list_length ?tail ?next ?length)))
              (((sub_atom ?atom ?before ?length ?after ?sub)
                (%sub_atom_arguments ?atom ?before ?length ?after ?sub)
@@ -85,7 +99,7 @@
 ;;; database boundary to ensure an empty dynamic predicate is observable.
 (eval-when (:load-toplevel :execute)
   (dolist (clauses
-           '((((copy_term ?term ?copy) (findall ?term true (?copy))))
+           '((((copy_term ?term ?copy) (findall ?term true ($cons ?copy $nil))))
              (((retractall ?head) (%ensure_dynamic ?head) (%retractall ?head)))
              (((%retractall ?head) (%retract_head ?head) fail)
               ((%retractall ?head)))))
@@ -100,11 +114,11 @@
                    (and (atom_codes ?atom ?codes) (%chars_codes ?chars ?codes)))))
              (((number_chars ?number ?chars)
                (%chars_arguments number ?number ?chars)
-               (or (-> (var ?number)
+               (or (-> (ground ?chars)
                        (and (%chars_codes ?chars ?codes) (number_codes ?number ?codes)))
                    (and (number_codes ?number ?codes) (%chars_codes ?chars ?codes)))))
-             (((%chars_codes () ()))
-              ((%chars_codes (?char . ?chars) (?code . ?codes))
+             (((%chars_codes $nil $nil))
+              ((%chars_codes ($cons ?char ?chars) ($cons ?code ?codes))
                (char_code ?char ?code) (%chars_codes ?chars ?codes)))))
     (install-standard-predicate clauses)))
 
@@ -120,11 +134,14 @@
 (eval-when (:load-toplevel :execute)
   (dolist (clauses
            '((((read ?term) (current_input ?stream) (read ?stream ?term)))
-             (((read ?stream ?term) (read_term ?stream ?term ())))
+             (((read ?stream ?term) (read_term ?stream ?term $nil)))
              (((read_term ?term ?options) (current_input ?stream) (read_term ?stream ?term ?options)))
              (((write_term ?term ?options) (current_output ?stream) (write_term ?stream ?term ?options)))))
     (install-standard-predicate clauses))
   (dolist (name '(write writeq write_canonical))
     (install-standard-predicate (list (list (list name '?term) '(current_output ?stream) (list name '?stream '?term))))
     (install-standard-predicate (list (list (list name '?stream '?term)
-      (list 'write_term '?stream '?term (if (eq name 'write) nil '((quoted true)))))))))
+      (list 'write_term '?stream '?term
+            (case name (write '$nil)
+              (writeq '($cons (quoted true) ($cons (numbervars true) $nil)))
+              (write_canonical '($cons (quoted true) ($cons (ignore_ops true) $nil))))))))))
