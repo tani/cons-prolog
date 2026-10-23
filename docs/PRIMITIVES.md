@@ -133,7 +133,7 @@ through runtime entry. Punctuation aliases keep their previous meanings.
 - New tests cover registry separation/protection, clearing databases, repeat,
   caller cut scope, failed partial unification, cyclic copies, character conversion
   modes, substring ordering, dynamic rules/callbacks, SLG, and context restoration.
-- `tests/derived-observations.lisp` produces identical normalized observations
+- `tests/support/derived-observations.lisp` produces identical normalized observations
   against `3504d947` and this branch, including solutions, variable aliases,
   cyclic graph shape, error terms, answer order, EOF, and output effects.
 - Other Lisp implementations have not been run locally. The multi-implementation
@@ -144,8 +144,8 @@ To reproduce the comparison, run the observation script once per checkout and
 compare its stdout. Loading/compilation messages are suppressed by the script:
 
 ```sh
-SPROLOG_ROOT=/path/to/reference sbcl --script tests/derived-observations.lisp > before.txt
-SPROLOG_ROOT=/path/to/current sbcl --script tests/derived-observations.lisp > after.txt
+SPROLOG_ROOT=/path/to/reference sbcl --script tests/support/derived-observations.lisp > before.txt
+SPROLOG_ROOT=/path/to/current sbcl --script tests/support/derived-observations.lisp > after.txt
 diff -u before.txt after.txt
 ```
 

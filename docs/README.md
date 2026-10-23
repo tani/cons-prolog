@@ -14,7 +14,10 @@
 - [Roadmap](ROADMAP.md): implementation status and planned improvements.
 - [Changelog](../CHANGELOG.md): release history.
 
-Commands in these documents are run from the repository root. Benchmark scripts and raw results are in [`benchmarks/`](../benchmarks/); runnable examples are in [`examples/`](../examples/).
+Commands in these documents are run from the repository root. See the
+[test layout](../tests/README.md), [ISO layout](../tests/iso/README.md) and
+[benchmark layout](../benchmarks/README.md). Runnable examples are in
+[`examples/`](../examples/).
 
 - [Development](DEVELOPMENT.md): package-inferred ASDF systems, Nix outputs and portability
 

@@ -1,15 +1,15 @@
-(uiop:define-package #:sprolog/tests/iso-terms
+(uiop:define-package #:sprolog/tests/adapters/iso-terms
   (:use #:cl #:sprolog)
-  (:import-from #:sprolog/tests/tests #:check #:value-of)
+  (:import-from #:sprolog/tests/support/assertions #:check #:value-of)
   (:export #:run-iso-term-tests))
-(in-package #:sprolog/tests/iso-terms)
+(in-package #:sprolog/tests/adapters/iso-terms)
 
 (defun text-query (text database gc)
   (query (parse-prolog-string text :database database :package *package*)
          :database database :gc-threshold gc))
 
 (defun run-iso-term-tests ()
-  (let ((*package* (find-package :sprolog/tests/iso-terms)))
+  (let ((*package* (find-package :sprolog/tests/adapters/iso-terms)))
     (check (eq :native (database-term-model (make-database))))
     (check (handler-case (progn (make-database :term-model :bad) nil) (error () t)))
     (dolist (gc '(nil 1 8 4096))

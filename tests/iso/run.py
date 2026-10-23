@@ -11,7 +11,7 @@ import tempfile
 import time
 
 HERE = Path(__file__).resolve().parent
-WORKER = HERE / "worker.lisp"
+WORKER = HERE / "runtime/worker.lisp"
 LOCK = json.loads((HERE / "upstream.json").read_text())
 
 
@@ -44,7 +44,7 @@ def run_case(case, sbcl, timeout, term_model="native"):
         return dict(case, status="SKIP", observation=case["skip"], seconds=0)
     with tempfile.TemporaryDirectory(prefix="sprolog-iso-") as temporary:
         root = Path(temporary)
-        fields = {"id": case["id"], "harness": HERE / "harness.pl",
+        fields = {"id": case["id"], "harness": HERE / "runtime/harness.pl",
                   "program": HERE / "suite" / case["program"], "term-model": term_model}
         job, result = root / "job.sexp", root / "result.json"
         setup = "(" + " ".join(lisp_string(p) for p in case.get("predecessors", [])) + ")"
@@ -125,7 +125,7 @@ def main():
     selected = [c for c in cases if args.filter in c["id"]]
     if not selected:
         raise ValueError("Filter selected no cases")
-    expectations = json.loads((args.expectations or HERE / "expected-differences.json").read_text()) if (args.expectations or args.term_model == "native") else {}
+    expectations = json.loads((args.expectations or HERE / "expectations/expected-differences.json").read_text()) if (args.expectations or args.term_model == "native") else {}
     if args.term_model == "iso" and expectations:
         raise ValueError("ISO term mode does not allow expected differences")
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.jobs) as pool:

@@ -75,7 +75,7 @@ historical records in `docs/VALIDATION.md` and git history.
 
 ```sh
 python3 -m unittest discover -s tests/iso -p 'test_*.py' -v
-python3 tests/iso/run.py --baseline tests/iso/baseline.json --strict --jobs 2
+python3 tests/iso/run.py --baseline tests/iso/expectations/baseline.json --strict --jobs 2
 python3 tests/iso/run.py --filter predicates/read_term_3 --strict
 python3 tests/iso/run.py --term-model iso --strict --jobs 2 --output iso-results-strict
 ```
@@ -199,8 +199,8 @@ Normal runs use only committed files. Optional development regeneration uses
 SWI-Prolog as a reader/serializer for Logtalk syntax, not as a test oracle:
 
 ```sh
-python3 tests/iso/regenerate.py
-# or: python3 tests/iso/regenerate.py --swipl /path/to/swipl
+python3 tests/iso/tools/regenerate.py
+# or: python3 tests/iso/tools/regenerate.py --swipl /path/to/swipl
 ```
 
 This reads the bundled originals without network access, refuses changed source

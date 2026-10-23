@@ -1,10 +1,10 @@
-(uiop:define-package #:sprolog/tests/standard-library
+(uiop:define-package #:sprolog/tests/library/standard-library
   (:use #:cl #:sprolog)
-  (:import-from #:sprolog/tests/builtins #:iso-error-p)
-  (:import-from #:sprolog/tests/tests #:check #:value-of)
-  (:import-from #:sprolog/tests/let)
+  (:import-from #:sprolog/tests/adapters/builtins #:iso-error-p)
+  (:import-from #:sprolog/tests/support/assertions #:check #:value-of)
+  (:import-from #:sprolog/tests/syntax/let)
   (:export #:run-derived-adapter-tests #:run-standard-library-tests))
-(in-package #:sprolog/tests/standard-library)
+(in-package #:sprolog/tests/library/standard-library)
 
 (defun run-standard-library-tests ()
   (let ((*database* (make-database)))

@@ -1,13 +1,13 @@
-(uiop:define-package #:sprolog/tests/interactive
+(uiop:define-package #:sprolog/tests/api/interactive
   (:use #:cl #:sprolog)
-  (:import-from #:sprolog/tests/slg #:signals-error-p)
-  (:import-from #:sprolog/tests/tests #:check)
-  (:import-from #:sprolog/tests/term-syntax)
+  (:import-from #:sprolog/tests/kernel/slg #:signals-error-p)
+  (:import-from #:sprolog/tests/support/assertions #:check)
+  (:import-from #:sprolog/tests/syntax/term-syntax)
   (:export #:interactive-output #:run-interactive-tests))
-(in-package #:sprolog/tests/interactive)
+(in-package #:sprolog/tests/api/interactive)
 
 (defun interactive-output (commands thunk)
-  (let* ((*package* (find-package :sprolog/tests/interactive))
+  (let* ((*package* (find-package :sprolog/tests/api/interactive))
          (input (make-string-input-stream commands))
          (output (make-string-output-stream))
          (*query-io* (make-two-way-stream input output)))

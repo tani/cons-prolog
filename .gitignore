@@ -6,5 +6,5 @@ coverage/
 *.fas
 *.o
 *.abcl
-iso-results/
+iso-results*/
 __pycache__/

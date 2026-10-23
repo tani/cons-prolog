@@ -1,7 +1,7 @@
-(uiop:define-package #:sprolog/tests/tests
+(uiop:define-package #:sprolog/tests/support/assertions
   (:use #:cl #:sprolog)
   (:export #:*checks* #:check #:solutions #:value-of))
-(in-package #:sprolog/tests/tests)
+(in-package #:sprolog/tests/support/assertions)
 (defmacro solutions (&body goals)
   `(query ,(sprolog/src/syntax/host-syntax:goals-form goals)))
 (defvar *checks* 0)

@@ -20,7 +20,7 @@ jobs:
       - name: Test isolation and result classification
         run: python3 -m unittest discover -s tests/iso -p 'test_*.py' -v
       - name: Run bundled ISO checks offline and compare observations
-        run: python3 tests/iso/run.py --baseline tests/iso/baseline.json --strict --jobs 2
+        run: python3 tests/iso/run.py --baseline tests/iso/expectations/baseline.json --strict --jobs 2
       - name: Run strict term model without expected differences
         run: python3 tests/iso/run.py --term-model iso --strict --jobs 2 --output iso-results-strict
       - uses: actions/upload-artifact@v4

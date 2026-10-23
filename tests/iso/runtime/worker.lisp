@@ -1,7 +1,7 @@
 ;;; SPDX-License-Identifier: MIT
 ;;; Execute the checked-in plain Prolog port. No importer or external runtime.
 (require :asdf)
-(asdf:load-asd (merge-pathnames "../../sprolog.asd" *load-truename*))
+(asdf:load-asd (merge-pathnames "../../../sprolog.asd" *load-truename*))
 (asdf:load-system "sprolog")
 (uiop:define-package #:sprolog/iso-test-worker
   (:use #:cl #:sprolog)

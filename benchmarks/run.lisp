@@ -78,7 +78,7 @@
       (close-query vm))))
 (defvar *cases* (setup-cases))
 (defun benchmark-main ()
-  (let ((path (or (sb-ext:posix-getenv "BENCH_RESULTS") "benchmarks/results.sexp")))
+  (let ((path (or (sb-ext:posix-getenv "BENCH_RESULTS") "benchmarks/results/baseline.sexp")))
     ;; Warm each workload once, then record five isolated runs in rotating order.
     (dolist (case *cases*) (run-case case))
     (with-open-file (stream path :direction :output :if-exists :supersede)

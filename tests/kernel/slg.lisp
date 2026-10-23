@@ -1,9 +1,9 @@
-(uiop:define-package #:sprolog/tests/slg
+(uiop:define-package #:sprolog/tests/kernel/slg
   (:use #:cl #:sprolog)
-  (:import-from #:sprolog/tests/tests #:check #:solutions #:value-of)
-  (:import-from #:sprolog/tests/dcg)
+  (:import-from #:sprolog/tests/support/assertions #:check #:solutions #:value-of)
+  (:import-from #:sprolog/tests/syntax/dcg)
   (:export #:run-slg-depth-tests #:run-slg-tests #:run-wfs-exhaustive-tests #:run-wfs-oracle-tests #:signals-error-p #:slg-values #:wfs-oracle))
-(in-package #:sprolog/tests/slg)
+(in-package #:sprolog/tests/kernel/slg)
 
 (defun slg-values (name solutions)
   (sort (mapcar (lambda (s) (value-of name s)) solutions) #'string< :key #'prin1-to-string))

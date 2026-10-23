@@ -1,9 +1,9 @@
-(uiop:define-package #:sprolog/tests/dcg
+(uiop:define-package #:sprolog/tests/syntax/dcg
   (:use #:cl #:sprolog)
-  (:import-from #:sprolog/tests/tests #:check #:solutions #:value-of)
-  (:import-from #:sprolog/tests/wam-gc #:normalize-solutions #:palette #:red #:blue)
+  (:import-from #:sprolog/tests/support/assertions #:check #:solutions #:value-of)
+  (:import-from #:sprolog/tests/kernel/wam-gc #:normalize-solutions #:palette #:red #:blue)
   (:export #:run-dcg-tests #:signals-error-p))
-(in-package #:sprolog/tests/dcg)
+(in-package #:sprolog/tests/syntax/dcg)
 (defun signals-error-p (thunk)
   (handler-case (progn (funcall thunk) nil) (error () t)))
 (defun run-dcg-tests ()

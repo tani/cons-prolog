@@ -1,9 +1,9 @@
-(uiop:define-package #:sprolog/tests/cons-operations
+(uiop:define-package #:sprolog/tests/adapters/cons-operations
   (:use #:cl #:sprolog)
-  (:import-from #:sprolog/tests/tests #:check #:value-of)
-  (:import-from #:sprolog/tests/builtins #:iso-error-p)
+  (:import-from #:sprolog/tests/support/assertions #:check #:value-of)
+  (:import-from #:sprolog/tests/adapters/builtins #:iso-error-p)
   (:export #:run-cons-operation-tests))
-(in-package #:sprolog/tests/cons-operations)
+(in-package #:sprolog/tests/adapters/cons-operations)
 (defun run-cons-operation-tests ()
   (let ((*database* (make-database)))
     (dolist (gc '(nil 1 8 4096))

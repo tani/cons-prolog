@@ -1,10 +1,10 @@
-(uiop:define-package #:sprolog/tests/let
+(uiop:define-package #:sprolog/tests/syntax/let
   (:use #:cl #:sprolog)
-  (:import-from #:sprolog/tests/interactive #:interactive-output)
-  (:import-from #:sprolog/tests/slg #:signals-error-p)
-  (:import-from #:sprolog/tests/tests #:check #:solutions #:value-of)
+  (:import-from #:sprolog/tests/api/interactive #:interactive-output)
+  (:import-from #:sprolog/tests/kernel/slg #:signals-error-p)
+  (:import-from #:sprolog/tests/support/assertions #:check #:solutions #:value-of)
   (:export #:run-let-tests))
-(in-package #:sprolog/tests/let)
+(in-package #:sprolog/tests/syntax/let)
 
 (defun run-let-tests ()
   (let ((*database* (make-database)))

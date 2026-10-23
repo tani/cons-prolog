@@ -1,9 +1,9 @@
-(uiop:define-package #:sprolog/tests/term-syntax
+(uiop:define-package #:sprolog/tests/syntax/term-syntax
   (:use #:cl #:sprolog)
-  (:import-from #:sprolog/tests/builtins #:iso-error-p)
-  (:import-from #:sprolog/tests/tests #:check #:solutions #:value-of)
+  (:import-from #:sprolog/tests/adapters/builtins #:iso-error-p)
+  (:import-from #:sprolog/tests/support/assertions #:check #:solutions #:value-of)
   (:export #:run-term-syntax-tests))
-(in-package #:sprolog/tests/term-syntax)
+(in-package #:sprolog/tests/syntax/term-syntax)
 
 (defun run-term-syntax-tests ()
   (let ((*database* (make-database)))

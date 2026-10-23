@@ -19,7 +19,7 @@
   Break execution cycles through the model, instruction vocabulary, and explicit
   late hooks rather than defining implementation functions in another package.
 - For predicate/compiler changes, run `tests/run.lisp` with a 1 MiB control stack.
-  Compare `tests/derived-observations.lisp` with the reference revision when changing
+  Compare `tests/support/derived-observations.lisp` with the reference revision when changing
   derived definitions. Include cyclic terms, callbacks, SLG, and forced GC where relevant.
 - Document conditional retention of adapters in `docs/PRIMITIVES.md`; distinguish
   semantic necessities from optimized or compatibility-preserving implementations.

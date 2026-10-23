@@ -1,9 +1,9 @@
-(uiop:define-package #:sprolog/tests/builtins
+(uiop:define-package #:sprolog/tests/adapters/builtins
   (:use #:cl #:sprolog)
-  (:import-from #:sprolog/tests/tests #:check #:solutions #:value-of)
-  (:import-from #:sprolog/tests/slg-cut)
+  (:import-from #:sprolog/tests/support/assertions #:check #:solutions #:value-of)
+  (:import-from #:sprolog/tests/kernel/slg-cut)
   (:export #:iso-error-p #:iso-value #:run-builtin-arithmetic-tests #:run-builtin-extra-tests #:run-builtin-stream-tests #:run-builtin-tests #:run-prolog-arrow-tests #:run-readable-spelling-tests #:run-unification-spelling-tests))
-(in-package #:sprolog/tests/builtins)
+(in-package #:sprolog/tests/adapters/builtins)
 
 (defun iso-value (name goals &optional (gc 1))
   (value-of name (car (query goals :gc-threshold gc))))

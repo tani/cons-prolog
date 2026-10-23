@@ -1,15 +1,15 @@
-(uiop:define-package #:sprolog/tests/iso-compatibility
+(uiop:define-package #:sprolog/tests/adapters/iso-compatibility
   (:use #:cl #:sprolog)
-  (:import-from #:sprolog/tests/tests #:check #:value-of)
-  (:import-from #:sprolog/tests/builtins #:iso-error-p)
+  (:import-from #:sprolog/tests/support/assertions #:check #:value-of)
+  (:import-from #:sprolog/tests/adapters/builtins #:iso-error-p)
   (:export #:run-iso-compatibility-tests))
-(in-package #:sprolog/tests/iso-compatibility)
+(in-package #:sprolog/tests/adapters/iso-compatibility)
 
 (defun textual-query (text &optional (gc 1))
   (query (list (first (parse-prolog-string text))) :gc-threshold gc))
 
 (defun run-iso-compatibility-tests ()
- (let ((*package* (find-package :sprolog/tests/iso-compatibility)))
+ (let ((*package* (find-package :sprolog/tests/adapters/iso-compatibility)))
   (dolist (gc '(nil 1 8 4096))
     (let ((*database* (make-database)))
       (load-prolog-string ":- discontiguous(empty/1). :- multifile(shared/1). fixed(a). :- dynamic(changing/1). changing(a). :- dynamic('Case'/1). 'Case'(a). case(a).")

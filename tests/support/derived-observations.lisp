@@ -1,12 +1,12 @@
 ;;; Run against any checkout for differential comparison:
-;;; SPROLOG_ROOT=/path/to/checkout sbcl --script tests/derived-observations.lisp
+;;; SPROLOG_ROOT=/path/to/checkout sbcl --script tests/support/derived-observations.lisp
 (require :asdf)
 (let ((*standard-output* (make-broadcast-stream)))
   (asdf:load-asd (truename (merge-pathnames "sprolog.asd"
                         (uiop:ensure-directory-pathname (or (uiop:getenv "SPROLOG_ROOT") "./")))))
   (asdf:load-system "sprolog"))
-(uiop:define-package #:sprolog/tests/observations (:use #:cl #:sprolog))
-(in-package #:sprolog/tests/observations)
+(uiop:define-package #:sprolog/tests/support/derived-observations (:use #:cl #:sprolog))
+(in-package #:sprolog/tests/support/derived-observations)
 (defun observation (goals)
   (handler-case
       (list :solutions (query goals :limit 20 :gc-threshold 1))

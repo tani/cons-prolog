@@ -1,9 +1,9 @@
-(uiop:define-package #:sprolog/tests/native
+(uiop:define-package #:sprolog/tests/syntax/native
   (:use #:cl #:sprolog)
-  (:import-from #:sprolog/tests/tests #:check)
+  (:import-from #:sprolog/tests/support/assertions #:check)
   (:import-from #:sprolog/src/syntax/native #:*native-enabled*)
   (:export #:run-native-tests))
-(in-package #:sprolog/tests/native)
+(in-package #:sprolog/tests/syntax/native)
 (defun snapshot (text enabled)
   (let ((*native-enabled* (and enabled #+sbcl t #-sbcl nil)) (*print-circle* t) (*print-pretty* nil)
         (*print-gensym* nil))

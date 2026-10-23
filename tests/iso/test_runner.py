@@ -77,7 +77,8 @@ class AdapterTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.temp=tempfile.TemporaryDirectory(); cls.root=Path(cls.temp.name)
-        (cls.root/'suite').mkdir();shutil.copyfile(iso.HERE/'harness.pl',cls.root/'harness.pl')
+        (cls.root/'suite').mkdir(); (cls.root/'runtime').mkdir()
+        shutil.copyfile(iso.HERE/'runtime/harness.pl',cls.root/'runtime/harness.pl')
         (cls.root/'suite/fixture.pl').write_text('''
 :- dynamic(p/0).
 conf_case(ok,true,true,[],true).

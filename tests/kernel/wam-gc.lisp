@@ -1,8 +1,8 @@
-(uiop:define-package #:sprolog/tests/wam-gc
+(uiop:define-package #:sprolog/tests/kernel/wam-gc
   (:use #:cl #:sprolog)
-  (:import-from #:sprolog/tests/tests #:check #:solutions #:value-of)
+  (:import-from #:sprolog/tests/support/assertions #:check #:solutions #:value-of)
   (:export #:palette #:red #:blue #:compare-gc-modes #:normalize-solutions #:run-wam-gc-tests))
-(in-package #:sprolog/tests/wam-gc)
+(in-package #:sprolog/tests/kernel/wam-gc)
 
 (defun normalize-solutions (solutions)
   ;; Normalize fresh unbound-variable symbols while preserving identity per solution.

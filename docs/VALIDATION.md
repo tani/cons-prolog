@@ -129,7 +129,7 @@ With `SPROLOG_DISABLE_NATIVE=1`, **4,618 checks pass**; seven checks specificall
 asserting native execution/deoptimization are skipped. The existing 54 serialized
 derived observations match upstream `9e14c1e` exactly.
 
-`tests/native.lisp` compares native execution with the interpreter for arithmetic,
+`tests/syntax/native.lisp` compares native execution with the interpreter for arithmetic,
 bignums, floats and errors, cut/failure interactions, 49 combinations of guards
 and cuts, output aliasing and constrained outputs, open and rational terms,
 recursive collectors, and dependency invalidation. Pure tail and non-tail calls
@@ -253,13 +253,13 @@ SBCL 2.2.9, Linux x86-64, 2 GiB dynamic-space ceiling, 1 MiB control stack:
 indicators**, plus seven aliases. ISO conformance and Prolog text conversion are
 outside the specification.
 
-`tests/builtins.lisp` covers arithmetic, cons graph operations, control/cut scopes,
+`tests/adapters/builtins.lisp` covers arithmetic, cons graph operations, control/cut scopes,
 meta-calls, exception rollback, dynamic updates, findall/bagof, atom/number
 conversions and character/byte streams. Forced-GC checks use thresholds 1, 8 and
 4096, as well as disabled collection. Stress cases retain 100,000 arithmetic tail
 calls, 10,000 meta-calls and a 10,000-level arithmetic expression.
 
-`tests/term-syntax.lisp` verifies native cons terms and dotted tails, cyclic inputs,
+`tests/syntax/term-syntax.lisp` verifies native cons terms and dotted tails, cyclic inputs,
 ordinary LIST/CONS data symbols, meta-calls, exceptions, dynamic definitions,
 first-appearance BAGOF grouping, and all 27 removed predicate indicators.
 Existing 100,000-element list, WAM instruction-family, DCG, SLG and independent
@@ -277,7 +277,7 @@ sequences are rejected; legacy keyword syntax remains covered for compatibility.
 
 ## Interactive queries (0.9.0)
 
-`tests/interactive.lisp` checks demand-driven alternatives (including infinite
+`tests/api/interactive.lisp` checks demand-driven alternatives (including infinite
 REPEAT), EOF and explicit stop commands, invalid-command retries, ground success,
 failure, cyclic answer printing, lexical callbacks, undefined SLG answers and
 cursor teardown after stop, errors and nonlocal exits. Batch regressions use a
@@ -285,7 +285,7 @@ private collecting macro; the public `?-` interface is exercised separately.
 
 ## Lexical LET (0.9.1)
 
-`tests/let.lisp` covers logic-variable and lexical initializers, shadowing, optional
+`tests/syntax/let.lisp` covers logic-variable and lexical initializers, shadowing, optional
 declarations, mutation, escaping closures, branch scope, initialization counts,
 DCG DO, independent cursors, compiled hidden variables, ordinary callers of
 tabled predicates and forced GC. A 10,000-call tail-recursive predicate using

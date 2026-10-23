@@ -11,7 +11,7 @@ import re
 from pathlib import Path
 import subprocess
 
-HERE = Path(__file__).resolve().parent
+HERE = Path(__file__).resolve().parents[1]
 REVISION = 'e0f2576eef32aa5d5732a0d47531d0f62b9a31f1'
 
 
@@ -29,7 +29,7 @@ def main():
         previous = json.loads(lock_path.read_text())
         if previous.get('revision') != REVISION or previous['files']['vendor/logtalk'] != digests(HERE / 'vendor/logtalk'):
             raise ValueError('Bundled originals differ from the pinned sources; review source updates explicitly')
-    subprocess.run([args.swipl, '-q', '-f', str(HERE / 'port-logtalk.pl'), '--',
+    subprocess.run([args.swipl, '-q', '-f', str(HERE / 'tools/port-logtalk.pl'), '--',
                     str(HERE / 'vendor/logtalk/tests/prolog'), str(HERE / 'suite')], check=True)
     path = HERE / 'suite/cases.json'
     cases = json.loads(path.read_text())

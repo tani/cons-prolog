@@ -110,7 +110,27 @@ sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 | `src/syntax/` | Clause compiler, lowering, DCG and lexical/control source expansion |
 | `src/adapters/` | Term graphs, host types, arithmetic, dynamic database, solution collection, streams, dispatch |
 | `src/library/` | Derived predicates compiled from ordinary Prolog clauses |
+| `src/prolog/` | Prolog lexer, reader, writer and source loader |
 
 Directory boundaries describe responsibility. Every implementation file now has
 its own package and inferred subsystem; loading the complete `sprolog` system
 installs the execution providers and derived library before exposing the facade.
+
+## Test and measurement layout
+
+Lisp regression tests mirror the source layers under `tests/api/`,
+`tests/kernel/`, `tests/syntax/`, `tests/adapters/`, `tests/library/` and
+`tests/prolog/`. Shared assertions and differential observations live in
+`tests/support/`. `tests/run.lisp` and `tests/suite.lisp` retain their entry-point
+roles. Moving a test module requires updating its inferred package name and all
+imports; see [tests](../tests/README.md).
+
+The ISO driver keeps `tests/iso/run.py` as its entry point. Its `runtime/`,
+`tools/` and `expectations/` directories separate execution, development-time
+conversion and reviewed observations. The byte-pinned `suite/`, `vendor/` and
+`upstream.json` stay at the corpus root; see [ISO layout](../tests/iso/README.md).
+
+Benchmark scripts remain in `benchmarks/`; recorded data is collected under
+`benchmarks/results/`, including `profiles/`. Experiment-specific patches and
+measurements stay in `ablations/` and `type-declarations/`. See
+[benchmarks](../benchmarks/README.md) for scripts and default output paths.
