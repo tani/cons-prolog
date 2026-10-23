@@ -13,8 +13,8 @@ suite entry point; inferred package names match each test file's path.
 |---|---|
 | `api/` | Interactive query interface |
 | `kernel/` | WAM, garbage collection, SLG and cut |
-| `syntax/` | DCG, native compilation, lexical LET and term syntax |
-| `adapters/` | Builtins, cons operations, ISO behavior and strict terms |
+| `syntax/` | DCG, lexical LET and term syntax |
+| `adapters/` | Builtins, collectors, cons operations, ISO behavior and strict terms |
 | `library/` | Ordinary derived predicates and adapter wrappers |
 | `prolog/` | Text reader/writer and source loading |
 | `support/` | Assertions, solution helpers and differential observations |

@@ -1,5 +1,9 @@
 # Shared-source comparison with SWI-Prolog
 
+> Historical record: predicate specialization and native JIT compilation have
+> since been removed. These results apply to the optimizer revisions cited below,
+> not the current WAM interpreter. Run reproduction commands in those revisions.
+
 Measured 2026-10-23 JST, starting from upstream `9e14c1e` (0.10.0).
 All six workloads beat SWI-Prolog 9.2.9 with `-O` on this host after warmup.
 After [controlled ablation](NATIVE-ABLATION.md), the VM-side indexing, scalar

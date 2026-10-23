@@ -24,11 +24,12 @@
 See [the user guide](MANUAL.md), [builtin specification](BUILTINS.md) and
 [validation results](VALIDATION.md) for behavior and current restrictions.
 
-## Implemented after 0.10.0
+## Execution policy
 
-- Guarded SBCL compilation of pure ground modes, including native integer arithmetic,
-  indexed ground facts and finite pure collectors. VM algorithms are unchanged after
-  [ablation](NATIVE-ABLATION.md). See [measurements](COMPETITIVE-BENCHMARKS.md).
+Predicates execute through the portable WAM backend. Ground-mode specialization
+and native JIT compilation were removed to keep a single execution path.
+Earlier native-compiler [comparisons](COMPETITIVE-BENCHMARKS.md) and
+[ablation results](NATIVE-ABLATION.md) remain historical records.
 
 ## Scope
 
@@ -49,9 +50,8 @@ negation/conditionals remain unsupported.
 ## Future performance work
 
 The [historical profiles](BENCHMARKS.md) identify interpreter bottlenecks.
-[Ablation](NATIVE-ABLATION.md) showed that VM indexing and scalar/graph allocation
-changes were unnecessary for the current [SWI comparison](COMPETITIVE-BENCHMARKS.md).
-Revisit them when interpreter/SLG workloads require them.
+Make small, measured changes when interpreter/SLG workloads justify them. Earlier
+optimizer results do not establish the performance of the current interpreter.
 
 - VM indexing, scalar/graph allocation changes, X-register reuse and variable lifetime analysis.
 - Direct acyclic term construction, compact instruction encodings and native dispatch.

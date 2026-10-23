@@ -17,7 +17,7 @@ def main():
     parser.add_argument('--sbcl', default='sbcl')
     parser.add_argument('--swipl', default='swipl')
     parser.add_argument('--repeats', type=int, default=5)
-    parser.add_argument('--output', default='benchmarks/results/competitive-results.json')
+    parser.add_argument('--output', default='benchmarks/results/wam-results.json')
     parser.add_argument('--require-parity', action='store_true', help='exit unsuccessfully if any median is slower than SWI')
     args = parser.parse_args()
     env = dict(os.environ, BENCH_REPEATS=str(args.repeats))

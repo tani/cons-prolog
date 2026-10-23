@@ -14,8 +14,7 @@ repeats(N, Name, Expected) :-
     M is N-1, repeats(M, Name, Expected).
 batch_run(0, _, _) :- !.
 batch_run(N, Name, Expected) :- once(bench(Name, Result)), Result =:= Expected, M is N-1, batch_run(M, Name, Expected).
-batch_size(queens, 100). batch_size(tak, 100). batch_size(reverse, 10).
-batch_size(qsort, 100). batch_size(graph, 500). batch_size(differentiate, 250).
+batch_size(_, 1).
 main :- (getenv('BENCH_CASE', Case) -> downcase_atom(Case, Name), run_case(Name)
          ; (run_case(queens),run_case(tak),run_case(reverse),run_case(qsort),run_case(graph),run_case(differentiate))), halt.
 :- initialization(main, main).

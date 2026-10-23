@@ -23,11 +23,16 @@ python3 benchmarks/compare.py --sbcl /path/to/sbcl --swipl /path/to/swipl
 ```
 
 Baseline runs default to `results/baseline.sexp`; `BENCH_RESULTS` overrides the
-output path. The comparison driver defaults to `results/competitive-results.json`
+output path. The comparison driver defaults to `results/wam-results.json`
 relative to this directory; its `--output` override is relative to the repository
 root. Existing measurements retain their original bytes, versions and source
 fingerprints; moving them does not constitute a new benchmark run.
 
 See [baseline analysis](../docs/BENCHMARKS.md),
 [SWI comparison](../docs/COMPETITIVE-BENCHMARKS.md) and
-[native compiler ablation](../docs/NATIVE-ABLATION.md).
+[historical native compiler ablation](../docs/NATIVE-ABLATION.md).
+The specialization/JIT implementation has been removed. Archived native-compiler
+results do not describe the current WAM interpreter; use a new output path when
+measuring it. The current comparison defaults to one query per timed sample;
+`BENCH_BATCH` overrides this in both engines. `ablate.py` and its patches
+reproduce historical revisions only.

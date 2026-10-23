@@ -1,7 +1,7 @@
 (uiop:define-package #:sprolog/tests/suite
   (:use #:cl #:sprolog)
   (:nicknames #:sprolog/tests)
-  (:import-from #:sprolog/tests/syntax/native #:run-native-tests)
+  (:import-from #:sprolog/tests/adapters/collection #:run-collection-tests)
   (:import-from #:sprolog/tests/adapters/iso-compatibility #:run-iso-compatibility-tests)
   (:import-from #:sprolog/tests/adapters/iso-terms #:run-iso-term-tests)
   (:import-from #:sprolog/tests/prolog/io #:run-prolog-io-tests)
@@ -41,7 +41,7 @@
 (defun run-tests ()
   (let ((*database* (make-database)) (*checks* 0))
     (run-package-tests)
-  (run-native-tests)
+    (run-collection-tests)
     (<-- (parent alice bob)) (<- (parent bob charlie))
     (<-- (ancestor ?x ?y) (parent ?x ?y))
     (<- (ancestor ?x ?y) (parent ?x ?z) (ancestor ?z ?y))

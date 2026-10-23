@@ -206,27 +206,16 @@ READ/READ_TERM and WRITE predicates can select Prolog syntax through the term-I/
 adapter; both default to Lisp syntax. The writer preserves the native cons mapping
 and reports cycles or unrepresentable Lisp objects explicitly.
 
-## Conditional native lowering on SBCL
+## Predicate execution
 
-`src/syntax/native.lisp` compiles eligible user-predicate ground modes, conjunctions,
-cuts, integer arithmetic and a statically known pure `findall/3` goal to Common Lisp.
-The collector uses native continuations to enumerate the same clause/search order;
-ground fact relations are indexed by their available scalar inputs. This lowering
-adds no public predicate or library-wrapper VM instruction.
-The generated collector follows the database's immutable term model: ISO results
-use `$cons`/`$nil`, including empty and nested collections. Native-mode results
-retain ordinary Lisp lists without an additional conversion.
+All Prolog predicates use the portable WAM backend on every Lisp implementation.
+There is no predicate specialization, native JIT, mode cache or speculative
+fallback path. `findall/3` and `bagof/3` use the child-query collection adapter;
+returned lists follow the database's immutable term model.
 
-**Conditional retention:** general `findall/3` remains an adapter because arbitrary
-runtime goals, free template variables, effects, exceptions and tabling require the
-existing machinery. Native execution is speculative and has no externally visible
-bindings or effects until it finishes. Unsupported modes and exhausted budgets
-return to the VM. Definitions and adapters retain their existing error context,
-validation order, update and cut semantics. Library definitions are unchanged.
-
-Native counters in `query-statistics` count completed native call boundaries and
-deoptimizations. WAM instruction/depth/ownership-cell counters describe the VM path;
-native temporary conses are managed by Lisp GC and appear in host allocation data.
+`query-statistics` reports WAM execution, ownership GC and SLG counters.
+The former `:native-calls` and `:native-deoptimizations` counters were removed
+with the optimizer.
 
 ## Prolog source procedure properties
 

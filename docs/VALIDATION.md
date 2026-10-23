@@ -1,3 +1,22 @@
+# Portable WAM execution — 2026-10-23
+
+Predicate specialization and native JIT compilation have been removed. Every Lisp
+implementation uses the same WAM execution path, without mode caches or native
+call/deoptimization counters. WAM compilation and lexical Lisp callbacks remain.
+
+SBCL 2.2.9 with a 1 MiB control stack passes **5,455 checks**. General collection
+regressions cover both term models, empty/nested collections, compound elements,
+answer order and duplicates, variable sharing, cuts and forced GC. Optimizer-only
+comparisons and fallback-counter assertions were removed with that implementation.
+The 54 normalized derived observations match the preceding revision byte for byte.
+The bundled corpus completes with 726 PASS / 56 SKIP in ISO mode and
+718 PASS / 8 XFAIL / 56 SKIP in the default model, with no FAIL or BLOCKED in
+either mode. All 13 driver tests pass. The six shared-source workloads return
+their expected results in both models through WAM execution.
+
+Earlier validation records below describe the revisions tested at the time;
+optimizer-specific checks and measurements do not describe the current interpreter.
+
 # ISO failure and applicability corrections
 
 SBCL 2.2.9, 1 MiB stack: **5,350 native checks pass**. The bundled corpus completes

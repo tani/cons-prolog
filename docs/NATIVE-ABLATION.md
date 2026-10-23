@@ -1,5 +1,9 @@
 # Native compiler ablation — 2026-10-23
 
+> Historical record: predicate specialization and native JIT compilation have
+> since been removed. These results apply to the optimizer revisions cited below,
+> not the current WAM interpreter. Run reproduction commands in those revisions.
+
 ## Decision
 
 Keep the guarded native compiler and its ground-fact relation index. Remove the VM first-argument index, scalar-unification shortcuts and graph-copy rewrite from this PR. They are unnecessary to reach SWI parity on the six current workloads. This does not establish that they would be useless on interpreter-only or SLG workloads.
