@@ -10,10 +10,29 @@
     #:goal-instructions #:iso-atom #:iso-error #:iso-goal #:iso-predicate-name #:table
     #:variable-symbol-p)
   (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/syntax/dcg)
+  (:import-from #:sprolog/src/syntax/dcg #:finite-list-p)
   (:export #:iso-control-form-p #:iso-control-instructions #:source-meta-goal-p
-    #:validate-static-meta-goal))
+    #:validate-call-body #:validate-static-meta-goal))
 (in-package #:sprolog/src/syntax/control-syntax)
+
+(defun validate-call-body (goal)
+  "Validate transparent control positions, retaining explicit meta-call boundaries."
+  (let ((work (list goal)) (seen (make-hash-table :test 'eq)))
+    (loop while work do
+      (let* ((g (deref (pop work))))
+        (unless (or (logic-var-p g) (variable-symbol-p g)
+                    (host-goal-p g) (sequence-goals-p g)
+                    (scoped-goals-p g) (disjunction-goal-p g))
+          (unless (or (symbolp g)
+                      (and (consp g) (finite-list-p g) (symbolp (car g))))
+            (iso-error "type_error" (iso-atom "callable") goal))
+          (when (and (consp g) (not (gethash g seen))
+                     (member (iso-predicate-name (car g) (length (cdr g)))
+                             '("," ";" "->") :test #'string=))
+            (unless (= (length (cdr g)) 2)
+              (iso-error "type_error" (iso-atom "callable") goal))
+            (setf (gethash g seen) t)
+            (push (third g) work) (push (second g) work)))))))
 
 
 (defun source-meta-goal-p (goal)

@@ -115,6 +115,9 @@
         (setf head (iso-goal term)
               body (if (string= name "%RETRACT_HEAD") (iso-atom "true") (second args)))
         (multiple-value-setq (head body) (iso-clause-parts term)))
+    ;; Validate even when the predicate has no clauses to enumerate.
+    (when (and (string= name "CLAUSE") (not (logic-var-p (deref body))))
+      (iso-goal body))
     (let* ((key (predicate-key head)) (key (cons (iso-resolve-name db (car key) (cdr key)) (cdr key)))
            (p (gethash key (database-predicates db))) (results nil))
       (when (iso-builtin-p (car key) (cdr key))

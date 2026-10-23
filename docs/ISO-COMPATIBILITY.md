@@ -119,26 +119,38 @@ SBCL 2.2.9, 1 MiB control stack:
 
 | Suite | PASS | XFAIL | FAIL | SKIP | BLOCKED |
 |---|---:|---:|---:|---:|---:|
-| INRIA | 398 | 3 | 15 | 4 | 0 |
-| Standard examples | 528 | 3 | 30 | 6 | 0 |
-| Total | 926 | 6 | 45 | 10 | 0 |
+| INRIA | 410 | 3 | 3 | 4 | 0 |
+| Standard examples | 546 | 3 | 12 | 6 | 0 |
+| Total | 956 | 6 | 15 | 10 | 0 |
 
 Thus 977 checks execute and ten have false applicability premises.
 The six XFAILs are empty-list atom spelling `nil` versus `[]` and the native
 application/list-cell FUNCTOR interpretation, exercised in both suites.
 Term ordering and error validation are not exempted automatically.
 
-The 45 FAILs remain visible. They mix implementation differences with historical
-expectations/source issues, including exact rounded floating-point values,
-old error classes/culprits, and SUB_ATOM expectation tables. No tolerance or
-replacement answer is silently introduced; inspect the report before treating
-a particular failure as an implementation defect.
+Thirty-one former FAILs now pass: number conversion in fully instantiated modes,
+predicate-indicator and missing-clause-body validation, character error types,
+current-stream validation, stream domains/options, and whole-body callable-error
+culprits. NUMBER_CHARS remains an ordinary relation over NUMBER_CODES/CHAR_CODE;
+no VM instruction or tagged term model is added. Explicit ONCE and negation calls
+retain their own argument as culprit; whole-body validation visits only transparent
+conjunction/disjunction/if-then positions before executing side effects.
 
-The native regression suite passes **5,089 checks**. Ten adapter tests exercise
-a 28-check synthetic fixture, wrong/missing exceptions, aliasing, setup/order,
-reader-flag replay, process/file/database isolation, real HALT status,
-spoofed output, timeout continuation and source inventories. The 54 existing
-derived observations remain byte-for-byte unchanged.
+The 15 FAILs remain visible: five exact floating-point expectations, two predicate
+name mistakes, two SUB_ATOM comparator/expectation issues, one uncaught-throw test
+whose own harness catches the ball, one contradictory CALL culprit expectation,
+three native ordering/static/public-policy differences, and one declaration-only
+procedure-existence question. In particular, `sec78.pl:9:8` expects culprit `1` for
+`call((write(3),1))`, while INRIA `call:10` expects the whole conjunction for the
+same goal. The latter now passes and the contradictory example remains FAIL.
+No expected answer, tolerance or broad XFAIL exemption is introduced.
+
+The native regression suite passes **5,217 checks** with a 1 MiB control stack.
+Ten adapter tests exercise a 28-check synthetic fixture, wrong/missing exceptions,
+aliasing, setup/order, reader-flag replay, process/file/database isolation, real
+HALT status, spoofed output, timeout continuation and source inventories.
+Of 54 existing derived observations, 53 are unchanged; CLOSE on an invalid stream
+now reports the intended domain error instead of a type error.
 
 The former Logtalk corpus included conditional and disabled definitions.
 Its 782-definition counts are not comparable to this 987-check baseline.

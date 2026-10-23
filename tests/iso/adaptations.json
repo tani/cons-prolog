@@ -29,6 +29,7 @@
     "These are 1999 distributions, not an updated executable specification of all corrigenda.",
     "Several floating-point expected values are rounded or require exact historical representations; no tolerance is silently introduced.",
     "Some error classes/culprits and substitution expectations differ from current interpretations. Non-model discrepancies remain FAIL pending review.",
-    "Examples contain historical code/expectation mistakes, such as set_ionput in write_read_term2, a section-7.4 lookup of d7_4 against dis7_4 values, and a manually specified sub_atom result table. They are not silently rewritten."
+    "Examples contain historical code/expectation mistakes, such as set_ionput in write_read_term2, a section-7.4 lookup of d7_4 against dis7_4 values, and a manually specified sub_atom result table. They are not silently rewritten.",
+    "sec78.pl:9:8 expects type_error(callable,1) for call((write(3),1)), while INRIA call:10 expects the whole conjunction for the same goal. Whole-body conversion now preserves the ISO culprit; the contradictory example remains FAIL."
   ]
 }

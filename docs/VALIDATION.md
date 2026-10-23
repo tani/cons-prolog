@@ -1,4 +1,20 @@
-# Hodgson ISO suite port
+# ISO validation and number conversion corrections
+
+SBCL 2.2.9, 1 MiB control stack: **5,217 native checks pass**. All **987**
+Hodgson check points complete: **956 PASS, 6 XFAIL, 15 FAIL, 10 SKIP, 0 BLOCKED**.
+Thirty-one previous FAILs now pass. One previous PASS exposes a contradictory
+upstream CALL expectation, and one existing FAIL now observes the corrected
+character error class. These two changed observations are explicitly retained in
+the baseline; the upstream goals and expectations are unchanged.
+
+Tests cover concrete and partial numeric representations, malformed predicate
+indicators, body validation independent of clause lookup, exact character and
+stream errors, whole-body callable culprits, explicit meta-call boundaries and
+rejection before side effects. The driver still passes ten tests. The 54 existing
+derived observations differ only for the corrected CLOSE stream-domain error.
+See [ISO compatibility](ISO-COMPATIBILITY.md) for remaining failure categories.
+
+# Hodgson ISO suite port (historical baseline)
 
 The active ISO CI corpus is now Hodgson's plain-Prolog INRIA and standard-example
 suites: **987 check points, 926 PASS, 6 XFAIL, 45 FAIL, 10 SKIP, 0 BLOCKED** on

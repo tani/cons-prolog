@@ -100,7 +100,7 @@
                    (and (atom_codes ?atom ?codes) (%chars_codes ?chars ?codes)))))
              (((number_chars ?number ?chars)
                (%chars_arguments number ?number ?chars)
-               (or (-> (var ?number)
+               (or (-> (ground ?chars)
                        (and (%chars_codes ?chars ?codes) (number_codes ?number ?codes)))
                    (and (number_codes ?number ?codes) (%chars_codes ?chars ?codes)))))
              (((%chars_codes () ()))

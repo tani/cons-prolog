@@ -352,8 +352,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "inria/atom_chars:13": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS (TYPE_ERROR CHARACTER (F B)) (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|atom| (F B)) (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|atom| (F B)) (TYPE_ERROR CHARACTER (F B))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "inria/atom_chars:14": {
     "status": "PASS",
@@ -572,16 +572,16 @@
     "observation": "(:OBSERVED PASS)"
   },
   "inria/call:9": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS (TYPE_ERROR CALLABLE (|,| FAIL 1)) (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|callable| 1) (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|callable| 1) (TYPE_ERROR CALLABLE (|,| FAIL 1))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "inria/call:10": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS (TYPE_ERROR CALLABLE (|,| (WRITE 3) 1)) (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|callable| 1) (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|callable| 1) (TYPE_ERROR CALLABLE (|,| (WRITE 3) 1))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "inria/call:11": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS (TYPE_ERROR CALLABLE (|;| 1 TRUE)) (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|callable| 1) (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|callable| 1) (TYPE_ERROR CALLABLE (|;| 1 TRUE))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "inria/catch-and-throw:1": {
     "status": "FAIL",
@@ -644,8 +644,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "inria/clause:4": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS (TYPE_ERROR CALLABLE 5) FAILURE FAILURE (TYPE_ERROR CALLABLE 5)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "inria/clause:5": {
     "status": "PASS",
@@ -736,16 +736,16 @@
     "observation": "(:OBSERVED PASS)"
   },
   "inria/current_predicate:3": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS (TYPE_ERROR PREDICATE_INDICATOR 4) FAILURE FAILURE (TYPE_ERROR PREDICATE_INDICATOR 4)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "inria/current_predicate:4": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS (TYPE_ERROR PREDICATE_INDICATOR DOG) FAILURE FAILURE (TYPE_ERROR PREDICATE_INDICATOR DOG)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "inria/current_predicate:5": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS (TYPE_ERROR PREDICATE_INDICATOR (/ 0 DOG)) FAILURE FAILURE (TYPE_ERROR PREDICATE_INDICATOR (/ 0 DOG))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "inria/current_prolog_flag:1": {
     "status": "PASS",
@@ -1140,8 +1140,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "inria/number_chars:5": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS SUCCESS FAILURE FAILURE SUCCESS))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "inria/number_chars:6": {
     "status": "PASS",
@@ -1184,8 +1184,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "inria/number_chars:16": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS (TYPE_ERROR CHARACTER 2) (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|atom| 2) (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|atom| 2) (TYPE_ERROR CHARACTER 2)))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "inria/number_codes:1": {
     "status": "PASS",
@@ -1200,8 +1200,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "inria/number_codes:4": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS SUCCESS FAILURE FAILURE SUCCESS))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "inria/number_codes:5": {
     "status": "PASS",
@@ -1396,8 +1396,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "inria/setof:13": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (SUBSTITUTIONS (TYPE_ERROR CALLABLE (|;| TRUE 4)) (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|callable| 4) (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|callable| 4) (TYPE_ERROR CALLABLE (|;| TRUE 4))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "inria/setof:14": {
     "status": "PASS",
@@ -1728,8 +1728,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec78.pl:9:4": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (TYPE_ERROR CALLABLE (|,| (LOG 3) 3)) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|callable| 3) (SPROLOG/ATOMS::/ CALL 1))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec78.pl:9:5": {
     "status": "PASS",
@@ -1744,8 +1744,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec78.pl:9:8": {
-    "status": "PASS",
-    "observation": "(:OBSERVED PASS)"
+    "status": "FAIL",
+    "observation": "(:OBSERVED (WRONG_ERROR (TYPE_ERROR CALLABLE 1) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|callable| (|,| (WRITE 3) 1)) (SPROLOG/ATOMS::/ CALL 1))))"
   },
   "examples/sec78.pl:9:9": {
     "status": "PASS",
@@ -1756,12 +1756,12 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec78.pl:9:11": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (TYPE_ERROR CALLABLE (|,| FAIL 1)) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|callable| 1) (SPROLOG/ATOMS::/ CALL 1))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec78.pl:9:12": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (TYPE_ERROR CALLABLE (|,| 1 TRUE)) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|callable| 1) (SPROLOG/ATOMS::/ CALL 1))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec78.pl:11:1": {
     "status": "PASS",
@@ -2032,8 +2032,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec811.pl:2:1": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec811.pl:3:1": {
     "status": "PASS",
@@ -2056,8 +2056,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec811.pl:4:1": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec811.pl:5:1": {
     "status": "PASS",
@@ -2088,8 +2088,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec811.pl:6:5": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (DOMAIN_ERROR STREAM_OPTION (EOF ACTION)) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|domain_error| SPROLOG/ATOMS::|option| (EOF ACTION)) (SPROLOG/ATOMS::/ OPEN 4))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec811.pl:7:1": {
     "status": "PASS",
@@ -2104,8 +2104,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec811.pl:8:2": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (DOMAIN_ERROR STREAM_OR_ALIAS (/ (/ NOT STREAM) ALIAS)) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|stream_or_alias| (/ (/ NOT STREAM) ALIAS)) (SPROLOG/ATOMS::/ CLOSE 1))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec811.pl:8:3": {
     "status": "PASS",
@@ -2140,8 +2140,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec811.pl:12:1": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (DOMAIN_ERROR STREAM (/ NOT STREAM)) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|stream_or_alias| (/ NOT STREAM)) (SPROLOG/ATOMS::/ STREAM_PROPERTY 2))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec811.pl:12:2": {
     "status": "PASS",
@@ -2152,8 +2152,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec811.pl:14:1": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (DOMAIN_ERROR STREAM_OR_ALIAS (/ NOT STREAM)) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|stream_or_alias| (/ NOT STREAM)) (SPROLOG/ATOMS::/ AT_END_OF_STREAM 1))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec811.pl:15:1": {
     "status": "PASS",
@@ -2196,8 +2196,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec812.pl:5:3": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (DOMAIN_ERROR STREAM_OR_ALIAS (/ NOSTREAM NOALIAS)) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|stream_or_alias| (/ NOSTREAM NOALIAS)) (SPROLOG/ATOMS::/ GET_CHAR 2))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec812.pl:5:4": {
     "status": "PASS",
@@ -2228,8 +2228,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec812.pl:12:3": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (DOMAIN_ERROR STREAM_OR_ALIAS (/ NOSTREAM NOALIAS)) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|stream_or_alias| (/ NOSTREAM NOALIAS)) (SPROLOG/ATOMS::/ GET_CODE 2))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec812.pl:12:4": {
     "status": "PASS",
@@ -2260,8 +2260,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec812.pl:18:3": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (DOMAIN_ERROR STREAM_OR_ALIAS (/ NOSTREAM NOALIAS)) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|stream_or_alias| (/ NOSTREAM NOALIAS)) (SPROLOG/ATOMS::/ PEEK_CHAR 2))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec812.pl:18:4": {
     "status": "PASS",
@@ -2288,8 +2288,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec812.pl:23:3": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (DOMAIN_ERROR STREAM_OR_ALIAS (/ NOSTREAM NOALIAS)) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|stream_or_alias| (/ NOSTREAM NOALIAS)) (SPROLOG/ATOMS::/ PEEK_CODE 2))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec812.pl:23:4": {
     "status": "PASS",
@@ -2316,8 +2316,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec813.pl:5:3": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (DOMAIN_ERROR STREAM_OR_ALIAS (/ NOSTREAM NOALIAS)) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|stream_or_alias| (/ NOSTREAM NOALIAS)) (SPROLOG/ATOMS::/ GET_CHAR 2))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec813.pl:5:4": {
     "status": "PASS",
@@ -2348,8 +2348,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec813.pl:11:3": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (DOMAIN_ERROR STREAM_OR_ALIAS (/ NOSTREAM NOALIAS)) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|stream_or_alias| (/ NOSTREAM NOALIAS)) (SPROLOG/ATOMS::/ PEEK_BYTE 2))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec813.pl:11:4": {
     "status": "PASS",
@@ -2380,8 +2380,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec814.pl:10:3": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED (WRONG_ERROR (DOMAIN_ERROR STREAM_OR_ALIAS (/ NOSTREAM NOALIAS)) (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|stream_or_alias| (/ NOSTREAM NOALIAS)) (SPROLOG/ATOMS::/ READ 2))))"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec814.pl:10:4": {
     "status": "PASS",
@@ -2573,7 +2573,7 @@
   },
   "examples/sec816.pl:13:5": {
     "status": "FAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|atom| 115) (SPROLOG/ATOMS::/ ATOM_CHARS 2))))"
+    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| (SPROLOG/ATOMS::|type_error| SPROLOG/ATOMS::|character| 115) (SPROLOG/ATOMS::/ ATOM_CHARS 2))))"
   },
   "examples/sec816.pl:14:1": {
     "status": "PASS",
@@ -2612,8 +2612,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec816.pl:19:4": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED UNEXPECTED_FAILURE)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec816.pl:20:1": {
     "status": "PASS",
@@ -2640,8 +2640,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec816.pl:22:4": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED UNEXPECTED_FAILURE)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec816.pl:23:1": {
     "status": "PASS",
@@ -3416,8 +3416,8 @@
     "observation": "(:OBSERVED PASS)"
   },
   "examples/sec88.pl:4:6": {
-    "status": "FAIL",
-    "observation": "(:OBSERVED MISSING_ERROR)"
+    "status": "PASS",
+    "observation": "(:OBSERVED PASS)"
   },
   "examples/sec89.pl:1:1": {
     "status": "PASS",

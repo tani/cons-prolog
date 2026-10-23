@@ -46,7 +46,10 @@ The following predicates now use library clauses:
 
 Character conversion uses `char_code/2` and a shared Prolog list relation. The
 input/output direction is selected before traversing the list, preserving output
-variables and open output tails. `sub_atom/5` uses two `atom_concat/3` calls and
+variables and open output tails. For `number_chars/2`, a ground character list
+selects parsing even when the number is already instantiated; partial lists
+retain generation behavior. `number_codes/2` uses the existing list-validation
+boundary to make the same distinction. `sub_atom/5` uses two `atom_concat/3` calls and
 length relations, preserving before-then-length enumeration order.
 
 Private checks `%output_nonnegative/1`, `%chars_arguments/3`, and
@@ -62,6 +65,12 @@ is retained separately to preserve EOF and stream-type validation.
 An adapter wrapper marks its public error context. This context is saved/restored
 with continuations, choice points, and exception snapshots, so private checks do
 not expose helper names and later unrelated goals get their own contexts.
+Invalid current-stream arguments and invalid stream/alias values produce domain
+errors; `stream_property/2` requires a stream rather than accepting aliases.
+OPEN reports invalid option names in the `stream_option` domain. Predicate
+indicator and CLAUSE body checks run before enumeration, including empty lookup
+results. Runtime goal conversion reports the whole converted goal as the culprit
+of a callable type error, before any goal side effects can run.
 
 ## P3: copies, updates, and collection
 

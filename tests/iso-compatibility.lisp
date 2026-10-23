@@ -13,6 +13,42 @@
   (dolist (gc '(nil 1 8 4096))
     (let ((*database* (make-database)))
       (load-prolog-string "pick(a). pick(b). cat. dog :- true. implicit(X) :- X, call(X).")
+      (dolist (text '("number_chars(15,['0',x,f])."
+                      "number_codes(15,[48,120,102])."
+                      "number_chars(3.3,['3','.','3','E','+','0'])."
+                      "number_codes(33.0,[51,46,51,69,43,48,49])."
+                      "number_chars(12,['1',X]),X=='2'."
+                      "number_chars(12,['1'|Xs]),Xs==['2']."
+                      "number_codes(12,[49,X]),X==50."
+                      "number_codes(12,[49|Xs]),Xs==[50]."
+                      "current_predicate(pick/A),A==1."
+                      "current_predicate(N/1),N==pick."))
+        (check (textual-query text gc) "number parsing/output modes and partial predicate indicators"))
+      (dolist (case '(("number_chars(1,[a])" "syntax_error(number)")
+                      ("number_codes(1,[97])" "syntax_error(number)")
+                      ("number_codes(foo,[49])" "type_error(number,foo)")
+                      ("atom_chars(X,[a,f(b)])" "type_error(character,f(b))")
+                      ("number_chars(X,['4',2])" "type_error(character,2)")
+                      ("current_predicate(4)" "type_error(predicate_indicator,4)")
+                      ("current_predicate(dog)" "type_error(predicate_indicator,dog)")
+                      ("current_predicate(0/dog)" "type_error(predicate_indicator,0/dog)")
+                      ("clause(absent(X),5)" "type_error(callable,5)")
+                      ("clause(pick(X),5)" "type_error(callable,5)")
+                      ("current_input(fred)" "domain_error(stream,fred)")
+                      ("current_output(fred)" "domain_error(stream,fred)")
+                      ("get_char(not/stream,C)" "domain_error(stream_or_alias,not/stream)")
+                      ("stream_property(not/stream,P)" "domain_error(stream,not/stream)")
+                      ("open(missing,read,S,[eof(action)])" "domain_error(stream_option,eof(action))")
+                      ("call((fail,1))" "type_error(callable,(fail,1))")
+                      ("call((1;true))" "type_error(callable,(1;true))")
+                      ("once(3)" "type_error(callable,3)")
+                      ("\\+(3)" "type_error(callable,3)")
+                      ("call((once(3),true))" "type_error(callable,3)")
+                      ("setof(X,X^(true;4),S)" "type_error(callable,(true;4))")))
+        (check (textual-query (format nil "catch((~A,fail),error(~A,_),true)." (first case) (second case)) gc)
+               "ISO argument validation retains the full formal error"))
+      (check (textual-query "catch(call((assertz(unwanted_effect),1)),error(type_error(callable,(assertz(unwanted_effect),1)),_),true),\\+ current_predicate(unwanted_effect/0)." gc)
+             "meta goal conversion rejects invalid bodies before side effects")
       (dolist (text '("call((!,fail;true))."
                       "G=(!,fail;true),call(G)."
                       "call(';',(true->fail),X=1)."
