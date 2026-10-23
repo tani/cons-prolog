@@ -5,7 +5,8 @@
   (:import-from #:sprolog/src/adapters/term-ops
     #:iso-acyclic-p #:iso-atom #:iso-atom-p #:iso-bind #:iso-checked-unify #:iso-compound
     #:iso-error #:iso-identical-p #:iso-integer #:iso-list #:iso-required #:iso-text
-    #:iso-unifiable-p #:iso-variables)
+    #:iso-unifiable-p #:iso-variables #:iso-list-cell-p #:iso-list-head #:iso-list-tail
+    #:iso-null-p #:iso-list-from-host)
   (:import-from #:sprolog/src/api/state
     #:*iso-halt-function*)
   (:import-from #:sprolog/src/kernel/engine
@@ -49,16 +50,16 @@
       (setf (gethash name flags) (intern (string-upcase v) :keyword))) t))
 (defun iso-output-list (root &optional kind)
   (let ((x (deref root)) (seen (make-hash-table :test 'eq)) (ground t))
-    (loop while (consp x) do
+    (loop while (iso-list-cell-p x) do
       (when (gethash x seen) (iso-error "type_error" (iso-atom "list") root))
       (setf (gethash x seen) t)
-      (let ((item (deref (car x))))
+      (let ((item (deref (iso-list-head x))))
         (when (logic-var-p item) (setf ground nil))
         (unless (logic-var-p item)
           (cond ((eq kind :code) (iso-code-char item)) ((eq kind :char) (iso-character item)))))
-      (setf x (deref (cdr x))))
-    (unless (or (null x) (logic-var-p x)) (iso-error "type_error" (iso-atom "list") root))
-    (values t (and ground (null x)))))
+      (setf x (deref (iso-list-tail x))))
+    (unless (or (iso-null-p x) (logic-var-p x)) (iso-error "type_error" (iso-atom "list") root))
+    (values t (and ground (iso-null-p x)))))
 (defun iso-output-integer (x &optional nonnegative)
   (unless (logic-var-p (deref x)) (iso-integer x nonnegative)) t)
 (defun iso-deterministic (vm name args)
@@ -76,7 +77,7 @@
       ((string= name "FLOAT") (floatp (deref a)))
       ((string= name "COMPOUND") (consp (deref a)))
       ((string= name "ACYCLIC_TERM") (iso-acyclic-p a))
-      ((string= name "TERM_VARIABLES") (iso-output-list b) (unify vm b (iso-variables a)))
+      ((string= name "TERM_VARIABLES") (iso-output-list b) (unify vm b (iso-list-from-host (iso-variables a))))
       ((string= name "==") (iso-identical-p a b))
 
 
@@ -102,7 +103,7 @@
                (let ((text (coerce (mapcar #'iso-code-char (iso-list b)) 'string)))
                  (iso-bind vm a (if numbers (iso-parse-number text) (iso-atom text))))
                (let ((text (if numbers (iso-number-string x) (iso-text x))))
-                 (unify vm b (map 'list #'char-code text)))))))
+                 (unify vm b (iso-list-from-host (map 'list #'char-code text))))))))
       ((string= name "%CHARS_ARGUMENTS")
        (iso-output-list c :char)
        (let ((x (deref b)))

@@ -233,3 +233,21 @@ retraction, abolition and reflection. DYNAMIC declarations permit updates and
 inspection. DYNAMIC, MULTIFILE and DISCONTIGUOUS declarations create empty
 procedures immediately; source compilation and the isolated ISO runner use the
 same property marker. These are database metadata operations, not VM instructions.
+
+## Term model boundary
+
+Databases fix `:term-model :native` (default) or `:iso` at construction. Both
+share the cons graph VM, unification and GC. Strict lists use explicit
+`($cons Head Tail)` applications and `$nil`; their public Prolog names remain
+`'.'/2` and `[]`. Dedicated symbols prevent collision with user atoms of the
+same Lisp spelling. List adapters are semantically necessary to distinguish
+list spines from application argument spines; their construction/validation
+functions select the database's model. They are not additional VM opcodes.
+
+The protected standard library has one clause source with explicit list literals
+and two shared compilations. Query construction and cursor resumption bind the
+correct database/model, including callbacks, collectors and SLG children. Native
+mode retains its original list/pair behavior and observations. Strict KEYSORT
+validates `Key-Value` compounds and sorts by the key. DCG and host syntax select
+model-specific list lowering while preserving lexical callback objects in
+executable syntax only.

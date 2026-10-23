@@ -322,3 +322,21 @@ reader flags, stream lookahead/EOF, load replacement, multifile and empty dynami
 declarations, initialization, relative includes, ensure-loaded cache invalidation,
 recursive includes, DCG expansion, long flat terms and controlled nesting errors.
 The preexisting derived-observation output remains byte-for-byte unchanged.
+
+## Optional strict ISO terms
+
+SBCL with a 1 MiB control stack passes **5,476 checks**. The 126 additional
+strict-mode checks exercise list/compound and atom distinctions, internal-name
+collisions, FUNCTOR/ARG/UNIV agreement, character/code relations, copying and
+variable sharing, collectors, sorting, dynamic clauses, rational trees, textual
+and Lisp DCGs with lexical callbacks, SLG cursor resumption and forced GC. Four
+GC thresholds include collection at every safe point. Native-mode behavior and
+all 54 derived observations remain unchanged.
+
+The same bundled 782-definition corpus completes in both modes: native reports
+718 PASS / 8 XFAIL / 56 SKIP, while ISO reports **726 PASS / 0 XFAIL / 56 SKIP**.
+Neither has FAIL or BLOCKED. Strict mode has no expected-difference entries;
+undefined STO and applicability skips are unchanged. Thirteen driver tests cover
+isolation, error/result checking, timeouts, source integrity and strict-mode
+selection. See [ISO compatibility](ISO-COMPATIBILITY.md) for reproduction and
+license/provenance details.

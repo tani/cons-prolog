@@ -3,7 +3,7 @@
   (:import-from #:sprolog/src/adapters/adapter
     #:iso-output-list)
   (:import-from #:sprolog/src/adapters/term-ops
-    #:iso-atomic-equal #:iso-copy #:iso-text #:iso-variables)
+    #:iso-atomic-equal #:iso-copy #:iso-text #:iso-variables #:iso-list-from-host)
   (:import-from #:sprolog/src/kernel/engine
     #:close-query #:deref #:map-term #:next-solution #:unify)
   (:import-from #:sprolog/src/kernel/instructions
@@ -57,7 +57,7 @@
                      (set-difference (iso-variables actual) (append (iso-variables template) existential) :test #'eq)))
              (answers (iso-child-solutions vm template actual free)))
         (if (string= name "FINDALL")
-            (list (iso-result (list template goal (mapcar #'first answers))))
+            (list (iso-result (list template goal (iso-list-from-host (mapcar #'first answers)))))
             (iso-bagof-results vm template goal free answers))))))
 (defun iso-group-answers (vm answers)
   "Group copied answers by variant keys, preserving encounter order and aliases."
@@ -78,5 +78,5 @@
               (map-term goal (lambda (x)
                                (let ((entry (assoc (deref x) bindings :test #'eq)))
                                  (if entry (cdr entry) (deref x)))))
-              values))))
+              (iso-list-from-host values)))))
    (iso-group-answers vm answers)))

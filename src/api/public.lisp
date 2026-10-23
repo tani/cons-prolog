@@ -13,7 +13,7 @@
   (:import-from #:sprolog/src/kernel/gc #:collect-query-garbage)
   (:import-from #:sprolog/src/kernel/instructions #:tnot)
   (:import-from #:sprolog/src/kernel/model #:slg-incomplete-cut #:make-database #:iso-exception
-    #:iso-exception-term)
+    #:iso-exception-term #:database-term-model #:$cons #:$nil)
   (:import-from #:sprolog/src/kernel/slg #:table #:untable)
   (:import-from #:sprolog/src/syntax/compiler #:query #:make-query #:clear-database
     #:disassemble-predicate)
@@ -21,7 +21,7 @@
   (:export #:load-prolog #:load-prolog-string #:load-prolog-file #:read-prolog-term #:parse-prolog-string
     #:<- #:<-- #:?- #:prolog #:--> #:---> #:phrase #:dcg-expand #:query #:make-query
     #:next-solution #:slg-incomplete-cut #:table #:untable #:tnot #:close-query #:clear-database
-    #:*database* #:make-database #:*iso-halt-function* #:iso-exception #:iso-exception-term
+    #:*database* #:make-database #:database-term-model #:$cons #:$nil #:*iso-halt-function* #:iso-exception #:iso-exception-term
     #:builtin-predicate-inventory #:collect-query-garbage #:query-statistics
     #:disassemble-predicate))
 (in-package #:sprolog/src/api/public)

@@ -6,7 +6,46 @@ conditional branches. Normal execution is offline and requires only Python 3 and
 SBCL. Neither Logtalk nor SWI-Prolog is loaded by the runner.
 
 This is a finite validation corpus, not a complete executable specification or an
-ISO conformance certificate. It preserves sprolog's native cons term model.
+ISO conformance certificate. The default native cons model remains available;
+`:term-model :iso` adds strict list/compound and empty-list/atom distinctions.
+
+## Strict term mode
+
+```lisp
+(make-database :term-model :iso)       ; opt in
+(make-database :term-model :native)    ; default
+```
+
+`database-term-model` reports the immutable choice. `read_syntax` and
+`write_syntax` still independently default to `lisp` in either term model;
+loading Prolog text does not silently change them. Compiled databases and caches
+cannot be switched between models, and there is no implicit conversion of Lisp
+callback inputs or query results between them.
+
+| Prolog term | Strict Lisp term |
+|---|---|
+| `f(a)` | `(f a)` |
+| `[a,b]` | `($cons a ($cons b $nil))` |
+| `[a|b]`, `'.'(a,b)` | `($cons a b)` |
+| `[]`, `'[]'` | `$nil` |
+| `nil` | ordinary atom `nil`, distinct from `$nil` |
+
+`$cons` and `$nil` are exported from `sprolog`. They are dedicated internal
+symbols, not the ordinary Prolog atoms `'$cons'` and `'$nil'`. Term inspection
+exposes their ISO names `.` and `[]`; Prolog output uses bracket lists or, with
+`ignore_ops(true)`, explicit `'.'/2` applications. Lisp I/O uses the unescaped
+spellings `$cons` and `$nil`. In quoted Lisp output, an ordinary colliding user
+atom is package-qualified, e.g. `SPROLOG/ATOMS::$cons`, so it reads back distinctly.
+Lisp source and callbacks must explicitly construct strict lists; raw Lisp
+lists represent applications, and NIL is not an empty Prolog list in this mode.
+
+The VM, graph copying and collector are shared. The standard library remains
+ordinary clauses, compiled twice from one definition with explicit list
+literals. Mode selection affects list construction/validation, text boundaries,
+term inspection, KEYSORT pair validation and the selected shared library.
+Undefined cyclic/STO behavior remains the existing rational-tree extension.
+This is a strict **term model**, not a declaration that every Lisp extension has
+been removed or that the finite test corpus proves full ISO conformance.
 
 ## License and provenance
 
@@ -38,6 +77,7 @@ historical records in `docs/VALIDATION.md` and git history.
 python3 -m unittest discover -s tests/iso -p 'test_*.py' -v
 python3 tests/iso/run.py --baseline tests/iso/baseline.json --strict --jobs 2
 python3 tests/iso/run.py --filter predicates/read_term_3 --strict
+python3 tests/iso/run.py --term-model iso --strict --jobs 2 --output iso-results-strict
 ```
 
 `--sbcl` accepts an executable path; unit tests use `ISO_SBCL`. Each applicable
@@ -52,7 +92,10 @@ timings and diagnostics. The baseline rejects missing IDs and changed nonpassing
 observations while allowing improvements to PASS. An exact, individually
 explained native-model failure can be XFAIL; stale or unexpectedly passing
 XFAILs require review. **A green baseline job does not mean ISO conformance.**
-`--strict` returns nonzero while any FAIL remains.
+`--strict` returns nonzero while any FAIL remains. `--term-model iso` uses no
+expected-difference entries and rejects a supplied nonempty expectations file;
+all applicable definitions must actually pass. Its SKIPs use the same inventory
+and applicability conditions as native mode.
 
 ## Port and applicability
 
@@ -100,7 +143,13 @@ Defined ISO requirements take precedence. Implementation-defined,
 implementation-dependent and undefined behavior are distinguished; existing
 extensions are retained where compatible with defined ISO requirements.
 
-The current SBCL observation is **718 PASS, 8 XFAIL, 0 FAIL, 56 SKIP, 0 BLOCKED**.
+The SBCL observations are:
+
+| Term model | PASS | XFAIL | FAIL | SKIP | BLOCKED |
+|---|---:|---:|---:|---:|---:|
+| `native` (default) | 718 | 8 | 0 | 56 | 0 |
+| `iso` | 726 | 0 | 0 | 56 | 0 |
+
 The 56 skips comprise 45 STO definitions (23 example names, with alternate
 branches), one finite-arity and five bounded-integer premises, and five inactive
 conditional branches. The selected counterparts of those five branches execute.

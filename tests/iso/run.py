@@ -39,13 +39,13 @@ def lisp_string(text):
     return '"' + str(text).replace('\\', '\\\\').replace('"', '\\"') + '"'
 
 
-def run_case(case, sbcl, timeout):
+def run_case(case, sbcl, timeout, term_model="native"):
     if case.get("skip"):
         return dict(case, status="SKIP", observation=case["skip"], seconds=0)
     with tempfile.TemporaryDirectory(prefix="sprolog-iso-") as temporary:
         root = Path(temporary)
         fields = {"id": case["id"], "harness": HERE / "harness.pl",
-                  "program": HERE / "suite" / case["program"]}
+                  "program": HERE / "suite" / case["program"], "term-model": term_model}
         job, result = root / "job.sexp", root / "result.json"
         setup = "(" + " ".join(lisp_string(p) for p in case.get("predecessors", [])) + ")"
         job.write_text("(" + " ".join(":" + k + " " + lisp_string(v) for k,v in fields.items()) +
@@ -114,8 +114,9 @@ def main():
     parser.add_argument("--jobs", type=int, default=1)
     parser.add_argument("--filter", default="")
     parser.add_argument("--strict", action="store_true")
+    parser.add_argument("--term-model", choices=("native", "iso"), default="native")
     parser.add_argument("--baseline", type=Path)
-    parser.add_argument("--expectations", type=Path, default=HERE / "expected-differences.json")
+    parser.add_argument("--expectations", type=Path)
     args = parser.parse_args()
     if args.timeout <= 0 or args.jobs <= 0:
         parser.error("--timeout and --jobs must be positive")
@@ -124,10 +125,12 @@ def main():
     selected = [c for c in cases if args.filter in c["id"]]
     if not selected:
         raise ValueError("Filter selected no cases")
+    expectations = json.loads((args.expectations or HERE / "expected-differences.json").read_text()) if (args.expectations or args.term_model == "native") else {}
+    if args.term_model == "iso" and expectations:
+        raise ValueError("ISO term mode does not allow expected differences")
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.jobs) as pool:
-        results = list(pool.map(lambda c: run_case(c, args.sbcl, args.timeout), selected))
+        results = list(pool.map(lambda c: run_case(c, args.sbcl, args.timeout, args.term_model), selected))
     selected_ids = {r["id"] for r in results}
-    expectations = json.loads(args.expectations.read_text())
     if args.filter:
         expectations = {k:v for k,v in expectations.items() if k in selected_ids}
     apply_expectations(results, expectations)
@@ -139,7 +142,7 @@ def main():
         regressions = check_baseline(results, baseline)
     counts = dict(collections.Counter(r["status"] for r in results))
     report = {"upstream": LOCK, "inventory": len(cases), "selected": len(selected), "counts": counts,
-              "profile": {"term_model": "native_cons", "syntax": "prolog", "strict_expectations": True},
+              "profile": {"term_model": args.term_model, "syntax": "prolog", "strict_expectations": True},
               "regressions": regressions, "results": results}
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")

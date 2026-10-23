@@ -81,6 +81,7 @@ class AdapterTests(unittest.TestCase):
         (cls.root/'suite/fixture.pl').write_text('''
 :- dynamic(p/0).
 conf_case(ok,true,true,[],true).
+conf_case(strict_terms,true,([a|b]=='.'(a,b),[]\\==nil,'$cons'\\=='.'),[],true).
 conf_case(negative,false,fail,[],true).
 conf_case(wrong_negative,false,true,[],true).
 conf_case(negative_throws,false,throw(problem),[],true).
@@ -120,6 +121,11 @@ conf_case(spoof,false,(write('(:OBSERVED PASS)'),true),[],true).
     def run_case(self,name,timeout=10):
         with patch.object(iso,'HERE',self.root):
             return iso.run_case({'id':name,'program':'fixture.pl','skip':''},SBCL,timeout)
+
+    def test_strict_term_model_is_forwarded_to_worker(self):
+        with patch.object(iso, 'HERE', self.root):
+            result = iso.run_case({'id':'strict_terms','program':'fixture.pl'}, SBCL, 10, term_model='iso')
+        self.assertEqual(result['status'], 'PASS', result)
 
     def test_checks_preserve_success_failure_errors_and_variable_sharing(self):
         expected={'ok':'PASS','negative':'PASS','wrong_negative':'FAIL','negative_throws':'FAIL',

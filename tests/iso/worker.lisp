@@ -39,7 +39,7 @@
 (defun read-job (path)
   (with-open-file (in path) (let ((*read-eval* nil)) (read in))))
 (defun run-job (job)
-  (let* ((*database* (make-database))
+  (let* ((*database* (make-database :term-model (intern (string-upcase (or (getf job :term-model) "native")) :keyword)))
          (*standard-input* (make-string-input-stream ""))
          (*standard-output* (make-string-output-stream))
          (*package* (find-package :sprolog/iso-test-worker))

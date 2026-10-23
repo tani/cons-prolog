@@ -1,9 +1,9 @@
 (uiop:define-package #:sprolog/src/prolog/writer
   (:use #:cl)
   (:import-from #:sprolog/src/kernel/engine #:deref)
-  (:import-from #:sprolog/src/kernel/model #:logic-var-p)
+  (:import-from #:sprolog/src/kernel/model #:*term-model* #:database-term-model #:logic-var-p)
   (:import-from #:sprolog/src/adapters/term-ops
-    #:iso-acyclic-p #:iso-atom #:iso-atom-name #:iso-error #:iso-list #:iso-required #:iso-text)
+    #:iso-acyclic-p #:iso-atom #:iso-atom-name #:iso-error #:iso-list #:iso-required #:iso-text #:iso-empty-list #:iso-null-p #:iso-list-cell-p #:iso-list-head #:iso-list-tail)
   (:import-from #:sprolog/src/adapters/adapter #:iso-number-string)
   (:import-from #:sprolog/src/prolog/reader #:initialize-reader-operators)
   (:export #:write-prolog-term))
@@ -42,9 +42,11 @@
           (t (write-char c out))))
   (write-char #\' out))
 
-(defun write-prolog-term (stream term database &key quoted ignore-ops numbervars variable-names)
-  ;; No origin tags are available: finite symbol-headed applications use f(...),
-  ;; other cons spines use [...|...]. Both parse back to the same native conses.
+(defun write-prolog-term (stream term database &key quoted ignore-ops numbervars (variable-names nil names-supplied-p))
+  (let ((*term-model* (database-term-model database)))
+    (unless names-supplied-p (setf variable-names (iso-empty-list)))
+  ;; Native applications retain their original interpretation. Strict list
+  ;; cells have an explicit functor and can print as brackets or canonical dot/2.
   ;; Use an explicit task stack even for deeply nested and long flat terms.
   (unless (iso-acyclic-p term)
     (iso-error "representation_error" (iso-atom "acyclic_term")))
@@ -52,8 +54,9 @@
         (names (make-hash-table :test 'eq)) (used (make-hash-table :test 'equal))
         (serial 0))
     (dolist (pair (iso-list variable-names))
-      (let* ((pair (iso-required pair)) (parts (and (consp pair) (iso-list pair))))
-        (unless (and (= (length parts) 3) (symbolp (first parts))
+      (let* ((pair (iso-required pair)) (parts (and (consp pair) (if (eq *term-model* :iso) pair (iso-list pair)))))
+        (unless (and (consp parts) (consp (cdr parts)) (consp (cddr parts))
+                     (null (cdddr parts)) (symbolp (first parts))
                      (string= (iso-atom-name (first parts)) "="))
           (iso-error "domain_error" (iso-atom "variable_name") pair))
         (let ((name (iso-text (second parts))) (var (deref (third parts))))
@@ -99,7 +102,7 @@
                     (let ((x (deref x)))
                       (cond
                         ((logic-var-p x) (write-string (variable-name x) out))
-                        ((null x) (write-string "[]" out))
+                        ((iso-null-p x) (write-string "[]" out))
                         ((symbolp x) (emit-atom x))
                         ((or (integerp x) (floatp x))
                          (let ((text (iso-number-string x)))
@@ -112,6 +115,15 @@
                              (when parenthesize (write-char #\( out))
                              (write-string text out)
                              (when parenthesize (write-char #\) out)))))
+                        ((and (eq *term-model* :iso) (not ignore-ops) (iso-list-cell-p x))
+                         (let ((items nil) (tail x))
+                           (loop while (iso-list-cell-p tail) do
+                             (push (iso-list-head tail) items)
+                             (setf tail (deref (iso-list-tail tail))))
+                           (write-char #\[ out) (push (list :text "]") work)
+                           (unless (iso-null-p tail)
+                             (push (list :term tail 999) work) (push (list :text "|") work))
+                           (push-terms (nreverse items))))
                         ((consp x)
                          (let ((items nil) (tail x))
                            (loop while (consp tail) do (push (car tail) items) (setf tail (deref (cdr tail))))
@@ -147,4 +159,4 @@
                                  (push-terms items)))))
                         (t (iso-error "type_error" (iso-atom "prolog_term") x))))))))))
       stream)
-    t))
+    t)))

@@ -5,6 +5,7 @@
     #:jump #:leave-cut-scope #:proceed #:retry-me-else #:table-answer #:tnot #:trust-me
     #:try-branch #:try-me-else #:yield)
   (:import-from #:sprolog/src/kernel/model
+    #:*term-model* #:database-term-model
     #:%make-machine #:%make-var #:choice #:choice-age #:choice-args #:choice-builtin-context
     #:choice-code #:choice-continuation #:choice-cut #:choice-delays #:choice-handlers
     #:choice-heap #:choice-lineage #:choice-pc #:choice-scopes #:choice-slots #:choice-trail
@@ -286,6 +287,8 @@
   nil)
 (defun next-solution (vm)
   "Return an alist and a success flag; an empty alist can still be a solution."
+  (let ((*database* (machine-database vm))
+        (*term-model* (database-term-model (machine-database vm))))
   (when (machine-closed vm) (return-from next-solution (values nil nil)))
   (when (machine-slg vm) (slg-check-database vm))
   (when (machine-ready vm)
@@ -307,7 +310,7 @@
                   (if (machine-delays vm) :undefined :true)
                   (mapcar (lambda (table) (slg-table-goal (machine-slg vm) table))
                           (machine-delays vm)))))))
-  (values nil nil))
+  (values nil nil)))
 (defun query-statistics (vm)
   (list :native-calls (machine-native-calls vm) :native-deoptimizations (machine-native-deopts vm)
         :instructions (machine-steps vm) :max-continuation-depth (machine-max-depth vm)

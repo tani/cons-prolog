@@ -112,6 +112,12 @@ value to `(value)`. There is no special CONS marker or constructor.
 (query '((keysort ((2 . b) (1 . a) (2 . c)) ?pairs)))
 ```
 
+The following description applies to the default `:native` term model. In
+`:term-model :iso` databases, list cells use `($cons Head Tail)` and `$nil`;
+FUNCTOR/ARG/UNIV expose `'.'/2` and `[]`, KEYSORT uses `Key-Value` compounds, and
+canonical output expands lists into `'.'/2`. Input/output syntax selection is
+independent of this choice. See [strict term mode](ISO-COMPATIBILITY.md#strict-term-mode).
+
 These operations match predicate-call name, arity and argument positions.
 Lists and compounds remain indistinguishable: `(a b c)` has name A and arity 2.
 A list application's head must be an instantiated symbol. A variable head or

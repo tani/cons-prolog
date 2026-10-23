@@ -5,9 +5,9 @@
   (:import-from #:sprolog/src/kernel/instructions
     #:dcg-internal)
   (:import-from #:sprolog/src/kernel/model
-    #:database #:disjunction-goal #:make-disjunction-goal #:make-scoped-goals #:scoped-goals)
+    #:*term-model* #:database-term-model #:database #:disjunction-goal #:make-disjunction-goal #:make-scoped-goals #:scoped-goals)
   (:import-from #:sprolog/src/kernel/protocol
-    #:query #:variable-symbol-p)
+    #:query #:variable-symbol-p #:iso-list-cons #:iso-empty-list)
   (:import-from #:sprolog/src/api/state)
   (:import-from #:sprolog/src/kernel/wam)
   (:export #:dcg-body-goals #:dcg-control-p #:dcg-empty-terminals-p #:dcg-expand #:dcg-marker-p
@@ -101,7 +101,7 @@
            (cond
              ((dcg-marker-p form :terminals)
               (let ((tail next))
-                (dolist (token (reverse (dcg-terminal-tokens form))) (setf tail (cons token tail)))
+                (dolist (token (reverse (dcg-terminal-tokens form))) (setf tail (iso-list-cons token tail)))
                 (push (list '= state tail) goals)))
              ((dcg-marker-p form :or)
               (unless (cdr form) (error "DCG OR requires at least one branch"))
@@ -113,9 +113,9 @@
     ;; Empty and purely semantic productions consume nothing.
     (when (null last-consuming) (push (list '= input rest) goals))
     (nreverse goals)))
-(defun dcg-expand (head body)
+(defun dcg-expand (head body &key (term-model (database-term-model *database*)))
   "Return two values: the ordinary predicate head and its expanded Prolog body."
-  (let ((input (dcg-variable)) (rest (dcg-variable)))
+  (let ((*term-model* term-model) (input (dcg-variable)) (rest (dcg-variable)))
     (values (dcg-nonterminal head input rest) (dcg-body-goals body input rest))))
 (defun phrase-goals (grammar input rest) (dcg-body-goals (list grammar) input rest))
 (defun expand-query-goals (goals)
@@ -124,9 +124,10 @@
         (progn
           (unless (and (finite-list-p goal) (member (length goal) '(3 4)))
             (error "PHRASE takes a grammar, input, and optional remainder"))
-          (list (make-scoped-goals :goals (phrase-goals (second goal) (third goal) (fourth goal)))))
+          (list (make-scoped-goals :goals (phrase-goals (second goal) (third goal) (if (cdddr goal) (fourth goal) (iso-empty-list))))))
         (list goal))))
-(defun phrase (grammar input &optional rest &key limit (database *database*) (gc-threshold 4096))
-  "Collect DCG solutions from runtime Lisp data; default remainder is NIL."
-  (query (list (list 'phrase grammar input rest))
-         :limit limit :database database :gc-threshold gc-threshold))
+(defun phrase (grammar input &optional (rest nil rest-p) &key limit (database *database*) (gc-threshold 4096))
+  "Collect DCG solutions from runtime Lisp data; default remainder is the model's empty list."
+  (let ((*term-model* (database-term-model database)))
+  (query (list (list 'phrase grammar input (if rest-p rest (iso-empty-list))))
+         :limit limit :database database :gc-threshold gc-threshold)))

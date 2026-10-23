@@ -137,3 +137,15 @@ READ and WRITE predicates independently select Lisp or Prolog syntax:
 
 Both flags default to `lisp`. See [term I/O](docs/BUILTINS.md#term-io-and-reader-configuration)
 for writer options and the native cons mapping.
+
+Strict ISO term distinctions are available alongside the default native model:
+
+```lisp
+(let ((*database* (make-database :term-model :iso)))
+  (query '((= ?list ($cons a ($cons b $nil))))))
+```
+
+In this database, `[a,b]` and `'.'(a,'.'(b,[]))` both use
+`($cons a ($cons b $nil))`, while `f(a)` remains `(f a)`. `$nil` denotes
+`[]`; ordinary `nil` remains a distinct atom. The term model is immutable and
+independent of the two syntax flags. See [strict terms and validation](docs/ISO-COMPATIBILITY.md).
