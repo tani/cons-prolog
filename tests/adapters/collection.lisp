@@ -1,5 +1,5 @@
 (uiop:define-package #:sprolog/tests/adapters/collection
-  (:use #:cl #:sprolog)
+  (:use #:cl #:prolog)
   (:import-from #:sprolog/tests/support/assertions #:check)
   (:export #:run-collection-tests))
 (in-package #:sprolog/tests/adapters/collection)

@@ -1,5 +1,5 @@
 {
-  description = "sprolog: multi-implementation Common Lisp library and tests";
+  description = "Cons Prolog: multi-implementation Common Lisp library and tests";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";

@@ -30,7 +30,7 @@ callback inputs or query results between them.
 | `[]`, `'[]'` | `$nil` |
 | `nil` | ordinary atom `nil`, distinct from `$nil` |
 
-`$cons` and `$nil` are exported from `sprolog`. They are dedicated internal
+`$cons` and `$nil` are exported from the `cons` and `prolog` facade. They are dedicated internal
 symbols, not the ordinary Prolog atoms `'$cons'` and `'$nil'`. Term inspection
 exposes their ISO names `.` and `[]`; Prolog output uses bracket lists or, with
 `ignore_ops(true)`, explicit `'.'/2` applications. Lisp I/O uses the unescaped
@@ -127,7 +127,7 @@ The names alone do not establish that an example prescribes defined ISO behavior
   other exception. Its unread-tail assertion is removed because ISO 8.14.1.1
   NOTE 2 leaves the number of input characters undefined on error. Reader
   behavior is unchanged; the original expectation remains recorded.
-- Six upstream-disabled bitwise examples now execute against sprolog's documented
+- Six upstream-disabled bitwise examples now execute against Cons Prolog's documented
   implementation-defined choices (table below), with their upstream-disabled
   status and chosen values retained in the inventory.
 - STO/cyclic-term examples are SKIP, including their nominally enabled branches:
@@ -179,7 +179,7 @@ Complement inverts the infinite signed bit sequence; left shift multiplies by a
 power of two and right shift is arithmetic (sign-extending). These choices are
 retained and documented, not changed to invent a single portable ISO answer.
 
-| Enabled example | Expression | sprolog result |
+| Enabled example | Expression | Cons Prolog result |
 |---|---|---:|
 | `iso_bitwise_and_2_04` | `-10 /\ 12` | 4 |
 | `iso_bitwise_complement_1_03` | `\(10)` | -11 |

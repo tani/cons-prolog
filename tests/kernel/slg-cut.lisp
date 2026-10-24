@@ -1,5 +1,5 @@
 (uiop:define-package #:sprolog/tests/kernel/slg-cut
-  (:use #:cl #:sprolog)
+  (:use #:cl #:prolog)
   (:import-from #:sprolog/tests/kernel/slg #:slg-values)
   (:import-from #:sprolog/tests/support/assertions #:check)
   (:export #:incomplete-cut-p #:run-slg-cut-tests))

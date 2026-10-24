@@ -1,5 +1,5 @@
 (uiop:define-package #:sprolog/tests/api/interactive
-  (:use #:cl #:sprolog)
+  (:use #:cl #:prolog)
   (:import-from #:sprolog/tests/kernel/slg #:signals-error-p)
   (:import-from #:sprolog/tests/support/assertions #:check)
   (:import-from #:sprolog/tests/syntax/term-syntax)

@@ -1,5 +1,5 @@
 (uiop:define-package #:sprolog/tests/prolog/loader
-  (:use #:cl #:sprolog)
+  (:use #:cl #:prolog)
   (:import-from #:sprolog/tests/support/assertions #:check #:value-of)
   (:export #:run-prolog-loader-tests))
 (in-package #:sprolog/tests/prolog/loader)

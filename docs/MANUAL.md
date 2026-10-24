@@ -1,4 +1,4 @@
-# sprolog user guide
+# Cons Prolog user guide
 
 [README](../README.md) · [Builtins](BUILTINS.md) · [Validation](VALIDATION.md)
 

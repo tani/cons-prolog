@@ -1,5 +1,5 @@
 (uiop:define-package #:sprolog/tests/syntax/dcg
-  (:use #:cl #:sprolog)
+  (:use #:cl #:prolog)
   (:import-from #:sprolog/tests/support/assertions #:check #:solutions #:value-of)
   (:import-from #:sprolog/tests/kernel/wam-gc #:normalize-solutions #:palette #:red #:blue)
   (:export #:run-dcg-tests #:signals-error-p))

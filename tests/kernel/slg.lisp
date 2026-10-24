@@ -1,5 +1,5 @@
 (uiop:define-package #:sprolog/tests/kernel/slg
-  (:use #:cl #:sprolog)
+  (:use #:cl #:prolog)
   (:import-from #:sprolog/tests/support/assertions #:check #:solutions #:value-of)
   (:import-from #:sprolog/tests/syntax/dcg)
   (:export #:run-slg-depth-tests #:run-slg-tests #:run-wfs-exhaustive-tests #:run-wfs-oracle-tests #:signals-error-p #:slg-values #:wfs-oracle))

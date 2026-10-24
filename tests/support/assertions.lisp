@@ -1,5 +1,5 @@
 (uiop:define-package #:sprolog/tests/support/assertions
-  (:use #:cl #:sprolog)
+  (:use #:cl #:prolog)
   (:export #:*checks* #:check #:solutions #:value-of))
 (in-package #:sprolog/tests/support/assertions)
 (defmacro solutions (&body goals)

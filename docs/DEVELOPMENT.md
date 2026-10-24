@@ -10,7 +10,7 @@ There is no hand-maintained ASDF component list.
 Each source file uses `uiop:define-package` and enters that same package with
 `in-package`. Definitions belong to their implementation module. Cross-module
 calls use explicit `:import-from`, and modules export the interfaces used by their
-consumers. Only the final public facade has the `sprolog` nickname. It uses
+consumers. Only the final public facade has the `cons` and `prolog` nicknames. It uses
 `:use-reexport` to aggregate `api/public`, whose explicit imports and
 exports select the public API. Internal interfaces are not reexported through it.
 Tests follow the same arrangement, with shared test helpers and a final runner.

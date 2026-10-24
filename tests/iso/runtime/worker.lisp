@@ -4,7 +4,7 @@
 (asdf:load-asd (merge-pathnames "../../../sprolog.asd" *load-truename*))
 (asdf:load-system "sprolog")
 (uiop:define-package #:sprolog/iso-test-worker
-  (:use #:cl #:sprolog)
+  (:use #:cl #:prolog)
   (:import-from #:sprolog/src/adapters/term-ops #:iso-atom #:iso-atom-name))
 (in-package #:sprolog/iso-test-worker)
 (defun object (&rest pairs)

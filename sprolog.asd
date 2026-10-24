@@ -8,7 +8,7 @@
 
 ;; Module packages own their definitions. Map only the final public facade,
 ;; test runner, and generated atom namespace to their defining systems.
-(asdf:register-system-packages "sprolog/src/api/package" '("SPROLOG"))
+(asdf:register-system-packages "sprolog/src/api/package" '("CONS" "PROLOG"))
 (asdf:register-system-packages "sprolog/src/adapters/term-ops" '("SPROLOG/ATOMS"))
 (asdf:register-system-packages "sprolog/tests/suite" '("SPROLOG/TESTS"))
 

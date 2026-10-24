@@ -1,7 +1,7 @@
 (require :asdf)
 (asdf:load-asd (merge-pathnames "../sprolog.asd" *load-truename*))
 (asdf:load-system "sprolog")
-(defpackage #:sprolog/bench (:use #:cl #:sprolog))
+(defpackage #:sprolog/bench (:use #:cl #:prolog))
 (in-package #:sprolog/bench)
 
 (defstruct bench-case name goals (gc 4096) all expected)

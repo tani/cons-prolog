@@ -5,7 +5,7 @@
   (asdf:load-asd (truename (merge-pathnames "sprolog.asd"
                         (uiop:ensure-directory-pathname (or (uiop:getenv "SPROLOG_ROOT") "./")))))
   (asdf:load-system "sprolog"))
-(uiop:define-package #:sprolog/tests/support/derived-observations (:use #:cl #:sprolog))
+(uiop:define-package #:sprolog/tests/support/derived-observations (:use #:cl #:prolog))
 (in-package #:sprolog/tests/support/derived-observations)
 (defun observation (goals)
   (handler-case

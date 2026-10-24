@@ -1,5 +1,5 @@
 (uiop:define-package #:sprolog/tests/prolog/io
-  (:use #:cl #:sprolog)
+  (:use #:cl #:prolog)
   (:import-from #:sprolog/tests/support/assertions #:check)
   (:import-from #:sprolog/tests/adapters/builtins #:iso-error-p)
   (:export #:run-prolog-io-tests))

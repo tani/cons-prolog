@@ -1,5 +1,5 @@
 (uiop:define-package #:sprolog/tests/kernel/wam-gc
-  (:use #:cl #:sprolog)
+  (:use #:cl #:prolog)
   (:import-from #:sprolog/tests/support/assertions #:check #:solutions #:value-of)
   (:export #:palette #:red #:blue #:compare-gc-modes #:normalize-solutions #:run-wam-gc-tests))
 (in-package #:sprolog/tests/kernel/wam-gc)

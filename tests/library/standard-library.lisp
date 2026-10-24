@@ -1,5 +1,5 @@
 (uiop:define-package #:sprolog/tests/library/standard-library
-  (:use #:cl #:sprolog)
+  (:use #:cl #:prolog)
   (:import-from #:sprolog/tests/adapters/builtins #:iso-error-p)
   (:import-from #:sprolog/tests/support/assertions #:check #:value-of)
   (:import-from #:sprolog/tests/syntax/let)

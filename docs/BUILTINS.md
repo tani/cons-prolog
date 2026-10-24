@@ -2,7 +2,7 @@
 
 [README](../README.md) · [User guide](MANUAL.md)
 
-sprolog uses Lisp cons graphs as its term model. There is no separate Prolog
+Cons Prolog uses Lisp cons graphs as its term model. There is no separate Prolog
 compound type and no ISO conformance claim. `(f a b)` is exactly the same cons
 structure whether used as data or as a predicate application. Goal position gives
 it a callable interpretation. Data terms can have variable heads, improper tails,
@@ -30,7 +30,7 @@ the query/definition macros.
 The registry exposes 128 public predicate indicators, plus seven aliases.
 `src/adapters/builtins.lisp` registers primitive adapters and syntax;
 `src/library/standard-library.lisp` installs the derived predicates.
-`(sprolog:builtin-predicate-inventory)` lists the core indicators by name/arity;
+`(prolog:builtin-predicate-inventory)` lists the core indicators by name/arity;
 aliases are listed below. This inventory excludes user predicates and separate
 DCG/SLG APIs such as PHRASE and TNOT.
 
@@ -260,7 +260,7 @@ handlers survive VM GC and rollback. The existing Lisp exception API
 `iso-exception`/`iso-exception-term` and embedding hook `*iso-halt-function*` retain
 their historical names; exception payloads are plain S-expressions. HALT exits SBCL
 by default. Unknown predicates raise an existence error by default; the unknown
-flag can select failure instead. These conventions are sprolog's own specification.
+flag can select failure instead. These conventions are Cons Prolog's own specification.
 The read-only `max_arity` flag is `unbounded`, matching finite native application
 arities without a fixed implementation limit.
 

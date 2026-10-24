@@ -1,5 +1,5 @@
 (uiop:define-package #:sprolog/tests/syntax/term-syntax
-  (:use #:cl #:sprolog)
+  (:use #:cl #:prolog)
   (:import-from #:sprolog/tests/adapters/builtins #:iso-error-p)
   (:import-from #:sprolog/tests/support/assertions #:check #:solutions #:value-of)
   (:export #:run-term-syntax-tests))

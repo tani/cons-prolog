@@ -1,5 +1,5 @@
 (uiop:define-package #:sprolog/tests/adapters/iso-terms
-  (:use #:cl #:sprolog)
+  (:use #:cl #:prolog)
   (:import-from #:sprolog/tests/support/assertions #:check #:value-of)
   (:export #:run-iso-term-tests))
 (in-package #:sprolog/tests/adapters/iso-terms)

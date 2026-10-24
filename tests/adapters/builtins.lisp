@@ -1,5 +1,5 @@
 (uiop:define-package #:sprolog/tests/adapters/builtins
-  (:use #:cl #:sprolog)
+  (:use #:cl #:prolog)
   (:import-from #:sprolog/tests/support/assertions #:check #:solutions #:value-of)
   (:import-from #:sprolog/tests/kernel/slg-cut)
   (:export #:iso-error-p #:iso-value #:run-builtin-arithmetic-tests #:run-builtin-extra-tests #:run-builtin-stream-tests #:run-builtin-tests #:run-prolog-arrow-tests #:run-readable-spelling-tests #:run-unification-spelling-tests))

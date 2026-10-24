@@ -15,7 +15,7 @@
 - Use `uiop:define-package`; enter that exact package with `in-package`. Each
   module owns its definitions and explicitly imports/exports its interfaces.
   Select public symbols in `src/api/public.lisp`. Aggregate that interface with
-  `:use-reexport` in `src/api/package.lisp`, which alone has the `sprolog` nickname.
+  `:use-reexport` in `src/api/package.lisp`, which alone has the `cons` and `prolog` nicknames.
   Break execution cycles through the model, instruction vocabulary, and explicit
   late hooks rather than defining implementation functions in another package.
 - For predicate/compiler changes, run `tests/run.lisp` with a 1 MiB control stack.

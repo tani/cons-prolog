@@ -162,11 +162,11 @@ A clean-cache SBCL build passes 4,324 checks, including package ownership and
 facade isolation checks; the observation comparison remains identical.
 
 The package refactoring uses `uiop:define-package` and matching `in-package`
-forms in source and test modules. Public `sprolog:` names are selective reexports
+forms in source and test modules. Public `prolog:` names are selective reexports
 from their providers through `src/api/public.lisp`. The final
 `src/api/package.lisp` uses `:use-reexport` to aggregate that selected interface
 and is the sole implementation
-package with the `sprolog` nickname. Internal functions are owned by their modules;
+package with the `cons` and `prolog` nicknames. Internal functions are owned by their modules;
 old `sprolog::` internal references have been updated in tests, examples, and
 benchmarks. See [Development](DEVELOPMENT.md) for cycle boundaries and dispatch costs.
 

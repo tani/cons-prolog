@@ -1,7 +1,7 @@
 (require :asdf)
 (asdf:load-asd (merge-pathnames "../sprolog.asd" *load-truename*))
 (asdf:load-system "sprolog")
-(defpackage #:sprolog/competitive (:use #:cl #:sprolog))
+(defpackage #:sprolog/competitive (:use #:cl #:prolog))
 (in-package #:sprolog/competitive)
 (load-prolog-file "benchmarks/competitive.pl")
 (load-prolog-file "benchmarks/competitive-edges.pl")
