@@ -82,7 +82,7 @@
             shellHook = ''export CL_SOURCE_REGISTRY="$PWD//"'';
           }) available;
           overlayAttrs = lib.mapAttrs (impl: _: pkgs.${impl}.withOverrides
-            (_: _: \{ cons-prolog = config.packages."lib-${impl}"; })) available
+            (_: _: { "cons-prolog" = config.packages."lib-${impl}"; })) available
             // lib.mapAttrs' (impl: _: lib.nameValuePair "cons-prolog-${impl}"
               config.packages."main-${impl}") available;
         };
