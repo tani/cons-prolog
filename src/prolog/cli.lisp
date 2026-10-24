@@ -116,18 +116,19 @@
 (defun iso-repl ()
   (format *query-io* "~&cons REPL (--iso); end of file to exit.~%")
   (loop
-    (multiple-value-bind (term present marks) (iso-read-repl-term)
-      (declare (ignore marks))
-      (unless present (fresh-line *query-io*) (return))
-      (handler-case
+    ;; Reader failures (syntax_error) return to the prompt like goal errors.
+    (handler-case
+        (multiple-value-bind (term present marks) (iso-read-repl-term)
+          (declare (ignore marks))
+          (unless present (fresh-line *query-io*) (return))
           (cond ((or (named-form-p term "?-" 1) (named-form-p term ":-" 1))
                  (iso-interactive-query (isolate-goals (second term))))
                 ((or (named-form-p term ":-" 2) (named-form-p term "-->" 2))
                  ;; Rules typed at the prompt are asserted through assertz/1.
                  (unless (query (list (source-goal (list 'assertz term))) :limit 1)
                    (format *query-io* "ERROR: assertion failed.~%")))
-                (t (iso-interactive-query (isolate-goals term))))
-        (error (condition) (format *query-io* "ERROR: ~A~%" condition))))
+                (t (iso-interactive-query (isolate-goals term)))))
+      (error (condition) (format *query-io* "ERROR: ~A~%" condition)))
     (finish-output *query-io*))
   (values))
 

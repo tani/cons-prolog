@@ -24,8 +24,13 @@ No external Lisp libraries are required. From the repository directory:
 `(asdf:make "cons-prolog/cli")` builds a standalone `cons` executable in
 the repository directory.
 
+```lisp
+(require :asdf)
+(asdf:load-asd (truename "cons-prolog.asd"))
+(asdf:make "cons-prolog/cli")
+```
+
 ```sh
-# build: (asdf:load-asd (truename "cons-prolog.asd")) then (asdf:make "cons-prolog/cli")
 cons [file]        # run Lisp forms (S-expression Prolog), or a REPL with no file
 cons --lisp [file] # same, explicitly (native term model)
 cons --iso [file]  # strict ISO term model; files and the REPL use Prolog text
