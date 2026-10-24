@@ -19,6 +19,23 @@ No external Lisp libraries are required. From the repository directory:
 (use-package :prolog)
 ```
 
+## Command line
+
+`(asdf:make "cons-prolog/cli")` builds a standalone `cons` executable in
+the repository directory.
+
+```sh
+# build: (asdf:load-asd (truename "cons-prolog.asd")) then (asdf:make "cons-prolog/cli")
+cons [file]        # run Lisp forms (S-expression Prolog), or a REPL with no file
+cons --lisp [file] # same, explicitly (native term model)
+cons --iso [file]  # strict ISO term model; files and the REPL use Prolog text
+```
+
+In the `--iso` REPL, enter full-stop-terminated terms: `?- Goal.` or a bare
+goal queries (bindings print in Prolog syntax; `;` shows the next answer),
+and `Head :- Body.` asserts through `assertz/1`. `?-` directives inside
+script files execute as loader directives (no answer display). EOF exits.
+
 ## Nix
 
 The flake follows [nix-common-lisp](https://github.com/tani/nix-common-lisp),

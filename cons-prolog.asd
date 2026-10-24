@@ -17,3 +17,12 @@
   :perform (asdf:test-op (op system)
              (declare (ignore op system))
              (uiop:symbol-call :cons-prolog/tests :run-tests)))
+
+;; Standalone `cons' command line driver; (asdf:make "cons-prolog/cli").
+(asdf:defsystem "cons-prolog/cli"
+  ;; The CLI needs the full adapter layer (builtin providers); bring the
+  ;; whole base system, not just the cli file's inferred dependencies.
+  :depends-on ("cons-prolog" "cons-prolog/src/prolog/cli")
+  :build-operation "asdf:program-op"
+  :build-pathname "cons"
+  :entry-point "cons-prolog/src/prolog/cli:main")
