@@ -1,7 +1,7 @@
 (require :asdf)
 (asdf:load-asd (merge-pathnames "../sprolog.asd" *load-truename*))
 (asdf:load-system "sprolog")
-(use-package :sprolog)
+(use-package :prolog)
 (clear-database)
 (table 'path 2)
 (<-- (path ?x ?y) (path ?x ?z) (edge ?z ?y))

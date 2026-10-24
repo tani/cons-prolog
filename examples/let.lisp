@@ -1,7 +1,7 @@
 (require :asdf)
 (asdf:load-asd (merge-pathnames "../sprolog.asd" *load-truename*))
 (asdf:load-system "sprolog")
-(use-package :sprolog)
+(use-package :prolog)
 (<-- (adjusted ?n ?out)
   (let offset 10)
   (lisp ?out (+ ?n offset)))

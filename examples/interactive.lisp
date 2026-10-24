@@ -1,7 +1,7 @@
 (require :asdf)
 (asdf:load-asd (merge-pathnames "../sprolog.asd" *load-truename*))
 (asdf:load-system "sprolog")
-(use-package :sprolog)
+(use-package :prolog)
 (<-- (append () ?ys ?ys))
 (<- (append (?x . ?xs) ?ys (?x . ?zs)) (append ?xs ?ys ?zs))
 (?- (append ?xs ?ys (a b c)))

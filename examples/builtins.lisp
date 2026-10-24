@@ -1,7 +1,7 @@
 (require :asdf)
 (asdf:load-asd (merge-pathnames "../sprolog.asd" *load-truename*))
 (asdf:load-system "sprolog")
-(use-package :sprolog)
+(use-package :prolog)
 (format t "Term: ~S~%" (query '((= ?term (f a b)))))
 (format t "Nonunifiability: ~S~%" (query '((/= a b))))
 (format t "Arithmetic: ~S~%" (query '((is ?n (+ 1 (* 3 6))))))

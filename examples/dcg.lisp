@@ -1,7 +1,7 @@
 (require :asdf)
 (asdf:load-asd (merge-pathnames "../sprolog.asd" *load-truename*))
 (asdf:load-system "sprolog")
-(use-package :sprolog)
+(use-package :prolog)
 (---> (article) '(the))
 (---> (noun cat) '(cat))
 (--> (noun dog) '(dog))
