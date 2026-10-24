@@ -1,4 +1,4 @@
-# Working on sprolog
+# Working on Cons Prolog
 
 - Preserve the Lisp-native cons/rational-tree data model and the existing public API.
 - Put predicates definable from existing goals in `src/library/standard-library.lisp` as
@@ -26,7 +26,7 @@
 
 - Keep source responsibilities in `src/api/`, `src/kernel/`, `src/syntax/`,
   `src/adapters/`, `src/library/`, and `src/prolog/`. Dependency package names must match
-  `sprolog/src/<layer>/<file>`. Implementation namespaces are distinct. Match package dependencies to the
+  `cons-prolog/src/<layer>/<file>`. Implementation namespaces are distinct. Match package dependencies to the
   actual interfaces and initialization requirements; internal names are not facade API.
 
 - FUNCTOR, ARG and UNIV interpret nonempty proper lists as symbol-name plus finite

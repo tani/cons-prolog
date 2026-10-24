@@ -2,9 +2,9 @@
 
 ## ASDF
 
-`sprolog.asd` defines a `package-inferred-system`. Loading `sprolog` loads
-`sprolog/src/api/package`, the final public facade, and its inferred prerequisites.
-Testing loads `sprolog/tests/suite`, whose `run-tests` entry point runs the suite.
+`cons-prolog.asd` defines a `package-inferred-system`. Loading `cons-prolog` loads
+`cons-prolog/src/api/package`, the final public facade, and its inferred prerequisites.
+Testing loads `cons-prolog/tests/suite`, whose `run-tests` entry point runs the suite.
 There is no hand-maintained ASDF component list.
 
 Each source file uses `uiop:define-package` and enters that same package with
@@ -14,7 +14,7 @@ consumers. Only the final public facade has the `cons` and `prolog` nicknames. I
 `:use-reexport` to aggregate `api/public`, whose explicit imports and
 exports select the public API. Internal interfaces are not reexported through it.
 Tests follow the same arrangement, with shared test helpers and a final runner.
-The test runner alone has the `sprolog/tests` nickname.
+The test runner alone has the `cons-prolog/tests` nickname.
 
 The execution pipeline contains runtime/compiler/adapter cycles. Three explicit
 boundaries make its ASDF load graph acyclic:
@@ -39,9 +39,9 @@ must match its ASDF path and its `in-package` form.
 
 ```lisp
 (require :asdf)
-(asdf:load-asd (truename "sprolog.asd"))
-(asdf:load-system "sprolog")
-(asdf:test-system "sprolog")
+(asdf:load-asd (truename "cons-prolog.asd"))
+(asdf:load-system "cons-prolog")
+(asdf:test-system "cons-prolog")
 ```
 
 ASDF 3.1 or later is required. No Quicklisp dependencies are needed.
@@ -63,8 +63,8 @@ For each implementation `<impl>` it exports:
 | `devShells.<impl>` | Development shell with that implementation |
 
 `packages.default` is the SBCL library. `devShells.default` includes all
-available implementations. The default overlay adds `sprolog` to each Lisp's
-package set and exports `sprolog-<impl>` REPL wrappers.
+available implementations. The default overlay adds `cons-prolog` to each Lisp's
+package set and exports `cons-prolog-<impl>` REPL wrappers.
 
 Unlike the template's Fibonacci demo, this library does not define an
 application entry point or dump an executable image. `main-*` starts the Lisp
@@ -113,7 +113,7 @@ sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 | `src/prolog/` | Prolog lexer, reader, writer and source loader |
 
 Directory boundaries describe responsibility. Every implementation file now has
-its own package and inferred subsystem; loading the complete `sprolog` system
+its own package and inferred subsystem; loading the complete `cons-prolog` system
 installs the execution providers and derived library before exposing the facade.
 
 ## Test and measurement layout

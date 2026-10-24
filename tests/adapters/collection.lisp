@@ -1,11 +1,11 @@
-(uiop:define-package #:sprolog/tests/adapters/collection
+(uiop:define-package #:cons-prolog/tests/adapters/collection
   (:use #:cl #:prolog)
-  (:import-from #:sprolog/tests/support/assertions #:check)
+  (:import-from #:cons-prolog/tests/support/assertions #:check)
   (:export #:run-collection-tests))
-(in-package #:sprolog/tests/adapters/collection)
+(in-package #:cons-prolog/tests/adapters/collection)
 
 (defun run-collection-tests ()
-  (let ((*package* (find-package :sprolog/tests/adapters/collection)))
+  (let ((*package* (find-package :cons-prolog/tests/adapters/collection)))
     (dolist (model '(:native :iso))
       (let ((*database* (make-database :term-model model)))
         (load-prolog-string

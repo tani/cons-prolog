@@ -1,7 +1,7 @@
-(uiop:define-package #:sprolog/src/api/state (:use #:cl)
+(uiop:define-package #:cons-prolog/src/api/state (:use #:cl)
   (:export #:*iso-aliases* #:*iso-builtins* #:*iso-context* #:*iso-halt-function*
     #:*standard-predicates* #:*iso-standard-predicates* #:*syntax-predicates*))
-(in-package #:sprolog/src/api/state)
+(in-package #:cons-prolog/src/api/state)
 
 (defvar *iso-builtins* (make-hash-table :test 'equal))
 (defvar *iso-aliases* (make-hash-table :test 'equal))

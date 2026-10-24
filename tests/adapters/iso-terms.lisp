@@ -1,15 +1,15 @@
-(uiop:define-package #:sprolog/tests/adapters/iso-terms
+(uiop:define-package #:cons-prolog/tests/adapters/iso-terms
   (:use #:cl #:prolog)
-  (:import-from #:sprolog/tests/support/assertions #:check #:value-of)
+  (:import-from #:cons-prolog/tests/support/assertions #:check #:value-of)
   (:export #:run-iso-term-tests))
-(in-package #:sprolog/tests/adapters/iso-terms)
+(in-package #:cons-prolog/tests/adapters/iso-terms)
 
 (defun text-query (text database gc)
   (query (parse-prolog-string text :database database :package *package*)
          :database database :gc-threshold gc))
 
 (defun run-iso-term-tests ()
-  (let ((*package* (find-package :sprolog/tests/adapters/iso-terms)))
+  (let ((*package* (find-package :cons-prolog/tests/adapters/iso-terms)))
     (check (eq :native (database-term-model (make-database))))
     (check (handler-case (progn (make-database :term-model :bad) nil) (error () t)))
     (dolist (gc '(nil 1 8 4096))
@@ -68,7 +68,7 @@
             (check (and (search "($CONS " text) (search " $NIL)" text))
                    "strict list markers print uppercase without escapes"))
           (close out))
-        (dolist (text '("($cons a $nil)" "($cons SPROLOG/ATOMS::$cons $nil)"))
+        (dolist (text '("($cons a $nil)" "($cons CONS-PROLOG/ATOMS::$cons $nil)"))
           (with-input-from-string (in text)
             (check (query (list (list 'read in '?x)
                                (list 'functor '?x '$cons 2))

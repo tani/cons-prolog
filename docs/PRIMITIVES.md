@@ -151,8 +151,8 @@ To reproduce the comparison, run the observation script once per checkout and
 compare its stdout. Loading/compilation messages are suppressed by the script:
 
 ```sh
-SPROLOG_ROOT=/path/to/reference sbcl --script tests/support/derived-observations.lisp > before.txt
-SPROLOG_ROOT=/path/to/current sbcl --script tests/support/derived-observations.lisp > after.txt
+CONS_PROLOG_ROOT=/path/to/reference sbcl --script tests/support/derived-observations.lisp > before.txt
+CONS_PROLOG_ROOT=/path/to/current sbcl --script tests/support/derived-observations.lisp > after.txt
 diff -u before.txt after.txt
 ```
 
@@ -167,7 +167,7 @@ from their providers through `src/api/public.lisp`. The final
 `src/api/package.lisp` uses `:use-reexport` to aggregate that selected interface
 and is the sole implementation
 package with the `cons` and `prolog` nicknames. Internal functions are owned by their modules;
-old `sprolog::` internal references have been updated in tests, examples, and
+old `cons-prolog::` internal references have been updated in tests, examples, and
 benchmarks. See [Development](DEVELOPMENT.md) for cycle boundaries and dispatch costs.
 
 ## Cons-model operations and term I/O

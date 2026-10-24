@@ -1,13 +1,13 @@
-(uiop:define-package #:sprolog/src/syntax/compiler
+(uiop:define-package #:cons-prolog/src/syntax/compiler
   (:use #:cl)
-  (:import-from #:sprolog/src/kernel/engine
+  (:import-from #:cons-prolog/src/kernel/engine
     #:*database* #:close-query #:deref #:fresh-var #:map-term #:next-solution #:predicate-key
     #:unify)
-  (:import-from #:sprolog/src/kernel/instructions
+  (:import-from #:cons-prolog/src/kernel/instructions
     #:allocate #:call #:cut #:dcg-internal #:execute #:fail #:get-term #:host #:jump
     #:or-branches #:proceed #:put-args #:retry-me-else #:scoped-body #:tnot #:true #:trust-me
     #:try-branch #:try-me-else #:yield)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:*term-model* #:database-term-model
     #:database-iso-state #:iso-state-loaded-files #:iso-state-declarations #:iso-state-dynamic #:%make-machine #:database #:database-generation #:database-predicates #:database-tabled
     #:disjunction-goal-branches #:disjunction-goal-p #:host-goal #:host-goal-arguments
@@ -15,24 +15,24 @@
     #:machine-slots #:machine-variables #:make-predicate #:predicate #:predicate-clauses
     #:predicate-code #:scoped-goals-goals #:scoped-goals-p #:sequence-goals
     #:sequence-goals-goals #:sequence-goals-p #:slot-ref)
-  (:import-from #:sprolog/src/kernel/protocol
+  (:import-from #:cons-prolog/src/kernel/protocol
     #:iso-atom #:iso-builtin-p #:iso-compound #:iso-error #:iso-goal #:iso-predicate-name
     #:lower-wam-code #:table)
-  (:import-from #:sprolog/src/syntax/control-syntax
+  (:import-from #:cons-prolog/src/syntax/control-syntax
     #:iso-control-form-p #:iso-control-instructions #:validate-static-meta-goal)
-  (:import-from #:sprolog/src/syntax/dcg
+  (:import-from #:cons-prolog/src/syntax/dcg
     #:expand-query-goals)
-  (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:import-from #:cons-prolog/src/api/state)
+  (:import-from #:cons-prolog/src/kernel/protocol #:register-provider)
   (:export #:add-clause #:anonymous-p #:clear-database #:compile-clause #:compile-predicate
     #:control-goal-p #:disassemble-predicate #:goal-instructions #:make-query #:query
     #:term-template #:variable-symbol-p #:variables-in))
-(in-package #:sprolog/src/syntax/compiler)
+(in-package #:cons-prolog/src/syntax/compiler)
 
 (defun variable-symbol-p (x)
   (and (symbolp x)
-       (not (and (find-package :sprolog/atoms)
-                 (eq (symbol-package x) (find-package :sprolog/atoms))))
+       (not (and (find-package :cons-prolog/atoms)
+                 (eq (symbol-package x) (find-package :cons-prolog/atoms))))
        (plusp (length (symbol-name x)))
        (char= #\? (char (symbol-name x) 0))))
 (defun anonymous-p (x) (and (variable-symbol-p x) (string= (symbol-name x) "?")))
@@ -196,7 +196,7 @@
       (format stream "~4D  ~S~%" pc instruction))))
 
 (eval-when (:load-toplevel :execute)
-  (register-provider 'sprolog/src/kernel/protocol:goal-instructions 'goal-instructions)
-  (register-provider 'sprolog/src/kernel/protocol:query 'query)
-  (register-provider 'sprolog/src/kernel/protocol:variable-symbol-p 'variable-symbol-p)
+  (register-provider 'cons-prolog/src/kernel/protocol:goal-instructions 'goal-instructions)
+  (register-provider 'cons-prolog/src/kernel/protocol:query 'query)
+  (register-provider 'cons-prolog/src/kernel/protocol:variable-symbol-p 'variable-symbol-p)
 )

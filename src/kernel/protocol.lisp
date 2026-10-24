@@ -1,5 +1,5 @@
 ;;; Forward execution hooks. Providers own their definitions in their own packages.
-(uiop:define-package #:sprolog/src/kernel/protocol (:use #:cl)
+(uiop:define-package #:cons-prolog/src/kernel/protocol (:use #:cl)
   (:export #:register-provider #:ensure-registers #:execute-term-instruction #:goal-instructions
     #:host-goal-form #:iso-atom #:iso-atomic-equal #:iso-builtin-p #:iso-compound #:iso-error
     #:iso-execute #:iso-flag-value #:iso-goal #:iso-handle-exception #:iso-instruction-p
@@ -8,7 +8,7 @@
     #:slg-check-cut #:slg-check-database #:slg-close #:slg-enter-cut-frame #:slg-negative
     #:slg-return-answer #:slg-statistics #:slg-table-goal #:standard-predicate #:table
     #:variable-symbol-p #:iso-list-cons #:iso-empty-list))
-(in-package #:sprolog/src/kernel/protocol)
+(in-package #:cons-prolog/src/kernel/protocol)
 (defvar *providers* (make-hash-table :test 'eq))
 (defun register-provider (interface provider)
   (setf (gethash interface *providers*) provider))

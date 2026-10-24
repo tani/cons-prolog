@@ -1,13 +1,13 @@
-(uiop:define-package #:sprolog/src/prolog/writer
+(uiop:define-package #:cons-prolog/src/prolog/writer
   (:use #:cl)
-  (:import-from #:sprolog/src/kernel/engine #:deref)
-  (:import-from #:sprolog/src/kernel/model #:*term-model* #:database-term-model #:logic-var-p)
-  (:import-from #:sprolog/src/adapters/term-ops
+  (:import-from #:cons-prolog/src/kernel/engine #:deref)
+  (:import-from #:cons-prolog/src/kernel/model #:*term-model* #:database-term-model #:logic-var-p)
+  (:import-from #:cons-prolog/src/adapters/term-ops
     #:iso-acyclic-p #:iso-atom #:iso-atom-name #:iso-error #:iso-list #:iso-required #:iso-text #:iso-empty-list #:iso-null-p #:iso-list-cell-p #:iso-list-head #:iso-list-tail)
-  (:import-from #:sprolog/src/adapters/adapter #:iso-number-string)
-  (:import-from #:sprolog/src/prolog/reader #:initialize-reader-operators)
+  (:import-from #:cons-prolog/src/adapters/adapter #:iso-number-string)
+  (:import-from #:cons-prolog/src/prolog/reader #:initialize-reader-operators)
   (:export #:write-prolog-term))
-(in-package #:sprolog/src/prolog/writer)
+(in-package #:cons-prolog/src/prolog/writer)
 
 (defun identifier-atom-p (text)
   (and (plusp (length text)) (alpha-char-p (char text 0))

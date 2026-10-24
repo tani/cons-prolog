@@ -1,23 +1,23 @@
-(uiop:define-package #:sprolog/src/adapters/collection
+(uiop:define-package #:cons-prolog/src/adapters/collection
   (:use #:cl)
-  (:import-from #:sprolog/src/adapters/adapter
+  (:import-from #:cons-prolog/src/adapters/adapter
     #:iso-output-list)
-  (:import-from #:sprolog/src/adapters/term-ops
+  (:import-from #:cons-prolog/src/adapters/term-ops
     #:iso-atomic-equal #:iso-copy #:iso-text #:iso-variables #:iso-list-from-host)
-  (:import-from #:sprolog/src/kernel/engine
+  (:import-from #:cons-prolog/src/kernel/engine
     #:close-query #:deref #:map-term #:next-solution #:unify)
-  (:import-from #:sprolog/src/kernel/instructions
+  (:import-from #:cons-prolog/src/kernel/instructions
     #:yield)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:%make-machine #:logic-var-p #:machine-database #:machine-gc-floor #:machine-variables)
-  (:import-from #:sprolog/src/kernel/runtime
+  (:import-from #:cons-prolog/src/kernel/runtime
     #:iso-enter #:iso-goal #:iso-result)
-  (:import-from #:sprolog/src/kernel/protocol)
-  (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/adapters/dynamic)
+  (:import-from #:cons-prolog/src/kernel/protocol)
+  (:import-from #:cons-prolog/src/api/state)
+  (:import-from #:cons-prolog/src/adapters/dynamic)
   (:export #:iso-bagof-results #:iso-child-solutions #:iso-collect #:iso-group-answers
     #:iso-variant-p))
-(in-package #:sprolog/src/adapters/collection)
+(in-package #:cons-prolog/src/adapters/collection)
 
 
 (defun iso-child-solutions (vm template goal free)

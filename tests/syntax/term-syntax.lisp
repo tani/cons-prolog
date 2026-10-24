@@ -1,9 +1,9 @@
-(uiop:define-package #:sprolog/tests/syntax/term-syntax
+(uiop:define-package #:cons-prolog/tests/syntax/term-syntax
   (:use #:cl #:prolog)
-  (:import-from #:sprolog/tests/adapters/builtins #:iso-error-p)
-  (:import-from #:sprolog/tests/support/assertions #:check #:solutions #:value-of)
+  (:import-from #:cons-prolog/tests/adapters/builtins #:iso-error-p)
+  (:import-from #:cons-prolog/tests/support/assertions #:check #:solutions #:value-of)
   (:export #:run-term-syntax-tests))
-(in-package #:sprolog/tests/syntax/term-syntax)
+(in-package #:cons-prolog/tests/syntax/term-syntax)
 
 (defun run-term-syntax-tests ()
   (let ((*database* (make-database)))
@@ -36,7 +36,7 @@
                          (write . 1) (write . 2) (writeq . 1) (writeq . 2)
                          (write_canonical . 1) (write_canonical . 2) (write_term . 2) (write_term . 3)
                          (op . 3) (current_op . 3) (char_conversion . 2) (current_char_conversion . 2)))
-      (check (sprolog/src/api/registry:iso-builtin-p (car indicator) (cdr indicator)) "cons-model builtin is registered"))
+      (check (cons-prolog/src/api/registry:iso-builtin-p (car indicator) (cdr indicator)) "cons-model builtin is registered"))
     (check (query '((functor (f a) f 1))) "term arity matches call arity")
     (let ((ring (cons 'f nil)))
       (setf (cdr ring) ring)

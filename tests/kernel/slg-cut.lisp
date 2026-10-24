@@ -1,9 +1,9 @@
-(uiop:define-package #:sprolog/tests/kernel/slg-cut
+(uiop:define-package #:cons-prolog/tests/kernel/slg-cut
   (:use #:cl #:prolog)
-  (:import-from #:sprolog/tests/kernel/slg #:slg-values)
-  (:import-from #:sprolog/tests/support/assertions #:check)
+  (:import-from #:cons-prolog/tests/kernel/slg #:slg-values)
+  (:import-from #:cons-prolog/tests/support/assertions #:check)
   (:export #:incomplete-cut-p #:run-slg-cut-tests))
-(in-package #:sprolog/tests/kernel/slg-cut)
+(in-package #:cons-prolog/tests/kernel/slg-cut)
 
 (defun incomplete-cut-p (thunk)
   (handler-case (progn (funcall thunk) nil) (slg-incomplete-cut () t)))

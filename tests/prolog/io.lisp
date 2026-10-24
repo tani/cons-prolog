@@ -1,9 +1,9 @@
-(uiop:define-package #:sprolog/tests/prolog/io
+(uiop:define-package #:cons-prolog/tests/prolog/io
   (:use #:cl #:prolog)
-  (:import-from #:sprolog/tests/support/assertions #:check)
-  (:import-from #:sprolog/tests/adapters/builtins #:iso-error-p)
+  (:import-from #:cons-prolog/tests/support/assertions #:check)
+  (:import-from #:cons-prolog/tests/adapters/builtins #:iso-error-p)
   (:export #:run-prolog-io-tests))
-(in-package #:sprolog/tests/prolog/io)
+(in-package #:cons-prolog/tests/prolog/io)
 
 (defun text-goals (text)
   (list (first (parse-prolog-string text))))
@@ -28,7 +28,7 @@
       (close out))))
 
 (defun run-prolog-io-tests ()
-  (let ((*package* (find-package :sprolog/tests/prolog/io)))
+  (let ((*package* (find-package :cons-prolog/tests/prolog/io)))
     (let ((*database* (make-database)))
       (check (query '((current_prolog_flag read_syntax lisp) (current_prolog_flag write_syntax lisp))))
       (dolist (flag '(read_syntax write_syntax))

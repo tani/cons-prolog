@@ -1,20 +1,20 @@
-(uiop:define-package #:sprolog/src/kernel/wam
+(uiop:define-package #:cons-prolog/src/kernel/wam
   (:use #:cl)
-  (:import-from #:sprolog/src/kernel/engine
+  (:import-from #:cons-prolog/src/kernel/engine
     #:bind-var #:deref #:fresh-cons #:fresh-var #:unify)
-  (:import-from #:sprolog/src/kernel/instructions
+  (:import-from #:cons-prolog/src/kernel/instructions
     #:get-constant #:get-list #:get-structure #:get-value #:get-variable #:put-constant
     #:put-list #:put-structure #:put-value #:put-variable #:set-constant #:set-value
     #:set-variable #:set-void #:unify-constant #:unify-value #:unify-variable #:unify-void)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:logic-var-p #:machine-args #:machine-mode #:machine-scan #:machine-slots)
-  (:import-from #:sprolog/src/kernel/protocol)
-  (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/kernel/gc)
-  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:import-from #:cons-prolog/src/kernel/protocol)
+  (:import-from #:cons-prolog/src/api/state)
+  (:import-from #:cons-prolog/src/kernel/gc)
+  (:import-from #:cons-prolog/src/kernel/protocol #:register-provider)
   (:export #:begin-list #:begin-structure #:ensure-registers #:execute-term-instruction
     #:new-structure #:register-value #:scan-instruction #:scan-value))
-(in-package #:sprolog/src/kernel/wam)
+(in-package #:cons-prolog/src/kernel/wam)
 
 
 (defun ensure-registers (vm count)
@@ -128,6 +128,6 @@
     (otherwise (error "Unknown instruction ~S" op))))
 
 (eval-when (:load-toplevel :execute)
-  (register-provider 'sprolog/src/kernel/protocol:ensure-registers 'ensure-registers)
-  (register-provider 'sprolog/src/kernel/protocol:execute-term-instruction 'execute-term-instruction)
+  (register-provider 'cons-prolog/src/kernel/protocol:ensure-registers 'ensure-registers)
+  (register-provider 'cons-prolog/src/kernel/protocol:execute-term-instruction 'execute-term-instruction)
 )

@@ -1,17 +1,17 @@
-(uiop:define-package #:sprolog/src/api/registry
+(uiop:define-package #:cons-prolog/src/api/registry
   (:use #:cl)
-  (:import-from #:sprolog/src/api/state
+  (:import-from #:cons-prolog/src/api/state
     #:*iso-aliases* #:*iso-builtins* #:*iso-context* #:*iso-halt-function*
     #:*standard-predicates* #:*iso-standard-predicates* #:*syntax-predicates*)
-  (:import-from #:sprolog/src/kernel/protocol
+  (:import-from #:cons-prolog/src/kernel/protocol
     #:iso-predicate-name)
-  (:import-from #:sprolog/src/kernel/model #:*term-model*)
-  (:import-from #:sprolog/src/kernel/instructions)
-  (:import-from #:sprolog/src/api/api)
-  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:import-from #:cons-prolog/src/kernel/model #:*term-model*)
+  (:import-from #:cons-prolog/src/kernel/instructions)
+  (:import-from #:cons-prolog/src/api/api)
+  (:import-from #:cons-prolog/src/kernel/protocol #:register-provider)
   (:export #:builtin-predicate-inventory #:iso-builtin-p #:iso-primitive-p #:iso-register
     #:iso-syntax-p #:standard-predicate #:syntax-register))
-(in-package #:sprolog/src/api/registry)
+(in-package #:cons-prolog/src/api/registry)
 
 (defun iso-register (name arities)
   (dolist (arity arities) (setf (gethash (cons (string-upcase name) arity) *iso-builtins*) t)))
@@ -51,8 +51,8 @@
                            (and (string= (car a) (car b)) (< (cdr a) (cdr b))))))))
 
 (eval-when (:load-toplevel :execute)
-  (register-provider 'sprolog/src/kernel/protocol:iso-builtin-p 'iso-builtin-p)
-  (register-provider 'sprolog/src/kernel/protocol:iso-primitive-p 'iso-primitive-p)
-  (register-provider 'sprolog/src/kernel/protocol:iso-syntax-p 'iso-syntax-p)
-  (register-provider 'sprolog/src/kernel/protocol:standard-predicate 'standard-predicate)
+  (register-provider 'cons-prolog/src/kernel/protocol:iso-builtin-p 'iso-builtin-p)
+  (register-provider 'cons-prolog/src/kernel/protocol:iso-primitive-p 'iso-primitive-p)
+  (register-provider 'cons-prolog/src/kernel/protocol:iso-syntax-p 'iso-syntax-p)
+  (register-provider 'cons-prolog/src/kernel/protocol:standard-predicate 'standard-predicate)
 )

@@ -1,22 +1,22 @@
-(uiop:define-package #:sprolog/src/syntax/wam-compiler
+(uiop:define-package #:cons-prolog/src/syntax/wam-compiler
   (:use #:cl)
-  (:import-from #:sprolog/src/kernel/engine
+  (:import-from #:cons-prolog/src/kernel/engine
     #:unify)
-  (:import-from #:sprolog/src/kernel/instructions
+  (:import-from #:cons-prolog/src/kernel/instructions
     #:allocate #:clear-x #:cut #:deallocate #:enter-cut-scope #:execute #:get-constant
     #:get-list #:get-structure #:get-term #:get-value #:get-variable #:host #:iso-if #:jump
     #:leave-cut-scope #:or-branches #:proceed #:put-args #:put-constant #:put-list
     #:put-structure #:put-value #:put-variable #:scoped-body #:set-constant #:set-value
     #:set-variable #:set-void #:tnot #:try-branch #:unify-constant #:unify-value
     #:unify-variable #:unify-void)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:slot-ref #:slot-ref-anonymous #:slot-ref-index #:slot-ref-p)
-  (:import-from #:sprolog/src/kernel/protocol)
-  (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/syntax/compiler)
-  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:import-from #:cons-prolog/src/kernel/protocol)
+  (:import-from #:cons-prolog/src/api/state)
+  (:import-from #:cons-prolog/src/syntax/compiler)
+  (:import-from #:cons-prolog/src/kernel/protocol #:register-provider)
   (:export #:compound-fields #:ir-argument-register-count #:lower-wam-code #:structure-fields))
-(in-package #:sprolog/src/syntax/wam-compiler)
+(in-package #:cons-prolog/src/syntax/wam-compiler)
 
 
 (defun structure-fields (term)
@@ -181,5 +181,5 @@ All graph traversals are iterative, including compilation of cyclic templates."
       (coerce code 'list))))
 
 (eval-when (:load-toplevel :execute)
-  (register-provider 'sprolog/src/kernel/protocol:lower-wam-code 'lower-wam-code)
+  (register-provider 'cons-prolog/src/kernel/protocol:lower-wam-code 'lower-wam-code)
 )

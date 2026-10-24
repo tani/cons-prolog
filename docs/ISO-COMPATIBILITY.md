@@ -37,7 +37,7 @@ exposes their ISO names `.` and `[]`; Prolog output uses bracket lists or, with
 spellings `$CONS` and `$NIL` (the same Lisp symbols as `$cons` and `$nil`).
 Ordinary atom spelling and host-required escaping are preserved. In quoted Lisp
 output, an ordinary colliding user atom is package-qualified, e.g.
-`SPROLOG/ATOMS::$cons`, so it reads back distinctly.
+`CONS-PROLOG/ATOMS::$cons`, so it reads back distinctly.
 Lisp source and callbacks must explicitly construct strict lists; raw Lisp
 lists represent applications, and NIL is not an empty Prolog list in this mode.
 

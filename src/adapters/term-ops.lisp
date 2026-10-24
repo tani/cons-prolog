@@ -1,42 +1,42 @@
-(uiop:define-package #:sprolog/src/adapters/term-ops
+(uiop:define-package #:cons-prolog/src/adapters/term-ops
   (:use #:cl)
-  (:import-from #:sprolog/src/api/state
+  (:import-from #:cons-prolog/src/api/state
     #:*iso-context*)
-  (:import-from #:sprolog/src/kernel/engine
+  (:import-from #:cons-prolog/src/kernel/engine
     #:bind-var #:deref #:fresh-cons #:fresh-var #:map-term #:unify)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:%make-machine #:%make-var #:iso-exception #:logic-var-binding #:logic-var-p
     #:*term-model* #:$cons #:$nil)
-  (:import-from #:sprolog/src/kernel/protocol)
-  (:import-from #:sprolog/src/kernel/instructions)
-  (:import-from #:sprolog/src/api/registry)
-  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:import-from #:cons-prolog/src/kernel/protocol)
+  (:import-from #:cons-prolog/src/kernel/instructions)
+  (:import-from #:cons-prolog/src/api/registry)
+  (:import-from #:cons-prolog/src/kernel/protocol #:register-provider)
   (:export #:iso-acyclic-p #:iso-atom #:iso-atom-name #:iso-atom-p #:iso-atomic-equal #:iso-bind
     #:iso-checked-unify #:iso-compound #:iso-copy #:iso-error #:iso-identical-p #:iso-integer
     #:iso-list #:iso-occurs-p #:iso-parts #:iso-required #:iso-text #:iso-unifiable-p
     #:iso-variables #:iso-empty-list #:iso-null-p #:iso-list-cell-p #:iso-list-head
     #:iso-list-tail #:iso-list-cons #:iso-list-from-host))
-(in-package #:sprolog/src/adapters/term-ops)
+(in-package #:cons-prolog/src/adapters/term-ops)
 
 
-(defpackage #:sprolog/atoms (:use))
+(defpackage #:cons-prolog/atoms (:use))
 (defun iso-atom (name)
   (cond ((and (eq *term-model* :iso) (string= name "[]")) '$nil)
         ((and (eq *term-model* :iso) (string= name ".")) '$cons)
         ((and (not (eq *term-model* :iso)) (string-equal name "nil")) nil)
-        (t (intern name :sprolog/atoms))))
+        (t (intern name :cons-prolog/atoms))))
 (defun iso-atom-name (x)
   (cond ((and (eq *term-model* :iso) (eq x '$nil)) "[]")
         ((and (eq *term-model* :iso) (eq x '$cons)) ".")
-        ((symbolp x) (if (eq (symbol-package x) (find-package :sprolog/atoms))
+        ((symbolp x) (if (eq (symbol-package x) (find-package :cons-prolog/atoms))
                          (symbol-name x) (string-downcase (symbol-name x))))
         (t (iso-error "type_error" (iso-atom "atom") x))))
 (defun iso-atomic-equal (a b)
   ;; Lisp symbol identity is preserved; generated builtin atoms bridge by name.
   (or (eql a b)
       (and (symbolp a) (symbolp b) 
-           (or (eq (symbol-package a) (find-package :sprolog/atoms))
-               (eq (symbol-package b) (find-package :sprolog/atoms)))
+           (or (eq (symbol-package a) (find-package :cons-prolog/atoms))
+               (eq (symbol-package b) (find-package :cons-prolog/atoms)))
            (string= (iso-atom-name a) (iso-atom-name b)))))
 (defun iso-atom-p (x) (symbolp (deref x)))
 (defun iso-compound (name &rest args)
@@ -64,7 +64,7 @@
   (error 'iso-exception :term
          (iso-compound (iso-atom "error")
                        (apply #'iso-compound (iso-atom name) args)
-                       (or *iso-context* (iso-atom "sprolog")))))
+                       (or *iso-context* (iso-atom "cons-prolog")))))
 (defun iso-required (x)
   (let ((x (deref x)))
     (when (logic-var-p x) (iso-error "instantiation_error")) x))
@@ -157,10 +157,10 @@
         (string= (iso-atom-name target) (iso-atom-name value)) (unify vm target value))))
 
 (eval-when (:load-toplevel :execute)
-  (register-provider 'sprolog/src/kernel/protocol:iso-list-cons 'iso-list-cons)
-  (register-provider 'sprolog/src/kernel/protocol:iso-empty-list 'iso-empty-list)
-  (register-provider 'sprolog/src/kernel/protocol:iso-atom 'iso-atom)
-  (register-provider 'sprolog/src/kernel/protocol:iso-atomic-equal 'iso-atomic-equal)
-  (register-provider 'sprolog/src/kernel/protocol:iso-compound 'iso-compound)
-  (register-provider 'sprolog/src/kernel/protocol:iso-error 'iso-error)
+  (register-provider 'cons-prolog/src/kernel/protocol:iso-list-cons 'iso-list-cons)
+  (register-provider 'cons-prolog/src/kernel/protocol:iso-empty-list 'iso-empty-list)
+  (register-provider 'cons-prolog/src/kernel/protocol:iso-atom 'iso-atom)
+  (register-provider 'cons-prolog/src/kernel/protocol:iso-atomic-equal 'iso-atomic-equal)
+  (register-provider 'cons-prolog/src/kernel/protocol:iso-compound 'iso-compound)
+  (register-provider 'cons-prolog/src/kernel/protocol:iso-error 'iso-error)
 )

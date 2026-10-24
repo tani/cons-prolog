@@ -1,19 +1,19 @@
-(uiop:define-package #:sprolog/src/syntax/let-syntax
+(uiop:define-package #:cons-prolog/src/syntax/let-syntax
   (:use #:cl)
-  (:import-from #:sprolog/src/kernel/instructions
+  (:import-from #:cons-prolog/src/kernel/instructions
     #:dcg-internal)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:lexical-binding #:lexical-binding-getter #:lexical-binding-setter #:make-lexical-binding)
-  (:import-from #:sprolog/src/kernel/protocol
+  (:import-from #:cons-prolog/src/kernel/protocol
     #:host-goal-form)
-  (:import-from #:sprolog/src/syntax/compiler
+  (:import-from #:cons-prolog/src/syntax/compiler
     #:variable-symbol-p)
-  (:import-from #:sprolog/src/syntax/dcg
+  (:import-from #:cons-prolog/src/syntax/dcg
     #:finite-list-p)
-  (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/kernel/slg)
+  (:import-from #:cons-prolog/src/api/state)
+  (:import-from #:cons-prolog/src/kernel/slg)
   (:export #:globally-special-p #:let-goal-form #:lexical-binding-value))
-(in-package #:sprolog/src/syntax/let-syntax)
+(in-package #:cons-prolog/src/syntax/let-syntax)
 
 (defun lexical-binding-value (binding) (funcall (lexical-binding-getter binding)))
 (defun (setf lexical-binding-value) (value binding)

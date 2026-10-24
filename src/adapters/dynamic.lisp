@@ -1,29 +1,29 @@
-(uiop:define-package #:sprolog/src/adapters/dynamic
+(uiop:define-package #:cons-prolog/src/adapters/dynamic
   (:use #:cl)
-  (:import-from #:sprolog/src/adapters/adapter
+  (:import-from #:cons-prolog/src/adapters/adapter
     #:iso-state-for)
-  (:import-from #:sprolog/src/adapters/term-ops
+  (:import-from #:cons-prolog/src/adapters/term-ops
     #:iso-atom #:iso-compound #:iso-error #:iso-integer #:iso-parts #:iso-required #:iso-text
     #:iso-unifiable-p)
-  (:import-from #:sprolog/src/api/registry
+  (:import-from #:cons-prolog/src/api/registry
     #:iso-builtin-p)
-  (:import-from #:sprolog/src/kernel/engine
+  (:import-from #:cons-prolog/src/kernel/engine
     #:deref #:instantiate #:map-term #:predicate-key #:reify)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:%make-var #:database-generation #:database-predicates #:database-tabled #:host-goal-p
     #:iso-state-dynamic #:iso-state-declarations #:logic-var-binding #:logic-var-p #:machine-database #:make-predicate
     #:predicate-clauses #:slot-ref-index #:slot-ref-p)
-  (:import-from #:sprolog/src/kernel/runtime
+  (:import-from #:cons-prolog/src/kernel/runtime
     #:iso-goal #:iso-predicate-name #:iso-resolve-name #:iso-result #:iso-rule-functor-p)
-  (:import-from #:sprolog/src/syntax/compiler
+  (:import-from #:cons-prolog/src/syntax/compiler
     #:compile-predicate #:term-template #:variable-symbol-p)
-  (:import-from #:sprolog/src/kernel/protocol)
-  (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/kernel/instructions)
-  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:import-from #:cons-prolog/src/kernel/protocol)
+  (:import-from #:cons-prolog/src/api/state)
+  (:import-from #:cons-prolog/src/kernel/instructions)
+  (:import-from #:cons-prolog/src/kernel/protocol #:register-provider)
   (:export #:iso-body-list #:iso-body-term #:iso-check-modifiable #:iso-clause-alternatives
     #:iso-clause-parts #:iso-indicator #:iso-modify #:iso-publish))
-(in-package #:sprolog/src/adapters/dynamic)
+(in-package #:cons-prolog/src/adapters/dynamic)
 
 
 ;;; Dynamic predicates use immutable clause/code snapshots (logical update view).
@@ -169,5 +169,5 @@
   (if (and (null (cdr head)) (symbolp (deref requested))) (car head) head))
 
 (eval-when (:load-toplevel :execute)
-  (register-provider 'sprolog/src/kernel/protocol:iso-modify 'iso-modify)
+  (register-provider 'cons-prolog/src/kernel/protocol:iso-modify 'iso-modify)
 )

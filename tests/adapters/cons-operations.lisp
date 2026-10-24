@@ -1,9 +1,9 @@
-(uiop:define-package #:sprolog/tests/adapters/cons-operations
+(uiop:define-package #:cons-prolog/tests/adapters/cons-operations
   (:use #:cl #:prolog)
-  (:import-from #:sprolog/tests/support/assertions #:check #:value-of)
-  (:import-from #:sprolog/tests/adapters/builtins #:iso-error-p)
+  (:import-from #:cons-prolog/tests/support/assertions #:check #:value-of)
+  (:import-from #:cons-prolog/tests/adapters/builtins #:iso-error-p)
   (:export #:run-cons-operation-tests))
-(in-package #:sprolog/tests/adapters/cons-operations)
+(in-package #:cons-prolog/tests/adapters/cons-operations)
 (defun run-cons-operation-tests ()
   (let ((*database* (make-database)))
     (dolist (gc '(nil 1 8 4096))
@@ -77,7 +77,7 @@
       (unwind-protect
            (check (query (list (list 'read_term input '?term '((variables ?vars) (variable_names ?names) (singletons ?single)))
                               '(= ?term (f ?x ?x ?anon ?y)) '(= ?vars (?x ?anon ?y))
-                              (list '= '?single (list (cons (sprolog/src/adapters/term-ops:iso-atom "?Y") '?y)))
+                              (list '= '?single (list (cons (cons-prolog/src/adapters/term-ops:iso-atom "?Y") '?y)))
                               (list 'read input 'end_of_file))) "S-expression variables and EOF")
         (close input)))
     (let ((input (make-string-input-stream "#.(error)")))
@@ -116,7 +116,7 @@
             (close input))) (close output)))
     (let ((output (make-string-output-stream)))
       (check (query (list (list 'write_term output '(?a ?b ?a)
-                               (list '(quoted true) (list 'variable_names (list (cons (sprolog/src/adapters/term-ops:iso-atom "?G0") '?a))))))))
+                               (list '(quoted true) (list 'variable_names (list (cons (cons-prolog/src/adapters/term-ops:iso-atom "?G0") '?a))))))))
       (let ((input (make-string-input-stream (get-output-stream-string output))))
         (unwind-protect
              (check (query (list (list 'read input '(?a ?b ?a)) '(/== ?a ?b))) "writer variable names do not collide")

@@ -1,33 +1,33 @@
-(uiop:define-package #:sprolog/src/adapters/builtins
+(uiop:define-package #:cons-prolog/src/adapters/builtins
   (:use #:cl)
-  (:import-from #:sprolog/src/adapters/adapter
+  (:import-from #:cons-prolog/src/adapters/adapter
     #:iso-deterministic #:iso-state-for)
-  (:import-from #:sprolog/src/adapters/term-io #:iso-term-io #:iso-reader-state-results)
-  (:import-from #:sprolog/src/adapters/term-relations #:iso-term-operation)
-  (:import-from #:sprolog/src/adapters/collection
+  (:import-from #:cons-prolog/src/adapters/term-io #:iso-term-io #:iso-reader-state-results)
+  (:import-from #:cons-prolog/src/adapters/term-relations #:iso-term-operation)
+  (:import-from #:cons-prolog/src/adapters/collection
     #:iso-collect)
-  (:import-from #:sprolog/src/adapters/dynamic
+  (:import-from #:cons-prolog/src/adapters/dynamic
     #:iso-clause-alternatives)
-  (:import-from #:sprolog/src/adapters/streams
+  (:import-from #:cons-prolog/src/adapters/streams
     #:iso-stream-properties)
-  (:import-from #:sprolog/src/adapters/term-ops
+  (:import-from #:cons-prolog/src/adapters/term-ops
     #:iso-atom #:iso-compound #:iso-copy #:iso-error #:iso-required #:iso-text)
-  (:import-from #:sprolog/src/api/registry
+  (:import-from #:cons-prolog/src/api/registry
     #:iso-register #:syntax-register)
-  (:import-from #:sprolog/src/api/state
+  (:import-from #:cons-prolog/src/api/state
     #:*iso-aliases* #:*iso-builtins* #:*iso-context* #:*syntax-predicates*)
-  (:import-from #:sprolog/src/kernel/engine
+  (:import-from #:cons-prolog/src/kernel/engine
     #:backtrack #:deref #:restore-continuation)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:database-predicates #:iso-exception #:iso-state-flags #:logic-var-p #:machine-args
     #:machine-builtin-context #:machine-database)
-  (:import-from #:sprolog/src/kernel/runtime
+  (:import-from #:cons-prolog/src/kernel/runtime
     #:iso-alternatives #:iso-catch #:iso-enter #:iso-goal #:iso-resolve-name #:iso-result)
-  (:import-from #:sprolog/src/kernel/protocol)
-  (:import-from #:sprolog/src/kernel/instructions)
-  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:import-from #:cons-prolog/src/kernel/protocol)
+  (:import-from #:cons-prolog/src/kernel/instructions)
+  (:import-from #:cons-prolog/src/kernel/protocol #:register-provider)
   (:export #:iso-enumerate #:iso-invoke))
-(in-package #:sprolog/src/adapters/builtins)
+(in-package #:cons-prolog/src/adapters/builtins)
 
 
 (defun iso-enumerate (vm name args)
@@ -60,7 +60,7 @@
          (when (and (consp indicator) (symbolp (deref (second indicator)))
                     (integerp (deref (third indicator))))
            (let* ((name (deref (second indicator))) (arity (deref (third indicator)))
-                  (atoms (find-package :sprolog/atoms))
+                  (atoms (find-package :cons-prolog/atoms))
                   (atom (find-symbol (iso-text name) atoms)))
              ;; Generated atoms bridge Lisp symbols by spelling, possibly matching
              ;; several definitions. Keep enumeration for those cases.
@@ -139,5 +139,5 @@
   (iso-register "%sub_atom_arguments" '(5)))
 
 (eval-when (:load-toplevel :execute)
-  (register-provider 'sprolog/src/kernel/protocol:iso-invoke 'iso-invoke)
+  (register-provider 'cons-prolog/src/kernel/protocol:iso-invoke 'iso-invoke)
 )

@@ -1,27 +1,27 @@
-(uiop:define-package #:sprolog/src/adapters/adapter
+(uiop:define-package #:cons-prolog/src/adapters/adapter
   (:use #:cl)
-  (:import-from #:sprolog/src/adapters/arithmetic
+  (:import-from #:cons-prolog/src/adapters/arithmetic
     #:iso-eval)
-  (:import-from #:sprolog/src/adapters/term-ops
+  (:import-from #:cons-prolog/src/adapters/term-ops
     #:iso-acyclic-p #:iso-atom #:iso-atom-p #:iso-bind #:iso-checked-unify #:iso-compound
     #:iso-error #:iso-identical-p #:iso-integer #:iso-list #:iso-required #:iso-text
     #:iso-unifiable-p #:iso-variables #:iso-list-cell-p #:iso-list-head #:iso-list-tail
     #:iso-null-p #:iso-list-from-host)
-  (:import-from #:sprolog/src/api/state
+  (:import-from #:cons-prolog/src/api/state
     #:*iso-halt-function*)
-  (:import-from #:sprolog/src/kernel/engine
+  (:import-from #:cons-prolog/src/kernel/engine
     #:deref #:unify)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:database #:database-iso-state #:iso-exception #:iso-state #:iso-state-aliases
     #:iso-state-flags #:logic-var-p #:machine-database #:make-iso-state)
-  (:import-from #:sprolog/src/kernel/protocol
+  (:import-from #:cons-prolog/src/kernel/protocol
     #:iso-io #:iso-modify)
-  (:import-from #:sprolog/src/kernel/instructions)
-  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:import-from #:cons-prolog/src/kernel/instructions)
+  (:import-from #:cons-prolog/src/kernel/protocol #:register-provider)
   (:export #:iso-character #:iso-code-char #:iso-deterministic #:iso-flag-value
     #:iso-number-string #:iso-output-integer #:iso-output-list #:iso-parse-number #:iso-set-flag
     #:iso-state-for))
-(in-package #:sprolog/src/adapters/adapter)
+(in-package #:cons-prolog/src/adapters/adapter)
 
 (defun iso-state-for (database)
   (or (database-iso-state database)
@@ -164,5 +164,5 @@
       (iso-exception (c) (error c)) (error () (iso-error "syntax_error" (iso-atom "number"))))))
 
 (eval-when (:load-toplevel :execute)
-  (register-provider 'sprolog/src/kernel/protocol:iso-flag-value 'iso-flag-value)
+  (register-provider 'cons-prolog/src/kernel/protocol:iso-flag-value 'iso-flag-value)
 )

@@ -1,11 +1,11 @@
-(uiop:define-package #:sprolog/src/adapters/term-relations
+(uiop:define-package #:cons-prolog/src/adapters/term-relations
   (:use #:cl)
-  (:import-from #:sprolog/src/adapters/adapter #:iso-state-for #:iso-output-list #:iso-output-integer)
-  (:import-from #:sprolog/src/adapters/term-ops #:iso-atom #:iso-atomic-equal #:iso-bind #:iso-error #:iso-required #:iso-integer #:iso-list #:iso-text #:iso-acyclic-p #:iso-list-from-host)
-  (:import-from #:sprolog/src/kernel/engine #:deref #:unify #:fresh-var #:fresh-cons)
-  (:import-from #:sprolog/src/kernel/model #:*term-model* #:logic-var-p #:logic-var-id #:machine-database #:iso-state-order-ids)
+  (:import-from #:cons-prolog/src/adapters/adapter #:iso-state-for #:iso-output-list #:iso-output-integer)
+  (:import-from #:cons-prolog/src/adapters/term-ops #:iso-atom #:iso-atomic-equal #:iso-bind #:iso-error #:iso-required #:iso-integer #:iso-list #:iso-text #:iso-acyclic-p #:iso-list-from-host)
+  (:import-from #:cons-prolog/src/kernel/engine #:deref #:unify #:fresh-var #:fresh-cons)
+  (:import-from #:cons-prolog/src/kernel/model #:*term-model* #:logic-var-p #:logic-var-id #:machine-database #:iso-state-order-ids)
   (:export #:iso-term-operation #:iso-term-compare))
-(in-package #:sprolog/src/adapters/term-relations)
+(in-package #:cons-prolog/src/adapters/term-relations)
 
 (defun order-id (vm x)
   (let ((ids (iso-state-order-ids (iso-state-for (machine-database vm)))))

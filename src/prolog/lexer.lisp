@@ -1,11 +1,11 @@
-(uiop:define-package #:sprolog/src/prolog/lexer
+(uiop:define-package #:cons-prolog/src/prolog/lexer
   (:use #:cl)
-  (:import-from #:sprolog/src/adapters/term-ops #:iso-atom #:iso-error)
-  (:import-from #:sprolog/src/api/state #:*iso-context*)
+  (:import-from #:cons-prolog/src/adapters/term-ops #:iso-atom #:iso-error)
+  (:import-from #:cons-prolog/src/api/state #:*iso-context*)
   (:export #:make-lexer #:lexer-stream #:lexer-line #:lexer-column #:lexer-source
            #:lexer-token-line #:lexer-token-column
            #:flush-lookahead #:lexer-conversions #:lexer-look #:peek-token #:take-token #:expect-token #:prolog-syntax-error))
-(in-package #:sprolog/src/prolog/lexer)
+(in-package #:cons-prolog/src/prolog/lexer)
 (defstruct lexer stream (line 1) (column 0) (source "<stream>") look conversions buffer
   (token-line 1) (token-column 0)
   last-raw (last-line 1) (last-column 0))

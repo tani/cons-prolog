@@ -1,9 +1,9 @@
-(uiop:define-package #:sprolog/tests/support/assertions
+(uiop:define-package #:cons-prolog/tests/support/assertions
   (:use #:cl #:prolog)
   (:export #:*checks* #:check #:solutions #:value-of))
-(in-package #:sprolog/tests/support/assertions)
+(in-package #:cons-prolog/tests/support/assertions)
 (defmacro solutions (&body goals)
-  `(query ,(sprolog/src/syntax/host-syntax:goals-form goals)))
+  `(query ,(cons-prolog/src/syntax/host-syntax:goals-form goals)))
 (defvar *checks* 0)
 (defun check (value &optional (description "check"))
   (incf *checks*) (unless value (error "FAILED: ~A" description)))

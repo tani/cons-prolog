@@ -1,27 +1,27 @@
-(uiop:define-package #:sprolog/src/adapters/streams
+(uiop:define-package #:cons-prolog/src/adapters/streams
   (:use #:cl)
-  (:import-from #:sprolog/src/adapters/adapter
+  (:import-from #:cons-prolog/src/adapters/adapter
     #:iso-character #:iso-code-char #:iso-state-for)
-  (:import-from #:sprolog/src/adapters/term-ops
+  (:import-from #:cons-prolog/src/adapters/term-ops
     #:iso-atom #:iso-bind #:iso-compound #:iso-error #:iso-integer #:iso-list #:iso-parts
     #:iso-required #:iso-text)
-  (:import-from #:sprolog/src/kernel/engine
+  (:import-from #:cons-prolog/src/kernel/engine
     #:deref #:unify)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:iso-state-aliases #:iso-state-input #:iso-state-output #:iso-state-streams #:iso-stream
     #:iso-stream-alias #:iso-stream-byte-look #:iso-stream-eof-action #:iso-stream-file
     #:iso-stream-mode #:iso-stream-past-end #:iso-stream-reposition #:iso-stream-type
     #:logic-var-p #:machine-database #:make-iso-stream)
-  (:import-from #:sprolog/src/kernel/runtime
+  (:import-from #:cons-prolog/src/kernel/runtime
     #:iso-result)
-  (:import-from #:sprolog/src/kernel/protocol)
-  (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/kernel/instructions)
-  (:import-from #:sprolog/src/adapters/collection)
-  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:import-from #:cons-prolog/src/kernel/protocol)
+  (:import-from #:cons-prolog/src/api/state)
+  (:import-from #:cons-prolog/src/kernel/instructions)
+  (:import-from #:cons-prolog/src/adapters/collection)
+  (:import-from #:cons-prolog/src/kernel/protocol #:register-provider)
   (:export #:iso-boolean #:iso-io #:iso-open #:iso-option #:iso-options #:iso-read-unit
     #:iso-stream-end-p #:iso-stream-for #:iso-stream-properties))
-(in-package #:sprolog/src/adapters/streams)
+(in-package #:cons-prolog/src/adapters/streams)
 
 (defun iso-options (term allowed &optional (domain "option"))
   (let ((result nil))
@@ -175,5 +175,5 @@
       (t (error "Missing builtin implementation: ~A/~D" name n)))))
 
 (eval-when (:load-toplevel :execute)
-  (register-provider 'sprolog/src/kernel/protocol:iso-io 'iso-io)
+  (register-provider 'cons-prolog/src/kernel/protocol:iso-io 'iso-io)
 )

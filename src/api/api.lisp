@@ -1,20 +1,20 @@
-(uiop:define-package #:sprolog/src/api/api
+(uiop:define-package #:cons-prolog/src/api/api
   (:use #:cl)
-  (:import-from #:sprolog/src/kernel/engine
+  (:import-from #:cons-prolog/src/kernel/engine
     #:*database* #:close-query #:next-solution)
-  (:import-from #:sprolog/src/syntax/compiler
+  (:import-from #:cons-prolog/src/syntax/compiler
     #:add-clause #:make-query)
-  (:import-from #:sprolog/src/syntax/dcg
+  (:import-from #:cons-prolog/src/syntax/dcg
     #:dcg-expand)
-  (:import-from #:sprolog/src/syntax/host-syntax
+  (:import-from #:cons-prolog/src/syntax/host-syntax
     #:goals-form)
-  (:import-from #:sprolog/src/kernel/protocol)
-  (:import-from #:sprolog/src/kernel/model #:database-term-model)
-  (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/kernel/instructions)
+  (:import-from #:cons-prolog/src/kernel/protocol)
+  (:import-from #:cons-prolog/src/kernel/model #:database-term-model)
+  (:import-from #:cons-prolog/src/api/state)
+  (:import-from #:cons-prolog/src/kernel/instructions)
   (:export #:---> #:--> #:<- #:<-- #:?- #:display-query-answer #:interactive-query #:prolog
     #:query-more-p))
-(in-package #:sprolog/src/api/api)
+(in-package #:cons-prolog/src/api/api)
 
 
 (eval-when (:compile-toplevel :load-toplevel :execute)

@@ -1,4 +1,4 @@
-(uiop:define-package #:sprolog/src/kernel/model (:use #:cl)
+(uiop:define-package #:cons-prolog/src/kernel/model (:use #:cl)
   (:export #:%make-machine #:%make-var #:choice #:choice-age #:choice-args
     #:database-term-model #:*term-model* #:$cons #:$nil
     #:choice-builtin-context #:choice-code #:choice-continuation #:choice-cut #:choice-delays
@@ -51,7 +51,7 @@
     #:slg-table-name #:slg-table-p #:slg-table-tokens #:slg-table-waiters #:slg-waiter
     #:slg-waiter-negativep #:slg-waiter-p #:slg-waiter-tailp #:slg-waiter-vm #:slot-ref
     #:slot-ref-anonymous #:slot-ref-index #:slot-ref-p))
-(in-package #:sprolog/src/kernel/model)
+(in-package #:cons-prolog/src/kernel/model)
 
 ;;; Streams and options.
 (defstruct iso-stream stream file mode (type "text") alias (reposition nil) (eof-action "eof_code") (past-end nil) (byte-look :empty))

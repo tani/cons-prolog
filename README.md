@@ -14,8 +14,8 @@ No external Lisp libraries are required. From the repository directory:
 
 ```lisp
 (require :asdf)
-(asdf:load-asd (truename "sprolog.asd"))
-(asdf:load-system "sprolog")
+(asdf:load-asd (truename "cons-prolog.asd"))
+(asdf:load-system "cons-prolog")
 (use-package :prolog)
 ```
 
@@ -41,7 +41,7 @@ supports the implementation. GitHub Actions tests those outputs on Linux
 ASDF uses `package-inferred-system`: module dependencies are declared by each
 file's `uiop:define-package`. Implementation modules own their definitions;
 the final API facade has the `cons` and `prolog` nicknames and reexports the public interface.
-Internal `sprolog::` references should use the owning module instead.
+Internal `cons-prolog::` references should use the owning module instead.
 See [development notes](docs/DEVELOPMENT.md) for module layout and portability.
 
 ## Define and query

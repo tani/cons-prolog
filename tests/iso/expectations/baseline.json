@@ -889,7 +889,7 @@
   },
   "predicates/atom_chars_2/tests.lgt:iso_atom_chars_2_02:37": {
     "status": "XFAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== (SPROLOG/ATOMS::|n| SPROLOG/ATOMS::|i| SPROLOG/ATOMS::|l|) ([ ]))))"
+    "observation": "(:OBSERVED (POST_FAILED (== (CONS-PROLOG/ATOMS::|n| CONS-PROLOG/ATOMS::|i| CONS-PROLOG/ATOMS::|l|) ([ ]))))"
   },
   "predicates/atom_chars_2/tests.lgt:iso_atom_chars_2_03:40": {
     "status": "PASS",
@@ -1557,7 +1557,7 @@
   },
   "predicates/functor_3/tests.lgt:iso_functor_3_10:65": {
     "status": "XFAIL",
-    "observation": "(:OBSERVED (EXCEPTION (SPROLOG/ATOMS::|error| SPROLOG/ATOMS::|instantiation_error| (SPROLOG/ATOMS::/ FUNCTOR 3))))"
+    "observation": "(:OBSERVED (EXCEPTION (CONS-PROLOG/ATOMS::|error| CONS-PROLOG/ATOMS::|instantiation_error| (CONS-PROLOG/ATOMS::/ FUNCTOR 3))))"
   },
   "predicates/functor_3/tests.lgt:iso_functor_3_11:68": {
     "status": "PASS",
@@ -2969,15 +2969,15 @@
   },
   "syntax/lists/tests.lgt:iso_list_01:34": {
     "status": "XFAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== (SPROLOG/ATOMS::|a|) (|.| A NIL))))"
+    "observation": "(:OBSERVED (POST_FAILED (== (CONS-PROLOG/ATOMS::|a|) (|.| A NIL))))"
   },
   "syntax/lists/tests.lgt:iso_list_02:38": {
     "status": "XFAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== (SPROLOG/ATOMS::|a| SPROLOG/ATOMS::|b|) (|.| A (|.| B NIL)))))"
+    "observation": "(:OBSERVED (POST_FAILED (== (CONS-PROLOG/ATOMS::|a| CONS-PROLOG/ATOMS::|b|) (|.| A (|.| B NIL)))))"
   },
   "syntax/lists/tests.lgt:iso_list_03:42": {
     "status": "XFAIL",
-    "observation": "(:OBSERVED (POST_FAILED (== (SPROLOG/ATOMS::|a| . SPROLOG/ATOMS::|b|) (|.| A B))))"
+    "observation": "(:OBSERVED (POST_FAILED (== (CONS-PROLOG/ATOMS::|a| . CONS-PROLOG/ATOMS::|b|) (|.| A B))))"
   },
   "syntax/numbers/tests.lgt:iso_number_01:37": {
     "status": "PASS",

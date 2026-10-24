@@ -1,16 +1,16 @@
-(uiop:define-package #:sprolog/src/adapters/arithmetic
+(uiop:define-package #:cons-prolog/src/adapters/arithmetic
   (:use #:cl)
-  (:import-from #:sprolog/src/adapters/term-ops
+  (:import-from #:cons-prolog/src/adapters/term-ops
     #:iso-atom #:iso-compound #:iso-error #:iso-integer #:iso-parts #:iso-required #:iso-text)
-  (:import-from #:sprolog/src/syntax/dcg
+  (:import-from #:cons-prolog/src/syntax/dcg
     #:finite-list-p)
-  (:import-from #:sprolog/src/kernel/protocol)
-  (:import-from #:sprolog/src/kernel/model)
-  (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/kernel/instructions)
-  (:import-from #:sprolog/src/kernel/runtime)
+  (:import-from #:cons-prolog/src/kernel/protocol)
+  (:import-from #:cons-prolog/src/kernel/model)
+  (:import-from #:cons-prolog/src/api/state)
+  (:import-from #:cons-prolog/src/kernel/instructions)
+  (:import-from #:cons-prolog/src/kernel/runtime)
   (:export #:iso-eval))
-(in-package #:sprolog/src/adapters/arithmetic)
+(in-package #:cons-prolog/src/adapters/arithmetic)
 
 
 ;;; Arithmetic: integer arithmetic stays exact; ISO floats are SBCL doubles.

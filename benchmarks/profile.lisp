@@ -1,6 +1,6 @@
 (require :sb-sprof)
 (load (merge-pathnames "run.lisp" *load-truename*))
-(in-package #:sprolog/bench)
+(in-package #:cons-prolog/bench)
 (let* ((name (or (sb-ext:posix-getenv "BENCH_PROFILE") "waste-50k-gc4096"))
        (mode (if (equal (sb-ext:posix-getenv "BENCH_PROFILE_MODE") "alloc") :alloc :cpu))
        (case (find name *cases* :key #'bench-case-name :test #'equal)))
@@ -13,6 +13,6 @@
       (unwind-protect
            (if (bench-case-all case)
                (loop while (nth-value 1 (next-solution vm)))
-               (progn (sprolog/src/kernel/engine:run-machine vm) (export-answer vm)))
+               (progn (cons-prolog/src/kernel/engine:run-machine vm) (export-answer vm)))
         (close-query vm))))
   (sb-sprof:report :type :flat :max 60))

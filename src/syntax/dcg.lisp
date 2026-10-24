@@ -1,19 +1,19 @@
-(uiop:define-package #:sprolog/src/syntax/dcg
+(uiop:define-package #:cons-prolog/src/syntax/dcg
   (:use #:cl)
-  (:import-from #:sprolog/src/kernel/engine
+  (:import-from #:cons-prolog/src/kernel/engine
     #:*database*)
-  (:import-from #:sprolog/src/kernel/instructions
+  (:import-from #:cons-prolog/src/kernel/instructions
     #:dcg-internal)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:*term-model* #:database-term-model #:database #:disjunction-goal #:make-disjunction-goal #:make-scoped-goals #:scoped-goals)
-  (:import-from #:sprolog/src/kernel/protocol
+  (:import-from #:cons-prolog/src/kernel/protocol
     #:query #:variable-symbol-p #:iso-list-cons #:iso-empty-list)
-  (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/kernel/wam)
+  (:import-from #:cons-prolog/src/api/state)
+  (:import-from #:cons-prolog/src/kernel/wam)
   (:export #:dcg-body-goals #:dcg-control-p #:dcg-empty-terminals-p #:dcg-expand #:dcg-marker-p
     #:dcg-nonterminal #:dcg-terminal-tokens #:dcg-variable #:expand-query-goals #:finite-list-p
     #:flatten-dcg-sequence #:phrase #:phrase-goals #:validate-dcg-controls))
-(in-package #:sprolog/src/syntax/dcg)
+(in-package #:cons-prolog/src/syntax/dcg)
 
 (defun finite-list-p (value)
   (let ((seen (make-hash-table :test 'eq)))

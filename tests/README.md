@@ -6,7 +6,7 @@ Run commands from the repository root:
 sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 ```
 
-`run.lisp` loads the `sprolog/tests` ASDF system. `suite.lisp` remains the single
+`run.lisp` loads the `cons-prolog/tests` ASDF system. `suite.lisp` remains the single
 suite entry point; inferred package names match each test file's path.
 
 | Directory | Coverage |
@@ -23,8 +23,8 @@ suite entry point; inferred package names match each test file's path.
 Compare normalized derived observations across checkouts using the same script:
 
 ```sh
-SPROLOG_ROOT=/path/to/reference sbcl --script tests/support/derived-observations.lisp > before.txt
-SPROLOG_ROOT=/path/to/current sbcl --script tests/support/derived-observations.lisp > after.txt
+CONS_PROLOG_ROOT=/path/to/reference sbcl --script tests/support/derived-observations.lisp > before.txt
+CONS_PROLOG_ROOT=/path/to/current sbcl --script tests/support/derived-observations.lisp > after.txt
 diff -u before.txt after.txt
 ```
 

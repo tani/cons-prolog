@@ -45,7 +45,7 @@ for DCG terminal syntax; these are not term tags or database metadata.
 
 Unquoted atoms and lowercase quoted atoms map to uppercase symbols in the target
 Lisp package. Case-sensitive quoted atoms, and atoms beginning with `?`, use
-`sprolog/atoms`. Named variables become uninterned `?Name` symbols, shared within
+`cons-prolog/atoms`. Named variables become uninterned `?Name` symbols, shared within
 one term only. Each underscore is anonymous. This keeps ordinary Lisp queries
 usable for text-loaded predicates while preserving variable scope.
 

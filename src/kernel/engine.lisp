@@ -1,10 +1,10 @@
-(uiop:define-package #:sprolog/src/kernel/engine
+(uiop:define-package #:cons-prolog/src/kernel/engine
   (:use #:cl)
-  (:import-from #:sprolog/src/kernel/instructions
+  (:import-from #:cons-prolog/src/kernel/instructions
     #:allocate #:call #:clear-x #:cut #:deallocate #:enter-cut-scope #:execute #:fail #:host
     #:jump #:leave-cut-scope #:proceed #:retry-me-else #:table-answer #:tnot #:trust-me
     #:try-branch #:try-me-else #:yield)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:*term-model* #:database-term-model
     #:%make-machine #:%make-var #:choice #:choice-age #:choice-args #:choice-builtin-context
     #:choice-code #:choice-continuation #:choice-cut #:choice-delays #:choice-handlers
@@ -23,18 +23,18 @@
     #:machine-slg-worker #:machine-slots #:machine-steps #:machine-trail #:machine-variables
     #:make-choice #:make-continuation #:make-database #:predicate-adapter-context
     #:predicate-code #:slot-ref #:slot-ref-index #:slot-ref-p)
-  (:import-from #:sprolog/src/kernel/protocol
+  (:import-from #:cons-prolog/src/kernel/protocol
     #:ensure-registers #:execute-term-instruction #:iso-atom #:iso-atomic-equal #:iso-compound
     #:iso-execute #:iso-handle-exception #:iso-instruction-p #:iso-invoke #:iso-primitive-p
     #:iso-resolve-name #:iso-syntax-p #:iso-unknown #:maybe-collect #:slg-call #:slg-check-cut
     #:slg-check-database #:slg-close #:slg-enter-cut-frame #:slg-negative #:slg-return-answer
     #:slg-statistics #:slg-table-goal #:standard-predicate #:table)
-  (:import-from #:sprolog/src/api/state)
+  (:import-from #:cons-prolog/src/api/state)
   (:export #:*database* #:backtrack #:bind-var #:close-query #:deref #:fresh-cons #:fresh-var
     #:instantiate #:invoke-predicate #:map-term #:next-solution #:pop-clear #:predicate-key
     #:push-choice #:query-statistics #:record-cell #:reify #:resolve-code #:restore-continuation
     #:run-machine #:truncate-vector #:unify #:unwind-trail))
-(in-package #:sprolog/src/kernel/engine)
+(in-package #:cons-prolog/src/kernel/engine)
 
 (defvar *database* (make-database))
 

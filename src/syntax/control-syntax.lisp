@@ -1,19 +1,19 @@
-(uiop:define-package #:sprolog/src/syntax/control-syntax
+(uiop:define-package #:cons-prolog/src/syntax/control-syntax
   (:use #:cl)
-  (:import-from #:sprolog/src/kernel/engine
+  (:import-from #:cons-prolog/src/kernel/engine
     #:deref #:map-term)
-  (:import-from #:sprolog/src/kernel/instructions
+  (:import-from #:cons-prolog/src/kernel/instructions
     #:call #:cut #:fail #:iso-if #:or-branches #:scoped-body)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:disjunction-goal-p #:host-goal-p #:logic-var-p #:scoped-goals-p #:sequence-goals-p)
-  (:import-from #:sprolog/src/kernel/protocol
+  (:import-from #:cons-prolog/src/kernel/protocol
     #:goal-instructions #:iso-atom #:iso-error #:iso-goal #:iso-predicate-name #:table
     #:variable-symbol-p)
-  (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/syntax/dcg #:finite-list-p)
+  (:import-from #:cons-prolog/src/api/state)
+  (:import-from #:cons-prolog/src/syntax/dcg #:finite-list-p)
   (:export #:iso-control-form-p #:iso-control-instructions #:source-meta-goal-p
     #:validate-call-body #:validate-static-meta-goal))
-(in-package #:sprolog/src/syntax/control-syntax)
+(in-package #:cons-prolog/src/syntax/control-syntax)
 
 (defun validate-call-body (goal)
   "Validate transparent control positions, retaining explicit meta-call boundaries."

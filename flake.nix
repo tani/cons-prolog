@@ -12,7 +12,7 @@
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
       perSystem = { config, pkgs, lib, system, ... }:
         let
-          pname = "sprolog";
+          pname = "cons-prolog";
           version = "0.10.0";
           src = lib.cleanSource ./.;
           implementations = {
@@ -35,27 +35,27 @@
             lisp = pkgs.${impl};
             library = lisp.buildASDFSystem {
               inherit pname version src;
-              systems = [ "sprolog" "sprolog/tests" ];
+              systems = [ "cons-prolog" "cons-prolog/tests" ];
               lispLibs = [];
               nativeLibs = [];
               preBuild = ''export XDG_CACHE_HOME="$TMPDIR/asdf-cache"'';
             };
             runtime = lisp.withPackages (_: [ library ]);
-            test = pkgs.writeShellScriptBin "sprolog-test" ''
+            test = pkgs.writeShellScriptBin "cons-prolog-test" ''
               exec ${runtime}/bin/${options.program} ${options.args} \
                 ${options.eval} '(require "asdf")' \
-                ${options.eval} '(handler-case (progn (asdf:test-system "sprolog") (uiop:quit 0)) (error (condition) (format *error-output* "~&~A~%" condition) (uiop:quit 1)))'
+                ${options.eval} '(handler-case (progn (asdf:test-system "cons-prolog") (uiop:quit 0)) (error (condition) (format *error-output* "~&~A~%" condition) (uiop:quit 1)))'
             '';
-            # sprolog is a library: main-* starts a REPL with its API loaded.
-            main = pkgs.writeShellScriptBin "sprolog" ''
+            # Cons Prolog is a library: main-* starts a REPL with its API loaded.
+            main = pkgs.writeShellScriptBin "cons-prolog" ''
               exec ${runtime}/bin/${options.program} ${options.args} \
                 ${options.eval} '(require "asdf")' \
-                ${options.eval} '(progn (asdf:load-system "sprolog") (use-package :sprolog))' ${lib.optionalString (impl == "clisp") "-repl"} "$@"
+                ${options.eval} '(progn (asdf:load-system "cons-prolog") (use-package :prolog))' ${lib.optionalString (impl == "clisp") "-repl"} "$@"
             '';
-            check = pkgs.runCommand "sprolog-test-${impl}" {} ''
+            check = pkgs.runCommand "cons-prolog-test-${impl}" {} ''
               mkdir -p "$TMPDIR/asdf-cache"
               export XDG_CACHE_HOME="$TMPDIR/asdf-cache"
-              ${test}/bin/sprolog-test
+              ${test}/bin/cons-prolog-test
               touch "$out"
             '';
           in { inherit library runtime test main check; }) available;
@@ -70,7 +70,7 @@
           packages = attrsFor "lib" "library" // attrsFor "main" "main"
             // attrsFor "test" "test"
             // lib.optionalAttrs (recipe ? sbcl) { default = recipe.sbcl.library; };
-          apps = appsFor "main" "main" "sprolog" // appsFor "test" "test" "sprolog-test";
+          apps = appsFor "main" "main" "cons-prolog" // appsFor "test" "test" "cons-prolog-test";
           checks = attrsFor "test" "check";
           devShells = {
             default = pkgs.mkShell {
@@ -82,8 +82,8 @@
             shellHook = ''export CL_SOURCE_REGISTRY="$PWD//"'';
           }) available;
           overlayAttrs = lib.mapAttrs (impl: _: pkgs.${impl}.withOverrides
-            (_: _: { sprolog = config.packages."lib-${impl}"; })) available
-            // lib.mapAttrs' (impl: _: lib.nameValuePair "sprolog-${impl}"
+            (_: _: \{ cons-prolog = config.packages."lib-${impl}"; })) available
+            // lib.mapAttrs' (impl: _: lib.nameValuePair "cons-prolog-${impl}"
               config.packages."main-${impl}") available;
         };
     };

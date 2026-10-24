@@ -103,8 +103,8 @@ Use a clean checkout of the baseline for each candidate. From that checkout:
 
 ```sh
 # Baseline: do not apply a patch.
-# Narrow: git apply /path/to/sprolog/benchmarks/type-declarations/narrow.patch
-# Broad:  git apply /path/to/sprolog/benchmarks/type-declarations/broad.patch
+# Narrow: git apply /path/to/cons-prolog/benchmarks/type-declarations/narrow.patch
+# Broad:  git apply /path/to/cons-prolog/benchmarks/type-declarations/broad.patch
 BENCH_RESULTS=/tmp/type-results.sexp sbcl --dynamic-space-size 2048 --control-stack-size 1 --script benchmarks/run.lisp
 sbcl --dynamic-space-size 2048 --control-stack-size 1 --script tests/run.lisp
 ```

@@ -1,12 +1,12 @@
 ;;; SPDX-License-Identifier: MIT
 ;;; Execute the checked-in plain Prolog port. No importer or external runtime.
 (require :asdf)
-(asdf:load-asd (merge-pathnames "../../../sprolog.asd" *load-truename*))
-(asdf:load-system "sprolog")
-(uiop:define-package #:sprolog/iso-test-worker
+(asdf:load-asd (merge-pathnames "../../../cons-prolog.asd" *load-truename*))
+(asdf:load-system "cons-prolog")
+(uiop:define-package #:cons-prolog/iso-test-worker
   (:use #:cl #:prolog)
-  (:import-from #:sprolog/src/adapters/term-ops #:iso-atom #:iso-atom-name))
-(in-package #:sprolog/iso-test-worker)
+  (:import-from #:cons-prolog/src/adapters/term-ops #:iso-atom #:iso-atom-name))
+(in-package #:cons-prolog/iso-test-worker)
 (defun object (&rest pairs)
   (let ((table (make-hash-table :test 'equal)))
     (loop for (key value) on pairs by #'cddr do (setf (gethash key table) value)) table))
@@ -42,7 +42,7 @@
   (let* ((*database* (make-database :term-model (intern (string-upcase (or (getf job :term-model) "native")) :keyword)))
          (*standard-input* (make-string-input-stream ""))
          (*standard-output* (make-string-output-stream))
-         (*package* (find-package :sprolog/iso-test-worker))
+         (*package* (find-package :cons-prolog/iso-test-worker))
          (stage "LOAD") (outcome nil))
     (handler-case
         (progn

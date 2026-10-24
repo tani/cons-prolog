@@ -1,13 +1,13 @@
-(uiop:define-package #:sprolog/src/prolog/reader
+(uiop:define-package #:cons-prolog/src/prolog/reader
   (:use #:cl)
-  (:import-from #:sprolog/src/prolog/lexer #:flush-lookahead #:lexer-conversions #:make-lexer #:peek-token #:take-token #:expect-token #:prolog-syntax-error
+  (:import-from #:cons-prolog/src/prolog/lexer #:flush-lookahead #:lexer-conversions #:make-lexer #:peek-token #:take-token #:expect-token #:prolog-syntax-error
     #:lexer-line #:lexer-column #:lexer-token-line #:lexer-token-column)
-  (:import-from #:sprolog/src/kernel/engine #:*database*)
-  (:import-from #:sprolog/src/kernel/model #:*term-model* #:database-term-model #:iso-state-operators #:iso-state-reader-initialized #:iso-state-conversions #:iso-state-flags)
-  (:import-from #:sprolog/src/adapters/adapter #:iso-state-for)
-  (:import-from #:sprolog/src/adapters/term-ops #:iso-atom #:iso-empty-list #:iso-list-from-host #:iso-compound)
+  (:import-from #:cons-prolog/src/kernel/engine #:*database*)
+  (:import-from #:cons-prolog/src/kernel/model #:*term-model* #:database-term-model #:iso-state-operators #:iso-state-reader-initialized #:iso-state-conversions #:iso-state-flags)
+  (:import-from #:cons-prolog/src/adapters/adapter #:iso-state-for)
+  (:import-from #:cons-prolog/src/adapters/term-ops #:iso-atom #:iso-empty-list #:iso-list-from-host #:iso-compound)
   (:export #:read-prolog-term #:parse-prolog-string #:initialize-reader-operators))
-(in-package #:sprolog/src/prolog/reader)
+(in-package #:cons-prolog/src/prolog/reader)
 (defun initialize-reader-operators (database)
   (let ((state (iso-state-for database)))
     (unless (iso-state-reader-initialized state)

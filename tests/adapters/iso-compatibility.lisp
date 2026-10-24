@@ -1,11 +1,11 @@
-(uiop:define-package #:sprolog/tests/adapters/iso-compatibility
+(uiop:define-package #:cons-prolog/tests/adapters/iso-compatibility
   (:use #:cl #:prolog)
-  (:import-from #:sprolog/tests/support/assertions #:check #:value-of)
-  (:import-from #:sprolog/tests/adapters/builtins #:iso-error-p)
-  (:import-from #:sprolog/src/syntax/compiler #:add-clause)
-  (:import-from #:sprolog/src/adapters/term-ops #:iso-atom)
+  (:import-from #:cons-prolog/tests/support/assertions #:check #:value-of)
+  (:import-from #:cons-prolog/tests/adapters/builtins #:iso-error-p)
+  (:import-from #:cons-prolog/src/syntax/compiler #:add-clause)
+  (:import-from #:cons-prolog/src/adapters/term-ops #:iso-atom)
   (:export #:run-iso-compatibility-tests))
-(in-package #:sprolog/tests/adapters/iso-compatibility)
+(in-package #:cons-prolog/tests/adapters/iso-compatibility)
 
 (defun textual-query (text &optional (gc 1))
   (query (list (first (parse-prolog-string text))) :gc-threshold gc))
@@ -55,7 +55,7 @@
             (check (= 3 (length (lookup atom))) "exact generated atom hit retains bridged alternatives")))))))
 
 (defun run-iso-compatibility-tests ()
- (let ((*package* (find-package :sprolog/tests/adapters/iso-compatibility)))
+ (let ((*package* (find-package :cons-prolog/tests/adapters/iso-compatibility)))
   (run-current-predicate-tests)
   (dolist (gc '(nil 1 8 4096))
     (let ((*database* (make-database)))
@@ -181,10 +181,10 @@
     (let ((vm (make-query nil))
           (terms (list 100.0d0 -100 1/2 #C(1 2) 'a "opaque" '(1 . a) '(1 2) '(f a) '(a a b))))
       (unwind-protect
-           (let ((ordered (stable-sort terms (lambda (a b) (< (sprolog/src/adapters/term-relations:iso-term-compare vm a b) 0)))))
+           (let ((ordered (stable-sort terms (lambda (a b) (< (cons-prolog/src/adapters/term-relations:iso-term-compare vm a b) 0)))))
              (check (loop for tail on ordered always
                       (loop for b in (cdr tail) always
-                        (minusp (sprolog/src/adapters/term-relations:iso-term-compare vm (car tail) b))))
+                        (minusp (cons-prolog/src/adapters/term-relations:iso-term-compare vm (car tail) b))))
                     "ISO and Lisp extension classes form a transitive mixed order"))
         (close-query vm)))
     (check (equal '((- 1 2) (- (|,| 1 2)) (f |:-| |;| (|:-| |:-| . |:-|)))

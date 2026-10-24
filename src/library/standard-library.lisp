@@ -1,20 +1,20 @@
-(uiop:define-package #:sprolog/src/library/standard-library
+(uiop:define-package #:cons-prolog/src/library/standard-library
   (:use #:cl)
-  (:import-from #:sprolog/src/api/state
+  (:import-from #:cons-prolog/src/api/state
     #:*standard-predicates* #:*iso-standard-predicates*)
-  (:import-from #:sprolog/src/kernel/engine
+  (:import-from #:cons-prolog/src/kernel/engine
     #:predicate-key)
-  (:import-from #:sprolog/src/kernel/instructions
+  (:import-from #:cons-prolog/src/kernel/instructions
     #:call #:fail #:true)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:*term-model* #:$cons #:$nil #:make-predicate)
-  (:import-from #:sprolog/src/syntax/compiler
+  (:import-from #:cons-prolog/src/syntax/compiler
     #:compile-predicate)
-  (:import-from #:sprolog/src/kernel/protocol)
-  (:import-from #:sprolog/src/adapters/builtins)
-  (:import-from #:sprolog/src/adapters/term-ops #:iso-empty-list #:iso-list-cons)
+  (:import-from #:cons-prolog/src/kernel/protocol)
+  (:import-from #:cons-prolog/src/adapters/builtins)
+  (:import-from #:cons-prolog/src/adapters/term-ops #:iso-empty-list #:iso-list-cons)
   (:export #:install-standard-predicate))
-(in-package #:sprolog/src/library/standard-library)
+(in-package #:cons-prolog/src/library/standard-library)
 
 
 (defun library-term (term)

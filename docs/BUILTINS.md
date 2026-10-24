@@ -193,7 +193,7 @@ and names unbound variables `?G0`, `?G1`, etc. `writeq` and `write_canonical`
 enable quoted Lisp output; both have the same S-expression representation.
 `write_term` supports `quoted` and `variable_names` (native pairs with names
 beginning with `?`). In quoted query source those names must be atoms from
-`sprolog/atoms` (for example `(intern "?Name" :sprolog/atoms)`), since ordinary
+`cons-prolog/atoms` (for example `(intern "?Name" :cons-prolog/atoms)`), since ordinary
 Lisp symbols beginning with `?` are compiled as variables. Duplicate names for
 different variables and the anonymous name `?` are rejected. `ignore_ops` and `numbervars` validate booleans but have no
 effect in this format: operators do not affect Lisp syntax and there is no

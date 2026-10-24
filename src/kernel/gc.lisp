@@ -1,6 +1,6 @@
-(uiop:define-package #:sprolog/src/kernel/gc
+(uiop:define-package #:cons-prolog/src/kernel/gc
   (:use #:cl)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:choice-args #:choice-continuation #:choice-handlers #:choice-heap #:choice-slots
     #:choice-trail #:continuation-handlers #:continuation-parent #:continuation-slots
     #:iso-handler-catcher #:iso-handler-parent #:iso-handler-recovery #:iso-handler-snapshot
@@ -8,13 +8,13 @@
     #:machine-continuation #:machine-gc-count #:machine-gc-floor #:machine-gc-limit
     #:machine-gc-reclaimed #:machine-heap #:machine-iso-handlers #:machine-max-live
     #:machine-scan #:machine-slg-root #:machine-slots #:machine-trail #:machine-variables)
-  (:import-from #:sprolog/src/kernel/protocol)
-  (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/kernel/instructions)
-  (:import-from #:sprolog/src/kernel/engine)
-  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:import-from #:cons-prolog/src/kernel/protocol)
+  (:import-from #:cons-prolog/src/api/state)
+  (:import-from #:cons-prolog/src/kernel/instructions)
+  (:import-from #:cons-prolog/src/kernel/engine)
+  (:import-from #:cons-prolog/src/kernel/protocol #:register-provider)
   (:export #:collect-query-garbage #:maybe-collect))
-(in-package #:sprolog/src/kernel/gc)
+(in-package #:cons-prolog/src/kernel/gc)
 
 
 (defun collect-query-garbage (vm)
@@ -90,5 +90,5 @@ Object identity and allocation age survive compaction. Lisp GC reclaims bytes."
     (collect-query-garbage vm)))
 
 (eval-when (:load-toplevel :execute)
-  (register-provider 'sprolog/src/kernel/protocol:maybe-collect 'maybe-collect)
+  (register-provider 'cons-prolog/src/kernel/protocol:maybe-collect 'maybe-collect)
 )

@@ -1,14 +1,14 @@
-(uiop:define-package #:sprolog/src/kernel/slg
+(uiop:define-package #:cons-prolog/src/kernel/slg
   (:use #:cl)
-  (:import-from #:sprolog/src/kernel/engine
+  (:import-from #:cons-prolog/src/kernel/engine
     #:*database* #:backtrack #:close-query #:deref #:fresh-cons #:fresh-var #:instantiate
     #:predicate-key #:push-choice #:reify #:restore-continuation #:run-machine #:truncate-vector
     #:unify)
-  (:import-from #:sprolog/src/kernel/gc
+  (:import-from #:cons-prolog/src/kernel/gc
     #:maybe-collect)
-  (:import-from #:sprolog/src/kernel/instructions
+  (:import-from #:cons-prolog/src/kernel/instructions
     #:call #:table-answer #:true #:yield)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:%make-machine #:%make-var #:choice-args #:choice-continuation #:choice-handlers #:choice-p
     #:choice-scopes #:choice-slots #:continuation-cut #:continuation-handlers #:continuation-p
     #:continuation-parent #:continuation-scopes #:continuation-slots #:copy-choice
@@ -32,10 +32,10 @@
     #:slg-table-arity #:slg-table-complete #:slg-table-consumers #:slg-table-dependencies
     #:slg-table-falsep #:slg-table-id #:slg-table-index #:slg-table-name #:slg-table-tokens
     #:slg-table-waiters #:slg-waiter #:slg-waiter-negativep #:slg-waiter-tailp #:slg-waiter-vm)
-  (:import-from #:sprolog/src/kernel/protocol)
-  (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/syntax/wam-compiler)
-  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:import-from #:cons-prolog/src/kernel/protocol)
+  (:import-from #:cons-prolog/src/api/state)
+  (:import-from #:cons-prolog/src/syntax/wam-compiler)
+  (:import-from #:cons-prolog/src/kernel/protocol #:register-provider)
   (:export #:slg-add-answer #:slg-answer-key #:slg-call #:slg-check-cut #:slg-check-database
     #:slg-check-database-if-present #:slg-close #:slg-complete-component #:slg-component-idle-p
     #:slg-components #:slg-context-for #:slg-copy-machine #:slg-cycle-consumer #:slg-delays
@@ -44,7 +44,7 @@
     #:slg-register-guard #:slg-release-cycles #:slg-resume #:slg-return-answer #:slg-settle
     #:slg-simplify #:slg-statistics #:slg-table-goal #:slg-task-owner #:slg-thaw
     #:slg-unconditional-p #:slg-wait #:table #:untable))
-(in-package #:sprolog/src/kernel/slg)
+(in-package #:cons-prolog/src/kernel/slg)
 
 
 (defun table (name arity &optional (database *database*))
@@ -500,14 +500,14 @@ Code, table entries and host functions are immutable and shared."
     (setf (slg-context-running context) nil)))
 
 (eval-when (:load-toplevel :execute)
-  (register-provider 'sprolog/src/kernel/protocol:slg-call 'slg-call)
-  (register-provider 'sprolog/src/kernel/protocol:slg-check-cut 'slg-check-cut)
-  (register-provider 'sprolog/src/kernel/protocol:slg-check-database 'slg-check-database)
-  (register-provider 'sprolog/src/kernel/protocol:slg-close 'slg-close)
-  (register-provider 'sprolog/src/kernel/protocol:slg-enter-cut-frame 'slg-enter-cut-frame)
-  (register-provider 'sprolog/src/kernel/protocol:slg-negative 'slg-negative)
-  (register-provider 'sprolog/src/kernel/protocol:slg-return-answer 'slg-return-answer)
-  (register-provider 'sprolog/src/kernel/protocol:slg-statistics 'slg-statistics)
-  (register-provider 'sprolog/src/kernel/protocol:slg-table-goal 'slg-table-goal)
-  (register-provider 'sprolog/src/kernel/protocol:table 'table)
+  (register-provider 'cons-prolog/src/kernel/protocol:slg-call 'slg-call)
+  (register-provider 'cons-prolog/src/kernel/protocol:slg-check-cut 'slg-check-cut)
+  (register-provider 'cons-prolog/src/kernel/protocol:slg-check-database 'slg-check-database)
+  (register-provider 'cons-prolog/src/kernel/protocol:slg-close 'slg-close)
+  (register-provider 'cons-prolog/src/kernel/protocol:slg-enter-cut-frame 'slg-enter-cut-frame)
+  (register-provider 'cons-prolog/src/kernel/protocol:slg-negative 'slg-negative)
+  (register-provider 'cons-prolog/src/kernel/protocol:slg-return-answer 'slg-return-answer)
+  (register-provider 'cons-prolog/src/kernel/protocol:slg-statistics 'slg-statistics)
+  (register-provider 'cons-prolog/src/kernel/protocol:slg-table-goal 'slg-table-goal)
+  (register-provider 'cons-prolog/src/kernel/protocol:table 'table)
 )

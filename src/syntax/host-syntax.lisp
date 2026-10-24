@@ -1,21 +1,21 @@
-(uiop:define-package #:sprolog/src/syntax/host-syntax
+(uiop:define-package #:cons-prolog/src/syntax/host-syntax
   (:use #:cl)
-  (:import-from #:sprolog/src/kernel/model
+  (:import-from #:cons-prolog/src/kernel/model
     #:*term-model* #:database-term-model #:disjunction-goal-branches #:disjunction-goal-p #:make-disjunction-goal #:make-host-goal
     #:make-scoped-goals #:make-sequence-goals #:scoped-goals-goals #:scoped-goals-p)
-  (:import-from #:sprolog/src/syntax/compiler
+  (:import-from #:cons-prolog/src/syntax/compiler
     #:variables-in)
-  (:import-from #:sprolog/src/syntax/dcg
+  (:import-from #:cons-prolog/src/syntax/dcg
     #:expand-query-goals #:finite-list-p)
-  (:import-from #:sprolog/src/syntax/let-syntax
+  (:import-from #:cons-prolog/src/syntax/let-syntax
     #:let-goal-form #:lexical-binding-value)
-  (:import-from #:sprolog/src/kernel/engine #:*database*)
-  (:import-from #:sprolog/src/kernel/protocol)
-  (:import-from #:sprolog/src/api/state)
-  (:import-from #:sprolog/src/kernel/instructions)
-  (:import-from #:sprolog/src/kernel/protocol #:register-provider)
+  (:import-from #:cons-prolog/src/kernel/engine #:*database*)
+  (:import-from #:cons-prolog/src/kernel/protocol)
+  (:import-from #:cons-prolog/src/api/state)
+  (:import-from #:cons-prolog/src/kernel/instructions)
+  (:import-from #:cons-prolog/src/kernel/protocol #:register-provider)
   (:export #:goal-form #:goals-form #:host-goal-form #:source-control-p #:source-sequence))
-(in-package #:sprolog/src/syntax/host-syntax)
+(in-package #:cons-prolog/src/syntax/host-syntax)
 
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -84,5 +84,5 @@
       `(list ,@(nreverse result)))))
 
 (eval-when (:load-toplevel :execute)
-  (register-provider 'sprolog/src/kernel/protocol:host-goal-form 'host-goal-form)
+  (register-provider 'cons-prolog/src/kernel/protocol:host-goal-form 'host-goal-form)
 )
